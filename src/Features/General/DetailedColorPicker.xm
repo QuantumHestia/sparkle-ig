@@ -3,6 +3,22 @@
 #import "../../Utils.h"
 #import "../../App/SPKPerfMeter.h"
 
+// The Swift controls expose the button as a property and have no underscored ivar,
+// so MSHookIvar would dereference NULL there; the Obj-C variants keep the ivar
+static IGStoryEyedropperToggleButton *SPKEyedropperToggleButton(UIView *controls) {
+    SEL getter = @selector(eyedropperToggleButton);
+    if ([controls respondsToSelector:getter]) {
+        id button = ((id (*)(id, SEL))objc_msgSend)(controls, getter);
+        return [button isKindOfClass:%c(IGStoryEyedropperToggleButton)] ? button : nil;
+    }
+
+    Ivar ivar = class_getInstanceVariable(object_getClass(controls), "_eyedropperToggleButton");
+    if (ivar == NULL)
+        return nil;
+    id button = object_getIvar(controls, ivar);
+    return [button isKindOfClass:%c(IGStoryEyedropperToggleButton)] ? button : nil;
+}
+
 %group SPKDetailedColorPickerHooks
 
 %hook IGStoryEyedropperToggleButton
@@ -60,7 +76,12 @@ didSelectColor : (UIColor *)color
     id presentingVC = [SPKUtils nearestViewControllerForView:self];
 
     if ([presentingVC isKindOfClass:%c(IGStoryTextEntryViewController)]) {
-        [presentingVC textViewControllerDidUpdateWithColor:color colorSource:0];
+        // 446 added a trailing text color effect argument; nil keeps the plain color
+        if ([presentingVC respondsToSelector:@selector(textViewControllerDidUpdateWithColor:colorSource:textColorEffect:)]) {
+            [presentingVC textViewControllerDidUpdateWithColor:color colorSource:0 textColorEffect:nil];
+        } else if ([presentingVC respondsToSelector:@selector(textViewControllerDidUpdateWithColor:colorSource:)]) {
+            [presentingVC textViewControllerDidUpdateWithColor:color colorSource:0];
+        }
     } else if (
         [presentingVC isKindOfClass:SPKResolveIGClass(@"IGStoryPostCaptureDrawing.IGStoryCreationDrawingViewController", @"IGStoryCreationDrawingViewController")] || [presentingVC isKindOfClass:%c(IGDirectThreadViewDrawingViewController)]) {
         [presentingVC drawingControls:nil didSelectColor:color];
@@ -69,19 +90,18 @@ didSelectColor : (UIColor *)color
 %end
 
 %hook IGStoryColorPaletteView
-- (CGFloat)collectionView:(id)view didSelectItemAtIndexPath:(id)index {
+- (void)collectionView:(id)view didSelectItemAtIndexPath:(id)index {
     UIView *colorPickingControls = [self superview];
 
     if (
         [colorPickingControls isKindOfClass:SPKResolveIGClass(@"IGStoryPostCaptureDrawingControls.IGStoryColorPickingControls", @"IGStoryColorPickingControls")] || [colorPickingControls isKindOfClass:%c(IGDirectThreadColorPickingControls)]) {
-        IGStoryEyedropperToggleButton *_eyedropperToggleButton = MSHookIvar<IGStoryEyedropperToggleButton *>(colorPickingControls, "_eyedropperToggleButton");
-
-        if (_eyedropperToggleButton != nil) {
-            [_eyedropperToggleButton setPushedDown:NO];
+        IGStoryEyedropperToggleButton *eyedropperToggleButton = SPKEyedropperToggleButton(colorPickingControls);
+        if ([eyedropperToggleButton respondsToSelector:@selector(setPushedDown:)]) {
+            [eyedropperToggleButton setPushedDown:NO];
         }
     }
 
-    return %orig;
+    %orig;
 }
 %end
 

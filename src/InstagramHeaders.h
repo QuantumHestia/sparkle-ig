@@ -699,6 +699,7 @@
 
 @interface IGStoryTextEntryViewController : UIViewController
 - (void)textViewControllerDidUpdateWithColor:(id)color colorSource:(NSInteger)source;
+- (void)textViewControllerDidUpdateWithColor:(id)color colorSource:(NSInteger)source textColorEffect:(id)effect; // 446+
 @end
 
 @interface IGStoryColorPaletteView : UIView
