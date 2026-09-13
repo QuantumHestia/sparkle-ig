@@ -1985,6 +1985,8 @@
 "STORIES_ACTION_BUTTON_ENABLED_HELP" = "Ajoute un bouton d'action au-dessus de la barre inférieure des stories. Un appui lance l'action par défaut, un appui long ouvre le menu complet.";
 "STORIES_ACTION_BUTTON_STORIES_ACTION_BUTTON_TITLE" = "Bouton d'action Stories";
 "STORIES_CONFIRMATIONS_CONFIRM_LIKE_HELP" = "Demande confirmation avant d'aimer une story.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_HELP" = "Demande confirmation avant que le bouton œil marque une story comme vue.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE" = "Confirmer marquer comme vue";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_HELP" = "Demande confirmation avant l'envoi d'un emoji de réaction rapide.";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_TITLE" = "Confirmer la réaction rapide";
 "STORIES_CONFIRMATIONS_CONFIRM_STICKER_HELP" = "Demande confirmation avant d'appuyer sur un autocollant de story.";
@@ -2063,6 +2065,7 @@
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE" = "Avancer au j'aime de la Story";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_REPLY_TITLE" = "Avancer à la réponse de la Story";
 "STORIES_STORY_NAVIGATION_HEADER" = "Navigation de la Story";
+"STORIES_STORY_SEEN_BUTTONS_CONFIRM_MARK_SEEN_MESSAGE" = "Marquer cette story comme vue ? Vous apparaîtrez dans la liste des spectateurs.";
 "STORIES_STORY_SEEN_BUTTONS_MARKED_STORY_SEEN_TEXT" = "Story marquée comme vue";
 "STORIES_STORY_SEEN_BUTTONS_STORY_USER_NOT_FOUND_TEXT" = "Utilisateur de la Story non trouvé";
 "STORIES_STORY_VIEWERS_FETCHER_COULD_NOT_LOAD_VIEWERS_TEXT" = "Impossible de charger les spectateurs";

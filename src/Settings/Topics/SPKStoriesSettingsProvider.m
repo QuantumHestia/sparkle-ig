@@ -138,6 +138,10 @@ static NSArray *SPKStoriesSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"reactions")
                                     defaultsKey:@"stories_confirm_quick_reaction"],
                                SPKL(@"STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE")
+                                           icon:SPKSettingsIcon(@"eye")
+                                    defaultsKey:@"stories_confirm_mark_seen"],
+                               SPKL(@"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_CONFIRMATIONS_CONFIRM_STICKER_INTERACTION_TITLE")
                                            icon:SPKSettingsIcon(@"sticker")
                                     defaultsKey:@"stories_confirm_sticker"],

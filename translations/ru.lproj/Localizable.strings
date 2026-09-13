@@ -1985,6 +1985,8 @@
 "STORIES_ACTION_BUTTON_ENABLED_HELP" = "Добавляет кнопку действия над нижней панелью историй. Нажатие выполняет действие по умолчанию, долгое нажатие открывает полное меню.";
 "STORIES_ACTION_BUTTON_STORIES_ACTION_BUTTON_TITLE" = "Кнопка действия историй";
 "STORIES_CONFIRMATIONS_CONFIRM_LIKE_HELP" = "Запрашивает подтверждение перед отметкой истории.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_HELP" = "Запрашивает подтверждение, прежде чем кнопка глаза пометит историю как просмотренную.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE" = "Подтверждать отметку о просмотре";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_HELP" = "Запрашивает подтверждение перед отправкой эмодзи быстрой реакции.";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_TITLE" = "Подтверждение быстрой реакции";
 "STORIES_CONFIRMATIONS_CONFIRM_STICKER_HELP" = "Запрашивает подтверждение перед нажатием на стикер в истории.";
@@ -2063,6 +2065,7 @@
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE" = "Продвинуться при лайке истории";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_REPLY_TITLE" = "Продвинуться при ответе на историю";
 "STORIES_STORY_NAVIGATION_HEADER" = "Навигация истории";
+"STORIES_STORY_SEEN_BUTTONS_CONFIRM_MARK_SEEN_MESSAGE" = "Пометить эту историю как просмотренную? Вы появитесь в списке зрителей.";
 "STORIES_STORY_SEEN_BUTTONS_MARKED_STORY_SEEN_TEXT" = "История помечена как просмотренная";
 "STORIES_STORY_SEEN_BUTTONS_STORY_USER_NOT_FOUND_TEXT" = "Пользователь истории не найден";
 "STORIES_STORY_VIEWERS_FETCHER_COULD_NOT_LOAD_VIEWERS_TEXT" = "Не удалось загрузить зрителей";

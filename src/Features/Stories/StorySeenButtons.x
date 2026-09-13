@@ -353,7 +353,18 @@ UIView *SPKActiveStoryOverlayForInteractions(void) {
 %new - (void)spk_storySeenButtonTapped:(UIButton *)sender {
 (void)sender;
 SPKPlayButtonTappedHaptic();
-SPKMarkCurrentStoryAsSeenFromOverlay((UIView *)self);
+if (![SPKUtils getBoolPref:@"stories_confirm_mark_seen"]) {
+    SPKMarkCurrentStoryAsSeenFromOverlay((UIView *)self);
+    return;
+}
+// Resolve the overlay weakly: the viewer can advance or close while the alert is up.
+__weak UIView *weakOverlay = (UIView *)self;
+[SPKUtils
+    showConfirmation:^{
+        SPKMarkCurrentStoryAsSeenFromOverlay(weakOverlay);
+    }
+               title:SPKL(@"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE")
+             message:SPKL(@"STORIES_STORY_SEEN_BUTTONS_CONFIRM_MARK_SEEN_MESSAGE")];
 }
 
 %new - (void)spk_storySeenButtonLongPressed:(UILongPressGestureRecognizer *)gesture {

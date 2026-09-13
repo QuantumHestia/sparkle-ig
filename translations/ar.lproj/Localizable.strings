@@ -1985,6 +1985,8 @@
 "STORIES_ACTION_BUTTON_ENABLED_HELP" = "يضيف زر إجراء فوق شريط القصة السفلي. الضغط ينفذ الإجراء الافتراضي، والضغط المطول يفتح القائمة الكاملة.";
 "STORIES_ACTION_BUTTON_STORIES_ACTION_BUTTON_TITLE" = "زر إجراء القصص";
 "STORIES_CONFIRMATIONS_CONFIRM_LIKE_HELP" = "يطلب تأكيداً قبل الإعجاب بأي قصة.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_HELP" = "يطلب تأكيداً قبل أن يضع زر العين علامة المشاهدة على القصة.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE" = "تأكيد وضع علامة كمشاهدة";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_HELP" = "يطلب تأكيداً قبل إرسال رمز تفاعل سريع.";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_TITLE" = "تأكيد التفاعل السريع";
 "STORIES_CONFIRMATIONS_CONFIRM_STICKER_HELP" = "يطلب تأكيداً قبل الضغط على ملصق في القصة.";
@@ -2063,6 +2065,7 @@
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE" = "التقدم على إعجاب القصة";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_REPLY_TITLE" = "التقدم على رد القصة";
 "STORIES_STORY_NAVIGATION_HEADER" = "التنقل في القصة";
+"STORIES_STORY_SEEN_BUTTONS_CONFIRM_MARK_SEEN_MESSAGE" = "هل تريد وضع علامة المشاهدة على هذه القصة؟ ستظهر في قائمة مشاهديها.";
 "STORIES_STORY_SEEN_BUTTONS_MARKED_STORY_SEEN_TEXT" = "تم وضع علامة على القصة كمشاهدة";
 "STORIES_STORY_SEEN_BUTTONS_STORY_USER_NOT_FOUND_TEXT" = "لم يتم العثور على المستخدم في Story";
 "STORIES_STORY_VIEWERS_FETCHER_COULD_NOT_LOAD_VIEWERS_TEXT" = "تعذّر تحميل المشاهدين";

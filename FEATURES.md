@@ -180,6 +180,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Confirmations
 - **Confirm Like**, **Confirm Quick Reaction**, **Confirm Sticker Interaction**.
+- **Confirm Mark as Seen**: Asks before the eye button marks a story as seen (and advances, if enabled).
 
 ### Instagram Plus (not available in v410.1.0)
 - **Unlock Story Preview**: Unlocks the Instagram Plus "Story Preview" — long-pressing a story shows the real preview (photo, video, auto-advance) instead of the blurred upgrade upsell, without appearing on the viewer list. Also removes the "Try Instagram Plus" row from the long-press menu. Works from the feed story tray and DMs.

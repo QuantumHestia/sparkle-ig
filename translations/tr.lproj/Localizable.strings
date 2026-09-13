@@ -1985,6 +1985,8 @@
 "STORIES_ACTION_BUTTON_ENABLED_HELP" = "Alt hikaye çubuğunun üstüne bir işlem düğmesi ekler. Dokunmak varsayılan işlemi çalıştırır, uzun basmak tam menüyü açar.";
 "STORIES_ACTION_BUTTON_STORIES_ACTION_BUTTON_TITLE" = "Hikaye Eylem Düğmesi";
 "STORIES_CONFIRMATIONS_CONFIRM_LIKE_HELP" = "Bir hikaye beğenilmeden önce onay ister.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_HELP" = "Göz düğmesi bir hikayeyi görüldü olarak işaretlemeden önce onay ister.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE" = "Görüldü İşaretlemeyi Onayla";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_HELP" = "Hızlı tepki emojisi gönderilmeden önce onay ister.";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_TITLE" = "Hızlı Tepkiyi Onayla";
 "STORIES_CONFIRMATIONS_CONFIRM_STICKER_HELP" = "Bir hikaye çıkartmasına dokunulmadan önce onay ister.";
@@ -2063,6 +2065,7 @@
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE" = "Hikaye Beğenisinde İleri";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_REPLY_TITLE" = "Hikaye Yanıtında İleri";
 "STORIES_STORY_NAVIGATION_HEADER" = "Hikaye Navigasyonu";
+"STORIES_STORY_SEEN_BUTTONS_CONFIRM_MARK_SEEN_MESSAGE" = "Bu hikaye görüldü olarak işaretlensin mi? Görüntüleyenler listesinde yer alacaksın.";
 "STORIES_STORY_SEEN_BUTTONS_MARKED_STORY_SEEN_TEXT" = "Hikaye görüldü olarak işaretlendi";
 "STORIES_STORY_SEEN_BUTTONS_STORY_USER_NOT_FOUND_TEXT" = "Hikaye kullanıcısı bulunamadı";
 "STORIES_STORY_VIEWERS_FETCHER_COULD_NOT_LOAD_VIEWERS_TEXT" = "İzleyiciler yüklenemedi";

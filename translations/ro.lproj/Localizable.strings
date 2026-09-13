@@ -1985,6 +1985,8 @@
 "STORIES_ACTION_BUTTON_ENABLED_HELP" = "Adaugă un buton de acțiune deasupra barei de jos a poveștilor. O atingere execută acțiunea implicită, apăsarea lungă deschide meniul complet.";
 "STORIES_ACTION_BUTTON_STORIES_ACTION_BUTTON_TITLE" = "Buton de acțiune povești";
 "STORIES_CONFIRMATIONS_CONFIRM_LIKE_HELP" = "Cere confirmare înainte de aprecierea unei povești.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_HELP" = "Cere confirmare înainte ca butonul ochi să marcheze o poveste ca vizualizată.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE" = "Confirmă marcarea ca vizualizată";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_HELP" = "Cere confirmare înainte de trimiterea unui emoji de reacție rapidă.";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_TITLE" = "Confirmă reacție rapidă";
 "STORIES_CONFIRMATIONS_CONFIRM_STICKER_HELP" = "Cere confirmare înainte de atingerea unui sticker dintr-o poveste.";
@@ -2063,6 +2065,7 @@
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE" = "Avansează pe apreciere poveste";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_REPLY_TITLE" = "Avansează pe răspuns poveste";
 "STORIES_STORY_NAVIGATION_HEADER" = "Navigare poveste";
+"STORIES_STORY_SEEN_BUTTONS_CONFIRM_MARK_SEEN_MESSAGE" = "Marchezi această poveste ca vizualizată? Vei apărea în lista de spectatori.";
 "STORIES_STORY_SEEN_BUTTONS_MARKED_STORY_SEEN_TEXT" = "Poveste marcată ca vizualizată";
 "STORIES_STORY_SEEN_BUTTONS_STORY_USER_NOT_FOUND_TEXT" = "Utilizator poveste negăsit";
 "STORIES_STORY_VIEWERS_FETCHER_COULD_NOT_LOAD_VIEWERS_TEXT" = "Nu s-au putut încărca spectatorii";

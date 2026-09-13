@@ -1985,6 +1985,8 @@
 "STORIES_ACTION_BUTTON_ENABLED_HELP" = "Προσθέτει κουμπί ενεργειών πάνω από την κάτω γραμμή των ιστοριών. Το πάτημα εκτελεί την προεπιλεγμένη ενέργεια, το παρατεταμένο πάτημα ανοίγει το πλήρες μενού.";
 "STORIES_ACTION_BUTTON_STORIES_ACTION_BUTTON_TITLE" = "Κουμπί Ενέργειας Ιστοριών";
 "STORIES_CONFIRMATIONS_CONFIRM_LIKE_HELP" = "Ζητά επιβεβαίωση πριν γίνει like σε μια ιστορία.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_HELP" = "Ζητά επιβεβαίωση πριν το κουμπί ματιού σημειώσει μια ιστορία ως προβληθείσα.";
+"STORIES_CONFIRMATIONS_CONFIRM_MARK_SEEN_TITLE" = "Επιβεβαίωση σήμανσης ως προβληθείσα";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_HELP" = "Ζητά επιβεβαίωση πριν σταλεί emoji γρήγορης αντίδρασης.";
 "STORIES_CONFIRMATIONS_CONFIRM_QUICK_REACTION_TITLE" = "Επιβεβαίωση γρήγορης αντίδρασης";
 "STORIES_CONFIRMATIONS_CONFIRM_STICKER_HELP" = "Ζητά επιβεβαίωση πριν πατηθεί ένα αυτοκόλλητο ιστορίας.";
@@ -2063,6 +2065,7 @@
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE" = "Προέλαση κατά Αρέσκεια Ιστορίας";
 "STORIES_STORY_NAVIGATION_ADVANCE_STORY_REPLY_TITLE" = "Προέλαση κατά Απάντηση Ιστορίας";
 "STORIES_STORY_NAVIGATION_HEADER" = "Πλοήγηση Ιστορίας";
+"STORIES_STORY_SEEN_BUTTONS_CONFIRM_MARK_SEEN_MESSAGE" = "Να σημειωθεί αυτή η ιστορία ως προβληθείσα; Θα εμφανιστείτε στη λίστα θεατών της.";
 "STORIES_STORY_SEEN_BUTTONS_MARKED_STORY_SEEN_TEXT" = "Σημειώθηκε η ιστορία ως διαβασμένη";
 "STORIES_STORY_SEEN_BUTTONS_STORY_USER_NOT_FOUND_TEXT" = "Η ιστορία χρήστη δεν βρέθηκε";
 "STORIES_STORY_VIEWERS_FETCHER_COULD_NOT_LOAD_VIEWERS_TEXT" = "Δεν ήταν δυνατή η φόρτωση προβολών";

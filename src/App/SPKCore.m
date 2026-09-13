@@ -80,6 +80,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"msgs_confirm_double_tap" : @(NO),
         @"msgs_confirm_reaction" : @(NO),
         @"stories_confirm_like" : @(NO),
+        @"stories_confirm_mark_seen" : @(NO),
         @"reels_confirm_like" : @(NO),
         @"msgs_confirm_voice_msg" : @(NO),
         @"general_confirm_create_group" : @(NO),
