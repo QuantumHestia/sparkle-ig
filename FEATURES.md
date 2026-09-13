@@ -164,9 +164,9 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Stories Action Button**, **Default Tap Action**, **Configure Actions**: As with feed; placed above the bottom story bar.
 
 ### Seen Receipts
-- **Manually Mark Seen**: Suppresses automatic seen receipts and adds an eye button to mark a story seen.
-- **Included / Excluded Users**: Two separate per-account lists, selected by Manually Mark Seen: when off, the *Included Users* list (only those users get the eye button / require manual seen); when on, the *Excluded Users* list (those users keep normal automatic seen). Each list is independent and stored per account. Manageable from the eye button, long-press, or the list.
-- **Mark Seen on Like**, **Mark Seen on Reply**: disabled unless Manually Mark Seen is on.
+- **Manually Mark Seen**: *Off* (default) keeps normal seen receipts. *On Tap* suppresses automatic seen receipts and adds an eye button that marks the current story seen. *Toggle* also suppresses them, but the eye button switches normal seen receipts on or off for every story: turning them on marks the story on screen and crosses out the eye, and they turn off again when you leave stories or restart Instagram. Users on the Excluded Users list keep normal seen receipts in both modes.
+- **Included / Excluded Users**: Two separate per-account lists, selected by Manually Mark Seen: when Off, the *Included Users* list (only those users get the eye button / require manual seen); in On Tap or Toggle, the *Excluded Users* list (those users keep normal automatic seen). Each list is independent and stored per account. Manageable from the eye button, long-press, or the list.
+- **Mark Seen on Like**, **Mark Seen on Reply**: disabled while Manually Mark Seen is Off.
 
 ### Playback
 - **Story Audio Button**: Adds an animated speaker button above the bottom Story bar for Story media with playable audio. Tap it to mute or unmute Story playback without changing Feed or Reels audio. It distinguishes playing, muted, and zero system volume; at zero volume, tapping gives selection feedback and animates the icon without changing playback or device volume.
@@ -176,11 +176,11 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Story Navigation
 - **Stop Auto Advance**: Prevents auto-advancing to the next story.
-- **Advance on Eye Button / Story Like / Story Reply**: Advances after the respective mark-seen action.
+- **Advance on Eye Button / Story Like / Story Reply**: Advances after the respective mark-seen action. Advance on Eye Button is disabled while Manually Mark Seen is set to Toggle.
 
 ### Confirmations
 - **Confirm Like**, **Confirm Quick Reaction**, **Confirm Sticker Interaction**.
-- **Confirm Mark as Seen**: Asks before the eye button marks a story as seen (and advances, if enabled).
+- **Confirm Mark as Seen**: Asks before the eye button marks a story as seen (and advances, if enabled). In Toggle mode, asks only when turning receipts on.
 
 ### Instagram Plus (not available in v410.1.0)
 - **Unlock Story Preview**: Unlocks the Instagram Plus "Story Preview" — long-pressing a story shows the real preview (photo, video, auto-advance) instead of the blurred upgrade upsell, without appearing on the viewer list. Also removes the "Try Instagram Plus" row from the long-press menu. Works from the feed story tray and DMs.

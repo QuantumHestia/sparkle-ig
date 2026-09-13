@@ -25,17 +25,18 @@ static NSArray *SPKStoriesSettingsSections(void);
     [self replaceSections:SPKStoriesSettingsSections()];
 }
 
-- (void)switchChanged:(UISwitch *)sender {
-    SPKSetting *row = [self settingForSender:sender];
-    [super switchChanged:sender];
-    if ([row.defaultsKey isEqualToString:@"stories_manual_seen"]) {
+- (void)menuChanged:(UICommand *)command {
+    [super menuChanged:command];
+    // The mode gates rows in other sections: the like/reply triggers, the user
+    // list's meaning and Advance on Eye Button.
+    if ([command.propertyList[@"defaultsKey"] isEqualToString:@"stories_manual_seen_mode"]) {
         [self replaceSections:SPKStoriesSettingsSections()];
     }
 }
 @end
 
 static NSDictionary *SPKStoriesSeenReceiptsSection(void) {
-    BOOL manualSeen = [SPKUtils getBoolPref:@"stories_manual_seen"];
+    BOOL manualSeen = SPKStoryManualSeenEnabled();
     SPKSetting *manualSeenList = [SPKSetting navigationCellWithTitle:SPKStoryManualSeenListTitle(manualSeen)
                                                             subtitle:@""
                                                                 icon:SPKSettingsIcon(@"users")
@@ -53,17 +54,20 @@ static NSDictionary *SPKStoriesSeenReceiptsSection(void) {
     markSeenOnLike.helpText = SPKL(@"STORIES_SEEN_RECEIPTS_MARK_SEEN_LIKE_HELP");
     markSeenOnReply.helpText = SPKL(@"STORIES_SEEN_RECEIPTS_MARK_SEEN_REPLY_HELP");
     markSeenOnLike.enabledProvider = ^BOOL {
-        return [SPKUtils getBoolPref:@"stories_manual_seen"];
+        return SPKStoryManualSeenEnabled();
     };
     markSeenOnReply.enabledProvider = ^BOOL {
-        return [SPKUtils getBoolPref:@"stories_manual_seen"];
+        return SPKStoryManualSeenEnabled();
     };
 
+    SPKSetting *manualSeenMode = [SPKSetting menuCellWithTitle:SPKL(@"MESSAGES_MESSAGING_MANUALLY_MARK_SEEN_TITLE")
+                                                          icon:SPKSettingsIcon(@"eye")
+                                                          menu:SPKStoryManualSeenModeMenu()];
+    manualSeenMode.defaultsKey = @"stories_manual_seen_mode";
+    manualSeenMode.helpText = SPKL(@"STORIES_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP");
+
     return SPKTopicSection(SPKL(@"STORIES_SEEN_RECEIPTS_HEADER"), @[
-        SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_MESSAGING_MANUALLY_MARK_SEEN_TITLE")
-                                       icon:SPKSettingsIcon(@"eye")
-                                defaultsKey:@"stories_manual_seen"],
-                           SPKL(@"STORIES_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP")),
+        manualSeenMode,
         markSeenOnLike,
         markSeenOnReply,
         manualSeenList,
@@ -115,10 +119,17 @@ static NSArray *SPKStoriesSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"autoscroll")
                                     defaultsKey:@"stories_stop_auto_advance"],
                                SPKL(@"STORIES_NAVIGATION_STOP_AUTO_ADVANCE_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_STORY_NAVIGATION_ADVANCE_EYE_BUTTON_TITLE")
-                                           icon:SPKSettingsIcon(@"eye")
-                                    defaultsKey:@"stories_advance_on_manual_seen"],
-                               SPKL(@"STORIES_NAVIGATION_ADVANCE_EYE_BUTTON_HELP")),
+            ({
+                SPKSetting *advanceOnEyeButton = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_STORY_NAVIGATION_ADVANCE_EYE_BUTTON_TITLE")
+                                                                                              icon:SPKSettingsIcon(@"eye")
+                                                                                       defaultsKey:@"stories_advance_on_manual_seen"],
+                                                                  SPKL(@"STORIES_NAVIGATION_ADVANCE_EYE_BUTTON_HELP"));
+                // A seen-receipts toggle has no single story to advance past.
+                advanceOnEyeButton.enabledProvider = ^BOOL {
+                    return !SPKStoryEyeButtonTogglesSeenReceipts();
+                };
+                advanceOnEyeButton;
+            }),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_STORY_NAVIGATION_ADVANCE_STORY_LIKE_TITLE")
                                            icon:SPKSettingsIcon(@"heart")
                                     defaultsKey:@"stories_advance_on_like_seen"],

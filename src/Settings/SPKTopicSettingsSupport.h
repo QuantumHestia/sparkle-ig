@@ -29,6 +29,7 @@ UIMenu *SPKHiddenChatsRevealResetMenu(void);
 UIMenu *SPKLastActiveFormatMenu(void);
 UIMenu *SPKLiquidGlassTabBarStateMenu(void);
 UIMenu *SPKScrollEdgeStyleMenu(void);
+UIMenu *SPKStoryManualSeenModeMenu(void);
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
 UIMenu *SPKTextLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);

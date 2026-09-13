@@ -714,7 +714,7 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
         if (offersListTap) {
             if ([identifier isEqualToString:kSPKNotificationStorySeenUserRule] ||
                 [identifier isEqualToString:kSPKNotificationProfileStorySeenUserRule]) {
-                BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+                BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
                 resolvedSubtitle = manualSeenEnabled ? SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_EXCLUDED_LIST_TEXT") : SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_INCLUDED_LIST_TEXT");
             } else if ([identifier isEqualToString:kSPKNotificationDirectThreadSeenRule] ||
                        [identifier isEqualToString:kSPKNotificationProfileMessagesSeenUserRule]) {

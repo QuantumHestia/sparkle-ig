@@ -54,7 +54,15 @@ static NSArray<SPKPreferenceMigration *> *SPKPreferenceMigrationList(void) {
             return [value boolValue] ? @"soft" : @"off";
         });
 
-        list = @[ instantsCameraButton, hideRecentSearches, scrollEdgeStyle ];
+        // The Manually Mark Seen switch for stories became a menu that adds a
+        // mode where the eye button toggles seen receipts.
+        SPKPreferenceMigration *storyManualSeenMode = SPKMigration(@"stories_manual_seen_mode", @"stories_manual_seen", @"stories_manual_seen_mode", ^id(id value) {
+            if (![value respondsToSelector:@selector(boolValue)])
+                return nil;
+            return [value boolValue] ? @"tap" : @"off";
+        });
+
+        list = @[ instantsCameraButton, hideRecentSearches, scrollEdgeStyle, storyManualSeenMode ];
     });
     return list;
 }

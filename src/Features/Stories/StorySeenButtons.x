@@ -44,10 +44,10 @@ static id SPKObjectForSelector(id target, NSString *selectorName);
 void SPKMarkStoryAsSeenForViewWithAdvancePref(UIView *view, NSString *advancePrefKey);
 
 static inline BOOL SPKManualStorySeenEnabled(void) {
-    return [SPKUtils getBoolPref:@"stories_manual_seen"];
+    return SPKStoryManualSeenEnabled();
 }
 static inline BOOL SPKStorySeenHooksNeeded(void) {
-    return [SPKUtils getBoolPref:@"stories_manual_seen"] ||
+    return SPKStoryManualSeenEnabled() ||
            SPKStoryManualSeenUserList(NO).count > 0 ||
            [SPKUtils getBoolPref:@"stories_mentions_btn"] ||
            [SPKUtils getBoolPref:@"stories_mark_seen_on_reply"] ||
@@ -217,6 +217,100 @@ static void SPKMarkCurrentStoryAsSeenFromOverlay(UIView *overlayView) {
     SPKMarkCurrentStoryAsSeenFromOverlayWithAdvancePref(overlayView, @"stories_advance_on_manual_seen");
 }
 
+static const void *kSPKStorySeenButtonLastIconAssocKey = &kSPKStorySeenButtonLastIconAssocKey;
+
+/// The eye is plain until toggle mode turns seen receipts on, then crossed out
+/// to show that tapping again stops them.
+static void SPKUpdateStorySeenButtonIcon(UIButton *button) {
+    if (!button)
+        return;
+    BOOL crossedOut = SPKStorySeenReceiptsSessionEnabled();
+    NSNumber *lastIcon = objc_getAssociatedObject(button, kSPKStorySeenButtonLastIconAssocKey);
+    if (lastIcon && lastIcon.boolValue == crossedOut)
+        return;
+    objc_setAssociatedObject(button, kSPKStorySeenButtonLastIconAssocKey, @(crossedOut), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
+    UIImage *image = [SPKAssetUtils instagramIconNamed:(crossedOut ? @"eye_off" : kSPKSeenMessagesBarIconResource) pointSize:24.0];
+    void (^applyImage)(void) = ^{
+        SPKSetSeenButtonImage(button, image, @"Story seen icon updated");
+        // Setting the image resets the tint to SDR white.
+        SPKApplyStorySeenButtonStyle(button);
+    };
+
+    UIImageView *iconView = [button isKindOfClass:SPKChromeButton.class] ? ((SPKChromeButton *)button).iconView : nil;
+    // The first assignment after the button appears is not a state change.
+    if (!lastIcon || !iconView) {
+        applyImage();
+        return;
+    }
+
+    iconView.transform = CGAffineTransformMakeScale(0.78, 0.78);
+    iconView.alpha = 0.65;
+    [UIView transitionWithView:iconView
+                      duration:0.16
+                       options:UIViewAnimationOptionTransitionCrossDissolve |
+                               UIViewAnimationOptionBeginFromCurrentState |
+                               UIViewAnimationOptionAllowAnimatedContent
+                    animations:applyImage
+                    completion:nil];
+    [UIView animateWithDuration:0.34
+                          delay:0.0
+         usingSpringWithDamping:0.70
+          initialSpringVelocity:0.55
+                        options:UIViewAnimationOptionBeginFromCurrentState |
+                                UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         iconView.transform = CGAffineTransformIdentity;
+                         iconView.alpha = 1.0;
+                     }
+                     completion:nil];
+}
+
+static UIViewController *SPKStoryViewerControllerForOverlay(UIView *overlayView) {
+    Class viewerClass = NSClassFromString(@"IGStoryViewerViewController");
+    for (UIResponder *responder = overlayView; responder; responder = responder.nextResponder) {
+        if (viewerClass && [responder isKindOfClass:viewerClass])
+            return (UIViewController *)responder;
+    }
+    return nil;
+}
+
+static void SPKToggleStorySeenReceiptsFromOverlay(UIView *overlayView) {
+    BOOL enable = !SPKStorySeenReceiptsSessionEnabled();
+    __weak UIView *weakOverlay = overlayView;
+    void (^apply)(void) = ^{
+        UIView *overlay = weakOverlay;
+        if (enable) {
+            // The session ends when this viewer disappears, like the story audio toggle.
+            UIViewController *viewer = SPKStoryViewerControllerForOverlay(overlay);
+            if (!viewer) {
+                SPKLog(@"Stories", @"[Sparkle StorySeen] No story viewer found for the seen receipts toggle");
+                return;
+            }
+            SPKStorySetSeenReceiptsSessionViewer(viewer);
+            // IG already skipped reporting the story on screen, so send it now.
+            SPKStoryContext *context = SPKStoryContextFromOverlay(overlay);
+            if (context && SPKStoryManualSeenAppliesToContext(context) && !SPKStoryMarkContextAsSeen(context)) {
+                SPKLog(@"Stories", @"[Sparkle StorySeen] Seen receipts on, but the current story could not be marked");
+            }
+            SPKNotify(kSPKNotificationStoryMarkSeen, SPKL(@"STORIES_STORY_SEEN_BUTTONS_RECEIPTS_ON_TEXT"), SPKL(@"STORIES_STORY_SEEN_BUTTONS_RECEIPTS_ON_SUBTITLE"), @"eye", SPKNotificationToneSuccess);
+        } else {
+            SPKStorySetSeenReceiptsSessionViewer(nil);
+            SPKNotify(kSPKNotificationStoryMarkSeen, SPKL(@"STORIES_STORY_SEEN_BUTTONS_RECEIPTS_OFF_TEXT"), nil, @"eye_off", SPKNotificationToneSuccess);
+        }
+        SPKUpdateStorySeenButtonIcon((UIButton *)[overlay viewWithTag:kSPKStorySeenButtonTag]);
+    [overlay setNeedsLayout];
+    };
+
+    if (enable && [SPKUtils getBoolPref:@"stories_confirm_mark_seen"]) {
+        [SPKUtils showConfirmation:apply
+                             title:SPKL(@"STORIES_STORY_SEEN_BUTTONS_CONFIRM_RECEIPTS_ON_TITLE")
+                           message:SPKL(@"STORIES_STORY_SEEN_BUTTONS_CONFIRM_RECEIPTS_ON_MESSAGE")];
+        return;
+    }
+    apply();
+}
+
 void SPKMarkStoryAsSeenForViewWithAdvancePref(UIView *view, NSString *advancePrefKey) {
     UIView *walker = view;
     for (NSInteger depth = 0; walker && depth < 24; depth++, walker = walker.superview) {
@@ -288,6 +382,7 @@ UIView *SPKActiveStoryOverlayForInteractions(void) {
     }
     if (showSeenButton) {
         SPKApplyStorySeenButtonStyle(seenButton);
+        SPKUpdateStorySeenButtonIcon(seenButton);
     }
 
     UIButton *storyActionButton = (UIButton *)[overlayView viewWithTag:kSPKStoriesActionButtonTag];
@@ -353,6 +448,10 @@ UIView *SPKActiveStoryOverlayForInteractions(void) {
 %new - (void)spk_storySeenButtonTapped:(UIButton *)sender {
 (void)sender;
 SPKPlayButtonTappedHaptic();
+if (SPKStoryEyeButtonTogglesSeenReceipts()) {
+    SPKToggleStorySeenReceiptsFromOverlay((UIView *)self);
+    return;
+}
 if (![SPKUtils getBoolPref:@"stories_confirm_mark_seen"]) {
     SPKMarkCurrentStoryAsSeenFromOverlay((UIView *)self);
     return;

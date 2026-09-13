@@ -297,6 +297,15 @@ UIMenu *SPKScrollEdgeStyleMenu(void) {
     ]];
 }
 
+UIMenu *SPKStoryManualSeenModeMenu(void) {
+    static NSString *const kSPKStoryManualSeenModeKey = @"stories_manual_seen_mode";
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, kSPKStoryManualSeenModeKey, @"off", NO),
+        SPKMenuCommand(SPKL(@"STORIES_SEEN_RECEIPTS_MANUAL_SEEN_MODE_TAP"), nil, nil, kSPKStoryManualSeenModeKey, @"tap", NO),
+        SPKMenuCommand(SPKL(@"STORIES_SEEN_RECEIPTS_MANUAL_SEEN_MODE_TOGGLE"), nil, nil, kSPKStoryManualSeenModeKey, @"toggle", NO)
+    ]];
+}
+
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void) {
     static NSString *const kSPKSwipeCloseCommentsDirectionKey = @"general_comments_swipe_close_direction";
     return [UIMenu menuWithChildren:@[

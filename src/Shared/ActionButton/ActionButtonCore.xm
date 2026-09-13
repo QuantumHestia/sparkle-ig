@@ -1063,7 +1063,7 @@ static NSString *SPKActionButtonDisplayTitleForContext(NSString *identifier,
         id user = SPKResolveMediaForContext(context);
         NSString *pk = user ? [SPKUtils pkFromIGUser:user] : nil;
         if (pk.length > 0) {
-            BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+            BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
             BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
             BOOL applies = manualSeenEnabled ? !listed : listed;
             return applies ? SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_START_MARKING_STORIES_SEEN_TEXT") : SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_SEEN_TEXT");
@@ -1155,7 +1155,7 @@ static UIImage *SPKIconForActionIdentifier(NSString *identifier, SPKActionButton
         NSString *pk = user ? [SPKUtils pkFromIGUser:user] : nil;
         BOOL applies = YES;
         if (pk.length > 0) {
-            BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+            BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
             BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
             applies = manualSeenEnabled ? !listed : listed;
         }
@@ -3178,7 +3178,7 @@ static BOOL SPKExecuteToggleProfileStorySeenUserRuleAction(SPKActionButtonContex
         return YES;
     }
 
-    BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+    BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
     BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
     BOOL applies = manualSeenEnabled ? !listed : listed;
 

@@ -34,6 +34,14 @@ NSURL *_Nullable SPKStoryURLForContext(SPKStoryContext *_Nullable context);
 NSString *_Nullable SPKStoryMediaIdentifierForContext(SPKStoryContext *_Nullable context);
 
 BOOL SPKStoryManualSeenAppliesToContext(SPKStoryContext *_Nullable context);
+/// Manually Mark Seen is on in either the tap or the toggle mode.
+BOOL SPKStoryManualSeenEnabled(void);
+BOOL SPKStoryEyeButtonTogglesSeenReceipts(void);
+BOOL SPKStorySeenReceiptsSessionEnabled(void);
+/// Starts a seen-receipts session scoped to `viewer`, or ends it when nil.
+void SPKStorySetSeenReceiptsSessionViewer(UIViewController *_Nullable viewer);
+/// Ends the session if `viewer` owns it.
+void SPKStoryEndSeenReceiptsSessionForViewer(UIViewController *viewer);
 NSArray *SPKStoryManualSeenUserList(BOOL manualSeenEnabled);
 void SPKStorySetManualSeenUserList(NSArray *users, BOOL manualSeenEnabled);
 BOOL SPKStoryManualSeenListContainsUser(NSString *_Nullable pk, BOOL manualSeenEnabled);
