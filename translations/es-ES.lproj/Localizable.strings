@@ -1006,7 +1006,6 @@
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Oculta los controles y superposiciones de Sparkle en capturas, grabaciones y duplicación de pantalla.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Ocultar IU en captura";
 "INTERFACE_CAPTURE_LIQUID_GLASS_TITLE" = "Liquid Glass";
-"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE" = "Desenfoque progresivo";
 "INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE" = "Comportamiento de la barra de pestañas";
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explorar y búsqueda";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Oculta la cuadrícula de publicaciones sugeridas en la pestaña Explorar.";
@@ -1021,7 +1020,8 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notificaciones";
 "INTERFACE_NOTIFICATIONS_HELP" = "Qué aspecto tienen los avisos propios de Sparkle y dónde aparecen.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Convierte la barra de pestañas en la cápsula flotante de iOS 26. El material de cristal en sí necesita iOS 26. Requiere reiniciar.";
-"INTERFACE_PROGRESSIVE_BLUR_HELP" = "Funde el contenido con las barras mediante un desenfoque progresivo en lugar de un borde duro. Requiere reiniciar.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Cómo se une el contenido con las barras al desplazarte. Predeterminado sigue a iOS, Suave desvanece el contenido con un desenfoque progresivo y Duro lo corta en un borde sólido con una línea divisoria. Desactivado mantiene el aspecto propio de Instagram. Requiere reiniciar.";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Efecto de borde de desplazamiento";
 "INTERFACE_TABS_HEADER" = "Pestañas";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Organiza la barra de pestañas con una vista previa en vivo. Los cambios se preparan y se aplican juntos, y después Instagram se reinicia.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "Editor de Pestañas";
@@ -1265,6 +1265,7 @@
 "MENU_FOLLOWING" = "Siguiendo";
 "MENU_FOR_YOU" = "Para Ti";
 "MENU_GIF_ACTIONS" = "Acciones GIF";
+"MENU_HARD" = "Duro";
 "MENU_HIDE_SCROLL" = "Ocultar al Desplazar";
 "MENU_HIGH" = "Alto";
 "MENU_LEAVING_THE_INBOX" = "Al salir de la bandeja";
@@ -1284,6 +1285,7 @@
 "MENU_PHOTO_ACTIONS" = "Acciones de Fotos";
 "MENU_RIGHT" = "Derecha";
 "MENU_SMART" = "Inteligente";
+"MENU_SOFT" = "Suave";
 "MENU_SORT" = "Ordenar";
 "MENU_SPARKLE_GALLERY" = "Galería Sparkle";
 "MENU_TOP" = "Superior";

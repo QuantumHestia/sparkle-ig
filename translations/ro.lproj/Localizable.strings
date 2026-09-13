@@ -1006,7 +1006,6 @@
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Ascunde comenzile și suprapunerile Sparkle din capturi de ecran, înregistrări de ecran și oglindirea ecranului.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Ascunde UI la captură";
 "INTERFACE_CAPTURE_LIQUID_GLASS_TITLE" = "Liquid Glass";
-"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE" = "Estompare progresivă";
 "INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE" = "Comportament bară file";
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explorare și căutare";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Ascunde grila de postări sugerate din fila Explorează.";
@@ -1021,7 +1020,8 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notificări";
 "INTERFACE_NOTIFICATIONS_HELP" = "Cum arată notificările proprii ale Sparkle și unde apar.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Transformă bara de file în pastila plutitoare din iOS 26. Materialul de sticlă în sine necesită iOS 26. Necesită repornire.";
-"INTERFACE_PROGRESSIVE_BLUR_HELP" = "Estompează conținutul în bare cu o neclaritate progresivă în loc de o margine dură. Necesită repornire.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Cum întâlnește conținutul barele în timpul derulării. Implicit urmează iOS, Moale estompează conținutul cu o estompare progresivă, iar Dur îl oprește la o margine opacă cu o linie de separare. Oprit păstrează aspectul Instagram. Necesită o repornire.";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Efect de margine la derulare";
 "INTERFACE_TABS_HEADER" = "File";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Aranjează bara de file cu previzualizare în timp real. Modificările sunt pregătite și aplicate împreună, apoi Instagram repornește.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "Editor file";
@@ -1265,6 +1265,7 @@
 "MENU_FOLLOWING" = "Urmărire";
 "MENU_FOR_YOU" = "Pentru tine";
 "MENU_GIF_ACTIONS" = "Acțiuni GIF";
+"MENU_HARD" = "Dur";
 "MENU_HIDE_SCROLL" = "Ascunde la derulare";
 "MENU_HIGH" = "Înalt";
 "MENU_LEAVING_THE_INBOX" = "La ieșirea din mesaje";
@@ -1284,6 +1285,7 @@
 "MENU_PHOTO_ACTIONS" = "Acțiuni foto";
 "MENU_RIGHT" = "Dreapta";
 "MENU_SMART" = "Inteligent";
+"MENU_SOFT" = "Moale";
 "MENU_SORT" = "Sortare";
 "MENU_SPARKLE_GALLERY" = "Galeria Sparkle";
 "MENU_TOP" = "Sus";

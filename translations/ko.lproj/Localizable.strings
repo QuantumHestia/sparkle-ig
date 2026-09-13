@@ -1006,7 +1006,6 @@
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "스크린샷, 화면 녹화 및 화면 미러링에서 Sparkle 컨트롤과 오버레이를 숨깁니다.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "캡처 시 UI 숨기기";
 "INTERFACE_CAPTURE_LIQUID_GLASS_TITLE" = "Liquid Glass";
-"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE" = "점진적 흐림";
 "INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE" = "탭 바 동작";
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "탐색 및 검색";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "탐색 탭의 추천 게시물 그리드를 숨깁니다.";
@@ -1021,7 +1020,8 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "알림";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle 자체 알림 배너의 모양과 표시 위치입니다.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "탭 바를 iOS 26의 떠 있는 알약 모양으로 바꿉니다. 유리 소재 자체는 iOS 26이 필요합니다. 재시작이 필요합니다.";
-"INTERFACE_PROGRESSIVE_BLUR_HELP" = "콘텐츠가 바에서 잘리지 않고 점진적인 흐림으로 자연스럽게 이어집니다. 재시작이 필요합니다.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "스크롤할 때 콘텐츠가 막대와 만나는 방식입니다. 기본값은 iOS를 따르고, 부드럽게는 점진적 블러로 콘텐츠를 흐리게 하며, 선명하게는 구분선이 있는 불투명한 가장자리에서 끝냅니다. 끄기는 Instagram 고유의 모습을 유지합니다. 재시작이 필요합니다.";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "스크롤 가장자리 효과";
 "INTERFACE_TABS_HEADER" = "탭";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "실시간 미리보기로 탭 바를 정렬합니다. 변경 사항은 임시 저장되었다가 한 번에 적용되며, 이후 Instagram이 다시 시작됩니다.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "탭 편집기";
@@ -1265,6 +1265,7 @@
 "MENU_FOLLOWING" = "팔로우 중";
 "MENU_FOR_YOU" = "발견";
 "MENU_GIF_ACTIONS" = "GIF 작업";
+"MENU_HARD" = "선명하게";
 "MENU_HIDE_SCROLL" = "스크롤 시 숨기기";
 "MENU_HIGH" = "높음";
 "MENU_LEAVING_THE_INBOX" = "받은 메시지함을 벗어날 때";
@@ -1284,6 +1285,7 @@
 "MENU_PHOTO_ACTIONS" = "사진 작업";
 "MENU_RIGHT" = "오른쪽";
 "MENU_SMART" = "스마트";
+"MENU_SOFT" = "부드럽게";
 "MENU_SORT" = "정렬";
 "MENU_SPARKLE_GALLERY" = "Sparkle 갤러리";
 "MENU_TOP" = "위";

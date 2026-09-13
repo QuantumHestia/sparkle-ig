@@ -1006,7 +1006,6 @@
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Приховує елементи керування та накладки Sparkle на знімках, записах і під час трансляції екрана.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Приховати UI при захопленні";
 "INTERFACE_CAPTURE_LIQUID_GLASS_TITLE" = "Liquid Glass";
-"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE" = "Прогресивне розмиття";
 "INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE" = "Поведінка панелі вкладок";
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore та пошук";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Приховує сітку рекомендованих дописів на вкладці Цікаве.";
@@ -1021,7 +1020,8 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Сповіщення";
 "INTERFACE_NOTIFICATIONS_HELP" = "Який вигляд мають власні сповіщення Sparkle і де вони з'являються.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Перетворює панель вкладок на плаваючу капсулу з iOS 26. Самому скляному матеріалу потрібна iOS 26. Потрібен перезапуск.";
-"INTERFACE_PROGRESSIVE_BLUR_HELP" = "Розчиняє вміст у панелях поступовим розмиттям замість різкої межі. Потрібен перезапуск.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Як вміст зустрічається з панелями під час прокручування. За замовчуванням слідує iOS, М'який розчиняє вміст прогресивним розмиттям, а Жорсткий обриває його біля суцільного краю з розділювальною лінією. Вимкнено зберігає власний вигляд Instagram. Потрібен перезапуск.";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Ефект краю прокручування";
 "INTERFACE_TABS_HEADER" = "Вкладки";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Упорядкуйте панель вкладок із живим переглядом. Зміни накопичуються й застосовуються разом, після чого Instagram перезапускається.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "Редактор вкладок";
@@ -1265,6 +1265,7 @@
 "MENU_FOLLOWING" = "Слідування";
 "MENU_FOR_YOU" = "Для вас";
 "MENU_GIF_ACTIONS" = "Дії GIF";
+"MENU_HARD" = "Жорсткий";
 "MENU_HIDE_SCROLL" = "Приховати при прокручуванні";
 "MENU_HIGH" = "Висока";
 "MENU_LEAVING_THE_INBOX" = "Вихід із вхідних";
@@ -1284,6 +1285,7 @@
 "MENU_PHOTO_ACTIONS" = "Дії фото";
 "MENU_RIGHT" = "Праворуч";
 "MENU_SMART" = "Розумна";
+"MENU_SOFT" = "М'який";
 "MENU_SORT" = "Сортування";
 "MENU_SPARKLE_GALLERY" = "Sparkle Gallery";
 "MENU_TOP" = "Вгорі";

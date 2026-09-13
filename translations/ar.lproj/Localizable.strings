@@ -1006,7 +1006,6 @@
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "يخفي عناصر تحكم Sparkle وطبقاتها من لقطات الشاشة وتسجيل الشاشة وعرض الشاشة.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "إخفاء الواجهة عند الالتقاط";
 "INTERFACE_CAPTURE_LIQUID_GLASS_TITLE" = "الزجاج السائل";
-"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE" = "التمويه التدريجي";
 "INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE" = "سلوك شريط علامات التبويب";
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "الاستكشاف والبحث";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "يخفي شبكة المنشورات المقترحة في تبويب الاستكشاف.";
@@ -1021,7 +1020,8 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "الإخطارات";
 "INTERFACE_NOTIFICATIONS_HELP" = "شكل إشعارات Sparkle الخاصة ومكان ظهورها.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "يعيد تشكيل شريط التبويبات ليصبح كبسولة عائمة بأسلوب iOS 26. مادة الزجاج نفسها تحتاج iOS 26. يتطلب إعادة تشغيل.";
-"INTERFACE_PROGRESSIVE_BLUR_HELP" = "يمزج المحتوى بالأشرطة عبر تمويه متدرج بدل حافة حادة. يتطلب إعادة تشغيل.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "طريقة التقاء المحتوى بالأشرطة أثناء التمرير. الافتراضي يتبع iOS، والناعم يُخفي المحتوى تدريجيًا بتمويه متدرج، والحاد ينهيه عند حافة صلبة بخط فاصل. معطل يُبقي مظهر Instagram الأصلي. يتطلب إعادة التشغيل.";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "تأثير حافة التمرير";
 "INTERFACE_TABS_HEADER" = "علامات التبويب";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "رتّب شريط التبويبات مع معاينة حية. تُجمع التغييرات وتُطبق معاً، ثم يعاد تشغيل Instagram.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "محرر التبويب";
@@ -1265,6 +1265,7 @@
 "MENU_FOLLOWING" = "متابع";
 "MENU_FOR_YOU" = "من أجلك";
 "MENU_GIF_ACTIONS" = "إجراءات GIF";
+"MENU_HARD" = "حاد";
 "MENU_HIDE_SCROLL" = "إخفاء عند التمرير";
 "MENU_HIGH" = "عالية";
 "MENU_LEAVING_THE_INBOX" = "عند مغادرة صندوق الوارد";
@@ -1284,6 +1285,7 @@
 "MENU_PHOTO_ACTIONS" = "إجراءات الصور";
 "MENU_RIGHT" = "يمين";
 "MENU_SMART" = "ذكي";
+"MENU_SOFT" = "ناعم";
 "MENU_SORT" = "ترتيب";
 "MENU_SPARKLE_GALLERY" = "معرض Sparkle";
 "MENU_TOP" = "أعلى";

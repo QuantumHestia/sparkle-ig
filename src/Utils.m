@@ -1039,7 +1039,7 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"interface_language",
             @"interface_liquid_glass",
             @"interface_liquid_glass_tabbar_mode",
-            @"interface_progressive_blur",
+            @"interface_scroll_edge_style",
             @"interface_hide_ui_on_capture",
             @"downloads_adv_encoding",
             // Tab/launch layout is configured once at launch and can't re-apply

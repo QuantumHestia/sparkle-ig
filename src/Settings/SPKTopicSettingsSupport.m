@@ -282,6 +282,21 @@ UIMenu *SPKLiquidGlassTabBarStateMenu(void) {
     ]];
 }
 
+UIMenu *SPKScrollEdgeStyleMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"off", YES),
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"default", YES),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"MENU_SOFT"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"soft", YES),
+                         SPKMenuCommand(SPKL(@"MENU_HARD"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"hard", YES)
+                     ]]
+    ]];
+}
+
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void) {
     static NSString *const kSPKSwipeCloseCommentsDirectionKey = @"general_comments_swipe_close_direction";
     return [UIMenu menuWithChildren:@[

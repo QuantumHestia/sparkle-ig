@@ -147,9 +147,9 @@ void SPKInstallLaunchCriticalHooks(void) {
     // session. Installing this with the delayed Messages surface misses that
     // one-time initializer, leaving the configured refresh interval inert.
     SPK_INSTALL(SPKInstallAccurateActiveStatusHooksIfEnabled);
-    // Progressive blur relies on UIScrollEdgeEffect (iOS 26+ only).
+    // The scroll edge style relies on UIScrollEdgeEffect (iOS 26+ only).
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0")) {
-        if ([SPKUtils getBoolPref:@"interface_progressive_blur"]) {
+        if (![[SPKUtils getStringPref:@"interface_scroll_edge_style"] isEqualToString:@"off"]) {
             SPK_INSTALL(SPKInstallProgressiveBlurHooksIfEnabled);
         }
     }

@@ -111,7 +111,7 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
 
 ### Liquid Glass *(iOS 26+)*
 - **Liquid Glass**: Force-enables Instagram's native Liquid Glass UI for accounts/devices that don't already have it. **(restart)** Only ever forces it *on*; turning it off never suppresses Liquid Glass that Instagram already renders natively (server-rollout accounts) or that Sparkle's own screens (Gallery, Settings, etc.) pick up automatically from iOS 26: so Sparkle's UI never looks inconsistent with Instagram's regardless of this switch.
-- **Progressive Blur**: Restores the native progressive navigation bar blur on scroll. Requires iOS 26 (relies on `UIScrollEdgeEffect`).
+- **Scroll Edge Effect**: How content meets the navigation and tab bars as you scroll. **Off** keeps Instagram's own look, **Default** follows iOS (soft on iOS 26, hard on iOS 27), **Soft** forces the progressive blur, and **Hard** forces the solid edge with a dividing line, shown only while content is scrolled under the bar. Replaces the Progressive Blur toggle (on becomes Soft). Requires iOS 26 (relies on `UIScrollEdgeEffect`) and a restart.
 - **Tab Bar Behavior**: Controls how the floating Liquid Glass tab bar behaves while scrolling.
 
 ### Tab Bar *(iOS 18 and lower)*

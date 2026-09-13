@@ -1006,7 +1006,6 @@
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Hides Sparkle controls and overlays from screenshots, screen recordings, and screen mirroring.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Hide UI on Capture";
 "INTERFACE_CAPTURE_LIQUID_GLASS_TITLE" = "Liquid Glass";
-"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE" = "Progressive Blur";
 "INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE" = "Tab Bar Behavior";
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Explore & Search";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Hides the grid of suggested posts on the Explore tab.";
@@ -1021,7 +1020,8 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notifications";
 "INTERFACE_NOTIFICATIONS_HELP" = "How Sparkle's own notification pills look and where they appear.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Reshapes the tab bar into the iOS 26 floating pill. The glass material itself needs iOS 26. Requires a restart.";
-"INTERFACE_PROGRESSIVE_BLUR_HELP" = "Fades content into the bars with a progressive blur instead of a hard edge. Requires a restart.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "How content meets the bars as you scroll. Default follows iOS, Soft fades content out with a progressive blur, and Hard ends it at a solid edge with a dividing line. Off keeps Instagram's own look. Requires a restart.";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Scroll Edge Effect";
 "INTERFACE_TABS_HEADER" = "Tabs";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Arrange the tab bar with a live preview. Changes are staged and applied together, then Instagram restarts.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "Tab Editor";
@@ -1265,6 +1265,7 @@
 "MENU_FOLLOWING" = "Following";
 "MENU_FOR_YOU" = "For You";
 "MENU_GIF_ACTIONS" = "GIF Actions";
+"MENU_HARD" = "Hard";
 "MENU_HIDE_SCROLL" = "Hide on Scroll";
 "MENU_HIGH" = "High";
 "MENU_LEAVING_THE_INBOX" = "Leaving the Inbox";
@@ -1284,6 +1285,7 @@
 "MENU_PHOTO_ACTIONS" = "Photo Actions";
 "MENU_RIGHT" = "Right";
 "MENU_SMART" = "Smart";
+"MENU_SOFT" = "Soft";
 "MENU_SORT" = "Sort";
 "MENU_SPARKLE_GALLERY" = "Sparkle Gallery";
 "MENU_TOP" = "Top";

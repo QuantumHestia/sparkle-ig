@@ -113,14 +113,15 @@
                 [[NSUserDefaults standardUserDefaults] setBool:isOn forKey:kSPKPrefInterfaceLiquidGlass];
                 [SPKUtils showRestartConfirmation];
             };
-            SPKSetting *progressiveBlur = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE")
-                                                             defaultsKey:kSPKPrefInterfaceProgressiveBlur
-                                                          requiresRestart:YES];
-            progressiveBlur.helpText = SPKL(@"INTERFACE_PROGRESSIVE_BLUR_HELP");
+            SPKSetting *scrollEdgeStyle = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_TITLE")
+                                                                   icon:nil
+                                                                   menu:SPKScrollEdgeStyleMenu()];
+            scrollEdgeStyle.defaultsKey = kSPKPrefInterfaceScrollEdgeStyle;
+            scrollEdgeStyle.helpText = SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_HELP");
 
             [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_HEADER"), @[
                           liquidGlass,
-                          progressiveBlur,
+                          scrollEdgeStyle,
                           tabBarBehaviorCell(),
                       ],
                                                 nil)];

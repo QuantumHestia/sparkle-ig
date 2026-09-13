@@ -291,15 +291,80 @@ extern "C" void SPKInstallLiquidGlassHooksIfEnabled(void) {
     });
 }
 
-// MARK: - Progressive Blur Hooks
-%group SPKProgressiveBlurHooks
+// MARK: - Scroll edge style hooks
+//
+// interface_scroll_edge_style: off leaves Instagram alone, default keeps the
+// edge effects visible with the system style, soft and hard pin that style.
+
+// The forced style, resolved once at install; nil means follow the system.
+static id sSPKForcedScrollEdgeStyle;
+// An explicitly set hard style stays visible once shown, unlike a hard style
+// UIKit resolves on its own, which fades out when the content returns to the
+// edge. Hard mode reproduces that by hiding each edge while nothing is under it.
+static BOOL sSPKScrollEdgeHidesAtRest;
+
+static id SPKScrollEdgeStyleForPreference(NSString *preference) {
+    SEL selector = NULL;
+    if ([preference isEqualToString:@"soft"])
+        selector = @selector(softStyle);
+    else if ([preference isEqualToString:@"hard"])
+        selector = @selector(hardStyle);
+    Class styleClass = objc_getClass("UIScrollEdgeEffectStyle");
+    if (!selector || ![styleClass respondsToSelector:selector])
+        return nil;
+    return ((id (*)(id, SEL))objc_msgSend)(styleClass, selector);
+}
+
+static void SPKApplyForcedScrollEdgeStyle(UIScrollView *scrollView) {
+    id forced = sSPKForcedScrollEdgeStyle;
+    if (!forced)
+        return;
+    static SEL selectors[4];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        selectors[0] = @selector(topEdgeEffect);
+        selectors[1] = @selector(bottomEdgeEffect);
+        selectors[2] = @selector(leftEdgeEffect);
+        selectors[3] = @selector(rightEdgeEffect);
+    });
+    for (int i = 0; i < 4; i++) {
+        if (![scrollView respondsToSelector:selectors[i]])
+            continue;
+        id effect = ((id (*)(id, SEL))objc_msgSend)(scrollView, selectors[i]);
+        if (![effect respondsToSelector:@selector(style)] || ![effect respondsToSelector:@selector(setStyle:)])
+            continue;
+        if (((id (*)(id, SEL))objc_msgSend)(effect, @selector(style)) != forced)
+            ((void (*)(id, SEL, id))objc_msgSend)(effect, @selector(setStyle:), forced);
+    }
+}
+
+static void SPKSetScrollEdgeEffectHidden(id effect, BOOL hidden) {
+    if (![effect respondsToSelector:@selector(isHidden)] || ![effect respondsToSelector:@selector(setHidden:)])
+        return;
+    if (((BOOL (*)(id, SEL))objc_msgSend)(effect, @selector(isHidden)) != hidden)
+        ((void (*)(id, SEL, BOOL))objc_msgSend)(effect, @selector(setHidden:), hidden);
+}
+
+static void SPKUpdateScrollEdgeRestVisibility(UIScrollView *scrollView) {
+    if (!sSPKScrollEdgeHidesAtRest || !scrollView.window || ![scrollView respondsToSelector:@selector(topEdgeEffect)])
+        return;
+    UIEdgeInsets insets = scrollView.adjustedContentInset;
+    CGFloat offsetY = scrollView.contentOffset.y;
+    // Half a point of slack absorbs fractional insets and rubber-band settling.
+    BOOL atTop = offsetY <= -insets.top + 0.5;
+    BOOL atBottom = offsetY + CGRectGetHeight(scrollView.bounds) >= scrollView.contentSize.height + insets.bottom - 0.5;
+    SPKSetScrollEdgeEffectHidden(((id (*)(id, SEL))objc_msgSend)(scrollView, @selector(topEdgeEffect)), atTop);
+    SPKSetScrollEdgeEffectHidden(((id (*)(id, SEL))objc_msgSend)(scrollView, @selector(bottomEdgeEffect)), atBottom);
+}
+
+%group SPKScrollEdgeVisibilityHooks
 %hook UIScrollEdgeEffect
 + (void)hide {
     // No-op to prevent globally hiding scroll-edge effects
 }
 
 - (BOOL)ig_isHidden {
-    return NO; // Always show the progressive blur
+    return NO; // Always show the scroll edge effect
 }
 
 - (void)ig_setIsHidden:(BOOL)hidden {
@@ -308,15 +373,62 @@ extern "C" void SPKInstallLiquidGlassHooksIfEnabled(void) {
 %end
 %end
 
+%group SPKScrollEdgeStyleHooks
+%hook UIScrollEdgeEffect
+// The automatic style resolves differently per iOS release (soft on iOS 26,
+// hard on iOS 27), so pin every explicit style write to the chosen one.
+- (void)setStyle:(id)style {
+    %orig(sSPKForcedScrollEdgeStyle ?: style);
+}
+%end
+
+// Edge effects are created lazily with the automatic style and UIKit reads
+// the stored value directly, so apply the style once per scroll view as it
+// lands in a window. UIScrollView has no public didMoveToWindow of its own, and
+// the table and collection view overrides bypass one added here, so hook the
+// private window move every scroll view subclass funnels through.
+%hook UIScrollView
+- (void)_didMoveFromWindow:(UIWindow *)fromWindow toWindow:(UIWindow *)toWindow {
+    %orig;
+    if (toWindow) {
+        SPKApplyForcedScrollEdgeStyle(self);
+        SPKUpdateScrollEdgeRestVisibility(self);
+    }
+}
+
+- (void)setContentOffset:(CGPoint)contentOffset {
+    %orig;
+    SPKUpdateScrollEdgeRestVisibility(self);
+}
+
+- (void)setContentSize:(CGSize)contentSize {
+    %orig;
+    SPKUpdateScrollEdgeRestVisibility(self);
+}
+
+- (void)adjustedContentInsetDidChange {
+    %orig;
+    SPKUpdateScrollEdgeRestVisibility(self);
+}
+%end
+%end
+
 extern "C" void SPKInstallProgressiveBlurHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (objc_getClass("UIScrollEdgeEffect")) {
-            %init(SPKProgressiveBlurHooks);
-            SPKLog(@"LiquidGlass", @"SPKProgressiveBlurHooks successfully installed!");
-        } else {
+        if (!objc_getClass("UIScrollEdgeEffect")) {
             SPKLog(@"LiquidGlass", @"UIScrollEdgeEffect class not found at runtime, skipping hooks.");
+            return;
         }
+        NSString *preference = [SPKUtils getStringPref:kSPKPrefInterfaceScrollEdgeStyle];
+        if ([preference isEqualToString:@"off"])
+            return;
+        %init(SPKScrollEdgeVisibilityHooks);
+        sSPKForcedScrollEdgeStyle = SPKScrollEdgeStyleForPreference(preference);
+        sSPKScrollEdgeHidesAtRest = [preference isEqualToString:@"hard"] && sSPKForcedScrollEdgeStyle;
+        if (sSPKForcedScrollEdgeStyle)
+            %init(SPKScrollEdgeStyleHooks);
+        SPKLog(@"LiquidGlass", @"Scroll edge hooks installed, style=%@", preference);
     });
 }
 

@@ -4,6 +4,7 @@
 #import "../Shared/Navigation/SPKTabConfiguration.h"
 #import "../Tweak.h"
 #import "../Utils.h"
+#import "SPKPreferenceMigrations.h"
 #import "SPKStartupHooks.h"
 #import "SPKStartupProfiler.h"
 
@@ -15,7 +16,8 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"tools_flex_instagram" : @(NO),
         @"interface_liquid_glass" : @(NO),
         @"interface_liquid_glass_tabbar_mode" : @"default",
-        @"interface_progressive_blur" : @(YES),
+        // off, default (follow iOS), soft or hard.
+        @"interface_scroll_edge_style" : @"soft",
         @"interface_nav_order" : @"default",
         @"interface_custom_tab_order" : @[ @"feed", @"clips", @"direct", @"search", @"profile" ],
         @"interface_swipe_tabs" : @"default",
@@ -273,65 +275,11 @@ static NSDictionary *SPKFeatureDefaults(void) {
     return defaults;
 }
 
-/// One-time rename of the Instants camera-screen preference.
-///
-/// `instants_upload_from_gallery` shipped as its own toggle for the upload button; that
-/// button and the saved-instants button are now one button with a menu, behind
-/// `instants_camera_btn`. Anyone who explicitly turned the old toggle on or off gets that
-/// choice carried over; everyone else takes the new default. Values are copied per
-/// namespace, since per-account preferences live under `u_<pk>_<key>` and a single global
-/// read would silently drop every account's setting but one.
-static void SPKCoreMigrateInstantsCameraButtonPreference(void) {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    static NSString *const migratedKey = @"instants_camera_btn_migrated";
-    if ([defaults boolForKey:migratedKey])
-        return;
-
-    NSString *legacyKey = @"instants_upload_from_gallery";
-    NSString *newKey = @"instants_camera_btn";
-    for (NSString *key in [defaults dictionaryRepresentation].allKeys) {
-        if (![key isEqualToString:legacyKey] && ![key hasSuffix:[@"_" stringByAppendingString:legacyKey]])
-            continue;
-        id value = [defaults objectForKey:key];
-        if (value != nil) {
-            NSString *target = [[key substringToIndex:key.length - legacyKey.length] stringByAppendingString:newKey];
-            if ([defaults objectForKey:target] == nil)
-                [defaults setObject:value forKey:target];
-        }
-        [defaults removeObjectForKey:key];
-    }
-
-    [defaults setBool:YES forKey:migratedKey];
-}
-
-/// One-time terminology rename for Hide Recent Searches. Copy both the global
-/// value and every per-account namespace before removing the legacy key.
-static void SPKCoreMigrateHideRecentSearchesPreference(void) {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    static NSString *const migratedKey = @"general_hide_recent_searches_migrated";
-    if ([defaults boolForKey:migratedKey])
-        return;
-
-    NSString *legacyKey = @"general_no_recent_searches";
-    NSString *newKey = @"general_hide_recent_searches";
-    for (NSString *key in [defaults dictionaryRepresentation].allKeys) {
-        if (![key isEqualToString:legacyKey] && ![key hasSuffix:[@"_" stringByAppendingString:legacyKey]])
-            continue;
-        id value = [defaults objectForKey:key];
-        if (value != nil) {
-            NSString *target = [[key substringToIndex:key.length - legacyKey.length] stringByAppendingString:newKey];
-            if ([defaults objectForKey:target] == nil)
-                [defaults setObject:value forKey:target];
-        }
-        [defaults removeObjectForKey:key];
-    }
-
-    [defaults setBool:YES forKey:migratedKey];
-}
-
 void SPKCoreRegisterBootstrapDefaults(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        // Before any registration, so renamed keys see only stored values.
+        SPKRunPendingPreferenceMigrations();
         [[NSUserDefaults standardUserDefaults] registerDefaults:SPKBootstrapDefaults()];
         SPKMigrateTabConfigurationIfNeeded();
         SPKStartupMark(@"bootstrap defaults registered");
@@ -344,8 +292,6 @@ void SPKCoreRegisterDefaults(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [[NSUserDefaults standardUserDefaults] registerDefaults:SPKFeatureDefaults()];
-        SPKCoreMigrateInstantsCameraButtonPreference();
-        SPKCoreMigrateHideRecentSearchesPreference();
         SPKStartupMark(@"feature defaults registered");
     });
 }

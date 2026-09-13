@@ -1006,7 +1006,6 @@
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_HELP" = "Αποκρύπτει τα χειριστήρια και τις επικαλύψεις του Sparkle από στιγμιότυπα, εγγραφές οθόνης και κατοπτρισμό οθόνης.";
 "INTERFACE_CAPTURE_HIDE_UI_CAPTURE_TITLE" = "Απόκρυψη Περιβάλλοντος κατά τη Σύλληψη";
 "INTERFACE_CAPTURE_LIQUID_GLASS_TITLE" = "Liquid Glass";
-"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE" = "Σταδιακό Θόλωμα";
 "INTERFACE_CAPTURE_TAB_BAR_BEHAVIOR_TITLE" = "Συμπεριφορά Γραμμής Καρτέλας";
 "INTERFACE_EXPLORE_SEARCH_HEADER" = "Εξερεύνηση & Αναζήτηση";
 "INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP" = "Κρύβει το πλέγμα προτεινόμενων δημοσιεύσεων στην καρτέλα Εξερεύνηση.";
@@ -1021,7 +1020,8 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Ειδοποιήσεις";
 "INTERFACE_NOTIFICATIONS_HELP" = "Πώς δείχνουν οι ειδοποιήσεις του ίδιου του Sparkle και πού εμφανίζονται.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Μετατρέπει τη γραμμή καρτελών στο αιωρούμενο χάπι του iOS 26. Το ίδιο το υλικό γυαλιού χρειάζεται iOS 26. Απαιτεί επανεκκίνηση.";
-"INTERFACE_PROGRESSIVE_BLUR_HELP" = "Σβήνει το περιεχόμενο μέσα στις μπάρες με προοδευτικό θόλωμα αντί για σκληρή ακμή. Απαιτεί επανεκκίνηση.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Πώς συναντά το περιεχόμενο τις μπάρες κατά την κύλιση. Η Προεπιλογή ακολουθεί το iOS, το Απαλό σβήνει το περιεχόμενο με προοδευτικό θάμπωμα και το Σκληρό το τερματίζει σε συμπαγή άκρη με διαχωριστική γραμμή. Το Ανενεργό διατηρεί την εμφάνιση του Instagram. Απαιτεί επανεκκίνηση.";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Εφέ άκρης κύλισης";
 "INTERFACE_TABS_HEADER" = "Καρτέλες";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Οργάνωσε τη γραμμή καρτελών με ζωντανή προεπισκόπηση. Οι αλλαγές συγκεντρώνονται και εφαρμόζονται μαζί, και μετά το Instagram επανεκκινεί.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "Επεξεργαστής Καρτελών";
@@ -1265,6 +1265,7 @@
 "MENU_FOLLOWING" = "Ακολουθούμενη";
 "MENU_FOR_YOU" = "Για Σας";
 "MENU_GIF_ACTIONS" = "Ενέργειες GIF";
+"MENU_HARD" = "Σκληρό";
 "MENU_HIDE_SCROLL" = "Απόκρυψη κατά την Κύλιση";
 "MENU_HIGH" = "Υψηλή";
 "MENU_LEAVING_THE_INBOX" = "Έξοδος από τα εισερχόμενα";
@@ -1284,6 +1285,7 @@
 "MENU_PHOTO_ACTIONS" = "Ενέργειες Φωτογραφίας";
 "MENU_RIGHT" = "Δεξιά";
 "MENU_SMART" = "Έξυπνο";
+"MENU_SOFT" = "Απαλό";
 "MENU_SORT" = "Ταξινόμηση";
 "MENU_SPARKLE_GALLERY" = "Sparkle Gallery";
 "MENU_TOP" = "Κορυφή";
