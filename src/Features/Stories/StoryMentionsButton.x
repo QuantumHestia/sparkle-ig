@@ -103,6 +103,21 @@ static NSString *SPKStoryMentionsBadgeText(NSUInteger count) {
 /// Places the count badge inside the button's capture canvas so it is redacted
 /// with the glyph when "Hide UI on Capture" is on. Runs from the overlay's
 /// layout pass, so it exits early whenever the rendered count is unchanged.
+static void SPKApplyStoryMentionsBadgeDynamicRange(SPKChromeButton *button, UILabel *badge) {
+    UIColor *accent = [SPKUtils SPKColor_InstagramBlue];
+    UIColor *background = SPKStoryDynamicRangeAccentTint(button, accent);
+    UIColor *text = button.iconTint ?: UIColor.whiteColor;
+    if (![badge.backgroundColor isEqual:background])
+        badge.backgroundColor = background;
+    if (![badge.textColor isEqual:text])
+        badge.textColor = text;
+    // The accent comes back unchanged on SDR stories.
+    if (background != accent) {
+        SPKChromeEnableExtendedDynamicRangeContent(badge);
+        SPKChromeEnableExtendedDynamicRangeContent(badge.superview);
+    }
+}
+
 static void SPKUpdateStoryMentionsBadge(UIButton *button, NSUInteger count) {
     if (![button isKindOfClass:SPKChromeButton.class])
         return;
@@ -118,6 +133,11 @@ static void SPKUpdateStoryMentionsBadge(UIButton *button, NSUInteger count) {
         }
         return;
     }
+
+    // The button style re-resolves SDR/EDR on every layout, so the badge
+    // colours follow it each pass; only creation and the text are cached.
+    if (badge)
+        SPKApplyStoryMentionsBadgeDynamicRange(chromeButton, badge);
 
     NSNumber *rendered = objc_getAssociatedObject(chromeButton, kSPKStoryMentionsBadgeCountKey);
     if (badge && rendered && rendered.unsignedIntegerValue == count)
@@ -151,6 +171,7 @@ static void SPKUpdateStoryMentionsBadge(UIButton *button, NSUInteger count) {
         ]];
     }
 
+    SPKApplyStoryMentionsBadgeDynamicRange(chromeButton, badge);
     badge.text = SPKStoryMentionsBadgeText(count);
     objc_setAssociatedObject(chromeButton, kSPKStoryMentionsBadgeCountKey, @(count), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
