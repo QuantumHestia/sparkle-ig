@@ -937,7 +937,7 @@ static NSArray<NSURLQueryItem *> *SPKSanitizedInstagramQueryItems(NSArray<NSURLQ
         blockedKeys = [NSSet setWithArray:@[
             @"igsh", @"igshid", @"igsi", @"ig_rid", @"ig_mid",
             @"utm_source", @"utm_medium", @"utm_campaign", @"utm_term", @"utm_content",
-            @"fbclid"
+            @"fbclid", @"stkn"
         ]];
     });
 
