@@ -143,6 +143,44 @@ static void SPKReelsPlaybackSendReason(UICollectionViewCell *cell, NSString *sel
     sSPKReelsPlaybackTogglingPlayback = NO;
 }
 
+/// The cell's own single-tap recognizer, which Instagram's tap handler expects.
+static UIGestureRecognizer *SPKReelsPlaybackSingleTapRecognizer(id gestureController) {
+    // A Swift stored property on current versions, an Objective-C ivar on older ones.
+    for (NSString *name in @[ @"singleTapRecognizer", @"_singleTapRecognizer" ]) {
+        id recognizer = [SPKUtils getIvarForObj:gestureController name:name.UTF8String];
+        if ([recognizer isKindOfClass:[UIGestureRecognizer class]])
+            return recognizer;
+    }
+    return nil;
+}
+
+/// Toggles playback the way a tap on the reel does when Instagram's tap-to-pause
+/// is on. Instagram then owns the pause: its paused overlay, indicator and resume
+/// tap all stay in step with the panel. Returns NO when the tap does something
+/// else on this version or account (such as muting), or the pieces are missing.
+static BOOL SPKReelsPlaybackToggleThroughTap(UICollectionViewCell *cell) {
+    id sectionController = SPKReelsPlaybackSend(cell, @"delegate");
+    id configuration = SPKReelsPlaybackSend(sectionController, @"playbackControlsTestConfiguration")
+                           ?: [SPKUtils getIvarForObj:sectionController name:"_playbackControlsTestConfiguration"];
+    SEL tapToPauseEnabled = NSSelectorFromString(@"tapToPauseEnabled");
+    if (![configuration respondsToSelector:tapToPauseEnabled] ||
+        !((BOOL (*)(id, SEL))objc_msgSend)(configuration, tapToPauseEnabled))
+        return NO;
+
+    id gestureController = [SPKUtils getIvarForObj:cell name:"_gestureController"];
+    UIGestureRecognizer *recognizer = SPKReelsPlaybackSingleTapRecognizer(gestureController);
+    SEL singleTap = @selector(gestureController:didObserveSingleTap:);
+    if (!gestureController || !recognizer || ![cell respondsToSelector:singleTap])
+        return NO;
+    @try {
+        ((void (*)(id, SEL, id, id))objc_msgSend)(cell, singleTap, gestureController, recognizer);
+    } @catch (NSException *exception) {
+        SPKLog(@"ReelsPlayback", @"Tap toggle failed: %@", exception);
+        return NO;
+    }
+    return YES;
+}
+
 static SPKPlaybackTarget *SPKReelsPlaybackTargetForCell(UICollectionViewCell *cell) {
     __weak UICollectionViewCell *weakCell = cell;
     SPKPlaybackTarget *target = [SPKPlaybackTarget new];
@@ -184,6 +222,8 @@ static SPKPlaybackTarget *SPKReelsPlaybackTargetForCell(UICollectionViewCell *ce
     target.togglePlayback = ^{
         UICollectionViewCell *strongCell = weakCell;
         BOOL pausing = SPKReelsPlaybackIsPlaying(strongCell);
+        if (!objc_getAssociatedObject(strongCell, kSPKReelsPausedByPanelAssocKey) && SPKReelsPlaybackToggleThroughTap(strongCell))
+            return;
         if (pausing)
             SPKReelsPlaybackSendReason(strongCell, @"pauseWithReason:", sSPKReelsLastPauseReason);
         else
