@@ -252,7 +252,7 @@ static UIView *SPKReelsFindMoreButton(UIView *verticalUFI) {
 - (void)handleBadgeTap:(UIButton *)badge;
 @end
 
-static void SPKReelsPresentPanel(UIView *anchor) {
+static void SPKReelsPresentPanel(UIView *anchor, UIView *source) {
     UICollectionViewCell *cell = SPKReelsPlaybackVideoCellForView(anchor);
     if (!SPKReelsPlaybackEnabled() || !SPKReelsPlaybackVideoView(cell)) {
         SPKLog(@"ReelsPlayback", @"Panel unavailable: enabled=%d cell=%@ videoView=%@",
@@ -262,7 +262,7 @@ static void SPKReelsPresentPanel(UIView *anchor) {
         return;
     }
     [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium] impactOccurred];
-    SPKPlaybackPanelPresent(anchor, SPKPlaybackSurfaceReels, SPKReelsPlaybackTargetForCell(cell));
+    SPKPlaybackPanelPresentFromSource(anchor, source, SPKPlaybackSurfaceReels, SPKReelsPlaybackTargetForCell(cell));
 }
 
 @implementation SPKReelsPlaybackGestureHandler
@@ -279,14 +279,15 @@ static void SPKReelsPresentPanel(UIView *anchor) {
 - (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer {
     if (recognizer.state != UIGestureRecognizerStateBegan)
         return;
-    SPKReelsPresentPanel(recognizer.view);
+    SPKReelsPresentPanel(recognizer.view, recognizer.view);
 }
 
 - (void)handleBadgeTap:(UIButton *)badge {
-    // Anchor to the more button: the speed text disappears as soon as the speed
-    // returns to 1x, which would take the panel down with it.
+    // Grow out of the speed text, but tie the panel's lifetime to the more button:
+    // the text disappears as soon as the speed returns to 1x, which would take the
+    // panel down with it.
     UIView *moreButton = SPKReelsFindMoreButton(badge.superview);
-    SPKReelsPresentPanel(moreButton.window ? moreButton : badge);
+    SPKReelsPresentPanel(moreButton.window ? moreButton : badge, badge);
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
@@ -388,6 +389,8 @@ static void SPKReelsUpdateSpeedBadge(UIView *verticalUFI, UIView *moreButton) {
         indicator.frame = frame;
     indicator.alpha = moreButton ? moreButton.alpha : 1.0;
     [verticalUFI bringSubviewToFront:indicator];
+    if (moreButton)
+        SPKPlaybackPanelAdoptSource(moreButton, indicator);
 }
 
 static void SPKReelsInstallPlaybackControls(UIView *verticalUFI) {

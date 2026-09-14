@@ -27,9 +27,9 @@ static NSTimeInterval const kSPKPlaybackSeekResumeGrace = 1.0;
 
 // MARK: - Palette
 
-// Liquid Glass adapts its own legibility, so content uses the dynamic system
-// label colors there. Without glass (iOS 18 and lower, or the Liquid Glass
-// toggle off) the panel is a solid Instagram surface, like Sparkle's sheets.
+// The panel is Liquid Glass where available (iOS 26 with the Liquid Glass toggle
+// on), otherwise a system blur material. Both adapt their own legibility, so
+// content uses the dynamic system label colors either way.
 typedef struct {
     BOOL glass;
 } SPKPlaybackPanelStyle;
@@ -40,16 +40,16 @@ static SPKPlaybackPanelStyle SPKPlaybackPanelCurrentStyle(void) {
     return style;
 }
 
-static UIColor *SPKPlaybackPrimaryColor(SPKPlaybackPanelStyle style) {
-    return style.glass ? UIColor.labelColor : [SPKUtils SPKColor_InstagramPrimaryText];
+static UIColor *SPKPlaybackPrimaryColor(__unused SPKPlaybackPanelStyle style) {
+    return UIColor.labelColor;
 }
 
-static UIColor *SPKPlaybackSecondaryColor(SPKPlaybackPanelStyle style) {
-    return style.glass ? UIColor.secondaryLabelColor : [SPKUtils SPKColor_InstagramSecondaryText];
+static UIColor *SPKPlaybackSecondaryColor(__unused SPKPlaybackPanelStyle style) {
+    return UIColor.secondaryLabelColor;
 }
 
-static UIColor *SPKPlaybackTrackColor(SPKPlaybackPanelStyle style) {
-    return style.glass ? [UIColor.labelColor colorWithAlphaComponent:0.18] : [SPKUtils SPKColor_InstagramSeparator];
+static UIColor *SPKPlaybackTrackColor(__unused SPKPlaybackPanelStyle style) {
+    return [UIColor.labelColor colorWithAlphaComponent:0.18];
 }
 
 static UIImage *SPKPlaybackSymbol(NSString *name, CGFloat pointSize, UIImageSymbolWeight weight) {
@@ -266,8 +266,12 @@ static NSString *SPKPlaybackTimeString(double seconds) {
 
 // MARK: - Panel view
 
+
+
 @interface SPKPlaybackPanelView : UIView
 @property (nonatomic, weak) UIView *anchor;
+/// The view the panel grows out of and covers. Usually the anchor itself.
+@property (nonatomic, weak) UIView *source;
 @property (nonatomic, assign) SPKPlaybackSurface surface;
 @property (nonatomic, strong) SPKPlaybackTarget *target;
 @property (nonatomic, copy) void (^onDismissRequest)(void);
@@ -275,12 +279,25 @@ static NSString *SPKPlaybackTimeString(double seconds) {
 @property (nonatomic, assign, readonly) BOOL menuActive;
 - (instancetype)initWithSurface:(SPKPlaybackSurface)surface target:(SPKPlaybackTarget *)target;
 - (void)refresh;
+/// Grows the panel out of `sourceRect` (in the panel's own coordinates).
+- (void)morphInFromRect:(CGRect)sourceRect;
+/// Collapses the panel back into `targetRect` (in the panel's own coordinates).
+/// `landing` runs as the shape reaches the button, the moment to show the button again.
+- (void)morphOutToRect:(CGRect)targetRect landing:(void (^)(void))landing completion:(void (^)(void))completion;
 @end
 
 @implementation SPKPlaybackPanelView {
     SPKPlaybackPanelStyle _style;
     UIView *_contentHost;
-    UIVisualEffectView *_glassView;
+    // The panel's shape. It is animated on its own, so the controls keep their
+    // full-size layout while the shape morphs between the button and the panel.
+    UIView *_backdropView;
+    UIView *_contentMask;
+    // Soft shadow around the material panel, hollow inside so it never darkens
+    // what shows through the blur (glass casts its own).
+    UIView *_shadowView;
+    CAShapeLayer *_shadowCutout;
+    NSArray<UIView *> *_rows;
     UIButton *_slowerButton;
     SPKPlaybackMenuButton *_speedButton;
     UIButton *_fasterButton;
@@ -300,6 +317,10 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     BOOL _playingBeforeSeek;
     NSUInteger _seekGeneration;
     CFTimeInterval _menuClosedAt;
+    BOOL _morphing;
+    NSMutableArray<UIViewPropertyAnimator *> *_morphAnimators;
+    NSUInteger _morphGeneration;
+    NSUInteger _blurGeneration;
     UISelectionFeedbackGenerator *_selectionFeedback;
     BOOL _menuVisible;
 }
@@ -318,53 +339,47 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     _selectionFeedback = [UISelectionFeedbackGenerator new];
 
     self.accessibilityViewIsModal = YES;
-    self.layer.cornerRadius = kSPKPlaybackPanelCornerRadius;
-    self.layer.cornerCurve = kCACornerCurveContinuous;
 
+    UIVisualEffect *effect = nil;
     if (_style.glass) {
         Class glassClass = NSClassFromString(@"UIGlassEffect");
-        UIVisualEffect *effect = glassClass ? [[glassClass alloc] init] : nil;
-        if ([effect isKindOfClass:[UIVisualEffect class]]) {
-            _glassView = [[UIVisualEffectView alloc] initWithEffect:effect];
-            _glassView.translatesAutoresizingMaskIntoConstraints = NO;
-            _glassView.clipsToBounds = YES;
-            _glassView.layer.cornerRadius = kSPKPlaybackPanelCornerRadius;
-            _glassView.layer.cornerCurve = kCACornerCurveContinuous;
-            [self addSubview:_glassView];
-            // Pinned with constraints (not autoresizing) so the content's fitted
-            // height propagates out to the panel in sizeThatFits:.
-            [NSLayoutConstraint activateConstraints:@[
-                [_glassView.topAnchor constraintEqualToAnchor:self.topAnchor],
-                [_glassView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor],
-                [_glassView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
-                [_glassView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
-            ]];
-            _contentHost = _glassView.contentView;
-        } else {
+        effect = glassClass ? [[glassClass alloc] init] : nil;
+        if (![effect isKindOfClass:[UIVisualEffect class]]) {
+            effect = nil;
             _style.glass = NO;
         }
     }
 
+    // The same material UIKit's own menus are built on.
+    if (!effect)
+        effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleSystemMaterial];
+    UIVisualEffectView *effectView = [[UIVisualEffectView alloc] initWithEffect:effect];
+    effectView.clipsToBounds = YES;
+    _backdropView = effectView;
+    _backdropView.userInteractionEnabled = NO;
+    _backdropView.layer.cornerRadius = kSPKPlaybackPanelCornerRadius;
+    _backdropView.layer.cornerCurve = kCACornerCurveContinuous;
+    _backdropView.frame = self.bounds;
     if (!_style.glass) {
-        self.backgroundColor = [SPKUtils SPKColor_InstagramBackground];
-        self.layer.borderWidth = 1.0 / UIScreen.mainScreen.scale;
-        self.layer.borderColor = [SPKUtils SPKColor_InstagramSeparator].CGColor;
-        self.layer.shadowColor = UIColor.blackColor.CGColor;
-        self.layer.shadowOpacity = 0.22;
-        self.layer.shadowRadius = 18.0;
-        self.layer.shadowOffset = CGSizeMake(0, 6);
-        _contentHost = self;
+        _shadowView = [[UIView alloc] initWithFrame:self.bounds];
+        _shadowView.userInteractionEnabled = NO;
+        _shadowView.layer.shadowColor = UIColor.blackColor.CGColor;
+        _shadowView.layer.shadowOffset = CGSizeMake(0.0, 10.0);
+        _shadowView.layer.shadowRadius = 30.0;
+        _shadowCutout = [CAShapeLayer layer];
+        _shadowCutout.fillRule = kCAFillRuleEvenOdd;
+        _shadowView.layer.mask = _shadowCutout;
+        [self addSubview:_shadowView];
     }
+    [self addSubview:_backdropView];
+
+    _contentHost = [[UIView alloc] initWithFrame:self.bounds];
+    _contentHost.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self addSubview:_contentHost];
 
     [self buildControls];
     [self refresh];
     return self;
-}
-
-- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
-    [super traitCollectionDidChange:previousTraitCollection];
-    if (!_style.glass)
-        self.layer.borderColor = [SPKUtils SPKColor_InstagramSeparator].CGColor;
 }
 
 - (UIButton *)iconButtonWithImage:(UIImage *)image accessibilityLabel:(NSString *)label action:(SEL)action {
@@ -468,6 +483,7 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     UIStackView *column = [[UIStackView alloc] initWithArrangedSubviews:@[ speedRow, timeRow, transportRow ]];
     column.axis = UILayoutConstraintAxisVertical;
     column.spacing = kSPKPlaybackRowSpacing;
+    _rows = @[ speedRow, timeRow, transportRow ];
     column.translatesAutoresizingMaskIntoConstraints = NO;
     [_contentHost addSubview:column];
 
@@ -514,6 +530,308 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     NSDictionary *attributes = @{NSFontAttributeName : [UIFont monospacedDigitSystemFontOfSize:20.0 weight:UIFontWeightSemibold]};
     configuration.attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attributes];
     _speedButton.configuration = configuration;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    if (!_morphing) {
+        _backdropView.frame = self.bounds;
+        _contentMask.frame = self.bounds;
+    }
+    [self layoutShadow];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    [self layoutShadow];
+}
+
+/// The shadow is laid out for the settled panel only; during a morph it is faded
+/// out, since a static path could not follow the moving shape.
+- (void)layoutShadow {
+    if (!_shadowView)
+        return;
+    CGRect bounds = self.bounds;
+    _shadowView.frame = bounds;
+    UIBezierPath *shape = [UIBezierPath bezierPathWithRoundedRect:bounds cornerRadius:kSPKPlaybackPanelCornerRadius];
+    _shadowView.layer.shadowPath = shape.CGPath;
+    // Darker in dark mode, where a light shadow would disappear into the video.
+    BOOL dark = self.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark;
+    _shadowView.layer.shadowOpacity = dark ? 0.38 : 0.14;
+
+    // Everything around the panel, minus the panel itself.
+    static CGFloat const spread = 150.0;
+    UIBezierPath *cutout = [UIBezierPath bezierPathWithRect:CGRectInset(bounds, -spread, -spread)];
+    [cutout appendPath:shape];
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    _shadowCutout.frame = _shadowView.layer.bounds;
+    _shadowCutout.path = cutout.CGPath;
+    [CATransaction commit];
+}
+
+// MARK: Morph
+
+// Motion runs on Core Animation's render server through property animators, so
+// a busy main thread (Reels decoding, feed layout) can't drop frames. Opening and
+// closing never overlap: closing first freezes every running opening animation
+// at its on-screen value, and each blur cleanup is tied to the run that started it.
+
+static CGFloat const kSPKPlaybackMorphBlur = 8.0;
+static NSString *const kSPKPlaybackBlurKeyPath = @"filters.gaussianBlur.inputRadius";
+
+/// The shape a button has before it becomes the panel: its own frame, as a capsule.
+static CGRect SPKPlaybackMorphSourceRect(CGRect rect) {
+    CGFloat side = MAX(36.0, MIN(CGRectGetWidth(rect), CGRectGetHeight(rect)));
+    CGPoint center = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect));
+    CGFloat width = MAX(side, CGRectGetWidth(rect));
+    return CGRectMake(center.x - width / 2.0, center.y - side / 2.0, width, side);
+}
+
+static UIViewPropertyAnimator *SPKPlaybackSpringAnimator(NSTimeInterval duration, CGFloat damping, void (^animations)(void)) {
+    UISpringTimingParameters *timing = [[UISpringTimingParameters alloc] initWithDampingRatio:damping];
+    UIViewPropertyAnimator *animator = [[UIViewPropertyAnimator alloc] initWithDuration:duration timingParameters:timing];
+    [animator addAnimations:animations];
+    animator.interruptible = YES;
+    return animator;
+}
+
+- (void)ensureContentMask {
+    if (_contentMask)
+        return;
+    _contentMask = [[UIView alloc] initWithFrame:self.bounds];
+    _contentMask.backgroundColor = UIColor.blackColor;
+    _contentMask.layer.cornerRadius = kSPKPlaybackPanelCornerRadius;
+    _contentMask.layer.cornerCurve = kCACornerCurveContinuous;
+    _contentHost.maskView = _contentMask;
+}
+
+/// +1 when the button sits below the panel's middle, -1 when above. Motion
+/// travels away from the button, so the panel reads as coming out of it.
+- (CGFloat)directionFromRect:(CGRect)rect {
+    return CGRectGetMidY(rect) >= CGRectGetMidY(self.bounds) ? 1.0 : -1.0;
+}
+
+- (void)setShapeFrame:(CGRect)frame radius:(CGFloat)radius {
+    _backdropView.frame = frame;
+    _backdropView.layer.cornerRadius = radius;
+    _contentMask.frame = frame;
+    _contentMask.layer.cornerRadius = radius;
+}
+
+- (void)runAnimator:(UIViewPropertyAnimator *)animator afterDelay:(NSTimeInterval)delay {
+    [_morphAnimators addObject:animator];
+    if (delay > 0.0)
+        [animator startAnimationAfterDelay:delay];
+    else
+        [animator startAnimation];
+}
+
+/// Stops every running animation where it currently is on screen.
+- (void)freezeMorph {
+    for (UIViewPropertyAnimator *animator in _morphAnimators) {
+        if (animator.state == UIViewAnimatingStateActive)
+            [animator stopAnimation:YES];
+    }
+    [_morphAnimators removeAllObjects];
+}
+
+- (CGFloat)presentedBlur {
+    CALayer *presentation = _contentHost.layer.presentationLayer;
+    id value = nil;
+    @try {
+        value = [presentation valueForKeyPath:kSPKPlaybackBlurKeyPath];
+    } @catch (__unused NSException *exception) {
+    }
+    return [value respondsToSelector:@selector(doubleValue)] ? [value doubleValue] : 0.0;
+}
+
+/// Animates the content's gaussian blur. The filter is dropped once a run that
+/// ends at zero finishes, unless a newer run has started since.
+- (void)animateBlurFrom:(CGFloat)from to:(CGFloat)to duration:(CFTimeInterval)duration {
+    CALayer *layer = _contentHost.layer;
+    Class filterClass = NSClassFromString(@"CAFilter");
+    SEL filterWithType = NSSelectorFromString(@"filterWithType:");
+    NSUInteger generation = ++_blurGeneration;
+    [layer removeAnimationForKey:@"spk_blur"];
+    if (![filterClass respondsToSelector:filterWithType] || (from <= 0.0 && to <= 0.0)) {
+        layer.filters = nil;
+        return;
+    }
+    @try {
+        id filter = ((id (*)(id, SEL, NSString *))objc_msgSend)(filterClass, filterWithType, @"gaussianBlur");
+        [filter setValue:@"gaussianBlur" forKey:@"name"];
+        [filter setValue:@(to) forKey:@"inputRadius"];
+        layer.filters = @[ filter ];
+
+        __weak __typeof(self) weakSelf = self;
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            __typeof(self) strongSelf = weakSelf;
+            if (strongSelf && to <= 0.0 && strongSelf->_blurGeneration == generation)
+                layer.filters = nil;
+        }];
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:kSPKPlaybackBlurKeyPath];
+        animation.fromValue = @(from);
+        animation.toValue = @(to);
+        animation.duration = duration;
+        animation.timingFunction = [CAMediaTimingFunction functionWithControlPoints:0.2 :0.0 :0.0 :1.0];
+        [layer addAnimation:animation forKey:@"spk_blur"];
+        [CATransaction commit];
+    } @catch (__unused NSException *exception) {
+        layer.filters = nil;
+    }
+}
+
+- (void)morphInFromRect:(CGRect)sourceRect {
+    if (!_morphAnimators)
+        _morphAnimators = [NSMutableArray array];
+    [self freezeMorph];
+    NSUInteger generation = ++_morphGeneration;
+
+    if (UIAccessibilityIsReduceMotionEnabled()) {
+        self.alpha = 0.0;
+        [self runAnimator:[[UIViewPropertyAnimator alloc] initWithDuration:0.18 curve:UIViewAnimationCurveEaseOut animations:^{
+                  self.alpha = 1.0;
+              }]
+               afterDelay:0.0];
+        return;
+    }
+
+    CGRect bounds = self.bounds;
+    CGRect start = SPKPlaybackMorphSourceRect(sourceRect);
+    CGFloat direction = [self directionFromRect:start];
+    [self ensureContentMask];
+    _morphing = YES;
+
+    // Starting state, committed before any animation begins.
+    [UIView performWithoutAnimation:^{
+        [self setShapeFrame:start radius:CGRectGetHeight(start) / 2.0];
+        self->_backdropView.alpha = 0.0;
+        self->_shadowView.alpha = 0.0;
+        self->_contentHost.alpha = 0.0;
+        self->_contentHost.transform = CGAffineTransformMakeScale(0.92, 0.92);
+    }];
+
+    // Shape: out of the button on a firm spring, fading up over the first frames.
+    UIViewPropertyAnimator *shape = SPKPlaybackSpringAnimator(0.34, 0.88, ^{
+        [self setShapeFrame:bounds radius:kSPKPlaybackPanelCornerRadius];
+        self->_contentHost.transform = CGAffineTransformIdentity;
+    });
+    __weak __typeof(self) weakSelf = self;
+    [shape addCompletion:^(UIViewAnimatingPosition position) {
+        __typeof(self) strongSelf = weakSelf;
+        if (!strongSelf || position != UIViewAnimatingPositionEnd || strongSelf->_morphGeneration != generation)
+            return;
+        strongSelf->_morphing = NO;
+        [strongSelf setNeedsLayout];
+    }];
+    [self runAnimator:shape afterDelay:0.0];
+    [self runAnimator:[[UIViewPropertyAnimator alloc] initWithDuration:0.07 curve:UIViewAnimationCurveEaseOut animations:^{
+              self->_backdropView.alpha = 1.0;
+          }]
+           afterDelay:0.0];
+
+    // The shadow settles in as the shape reaches its final size.
+    if (_shadowView) {
+        [self runAnimator:[[UIViewPropertyAnimator alloc] initWithDuration:0.2 curve:UIViewAnimationCurveEaseOut animations:^{
+                  self->_shadowView.alpha = 1.0;
+              }]
+               afterDelay:0.14];
+    }
+
+    // Controls: quick fade and a short sharpen as the shape opens.
+    [self runAnimator:[[UIViewPropertyAnimator alloc] initWithDuration:0.16 curve:UIViewAnimationCurveEaseOut animations:^{
+              self->_contentHost.alpha = 1.0;
+          }]
+           afterDelay:0.03];
+    [self animateBlurFrom:kSPKPlaybackMorphBlur to:0.0 duration:0.22];
+
+    // Rows ripple out of the button, nearest first.
+    NSArray<UIView *> *rows = direction > 0 ? _rows.reverseObjectEnumerator.allObjects : _rows;
+    [rows enumerateObjectsUsingBlock:^(UIView *row, NSUInteger index, __unused BOOL *stop) {
+        [UIView performWithoutAnimation:^{
+            row.alpha = 0.0;
+            row.transform = CGAffineTransformMakeTranslation(0.0, 8.0 * direction);
+        }];
+        [self runAnimator:SPKPlaybackSpringAnimator(0.32, 0.9, ^{
+                  row.alpha = 1.0;
+                  row.transform = CGAffineTransformIdentity;
+              })
+               afterDelay:0.03 + 0.025 * index];
+    }];
+}
+
+- (void)morphOutToRect:(CGRect)targetRect landing:(void (^)(void))landing completion:(void (^)(void))completion {
+    if (!_morphAnimators)
+        _morphAnimators = [NSMutableArray array];
+    CGFloat blur = [self presentedBlur];
+    [self freezeMorph];
+    NSUInteger generation = ++_morphGeneration;
+    _morphing = YES;
+
+    if (UIAccessibilityIsReduceMotionEnabled()) {
+        if (landing)
+            landing();
+        UIViewPropertyAnimator *fade = [[UIViewPropertyAnimator alloc] initWithDuration:0.15 curve:UIViewAnimationCurveEaseIn animations:^{
+            self.alpha = 0.0;
+        }];
+        [fade addCompletion:^(__unused UIViewAnimatingPosition position) {
+            if (completion)
+                completion();
+        }];
+        [self runAnimator:fade afterDelay:0.0];
+        return;
+    }
+
+    CGRect end = SPKPlaybackMorphSourceRect(targetRect);
+    CGFloat direction = [self directionFromRect:end];
+    [self ensureContentMask];
+    for (UIView *row in _rows) {
+        // Rows still mid-ripple join the content's exit instead of popping.
+        row.transform = CGAffineTransformIdentity;
+    }
+
+    // Controls and shadow leave first, then the shape drains back into the button.
+    [self animateBlurFrom:blur to:kSPKPlaybackMorphBlur duration:0.1];
+    [self runAnimator:[[UIViewPropertyAnimator alloc] initWithDuration:0.09 curve:UIViewAnimationCurveEaseIn animations:^{
+              self->_shadowView.alpha = 0.0;
+              self->_contentHost.alpha = 0.0;
+              self->_contentHost.transform = CGAffineTransformScale(CGAffineTransformMakeTranslation(0.0, 4.0 * direction), 0.96, 0.96);
+          }]
+           afterDelay:0.0];
+
+    static NSTimeInterval const collapseDuration = 0.22;
+    static CGFloat const landingFactor = 0.5;
+    UIViewPropertyAnimator *collapse = [[UIViewPropertyAnimator alloc] initWithDuration:collapseDuration
+                                                                         controlPoint1:CGPointMake(0.3, 0.0)
+                                                                         controlPoint2:CGPointMake(0.1, 1.0)
+                                                                            animations:^{
+                                                                                [self setShapeFrame:end radius:CGRectGetHeight(end) / 2.0];
+                                                                            }];
+    [collapse addAnimations:^{
+        self->_backdropView.alpha = 0.0;
+    } delayFactor:landingFactor];
+    __block BOOL landed = NO;
+    __weak __typeof(self) weakSelf = self;
+    void (^land)(void) = ^{
+        if (landed)
+            return;
+        landed = YES;
+        if (landing)
+            landing();
+    };
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(collapseDuration * landingFactor * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __typeof(self) strongSelf = weakSelf;
+        if (strongSelf && strongSelf->_morphGeneration == generation)
+            land();
+    });
+    [collapse addCompletion:^(__unused UIViewAnimatingPosition position) {
+        land();
+        if (completion)
+            completion();
+    }];
+    [self runAnimator:collapse afterDelay:0.0];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -813,6 +1131,9 @@ static NSString *SPKPlaybackTimeString(double seconds) {
 @property (nonatomic, strong) SPKPlaybackPanelView *panel;
 @property (nonatomic, strong) CADisplayLink *displayLink;
 @property (nonatomic, assign) BOOL dismissing;
+@property (nonatomic, strong) CALayer *concealMask;
+@property (nonatomic, weak) UIView *concealedAnchor;
+@property (nonatomic, strong) CALayer *previousAnchorMask;
 + (instancetype)shared;
 @end
 
@@ -835,29 +1156,76 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     [self dismissAnimated:NO];
 }
 
-- (CGRect)panelFrameForSize:(CGSize)size anchor:(UIView *)anchor {
-    CGRect bounds = self.window.bounds;
-    UIEdgeInsets safe = self.window.safeAreaInsets;
+- (CGRect)anchorFrameInWindow:(UIView *)anchor {
     CGRect anchorFrame = [anchor convertRect:anchor.bounds toView:nil];
-    if (anchor.window && anchor.window != (UIWindow *)self.window) {
+    if (anchor.window && self.window && anchor.window != (UIWindow *)self.window) {
         anchorFrame = [anchor.window convertRect:anchorFrame toCoordinateSpace:anchor.window.screen.coordinateSpace];
         anchorFrame = [self.window convertRect:anchorFrame fromCoordinateSpace:self.window.screen.coordinateSpace];
     }
+    return anchorFrame;
+}
+
+- (CGRect)anchorRectInPanel:(SPKPlaybackPanelView *)panel anchor:(UIView *)anchor {
+    UIView *host = panel.superview;
+    CGRect rect = [self anchorFrameInWindow:anchor];
+    return host ? [panel convertRect:rect fromView:host] : rect;
+}
+
+/// Places the panel over the button, the way a system menu opens on top of its
+/// source: the panel's corner nearest the button lines up with the button's
+/// corner, so the button is covered and the panel reads as the button expanding.
+- (CGRect)panelFrameForSize:(CGSize)size anchor:(UIView *)anchor {
+    CGRect bounds = self.window.bounds;
+    UIEdgeInsets safe = self.window.safeAreaInsets;
+    // A little past the button, so the panel's rounded corner still covers it.
+    static CGFloat const outset = 6.0;
+    CGRect anchorFrame = CGRectInset([self anchorFrameInWindow:anchor], -outset, -outset);
 
     CGFloat minX = MAX(kSPKPlaybackPanelMargin, safe.left + kSPKPlaybackPanelMargin);
     CGFloat maxX = CGRectGetWidth(bounds) - MAX(kSPKPlaybackPanelMargin, safe.right + kSPKPlaybackPanelMargin) - size.width;
-    CGFloat x = MIN(MAX(CGRectGetMidX(anchorFrame) - size.width / 2.0, minX), MAX(minX, maxX));
+    BOOL anchorOnTrailingSide = CGRectGetMidX(anchorFrame) >= CGRectGetMidX(bounds);
+    CGFloat x = anchorOnTrailingSide ? CGRectGetMaxX(anchorFrame) - size.width : CGRectGetMinX(anchorFrame);
+    x = MIN(MAX(x, minX), MAX(minX, maxX));
 
-    CGFloat gap = 10.0;
-    CGFloat y = CGRectGetMinY(anchorFrame) - gap - size.height;
-    if (y < safe.top + kSPKPlaybackPanelMargin)
-        y = CGRectGetMaxY(anchorFrame) + gap;
+    CGFloat minY = safe.top + kSPKPlaybackPanelMargin;
     CGFloat maxY = CGRectGetHeight(bounds) - safe.bottom - kSPKPlaybackPanelMargin - size.height;
-    y = MIN(MAX(y, safe.top + kSPKPlaybackPanelMargin), MAX(safe.top, maxY));
+    // Grow upward from the button when there's room, otherwise downward.
+    CGFloat y = CGRectGetMaxY(anchorFrame) - size.height;
+    if (y < minY)
+        y = CGRectGetMinY(anchorFrame);
+    y = MIN(MAX(y, minY), MAX(minY, maxY));
     return CGRectMake(x, y, size.width, size.height);
 }
 
-- (void)presentFromAnchor:(UIView *)anchor surface:(SPKPlaybackSurface)surface target:(SPKPlaybackTarget *)target {
+/// Hides the button under the panel without touching its alpha or hidden state,
+/// which Instagram drives (and which the panel watches to close itself).
+- (void)setAnchor:(UIView *)anchor concealed:(BOOL)concealed {
+    CALayer *layer = anchor.layer;
+    if (concealed) {
+        if (!layer || self.concealMask)
+            return;
+        self.concealMask = [CALayer layer];
+        self.concealedAnchor = anchor;
+        self.previousAnchorMask = layer.mask;
+        [CATransaction begin];
+        [CATransaction setDisableActions:YES];
+        layer.mask = self.concealMask;
+        [CATransaction commit];
+        return;
+    }
+    if (!self.concealMask)
+        return;
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    if (layer.mask == self.concealMask)
+        layer.mask = self.previousAnchorMask;
+    [CATransaction commit];
+    self.concealMask = nil;
+    self.concealedAnchor = nil;
+    self.previousAnchorMask = nil;
+}
+
+- (void)presentFromAnchor:(UIView *)anchor source:(UIView *)source surface:(SPKPlaybackSurface)surface target:(SPKPlaybackTarget *)target {
     UIWindowScene *scene = anchor.window.windowScene;
     if (!scene)
         return;
@@ -871,12 +1239,16 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     window.opaque = NO;
     window.windowLevel = UIWindowLevelStatusBar - 1.0;
     window.frame = scene.coordinateSpace.bounds;
-    window.overrideUserInterfaceStyle = anchor.window.traitCollection.userInterfaceStyle;
+    // Follow the button's own appearance rather than its window's: Instagram keeps
+    // some surfaces (Reels) dark regardless of the app theme, and the panel and its
+    // menus should match the surface they open over.
+    window.overrideUserInterfaceStyle = anchor.traitCollection.userInterfaceStyle;
     window.hidden = NO;
     self.window = window;
 
     SPKPlaybackPanelView *panel = [[SPKPlaybackPanelView alloc] initWithSurface:surface target:target];
     panel.anchor = anchor;
+    panel.source = source;
     panel.onDismissRequest = ^{
         SPKPlaybackPanelDismiss(YES);
     };
@@ -888,27 +1260,14 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     [host addSubview:panel];
     [host layoutIfNeeded];
     CGSize size = [panel sizeThatFits:CGSizeMake(kSPKPlaybackPanelWidth, CGFLOAT_MAX)];
-    CGRect frame = [self panelFrameForSize:size anchor:anchor];
+    CGRect frame = [self panelFrameForSize:size anchor:source];
     panel.frame = frame;
     [panel layoutIfNeeded];
 
-    // Grow out of the anchor.
-    CGRect anchorFrame = [anchor convertRect:anchor.bounds toView:nil];
-    CGPoint anchorCenter = CGPointMake(CGRectGetMidX(anchorFrame), CGRectGetMidY(anchorFrame));
-    CGAffineTransform start = CGAffineTransformMakeTranslation((anchorCenter.x - CGRectGetMidX(frame)) * 0.5,
-                                                               (anchorCenter.y - CGRectGetMidY(frame)) * 0.5);
-    panel.transform = CGAffineTransformScale(start, 0.6, 0.6);
-    panel.alpha = 0.0;
-    [UIView animateWithDuration:0.42
-                          delay:0.0
-         usingSpringWithDamping:0.82
-          initialSpringVelocity:0.4
-                        options:UIViewAnimationOptionAllowUserInteraction | UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         panel.transform = CGAffineTransformIdentity;
-                         panel.alpha = 1.0;
-                     }
-                     completion:nil];
+    [panel morphInFromRect:[self anchorRectInPanel:panel anchor:source]];
+    // A panel still collapsing from a previous button hands that button back first.
+    [self setAnchor:self.concealedAnchor concealed:NO];
+    [self setAnchor:source concealed:YES];
 
     UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, panel);
 
@@ -938,7 +1297,16 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     if (!window)
         return;
 
+    __weak __typeof(self) weakSelf = self;
+    UIView *concealedAnchor = self.concealedAnchor;
+    CALayer *concealMask = self.concealMask;
+    void (^reveal)(void) = ^{
+        // A newer panel may already have concealed a button of its own.
+        if (weakSelf.concealMask == concealMask)
+            [weakSelf setAnchor:concealedAnchor concealed:NO];
+    };
     void (^teardown)(void) = ^{
+        reveal();
         window.hidden = YES;
         window.rootViewController = nil;
     };
@@ -949,27 +1317,47 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     }
 
     window.userInteractionEnabled = NO;
-    [UIView animateWithDuration:0.2
-        delay:0.0
-        options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState
-        animations:^{
-            panel.transform = CGAffineTransformMakeScale(0.85, 0.85);
-            panel.alpha = 0.0;
-        }
-        completion:^(__unused BOOL finished) {
-            teardown();
-        }];
+    // Collapse into the view the panel came from while it's still showing, else
+    // into the anchor (a source like a speed label can go away at normal speed).
+    UIView *home = panel.source;
+    if (!home.window || home.hidden)
+        home = panel.anchor;
+    // A home that has left the screen has nowhere to collapse into; shrink in place.
+    CGRect targetRect = home.window ? [self anchorRectInPanel:panel anchor:home]
+                                    : CGRectInset(panel.bounds, CGRectGetWidth(panel.bounds) * 0.3, CGRectGetHeight(panel.bounds) * 0.3);
+    [panel morphOutToRect:targetRect landing:reveal completion:teardown];
 }
 @end
 
 void SPKPlaybackPanelPresent(UIView *anchor, SPKPlaybackSurface surface, SPKPlaybackTarget *target) {
     if (!anchor || !target)
         return;
-    [[SPKPlaybackPanelPresenter shared] presentFromAnchor:anchor surface:surface target:target];
+    SPKPlaybackPanelPresentFromSource(anchor, anchor, surface, target);
+}
+
+void SPKPlaybackPanelPresentFromSource(UIView *anchor, UIView *source, SPKPlaybackSurface surface, SPKPlaybackTarget *target) {
+    if (!anchor || !target)
+        return;
+    [[SPKPlaybackPanelPresenter shared] presentFromAnchor:anchor source:source.window ? source : anchor surface:surface target:target];
 }
 
 void SPKPlaybackPanelDismiss(BOOL animated) {
     [[SPKPlaybackPanelPresenter shared] dismissAnimated:animated];
+}
+
+void SPKPlaybackPanelAdoptSource(UIView *anchor, UIView *source) {
+    SPKPlaybackPanelPresenter *presenter = [SPKPlaybackPanelPresenter shared];
+    SPKPlaybackPanelView *panel = presenter.panel;
+    if (!panel || !source || panel.anchor != anchor || panel.source == source)
+        return;
+    // Only replaces a source that went away. A panel growing out of the anchor
+    // itself keeps covering the anchor.
+    UIView *current = panel.source;
+    if (current == anchor || (current.window && !current.hidden))
+        return;
+    [presenter setAnchor:current concealed:NO];
+    panel.source = source;
+    [presenter setAnchor:source concealed:YES];
 }
 
 BOOL SPKPlaybackPanelIsPresentedForAnchor(UIView *anchor) {

@@ -31,6 +31,13 @@ extern "C" {
 
 /// Shows the floating playback panel next to `anchor`, replacing any panel already on screen.
 void SPKPlaybackPanelPresent(UIView *anchor, SPKPlaybackSurface surface, SPKPlaybackTarget *target);
+/// Like SPKPlaybackPanelPresent, but grows out of and covers `source`, while the
+/// panel's lifetime still follows `anchor` (it closes when the anchor goes away).
+void SPKPlaybackPanelPresentFromSource(UIView *anchor, UIView *_Nullable source, SPKPlaybackSurface surface, SPKPlaybackTarget *target);
+/// Hands an open panel a replacement for a source view that went away (for
+/// example a speed label rebuilt after the speed passed through 1x), so the new
+/// view is covered too and the panel collapses into it.
+void SPKPlaybackPanelAdoptSource(UIView *anchor, UIView *source);
 void SPKPlaybackPanelDismiss(BOOL animated);
 BOOL SPKPlaybackPanelIsPresentedForAnchor(UIView *_Nullable anchor);
 
