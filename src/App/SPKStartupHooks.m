@@ -149,11 +149,11 @@ void SPKInstallLaunchCriticalHooks(void) {
     // session. Installing this with the delayed Messages surface misses that
     // one-time initializer, leaving the configured refresh interval inert.
     SPK_INSTALL(SPKInstallAccurateActiveStatusHooksIfEnabled);
-    // The scroll edge style relies on UIScrollEdgeEffect (iOS 26+ only).
+    // The scroll edge style relies on UIScrollEdgeEffect (iOS 26+ only). The
+    // hooks install in every mode and read the style at call time, so changing
+    // it applies live; Off makes them pass through.
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0")) {
-        if (![[SPKUtils getStringPref:@"interface_scroll_edge_style"] isEqualToString:@"off"]) {
-            SPK_INSTALL(SPKInstallProgressiveBlurHooksIfEnabled);
-        }
+        SPK_INSTALL(SPKInstallProgressiveBlurHooksIfEnabled);
     }
     // Liquid Glass surface hooks install on any iOS: the tab bar experiment
     // gates reshape the bar into the floating pill even pre-26 (only the glass

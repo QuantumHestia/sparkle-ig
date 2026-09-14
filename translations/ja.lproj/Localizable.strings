@@ -1020,7 +1020,7 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "通知";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle独自の通知バナーの見た目と表示位置です。";
 "INTERFACE_PILL_TAB_BAR_HELP" = "タブバーをiOS 26のフローティングピル型に変形します。ガラス素材自体にはiOS 26が必要です。再起動が必要です。";
-"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "スクロール時にコンテンツがバーとどう接するかを設定します。デフォルトはiOSに従い、ソフトはプログレッシブブラーでコンテンツをフェードさせ、ハードは区切り線のある不透明な端で切り替えます。オフはInstagram本来の見た目を維持します。再起動が必要です。";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "スクロール時にコンテンツが上部バーとどう接するかを設定します。デフォルトはiOSに従い、ソフトはプログレッシブブラーでコンテンツをフェードさせ、ハードは区切り線のある不透明な端で切り替えます。オフはInstagramの標準どおりこの効果を無効にし、再起動が必要です。";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "スクロール端エフェクト";
 "INTERFACE_TABS_HEADER" = "タブ";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "ライブプレビューでタブバーを並べ替えます。変更はまとめて保留され、適用時にInstagramが再起動します。";

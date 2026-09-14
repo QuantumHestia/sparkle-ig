@@ -1,5 +1,6 @@
 #import "SPKStrings.h"
 #import "SPKSettingsViewController.h"
+#import "SPKPreferences.h"
 #import "../App/SPKStartupHooks.h"
 #import "../AssetUtils.h"
 #import "../Features/Messages/MessageSeenButtons.h"
@@ -1346,6 +1347,9 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     }
     if ([defaultsKey hasPrefix:@"profile_follow_indicator"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SPKFollowIndicatorDidChangeNotification object:nil];
+    }
+    if ([defaultsKey isEqualToString:kSPKPrefInterfaceScrollEdgeStyle]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SPKScrollEdgeStyleDidChangeNotification object:nil];
     }
     if ([defaultsKey isEqualToString:@"msgs_seen_button_position"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SPKMessageSeenButtonPositionDidChangeNotification object:nil];

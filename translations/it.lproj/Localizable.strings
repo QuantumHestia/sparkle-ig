@@ -1020,7 +1020,7 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notifiche";
 "INTERFACE_NOTIFICATIONS_HELP" = "Che aspetto hanno gli avvisi di Sparkle e dove compaiono.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Trasforma la barra delle schede nella pillola fluttuante di iOS 26. Il materiale di vetro richiede iOS 26. Richiede un riavvio.";
-"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Come il contenuto incontra le barre durante lo scorrimento. Predefinito segue iOS, Morbido sfuma il contenuto con una sfocatura progressiva e Netto lo interrompe su un bordo pieno con una linea divisoria. Disattivato mantiene l'aspetto di Instagram. Richiede un riavvio.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Come il contenuto incontra la barra superiore durante lo scorrimento. Predefinito segue iOS, Morbido sfuma il contenuto con una sfocatura progressiva e Netto lo interrompe su un bordo pieno con una linea divisoria. Disattivato lascia che Instagram disattivi l'effetto, come fa di default, e richiede un riavvio.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Effetto bordo di scorrimento";
 "INTERFACE_TABS_HEADER" = "Schede";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Organizza la barra delle schede con un'anteprima dal vivo. Le modifiche vengono raccolte e applicate insieme, poi Instagram si riavvia.";

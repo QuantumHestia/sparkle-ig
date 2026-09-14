@@ -1020,7 +1020,7 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Notifications";
 "INTERFACE_NOTIFICATIONS_HELP" = "How Sparkle's own notification pills look and where they appear.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Reshapes the tab bar into the iOS 26 floating pill. The glass material itself needs iOS 26. Requires a restart.";
-"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "How content meets the bars as you scroll. Default follows iOS, Soft fades content out with a progressive blur, and Hard ends it at a solid edge with a dividing line. Off keeps Instagram's own look. Requires a restart.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "How content meets the top bar as you scroll. Default follows iOS, Soft fades content out with a progressive blur, and Hard ends it at a solid edge with a dividing line. Off lets Instagram disable the effect, as it does by default, and requires a restart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Scroll Edge Effect";
 "INTERFACE_TABS_HEADER" = "Tabs";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Arrange the tab bar with a live preview. Changes are staged and applied together, then Instagram restarts.";

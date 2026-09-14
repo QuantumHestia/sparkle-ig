@@ -1020,7 +1020,7 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Pranešimai";
 "INTERFACE_NOTIFICATIONS_HELP" = "Kaip atrodo ir kur rodomi Sparkle pranešimų skydeliai.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Performuoja skirtukų juostą į plaukiojančią iOS 26 kapsulę. Stiklo medžiagai reikia iOS 26. Reikia paleisti iš naujo.";
-"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Kaip turinys susiliečia su juostomis slenkant. Numatytasis atitinka iOS, Švelnus išblukina turinį laipsnišku suliejimu, o Ryškus jį užbaigia vientisu kraštu su skiriamąja linija. Išjungta palieka Instagram išvaizdą. Reikia paleisti iš naujo.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Kaip turinys susiliečia su viršutine juosta slenkant. Numatytasis atitinka iOS, Švelnus išblukina turinį laipsnišku suliejimu, o Ryškus jį užbaigia vientisu kraštu su skiriamąja linija. Išjungta leidžia Instagram išjungti efektą, kaip jis daro pagal numatytuosius nustatymus, ir reikia paleisti iš naujo.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Slinkimo krašto efektas";
 "INTERFACE_TABS_HEADER" = "Skirtukai";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Tvarkykite skirtukų juostą su tiesiogine peržiūra. Pakeitimai parengiami ir pritaikomi kartu, tada Instagram paleidžiama iš naujo.";

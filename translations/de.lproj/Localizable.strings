@@ -1020,7 +1020,7 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Benachrichtigungen";
 "INTERFACE_NOTIFICATIONS_HELP" = "Wie die eigenen Hinweisfelder von Sparkle aussehen und wo sie erscheinen.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Formt die Tab-Leiste zur schwebenden Pille aus iOS 26 um. Das Glasmaterial selbst benötigt iOS 26. Erfordert einen Neustart.";
-"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Wie Inhalte beim Scrollen auf die Leisten treffen. Standard folgt iOS, Weich blendet Inhalte mit einer progressiven Unschärfe aus und Hart endet an einer festen Kante mit Trennlinie. Aus behält das Aussehen von Instagram bei. Erfordert einen Neustart.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Wie Inhalte beim Scrollen auf die obere Leiste treffen. Standard folgt iOS, Weich blendet Inhalte mit einer progressiven Unschärfe aus und Hart endet an einer festen Kante mit Trennlinie. Aus lässt Instagram den Effekt wie standardmäßig deaktivieren und erfordert einen Neustart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Scrollkanten-Effekt";
 "INTERFACE_TABS_HEADER" = "Tabs";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Ordne die Tab-Leiste mit einer Live-Vorschau an. Änderungen werden gesammelt und gemeinsam übernommen, danach startet Instagram neu.";

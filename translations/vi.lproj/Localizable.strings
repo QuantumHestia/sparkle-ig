@@ -1020,7 +1020,7 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "Thông báo";
 "INTERFACE_NOTIFICATIONS_HELP" = "Kiểu hiển thị và vị trí của các thẻ thông báo riêng của Sparkle.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Đổi thanh tab thành dạng viên nổi của iOS 26. Riêng chất liệu kính cần iOS 26. Cần khởi động lại.";
-"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Cách nội dung gặp các thanh khi cuộn. Mặc định theo iOS, Mềm làm mờ dần nội dung bằng hiệu ứng mờ lũy tiến, còn Cứng kết thúc nội dung tại một mép đặc có đường phân cách. Tắt giữ giao diện gốc của Instagram. Cần khởi động lại.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Cách nội dung gặp thanh trên cùng khi cuộn. Mặc định theo iOS, Mềm làm mờ dần nội dung bằng hiệu ứng mờ lũy tiến, còn Cứng kết thúc nội dung tại một mép đặc có đường phân cách. Tắt để Instagram vô hiệu hóa hiệu ứng như mặc định và cần khởi động lại.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Hiệu ứng mép cuộn";
 "INTERFACE_TABS_HEADER" = "Tab";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Sắp xếp thanh tab với bản xem trước trực tiếp. Thay đổi được gom lại và áp dụng cùng lúc, sau đó Instagram khởi động lại.";

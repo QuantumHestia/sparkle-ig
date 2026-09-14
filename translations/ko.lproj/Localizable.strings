@@ -1020,7 +1020,7 @@
 "INTERFACE_NOTIFICATIONS_HEADER" = "알림";
 "INTERFACE_NOTIFICATIONS_HELP" = "Sparkle 자체 알림 배너의 모양과 표시 위치입니다.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "탭 바를 iOS 26의 떠 있는 알약 모양으로 바꿉니다. 유리 소재 자체는 iOS 26이 필요합니다. 재시작이 필요합니다.";
-"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "스크롤할 때 콘텐츠가 막대와 만나는 방식입니다. 기본값은 iOS를 따르고, 부드럽게는 점진적 블러로 콘텐츠를 흐리게 하며, 선명하게는 구분선이 있는 불투명한 가장자리에서 끝냅니다. 끄기는 Instagram 고유의 모습을 유지합니다. 재시작이 필요합니다.";
+"INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "스크롤할 때 콘텐츠가 상단 막대와 만나는 방식입니다. 기본값은 iOS를 따르고, 부드럽게는 점진적 블러로 콘텐츠를 흐리게 하며, 선명하게는 구분선이 있는 불투명한 가장자리에서 끝냅니다. 끄기는 Instagram이 기본적으로 하듯 효과를 비활성화하게 두며 재시작이 필요합니다.";
 "INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "스크롤 가장자리 효과";
 "INTERFACE_TABS_HEADER" = "탭";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "실시간 미리보기로 탭 바를 정렬합니다. 변경 사항은 임시 저장되었다가 한 번에 적용되며, 이후 Instagram이 다시 시작됩니다.";
