@@ -38,7 +38,7 @@ static NSDictionary<NSString *, NSString *> *SPKLangNames(void) {
     dispatch_once(&o, ^{ m = @{
         @"en":@"English", @"ar":@"العربية", @"de":@"Deutsch", @"el":@"Ελληνικά",
         @"es-ES":@"Español", @"fr":@"Français", @"hi":@"हिन्दी", @"it":@"Italiano",
-        @"ja":@"日本語", @"ko":@"한국어", @"pt-BR":@"Português (Brasil)", @"ru":@"Русский",
+        @"ja":@"日本語", @"ko":@"한국어", @"lt":@"Lietuvių", @"pt-BR":@"Português (Brasil)", @"ru":@"Русский",
         @"ro":@"Română",
         @"tr":@"Türkçe", @"uk":@"Українська", @"vi":@"Tiếng Việt", @"zh-Hans":@"简体中文" }; });
     return m;
