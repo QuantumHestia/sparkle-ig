@@ -17,7 +17,10 @@ static CGFloat const kSPKPlaybackPanelHeight = kSPKPlaybackPanelPadding * 2.0 + 
 static CGFloat const kSPKPlaybackPanelCornerRadius = 22.0;
 static CGFloat const kSPKPlaybackPanelMargin = 12.0;
 static double const kSPKPlaybackSkipInterval = 5.0;
-static NSTimeInterval const kSPKPlaybackScrubSeekInterval = 0.12;
+// A seek whose completion never arrives must not lock the scrubber for good.
+static NSTimeInterval const kSPKPlaybackSeekTimeout = 2.0;
+// How long after landing a seek the video gets to buffer before it is nudged.
+static NSTimeInterval const kSPKPlaybackSeekResumeGrace = 1.0;
 
 @implementation SPKPlaybackTarget
 @end
@@ -290,7 +293,12 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     double _renderedSpeed;
     NSInteger _renderedScope;
     NSInteger _renderedPlaying;
-    CFTimeInterval _lastScrubSeek;
+    BOOL _seekInFlight;
+    BOOL _hasPendingSeek;
+    double _pendingSeekTime;
+    double _seekTargetTime;
+    BOOL _playingBeforeSeek;
+    NSUInteger _seekGeneration;
     CFTimeInterval _menuClosedAt;
     UISelectionFeedbackGenerator *_selectionFeedback;
     BOOL _menuVisible;
@@ -572,7 +580,9 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     }
 
     double duration = [self duration];
-    if (!_scrubber.isScrubbing) {
+    // While a seek is landing the player still reports the old time; holding the
+    // thumb avoids a jump back to it.
+    if (!_scrubber.isScrubbing && ![self isSeeking]) {
         double current = self.target.currentTime ? self.target.currentTime() : 0.0;
         current = isfinite(current) ? MIN(MAX(current, 0.0), duration) : 0.0;
         _scrubber.progress = duration > 0.0 ? current / duration : 0.0;
@@ -673,9 +683,11 @@ static NSString *SPKPlaybackTimeString(double seconds) {
     double duration = [self duration];
     if (duration <= 0.0 || !self.target.seek)
         return;
-    double current = self.target.currentTime ? self.target.currentTime() : 0.0;
+    // Repeated taps build on the position already requested, not the stale clock.
+    double current = [self isSeeking] ? (_hasPendingSeek ? _pendingSeekTime : _seekTargetTime)
+                                      : (self.target.currentTime ? self.target.currentTime() : 0.0);
     double time = MIN(MAX(current + delta, 0.0), MAX(0.0, duration - 0.1));
-    self.target.seek(time, YES);
+    [self requestSeekToTime:time];
     _scrubber.progress = time / duration;
     [self updateTimeLabelsWithCurrent:time duration:duration];
 }
@@ -696,12 +708,64 @@ static NSString *SPKPlaybackTimeString(double seconds) {
         return;
     double time = MIN(progress * duration, MAX(0.0, duration - 0.1));
     [self updateTimeLabelsWithCurrent:time duration:duration];
+    // Dragging only previews the position; the player seeks once on release.
+    if (finished)
+        [self requestSeekToTime:time];
+}
 
-    CFTimeInterval now = CACurrentMediaTime();
-    if (!finished && now - _lastScrubSeek < kSPKPlaybackScrubSeekInterval)
+// MARK: Seeking
+
+- (BOOL)isSeeking {
+    return _seekInFlight || _hasPendingSeek;
+}
+
+- (void)requestSeekToTime:(double)time {
+    if (_seekInFlight) {
+        _hasPendingSeek = YES;
+        _pendingSeekTime = time;
         return;
-    _lastScrubSeek = now;
-    self.target.seek(time, finished);
+    }
+    _playingBeforeSeek = self.target.isPlaying ? self.target.isPlaying() : NO;
+    [self performSeekToTime:time];
+}
+
+- (void)performSeekToTime:(double)time {
+    _seekInFlight = YES;
+    _seekTargetTime = time;
+    NSUInteger generation = ++_seekGeneration;
+    __weak __typeof(self) weakSelf = self;
+    void (^landed)(void) = ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf seekDidLandForGeneration:generation];
+        });
+    };
+    self.target.seek(time, landed);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSPKPlaybackSeekTimeout * NSEC_PER_SEC)), dispatch_get_main_queue(), landed);
+}
+
+- (void)seekDidLandForGeneration:(NSUInteger)generation {
+    // Ignores the timeout of a seek that already landed, and vice versa.
+    if (!_seekInFlight || generation != _seekGeneration)
+        return;
+    _seekInFlight = NO;
+    if (_hasPendingSeek) {
+        _hasPendingSeek = NO;
+        [self performSeekToTime:_pendingSeekTime];
+        return;
+    }
+    if (!_playingBeforeSeek || !self.target.resumeAfterSeek)
+        return;
+    __weak __typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSPKPlaybackSeekResumeGrace * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        __typeof(self) strongSelf = weakSelf;
+        if (!strongSelf || generation != strongSelf->_seekGeneration || [strongSelf isSeeking] || strongSelf->_scrubber.isScrubbing)
+            return;
+        SPKPlaybackTarget *target = strongSelf.target;
+        BOOL available = target.isAvailable ? target.isAvailable() : NO;
+        BOOL playing = target.isPlaying ? target.isPlaying() : NO;
+        if (available && !playing)
+            target.resumeAfterSeek();
+    });
 }
 @end
 

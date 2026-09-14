@@ -159,20 +159,27 @@ static SPKPlaybackTarget *SPKReelsPlaybackTargetForCell(UICollectionViewCell *ce
     target.isPlaying = ^BOOL {
         return SPKReelsPlaybackIsPlaying(weakCell);
     };
-    target.seek = ^(double time, BOOL finished) {
+    target.seek = ^(double time, void (^completion)(void)) {
         UICollectionViewCell *strongCell = weakCell;
         SEL cellSeek = NSSelectorFromString(@"seekToTime:preciseTime:trigger:isSeekingOnTap:completionHandler:");
         SEL viewSeek = NSSelectorFromString(@"seekToTime:preciseTime:trigger:completionHandler:");
+        // The handler's arguments differ between versions and are not needed.
+        id handler = ^{
+            completion();
+        };
         @try {
             if ([strongCell respondsToSelector:cellSeek]) {
-                ((void (*)(id, SEL, double, BOOL, long long, BOOL, id))objc_msgSend)(strongCell, cellSeek, time, finished, 0, NO, nil);
-            } else {
-                id videoView = SPKReelsPlaybackVideoView(strongCell);
-                if ([videoView respondsToSelector:viewSeek])
-                    ((void (*)(id, SEL, double, BOOL, long long, id))objc_msgSend)(videoView, viewSeek, time, finished, 0, nil);
+                ((void (*)(id, SEL, double, BOOL, long long, BOOL, id))objc_msgSend)(strongCell, cellSeek, time, YES, 0, NO, handler);
+                return;
+            }
+            id videoView = SPKReelsPlaybackVideoView(strongCell);
+            if ([videoView respondsToSelector:viewSeek]) {
+                ((void (*)(id, SEL, double, BOOL, long long, id))objc_msgSend)(videoView, viewSeek, time, YES, 0, handler);
+                return;
             }
         } @catch (__unused NSException *exception) {
         }
+        completion();
     };
     target.togglePlayback = ^{
         UICollectionViewCell *strongCell = weakCell;
@@ -184,6 +191,14 @@ static SPKPlaybackTarget *SPKReelsPlaybackTargetForCell(UICollectionViewCell *ce
         // Instagram's own tap handler doesn't recognise a pause it didn't start,
         // so remember it and let the next tap on the reel resume.
         objc_setAssociatedObject(strongCell, kSPKReelsPausedByPanelAssocKey, pausing ? @YES : nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    };
+    target.resumeAfterSeek = ^{
+        UICollectionViewCell *strongCell = weakCell;
+        // A pause the panel holds is intentional; only a stalled player is restarted.
+        if (objc_getAssociatedObject(strongCell, kSPKReelsPausedByPanelAssocKey))
+            return;
+        SPKLog(@"ReelsPlayback", @"Restarting playback stalled after seek");
+        SPKReelsPlaybackSendReason(strongCell, @"playWithReason:", sSPKReelsLastPlayReason);
     };
     target.speedItem = ^id {
         return SPKReelsPlaybackItem(weakCell);

@@ -13,9 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, copy) double (^currentTime)(void);
 @property (nonatomic, copy) double (^duration)(void);
 @property (nonatomic, copy) BOOL (^isPlaying)(void);
-/// `finished` is NO for intermediate scrub positions and YES for the final one.
-@property (nonatomic, copy) void (^seek)(double time, BOOL finished);
+/// Performs one precise seek and calls `completion` when the player has landed.
+/// The panel never overlaps seeks: a player cancelling its previous seek can
+/// stay stuck buffering, so requests made meanwhile are coalesced.
+@property (nonatomic, copy) void (^seek)(double time, void (^completion)(void));
 @property (nonatomic, copy) void (^togglePlayback)(void);
+/// Restarts a video that was playing before a seek but stalled after it. Optional.
+@property (nonatomic, copy, nullable) void (^resumeAfterSeek)(void);
 /// The model object speeds are keyed by for the "This Video" scope.
 @property (nonatomic, copy) id _Nullable (^speedItem)(void);
 @property (nonatomic, copy) void (^applySpeed)(double speed);

@@ -204,6 +204,19 @@ static BOOL SPKStoryPlaybackPressPauseActive(UIView *overlayView) {
     return YES;
 }
 
+static void SPKStoryPlaybackWaitForSeek(UIView *videoView, double time, NSUInteger attempt, void (^completion)(void)) {
+    __weak UIView *weakVideoView = videoView;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIView *strongVideoView = weakVideoView;
+        double current = SPKStoryPlaybackReadDouble(strongVideoView, @selector(currentTime));
+        if (!strongVideoView || fabs(current - time) < 0.5 || attempt >= 15) {
+            completion();
+            return;
+        }
+        SPKStoryPlaybackWaitForSeek(strongVideoView, time, attempt + 1, completion);
+    });
+}
+
 static SPKPlaybackTarget *SPKStoryPlaybackTargetForOverlay(UIView *overlayView) {
     __weak UIView *weakOverlay = overlayView;
     SPKPlaybackTarget *target = [SPKPlaybackTarget new];
@@ -221,17 +234,19 @@ static SPKPlaybackTarget *SPKStoryPlaybackTargetForOverlay(UIView *overlayView) 
         UIView *videoView = SPKStoryPlaybackVideoViewForOverlay(weakOverlay);
         return SPKStoryPlaybackIsPlaying(videoView) && !SPKStoryPlaybackReachedEnd(videoView);
     };
-    target.seek = ^(double time, BOOL finished) {
+    target.seek = ^(double time, void (^completion)(void)) {
         UIView *videoView = SPKStoryPlaybackVideoViewForOverlay(weakOverlay);
         SEL precise = @selector(seekToTime:shouldUsePreciseTime:trigger:);
         @try {
-            if (finished && [videoView respondsToSelector:precise]) {
+            if ([videoView respondsToSelector:precise]) {
                 ((void (*)(id, SEL, double, BOOL, long long))objc_msgSend)(videoView, precise, time, YES, 0);
             } else if ([videoView respondsToSelector:@selector(seekToTime:)]) {
                 ((void (*)(id, SEL, double))objc_msgSend)(videoView, @selector(seekToTime:), time);
             }
         } @catch (__unused NSException *exception) {
         }
+        // The story view offers no seek callback, so watch the clock reach the target.
+        SPKStoryPlaybackWaitForSeek(videoView, time, 0, completion);
     };
     target.togglePlayback = ^{
         UIView *overlay = weakOverlay;
@@ -251,6 +266,20 @@ static SPKPlaybackTarget *SPKStoryPlaybackTargetForOverlay(UIView *overlayView) 
         BOOL playing = SPKStoryPlaybackIsPlaying(videoView);
         if (!SPKStoryPlaybackSetPressedPause(overlay, playing))
             SPKLog(@"StoryPlayback", @"No gesture executor for %@", NSStringFromClass([SPKStoryPlaybackSectionContext(overlay) class]));
+    };
+    target.resumeAfterSeek = ^{
+        UIView *overlay = weakOverlay;
+        // A pause the panel holds is intentional; only a stalled player is restarted.
+        if (objc_getAssociatedObject(overlay, kSPKStoryPlaybackPressPausedAssocKey))
+            return;
+        UIView *videoView = SPKStoryPlaybackVideoViewForOverlay(overlay);
+        if (SPKStoryPlaybackReachedEnd(videoView) || ![videoView respondsToSelector:@selector(play)])
+            return;
+        SPKLog(@"StoryPlayback", @"Restarting playback stalled after seek");
+        @try {
+            ((void (*)(id, SEL))objc_msgSend)(videoView, @selector(play));
+        } @catch (__unused NSException *exception) {
+        }
     };
     target.speedItem = ^id {
         return SPKStoryPlaybackItem(SPKStoryPlaybackVideoViewForOverlay(weakOverlay));
