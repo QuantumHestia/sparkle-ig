@@ -19,16 +19,7 @@
     else if ([[SPKUtils getStringPref:@"reels_tap_control"] isEqualToString:@"mute"])
         userTapPauseEnabled = false;
 
-    long long userMinSec = minSec;
-    long long userDuration = duration;
-    _Bool userShortScrubberEnabled = shortScrubberEnabled;
-    if ([SPKUtils getBoolPref:@"reels_show_scrubber"]) {
-        userMinSec = 0;
-        userDuration = 0;
-        userShortScrubberEnabled = true;
-    }
-
-    return %orig(set, userTapPauseEnabled, controls, previewThumbEnabled, userMinSec, seekSec, tapSec, userDuration, userShortScrubberEnabled);
+    return %orig(set, userTapPauseEnabled, controls, previewThumbEnabled, minSec, seekSec, tapSec, duration, shortScrubberEnabled);
 }
 %end
 
@@ -103,7 +94,6 @@
 
 extern "C" void SPKInstallReelsPlaybackHooksIfNeeded(void) {
     BOOL shouldInstall = ![[SPKUtils getStringPref:@"reels_tap_control"] isEqualToString:@"default"] ||
-                         [SPKUtils getBoolPref:@"reels_show_scrubber"] ||
                          [SPKUtils getBoolPref:@"reels_prevent_doom_scroll"] ||
                          [SPKUtils getBoolPref:@"reels_confirm_refresh"] ||
                          [SPKUtils getBoolPref:@"reels_disable_auto_unmute"];

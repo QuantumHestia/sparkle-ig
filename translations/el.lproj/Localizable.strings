@@ -1774,8 +1774,6 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Απενεργοποίηση Ανανέωσης Καρτέλας Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Το ξαναπάτημα της καρτέλας Reels κρατά το τρέχον reel αντί να φορτώνει νέα σειρά.";
 "REELS_BEHAVIOR_HEADER" = "Συμπεριφορά";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_HELP" = "Κρατά τη γραμμή προόδου στην οθόνη ώστε να μετακινείσαι μέσα σε ένα reel.";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_TITLE" = "Εμφάνιση Κατολισθητήρα Προόδου";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Τι κάνει ένα πάτημα σε ένα reel: η προεπιλογή του Instagram, παύση και αναπαραγωγή, ή σίγαση και άρση σίγασης.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Έλεγχοι Πατήματος";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Ζητά επιβεβαίωση πριν ένα διπλό πάτημα κάνει like σε ένα reel.";

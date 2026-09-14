@@ -1774,8 +1774,6 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Tắt Làm mới Tab Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Chạm lại tab Reels sẽ giữ nguyên reel hiện tại thay vì tải một loạt mới.";
 "REELS_BEHAVIOR_HEADER" = "Hành vi";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_HELP" = "Luôn hiển thị thanh tua trên màn hình để bạn có thể tua trong một reel.";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_TITLE" = "Hiển thị Thanh trượt Tiến trình";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Hành động khi chạm vào một reel: mặc định của Instagram, tạm dừng và phát, hoặc tắt và bật tiếng.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Điều khiển Nhấn";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Yêu cầu xác nhận trước khi chạm hai lần để thích một reel.";

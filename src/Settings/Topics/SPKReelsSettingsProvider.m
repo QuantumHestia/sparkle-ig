@@ -25,10 +25,6 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                          icon:SPKSettingsIcon(@"play")
                                          menu:SPKReelsTapControlMenu()],
                                SPKL(@"REELS_BEHAVIOR_TAP_CONTROLS_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_TITLE")
-                                           icon:SPKSettingsIcon(@"clock")
-                                    defaultsKey:@"reels_show_scrubber"],
-                               SPKL(@"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE")
                                            icon:SPKSettingsIcon(@"volume_off")
                                     defaultsKey:@"reels_disable_auto_unmute"

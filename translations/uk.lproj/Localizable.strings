@@ -1774,8 +1774,6 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Відключити оновлення вкладки Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Повторний дотик до вкладки Reels зберігає поточний ролик замість завантаження нової добірки.";
 "REELS_BEHAVIOR_HEADER" = "Поведінка";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_HELP" = "Лишає смугу прогресу на екрані, щоб перемотувати всередині ролика.";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_TITLE" = "Показати лінію прогресу";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Що робить дотик до ролика: як типово в Instagram, пауза й відтворення, або вимкнення та ввімкнення звуку.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Керування натисканням";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Запитує підтвердження, перш ніж подвійний дотик уподобає ролик.";

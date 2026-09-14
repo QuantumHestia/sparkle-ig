@@ -1774,8 +1774,6 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "تعطيل تحديث علامة تبويب Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "إعادة الضغط على تبويب Reels تبقي المقطع الحالي بدل تحميل مجموعة جديدة.";
 "REELS_BEHAVIOR_HEADER" = "السلوك";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_HELP" = "يبقي شريط التقدم ظاهراً على الشاشة لتتمكن من التنقل داخل الـ Reel.";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_TITLE" = "عرض شريط تمرير التقدم";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ما يفعله الضغط على Reel: الإجراء الافتراضي في Instagram، أو الإيقاف والتشغيل، أو الكتم وإلغاء الكتم.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "عناصر التحكم في الضغط";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "يطلب تأكيداً قبل أن يؤدي الضغط المزدوج إلى الإعجاب بـ Reel.";

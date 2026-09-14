@@ -206,7 +206,6 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Behavior
 - **Tap Controls**: `Default`, `Pause/Play`, or `Mute/Unmute`.
-- **Show Progress Scrubber**: Always shows the progress bar.
 - **Disable Auto-Unmuting Reels**: Prevents unmute on volume/silent-switch changes. **(restart)**
 - **Disable Reels Tab Refresh**: No refresh when re-tapping the Reels tab.
 

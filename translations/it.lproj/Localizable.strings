@@ -1774,8 +1774,6 @@
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Disabilita Aggiornamento Scheda Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Toccare di nuovo la scheda Reel mantiene il reel corrente invece di caricarne di nuovi.";
 "REELS_BEHAVIOR_HEADER" = "Comportamento";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_HELP" = "Mantiene visibile la barra di avanzamento per spostarti dentro un reel.";
-"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_TITLE" = "Mostra Scrubber Progresso";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Cosa fa un tocco su un reel: il comportamento predefinito di Instagram, pausa e riproduzione, oppure muto e audio attivo.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Controlli Tocco";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Chiede conferma prima che un doppio tocco metta mi piace a un reel.";
