@@ -63,6 +63,17 @@ UIImage *SPKSettingsIcon(NSString *name) {
     return [SPKAssetUtils instagramIconNamed:name pointSize:SPKSettingsCellIconPointSize];
 }
 
+UIImage *SPKSettingsPlaybackIcon(void) {
+    // SPKSettingsIcon substitutes a placeholder for a missing glyph, so look it up
+    // without one to know when to fall back.
+    UIImage *glyph = [SPKAssetUtils resolvedImageNamed:@"playback"
+                                             pointSize:SPKSettingsCellIconPointSize
+                                                weight:UIImageSymbolWeightRegular
+                                                source:SPKResolvedImageSourceInstagramIcon
+                                         renderingMode:UIImageRenderingModeAlwaysTemplate];
+    return glyph ?: SPKSettingsSystemIcon(@"speedometer", SPKSettingsCellIconPointSize, UIImageSymbolWeightRegular);
+}
+
 UIImage *SPKSettingsSystemIcon(NSString *name, CGFloat pointSize, UIImageSymbolWeight weight) {
     UIImage *symbol = [SPKAssetUtils resolvedImageNamed:name
                                               pointSize:pointSize
@@ -224,6 +235,14 @@ UIMenu *SPKReelsTapControlMenu(void) {
                          SPKMenuCommand(SPKL(@"MENU_PAUSE_PLAY"), nil, nil, @"reels_tap_control", @"pause", YES),
                          SPKMenuCommand(SPKL(@"MENU_MUTE_UNMUTE"), nil, nil, @"reels_tap_control", @"mute", YES)
                      ]]
+    ]];
+}
+
+UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_VIDEO"), nil, nil, defaultsKey, @"video", NO),
+        SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_SESSION"), nil, nil, defaultsKey, @"session", NO),
+        SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_ALWAYS"), nil, nil, defaultsKey, @"always", NO)
     ]];
 }
 

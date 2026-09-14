@@ -63,6 +63,8 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Each logged-in account keeps its own preferences, gallery scope, and download history, including account-scoped history clearing.
 - **Story viewer tools**:
   - Search everyone who saw your story, filter non-followers, and star viewers for quick lookup later.
+- **Playback controls**:
+  - A floating panel for stories and reels with playback speed (0.5x to 2x), scrubbing, 5 second skips, and pause, remembered per video, per session, or always.
 - **Privacy & focus**:
   - Hide ads, Meta AI, and suggested content.
   - Disable seen receipts, typing status, screenshot detection, and view-once limits.

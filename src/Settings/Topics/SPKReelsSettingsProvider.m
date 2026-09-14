@@ -3,6 +3,7 @@
 
 #import "../../Features/Reels/HideReelsHeader.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
+#import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
 
 static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
@@ -25,6 +26,26 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                          icon:SPKSettingsIcon(@"play")
                                          menu:SPKReelsTapControlMenu()],
                                SPKL(@"REELS_BEHAVIOR_TAP_CONTROLS_HELP")),
+            ({
+                SPKSetting *playbackControls = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE")
+                                                                                             icon:SPKSettingsPlaybackIcon()
+                                                                                      defaultsKey:@"reels_playback_controls"],
+                                                                 SPKL(@"REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP"));
+                // Gates the Keep Speed For row below.
+                playbackControls.reloadsTableOnSwitchChange = YES;
+                playbackControls;
+            }),
+            ({
+                SPKSetting *speedScope = [SPKSetting menuCellWithTitle:SPKL(@"PLAYBACK_PANEL_KEEP_SPEED_TITLE")
+                                                                  icon:SPKSettingsIcon(@"clock")
+                                                                  menu:SPKPlaybackSpeedScopeMenu(@"reels_playback_speed_scope")];
+                speedScope.defaultsKey = @"reels_playback_speed_scope";
+                speedScope.helpText = SPKL(@"PLAYBACK_PANEL_KEEP_SPEED_HELP");
+                speedScope.enabledProvider = ^BOOL {
+                    return [SPKUtils getBoolPref:@"reels_playback_controls"];
+                };
+                speedScope;
+            }),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE")
                                            icon:SPKSettingsIcon(@"volume_off")
                                     defaultsKey:@"reels_disable_auto_unmute"

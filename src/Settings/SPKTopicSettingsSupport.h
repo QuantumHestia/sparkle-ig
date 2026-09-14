@@ -15,6 +15,8 @@ NSDictionary *SPKTopicSectionWithInfoSheet(NSDictionary *section, BOOL usesInfoS
 FOUNDATION_EXPORT CGFloat const SPKSettingsCellIconPointSize;
 UIImage *SPKSettingsIcon(NSString *name);
 UIImage *SPKSettingsSystemIcon(NSString *name, CGFloat pointSize, UIImageSymbolWeight weight);
+/// Playback controls row icon; IG builds without the speed glyph (410) get an SF Symbol.
+UIImage *SPKSettingsPlaybackIcon(void);
 SPKSetting *SPKSettingApplyIconTint(SPKSetting *setting, UIColor *_Nullable tintColor);
 /// Attaches `helpText` to a row built inline inside a section's row array.
 SPKSetting *SPKSettingWithHelp(SPKSetting *setting, NSString *helpText);
@@ -23,6 +25,8 @@ SPKSetting *SPKTopicNavigationSetting(NSString *title, NSString *iconName, CGFlo
 SPKSetting *SPKActionButtonDefaultActionNavigationSetting(SPKActionButtonSource source);
 SPKSetting *SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSource source, NSString *topicTitle, NSArray<NSString *> *supportedActions, NSArray<SPKActionMenuSection *> *defaultSections);
 UIMenu *SPKReelsTapControlMenu(void);
+/// "Keep Speed For" choices for a playback controls scope key (`stories_playback_speed_scope`, ...).
+UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey);
 UIMenu *SPKMainFeedModeMenu(void);
 UIMenu *SPKSeenButtonPositionMenu(void);
 UIMenu *SPKHiddenChatsRevealResetMenu(void);

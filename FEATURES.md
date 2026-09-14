@@ -170,6 +170,8 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Playback
 - **Story Audio Button**: Adds an animated speaker button above the bottom Story bar for Story media with playable audio. Tap it to mute or unmute Story playback without changing Feed or Reels audio. It distinguishes playing, muted, and zero system volume; at zero volume, tapping gives selection feedback and animates the icon without changing playback or device volume.
+- **Playback Controls Button**: Adds a button beside the Story Audio Button on video stories. Tap it for a floating playback panel: step the speed from 0.5x to 2x or tap the speed for presets and the Keep Speed For choice, scrub with elapsed and remaining time, skip back or forward 5 seconds, and pause or resume the story; at the end of a story (with auto-advance off) the play button replays it. While a story plays at another speed, the button shows that speed instead of its icon. The panel uses Liquid Glass on iOS 26 and Instagram's own colors otherwise. Instagram's hold-to-fast-forward still works and returns to your chosen speed when released.
+- **Keep Speed For**: `This Video`, `This Session` (until you close the story viewer), or `Always`. The same choice is in the panel's speed menu.
 
 ### Hide
 - **Hide Audio Unavailable Toast**: Hides Instagram's message when a Story's audio cannot be played in your region. The unavailable audio remains muted.
@@ -208,6 +210,8 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 
 ### Behavior
 - **Tap Controls**: `Default`, `Pause/Play`, or `Mute/Unmute`.
+- **Playback Controls**: Long press a reel's more button for the same floating playback panel as Stories: speed from 0.5x to 2x, scrubbing, 5 second skips, and pause/play. While a reel plays at another speed, the speed is shown above the action button; tap it to reopen the panel. After pausing from the panel, tapping the reel resumes it. Video reels only.
+- **Keep Speed For**: `This Video`, `This Session` (until you leave Reels), or `Always`.
 - **Disable Auto-Unmuting Reels**: Prevents unmute on volume/silent-switch changes. **(restart)**
 - **Disable Reels Tab Refresh**: No refresh when re-tapping the Reels tab.
 

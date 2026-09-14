@@ -99,6 +99,26 @@ static NSArray *SPKStoriesSettingsSections(void) {
                 storyAudioToggle.helpText = SPKL(@"STORIES_PLAYBACK_AUDIO_TOGGLE_HELP");
                 storyAudioToggle;
             }),
+            ({
+                SPKSetting *playbackControls = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_PLAYBACK_CONTROLS_TITLE")
+                                                                                             icon:SPKSettingsPlaybackIcon()
+                                                                                      defaultsKey:@"stories_playback_controls"],
+                                                                 SPKL(@"STORIES_PLAYBACK_CONTROLS_HELP"));
+                // Gates the Keep Speed For row below.
+                playbackControls.reloadsTableOnSwitchChange = YES;
+                playbackControls;
+            }),
+            ({
+                SPKSetting *speedScope = [SPKSetting menuCellWithTitle:SPKL(@"PLAYBACK_PANEL_KEEP_SPEED_TITLE")
+                                                                  icon:SPKSettingsIcon(@"clock")
+                                                                  menu:SPKPlaybackSpeedScopeMenu(@"stories_playback_speed_scope")];
+                speedScope.defaultsKey = @"stories_playback_speed_scope";
+                speedScope.helpText = SPKL(@"PLAYBACK_PANEL_KEEP_SPEED_HELP");
+                speedScope.enabledProvider = ^BOOL {
+                    return [SPKUtils getBoolPref:@"stories_playback_controls"];
+                };
+                speedScope;
+            }),
         ],
                         nil),
         SPKTopicSection(@"", @[
