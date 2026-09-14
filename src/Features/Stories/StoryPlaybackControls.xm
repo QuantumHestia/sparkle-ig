@@ -19,6 +19,7 @@ static CGFloat const kSPKStoryPlaybackButtonSize = 44.0;
 static CGFloat const kSPKStoryPlaybackButtonSpacing = 4.0;
 static const void *kSPKStoryPlaybackSpeedLabelAssocKey = &kSPKStoryPlaybackSpeedLabelAssocKey;
 static const void *kSPKStoryPlaybackFooterObserverAssocKey = &kSPKStoryPlaybackFooterObserverAssocKey;
+static const void *kSPKStoryPlaybackPressPausedAssocKey = &kSPKStoryPlaybackPressPausedAssocKey;
 
 // Set while Sparkle itself changes a player's speed, so the setter hook can tell
 // its own writes from Instagram resetting the speed to 1x.
@@ -164,6 +165,9 @@ static BOOL SPKStoryPlaybackSetPressedPause(UIView *overlayView, BOOL paused) {
     if (!sectionContext || !executor)
         return NO;
 
+    // Pausing goes through the long-press path, which on some Instagram builds
+    // also fades the story chrome. The overlay hooks keep it visible while set.
+    objc_setAssociatedObject(overlayView, kSPKStoryPlaybackPressPausedAssocKey, paused ? @YES : nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     @try {
         if (paused) {
             SEL selector = NSSelectorFromString(@"performBeginPressing:region:gesture:tapPoint:");
@@ -182,6 +186,19 @@ static BOOL SPKStoryPlaybackSetPressedPause(UIView *overlayView, BOOL paused) {
         }
     } @catch (NSException *exception) {
         SPKLog(@"StoryPlayback", @"Executor %@ failed: %@", paused ? @"pause" : @"resume", exception);
+        return NO;
+    }
+    return YES;
+}
+
+/// True while the panel holds the story paused. A pause released some other way
+/// (a tap on the story, a story change) leaves the video playing, which clears it.
+static BOOL SPKStoryPlaybackPressPauseActive(UIView *overlayView) {
+    if (!objc_getAssociatedObject(overlayView, kSPKStoryPlaybackPressPausedAssocKey))
+        return NO;
+    UIView *videoView = SPKStoryPlaybackVideoViewForOverlay(overlayView);
+    if (videoView && SPKStoryPlaybackIsPlaying(videoView)) {
+        objc_setAssociatedObject(overlayView, kSPKStoryPlaybackPressPausedAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         return NO;
     }
     return YES;
@@ -480,6 +497,22 @@ static void SPKStoryPlaybackFilterIncomingSpeed(id videoView, double *speed) {
 %group SPKStoryPlaybackControlsHooks
 
 %hook IGStoryFullscreenOverlayView
+- (void)setChromeHidden:(BOOL)hidden {
+    if (hidden && SPKStoryPlaybackPressPauseActive((UIView *)self)) {
+        SPKLog(@"StoryPlayback", @"Kept chrome visible during panel pause");
+        return;
+    }
+    %orig(hidden);
+}
+
+- (void)hideOverlaysExcludingSponsoredStory:(BOOL)excludingSponsoredStory {
+    if (SPKStoryPlaybackPressPauseActive((UIView *)self)) {
+        SPKLog(@"StoryPlayback", @"Kept overlays visible during panel pause");
+        return;
+    }
+    %orig(excludingSponsoredStory);
+}
+
 - (void)layoutSubviews {
     %orig;
     SPK_PERF_SCOPE(@"StoryPlaybackControls.layoutSubviews");

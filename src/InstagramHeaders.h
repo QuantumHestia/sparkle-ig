@@ -330,6 +330,8 @@
 @interface IGStoryFullscreenOverlayView : UIView
 @property (nonatomic, weak, readwrite) id gestureDelegate;
 - (id)gestureDelegate;
+- (void)setChromeHidden:(BOOL)hidden;
+- (void)hideOverlaysExcludingSponsoredStory:(BOOL)excludingSponsoredStory;
 @end
 
 // Real superclass is IGViewController; UIViewController is enough for the
