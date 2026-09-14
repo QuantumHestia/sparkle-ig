@@ -99,6 +99,9 @@ static NSArray *SPKStoriesSettingsSections(void) {
                 storyAudioToggle.helpText = SPKL(@"STORIES_PLAYBACK_AUDIO_TOGGLE_HELP");
                 storyAudioToggle;
             }),
+        ],
+                        nil),
+        SPKTopicSection(@"", @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"STORIES_PLAYBACK_HIDE_AUDIO_UNAVAILABLE_TOAST_TITLE")
                                            icon:SPKSettingsIcon(@"error")
                                     defaultsKey:@"stories_hide_audio_unavailable_toast"],
