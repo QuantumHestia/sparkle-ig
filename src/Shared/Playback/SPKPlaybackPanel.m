@@ -27,16 +27,18 @@ static NSTimeInterval const kSPKPlaybackSeekResumeGrace = 1.0;
 
 // MARK: - Palette
 
-// The panel is Liquid Glass where available (iOS 26 with the Liquid Glass toggle
-// on), otherwise a system blur material. Both adapt their own legibility, so
-// content uses the dynamic system label colors either way.
+// The panel is Liquid Glass on iOS 26 and later, otherwise a system blur
+// material. It follows the OS rather than the Liquid Glass toggle because it
+// sits beside system context menus, which are glass on iOS 26 regardless of
+// that toggle. Both adapt their own legibility, so content uses the dynamic
+// system label colors either way.
 typedef struct {
     BOOL glass;
 } SPKPlaybackPanelStyle;
 
 static SPKPlaybackPanelStyle SPKPlaybackPanelCurrentStyle(void) {
     SPKPlaybackPanelStyle style;
-    style.glass = SPKChipGlassAvailable() && [SPKUtils spk_isLiquidGlassEffectivelyEnabled];
+    style.glass = SPKChipGlassAvailable();
     return style;
 }
 

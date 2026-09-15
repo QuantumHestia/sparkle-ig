@@ -298,10 +298,9 @@ static void SPKReelsPresentPanel(UIView *anchor, UIView *source) {
         SPKLog(@"ReelsPlayback", @"Panel unavailable: enabled=%d cell=%@ videoView=%@",
                SPKReelsPlaybackEnabled(), NSStringFromClass(cell.class),
                NSStringFromClass([SPKReelsPlaybackSend(cell, @"videoView") class]));
-        [[UINotificationFeedbackGenerator new] notificationOccurred:UINotificationFeedbackTypeWarning];
         return;
     }
-    [[[UIImpactFeedbackGenerator alloc] initWithStyle:UIImpactFeedbackStyleMedium] impactOccurred];
+    [[UISelectionFeedbackGenerator new] selectionChanged];
     SPKPlaybackPanelPresentFromSource(anchor, source, SPKPlaybackSurfaceReels, SPKReelsPlaybackTargetForCell(cell));
 }
 
