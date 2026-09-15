@@ -221,6 +221,14 @@ static const void *kSPKFlexThreeFingerGestureKey = &kSPKFlexThreeFingerGestureKe
 }
 %end
 
+// IG 447 moved the toast gate off IGDSLauncherConfig into this Swift class.
+// The launcher-config toast hooks above still cover older versions.
+%hook _TtC20IGDSToastLiquidGlass20IGDSToastLiquidGlass
++ (_Bool)isEnabled {
+    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+}
+%end
+
 // MARK: Bug reports
 
 // Disable sending modded insta bug reports
