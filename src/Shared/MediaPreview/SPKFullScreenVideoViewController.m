@@ -31,7 +31,6 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapGesture;
 @property (nonatomic, strong) NSURL *preparedPlaybackURL;
-@property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, assign) BOOL hasPreparedPlayer;
 @property (nonatomic, assign) BOOL hasStartedPlayback;
 @property (nonatomic, assign) BOOL isLoadingThumbnail;
@@ -43,7 +42,9 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 @property (nonatomic, strong) NSLayoutConstraint *thumbnailBottomConstraint;
 @property (nonatomic, assign) NSInteger loadGeneration;
 @property (nonatomic, assign) BOOL lastReportedZoomState;
-@property (nonatomic, assign) BOOL wasPlayingBeforeBackground;
+/// Set when Sparkle paused a playing video (page swiped away, app backgrounded), so
+/// the next display resumes it. A pause made in the transport controls never sets it.
+@property (nonatomic, assign) BOOL resumeWhenShown;
 
 @end
 
@@ -84,6 +85,10 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
         self.thumbnailView.image = self.mediaItem.thumbnail;
     }
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -432,9 +437,7 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
             _thumbnailView.hidden = YES;
             _thumbnailView.alpha = 0.0;
         }
-        if (!_isPlaying) {
-            [self play];
-        }
+        [self resumePlaybackForDisplay];
         return;
     }
 
@@ -467,19 +470,30 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
                                                                     strongSelf->_thumbnailView.hidden = YES;
                                                                     strongSelf->_thumbnailView.alpha = 0.0;
                                                                 }
-                                                                if (!strongSelf->_isPlaying) {
-                                                                    [strongSelf play];
-                                                                }
+                                                                [strongSelf resumePlaybackForDisplay];
                                                                 return;
                                                             }
 
                                                             [strongSelf preparePlayerWithURL:localURL];
-                                                            if (strongSelf->_playerItem && !strongSelf->_hasStartedPlayback) {
-                                                                [strongSelf startPlayback];
-                                                            } else if (strongSelf->_player && !strongSelf->_isPlaying) {
-                                                                [strongSelf play];
-                                                            }
+                                                            [strongSelf resumePlaybackForDisplay];
                                                         }];
+}
+
+// The first display starts playback. Later displays (returning to the page, a sheet
+// closing over it) only resume a video Sparkle paused, so a pause the viewer made in
+// AVKit's controls, which bypasses -pause, is kept.
+- (void)resumePlaybackForDisplay {
+    if (!_player)
+        return;
+    if (!_hasStartedPlayback) {
+        [self startPlayback];
+        return;
+    }
+    if (!self.resumeWhenShown)
+        return;
+    self.resumeWhenShown = NO;
+    if (!self.isPlaybackActive)
+        [self play];
 }
 
 - (void)startPlayback {
@@ -494,7 +508,6 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 
     _playerViewController.player = _player;
     [_player play];
-    _isPlaying = YES;
 
     [self hideThumbnailWhenReady];
 }
@@ -543,19 +556,24 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 #pragma mark - Notifications
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
-    _isPlaying = NO;
+    self.resumeWhenShown = NO;
+}
+
+// Read the state before the system gets a chance to pause a backgrounding player on
+// its own, which would otherwise look like a pause the viewer made.
+- (void)appWillResignActive:(NSNotification *)notification {
+    self.resumeWhenShown = self.resumeWhenShown || self.isPlaybackActive;
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification {
-    self.wasPlayingBeforeBackground = self.isPlaying;
-    [self pause];
+    [self suspendPlayback];
 }
 
 - (void)appDidBecomeActive:(NSNotification *)notification {
-    if (self.wasPlayingBeforeBackground) {
-        self.wasPlayingBeforeBackground = NO;
-        [self play];
-    }
+    // Off-screen pages keep their flag for when they are swiped back to.
+    if (!self.view.window)
+        return;
+    [self resumePlaybackForDisplay];
 }
 
 #pragma mark - Controls
@@ -568,10 +586,15 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     }
 }
 
+// The player's own state, not a mirror of it: AVKit's transport controls play and
+// pause the AVPlayer directly, without going through -play or -pause.
+- (BOOL)isPlaybackActive {
+    return _player && _player.timeControlStatus != AVPlayerTimeControlStatusPaused;
+}
+
 - (void)play {
     if (_player) {
         [_player play];
-        _isPlaying = YES;
         return;
     }
     [self prepareForDisplay];
@@ -579,7 +602,13 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 
 - (void)pause {
     [_player pause];
-    _isPlaying = NO;
+}
+
+- (void)suspendPlayback {
+    // OR in the current state: a second suspend of an already suspended video (the
+    // app backgrounding while the page is off screen) must not forget it was playing.
+    self.resumeWhenShown = self.resumeWhenShown || self.isPlaybackActive;
+    [_player pause];
 }
 
 #pragma mark - Cleanup
@@ -602,7 +631,7 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     _preparedPlaybackURL = nil;
     _hasPreparedPlayer = NO;
     _hasStartedPlayback = NO;
-    _isPlaying = NO;
+    _resumeWhenShown = NO;
 }
 
 - (void)reloadWithFileURL:(NSURL *)url {

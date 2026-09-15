@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<SPKFullScreenContentDelegate> delegate;
 @property (nonatomic, strong, readonly, nullable) UIView *contentOverlayView;
 @property (nonatomic, readonly) BOOL isZoomed;
+/// Whether the player is playing or waiting to play, however it was started.
+@property (nonatomic, readonly) BOOL isPlaybackActive;
 
 - (instancetype)initWithMediaItem:(SPKMediaItem *)item;
 - (void)preloadContent;
@@ -30,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)applyMediaContentInsets:(UIEdgeInsets)insets;
 - (void)play;
 - (void)pause;
+/// Pauses for the page leaving the screen. The next display resumes it only if it was
+/// playing, so a video the viewer paused stays paused.
+- (void)suspendPlayback;
 
 @end
 

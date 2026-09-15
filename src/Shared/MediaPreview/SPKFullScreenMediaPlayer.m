@@ -779,7 +779,8 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     SPKFullScreenVideoViewController *video = [self currentVideoViewController];
     if (!video)
         return;
-    self.pausedForNavigationAway = YES;
+    // A video the viewer already paused is not ours to resume.
+    self.pausedForNavigationAway = video.isPlaybackActive;
     [video pause];
 }
 
@@ -1327,7 +1328,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 
     for (UIViewController *prevVC in previousViewControllers) {
         if ([prevVC isKindOfClass:[SPKFullScreenVideoViewController class]]) {
-            [(SPKFullScreenVideoViewController *)prevVC pause];
+            [(SPKFullScreenVideoViewController *)prevVC suspendPlayback];
         }
     }
 }
@@ -1596,7 +1597,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
         return;
     }
     // Pause the preview's playback so its audio stops while the editor is open.
-    [[self currentVideoViewController] pause];
+    [[self currentVideoViewController] suspendPlayback];
 
     SPKTrimConfiguration *config = isAudio
                                        ? [SPKTrimConfiguration configurationWithAudioURL:url]
