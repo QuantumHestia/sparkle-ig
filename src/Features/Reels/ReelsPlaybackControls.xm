@@ -13,6 +13,7 @@ static NSInteger const kSPKReelsSpeedBadgeTag = 926012;
 // Sparkle's Reels action button; the speed text sits above it when present.
 static NSInteger const kSPKReelsActionButtonTag = 921342;
 static const void *kSPKReelsMoreLongPressAssocKey = &kSPKReelsMoreLongPressAssocKey;
+static const void *kSPKReelsSpeedLabelAssocKey = &kSPKReelsSpeedLabelAssocKey;
 
 // Set while Sparkle drives the cell, so the hooks below can tell its own calls
 // from Instagram's.
@@ -348,24 +349,54 @@ static void SPKReelsPresentPanel(UIView *anchor, UIView *source) {
 }
 @end
 
+/// The speed text inside the indicator. It lives in an SPKChromeCanvas rather
+/// than being the button's own title, so "Hide UI on Capture" redacts it.
+static UILabel *SPKReelsSpeedIndicatorLabel(UIButton *indicator) {
+    return objc_getAssociatedObject(indicator, kSPKReelsSpeedLabelAssocKey);
+}
+
 static UIButton *SPKReelsSpeedIndicator(UIView *verticalUFI) {
     UIView *existing = [verticalUFI viewWithTag:kSPKReelsSpeedBadgeTag];
     if ([existing isKindOfClass:[UIButton class]])
         return (UIButton *)existing;
 
+    // The button stays the tap target; only the visible text is redacted.
     UIButton *indicator = [UIButton buttonWithType:UIButtonTypeCustom];
     indicator.tag = kSPKReelsSpeedBadgeTag;
-    indicator.titleLabel.font = [UIFont monospacedDigitSystemFontOfSize:16.0 weight:UIFontWeightBold];
     indicator.adjustsImageWhenHighlighted = NO;
-    // Matches the shadow Instagram puts under the UFI glyphs over bright video.
-    indicator.titleLabel.layer.shadowColor = UIColor.blackColor.CGColor;
-    indicator.titleLabel.layer.shadowOpacity = 0.24;
-    indicator.titleLabel.layer.shadowRadius = 1.8;
-    indicator.titleLabel.layer.shadowOffset = CGSizeMake(0.0, 1.0);
     indicator.accessibilityLabel = SPKL(@"PLAYBACK_PANEL_OPEN_ACCESSIBILITY_LABEL");
     [indicator addTarget:[SPKReelsPlaybackGestureHandler shared]
                   action:@selector(handleBadgeTap:)
         forControlEvents:UIControlEventTouchUpInside];
+
+    SPKChromeCanvas *canvas = [[SPKChromeCanvas alloc] init];
+    canvas.userInteractionEnabled = NO;
+    [indicator addSubview:canvas];
+
+    UILabel *label = [UILabel new];
+    label.font = [UIFont monospacedDigitSystemFontOfSize:16.0 weight:UIFontWeightBold];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    // Matches the shadow Instagram puts under the UFI glyphs over bright video.
+    label.layer.shadowColor = UIColor.blackColor.CGColor;
+    label.layer.shadowOpacity = 0.24;
+    label.layer.shadowRadius = 1.8;
+    label.layer.shadowOffset = CGSizeMake(0.0, 1.0);
+    label.layer.masksToBounds = NO;
+    [canvas.contentContainer addSubview:label];
+
+    // Pinned to the canvas itself, never to contentContainer: the canvas
+    // re-parents its children once the secure layer materialises.
+    [NSLayoutConstraint activateConstraints:@[
+        [canvas.leadingAnchor constraintEqualToAnchor:indicator.leadingAnchor],
+        [canvas.trailingAnchor constraintEqualToAnchor:indicator.trailingAnchor],
+        [canvas.topAnchor constraintEqualToAnchor:indicator.topAnchor],
+        [canvas.bottomAnchor constraintEqualToAnchor:indicator.bottomAnchor],
+        [label.centerXAnchor constraintEqualToAnchor:canvas.centerXAnchor],
+        [label.centerYAnchor constraintEqualToAnchor:canvas.centerYAnchor],
+    ]];
+    objc_setAssociatedObject(indicator, kSPKReelsSpeedLabelAssocKey, label, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
     [verticalUFI addSubview:indicator];
     return indicator;
 }
@@ -410,21 +441,21 @@ static void SPKReelsUpdateSpeedBadge(UIView *verticalUFI, UIView *moreButton) {
     }
 
     UIButton *indicator = SPKReelsSpeedIndicator(verticalUFI);
+    UILabel *textLabel = SPKReelsSpeedIndicatorLabel(indicator);
     NSString *label = SPKPlaybackSpeedLabel(speed);
-    if (![[indicator titleForState:UIControlStateNormal] isEqualToString:label]) {
+    if (![textLabel.text isEqualToString:label]) {
         [UIView performWithoutAnimation:^{
-            [indicator setTitle:label forState:UIControlStateNormal];
+            textLabel.text = label;
             [indicator layoutIfNeeded];
         }];
     }
     indicator.accessibilityValue = label;
 
-    UIColor *tint = SPKReelsNativeUFITint(verticalUFI);
-    [indicator setTitleColor:tint forState:UIControlStateNormal];
+    textLabel.textColor = SPKReelsNativeUFITint(verticalUFI);
     SPKChromeEnableExtendedDynamicRangeContent(indicator);
-    SPKChromeEnableExtendedDynamicRangeContent(indicator.titleLabel);
+    SPKChromeEnableExtendedDynamicRangeContent(textLabel);
 
-    CGSize size = [indicator sizeThatFits:CGSizeMake(CGFLOAT_MAX, 28.0)];
+    CGSize size = [textLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, 28.0)];
     size.width = MAX(size.width, 44.0);
     size.height = 28.0;
     CGRect anchorFrame = [anchor convertRect:anchor.bounds toView:verticalUFI];
