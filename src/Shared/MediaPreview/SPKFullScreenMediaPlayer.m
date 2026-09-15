@@ -113,9 +113,9 @@ static NSString *SPKCopiedDownloadURLTitleForPlaybackSource(
         noun = SPKL(@"COMMON_MEDIA_TYPE_REEL");
         break;
     case SPKFullScreenPlaybackSourceFeed:
-    case SPKFullScreenPlaybackSourceProfile:
         noun = SPKL(@"MESSAGES_DELETED_MESSAGES_MODELS_POST_TEXT");
         break;
+    case SPKFullScreenPlaybackSourceProfile:
     case SPKFullScreenPlaybackSourceDirect:
     case SPKFullScreenPlaybackSourceInstants:
     case SPKFullScreenPlaybackSourceUnknown:
@@ -2143,9 +2143,8 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
         req.preferredFileExtension = extension;
         req.metadata = metadata;
         req.index = index;
-        req.linkString = mediaItem.fileURL.absoluteString.length
-                             ? mediaItem.fileURL.absoluteString
-                             : resolvedURL.absoluteString;
+        req.linkString = [self downloadLinkStringForItem:mediaItem]
+                             ?: resolvedURL.absoluteString;
         req.expectedFilenameStem = [[SPKDownloadHelpers
             preferredFilenameForURL:resolvedURL
                           mediaKind:kind
@@ -2157,15 +2156,32 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     return items;
 }
 
+// Remote photos and videos with a source media pick their link through the
+// download-quality preferences, like a download does. Local files, audio and bare
+// URLs copy as they are.
+- (nullable NSString *)downloadLinkStringForItem:(SPKMediaItem *)item {
+    NSURL *fileURL = item.fileURL;
+    BOOL isImage = item.mediaType == SPKMediaItemTypeImage;
+    BOOL isVideo = item.mediaType == SPKMediaItemTypeVideo;
+    if (item.sourceMediaObject && fileURL && !fileURL.isFileURL && (isImage || isVideo)) {
+        NSURL *linkURL = [SPKMediaQualityManager downloadLinkURLForMediaObject:item.sourceMediaObject
+                                                                      photoURL:isImage ? fileURL : nil
+                                                                      videoURL:isVideo ? fileURL : nil
+                                                          photoQualityOverride:nil];
+        if (linkURL.absoluteString.length > 0)
+            return linkURL.absoluteString;
+    }
+    NSString *linkString = fileURL.absoluteString;
+    if (linkString.length == 0) {
+        linkString = [[SPKMediaCacheManager sharedManager] bestAvailableFileURLForItem:item].absoluteString;
+    }
+    return linkString.length > 0 ? linkString : nil;
+}
+
 - (NSArray<NSString *> *)bulkDownloadLinksForPreview {
     NSMutableOrderedSet<NSString *> *links = [NSMutableOrderedSet orderedSet];
     for (SPKMediaItem *item in self.items) {
-        NSString *linkString = item.fileURL.absoluteString;
-        if (linkString.length == 0) {
-            NSURL *resolvedURL = [[SPKMediaCacheManager sharedManager]
-                bestAvailableFileURLForItem:item];
-            linkString = resolvedURL.absoluteString;
-        }
+        NSString *linkString = [self downloadLinkStringForItem:item];
         if (linkString.length > 0) {
             [links addObject:linkString];
         }
@@ -2174,6 +2190,14 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 - (void)copyAllDownloadLinks {
+    __weak typeof(self) weakSelf = self;
+    if ([self beginFetching4KCandidatesForItem:[self currentItem]
+                                    identifier:kSPKActionCopyDownloadLink
+                                         retry:^{
+                                             [weakSelf copyAllDownloadLinks];
+                                         }]) {
+        return;
+    }
     [self copyDownloadLinks:[self bulkDownloadLinksForPreview]];
 }
 
@@ -2188,6 +2212,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 }
 
 - (void)copyDownloadLinks:(NSArray<NSString *> *)links {
+    [[SPKNotificationCenter shared] dismissTransientProgressPill];
     if (links.count == 0) {
         SPKNotify(kSPKActionCopyDownloadLink, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINKS_AVAILABLE_TEXT"), nil,
                   @"error_filled", SPKNotificationToneError);
@@ -2196,21 +2221,41 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 
     [UIPasteboard generalPasteboard].string =
         [links componentsJoinedByString:@"\n"];
+    BOOL plural = links.count > 1;
     SPKNotify(
         kSPKActionCopyDownloadLink,
-        SPKCopiedDownloadURLTitleForPlaybackSource(self.playbackSource, YES),
-        SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)links.count),
+        SPKCopiedDownloadURLTitleForPlaybackSource(self.playbackSource, plural),
+        plural ? SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)links.count) : nil,
         @"circle_check_filled", SPKNotificationToneSuccess);
 }
 
 - (void)copyDownloadURLForCurrentItem {
     SPKMediaItem *item = [self currentItem];
-    NSString *linkString = item.fileURL.absoluteString;
-    if (linkString.length == 0) {
-        NSURL *resolvedURL = [[SPKMediaCacheManager sharedManager]
-            bestAvailableFileURLForItem:item];
-        linkString = resolvedURL.absoluteString;
+    __weak typeof(self) weakSelf = self;
+    if ([self beginFetching4KCandidatesForItem:item
+                                    identifier:kSPKActionCopyDownloadLink
+                                         retry:^{
+                                             [weakSelf copyDownloadURLForCurrentItem];
+                                         }]) {
+        return;
     }
+    NSURL *fileURL = item.fileURL;
+    BOOL isImage = item.mediaType == SPKMediaItemTypeImage;
+    BOOL isVideo = item.mediaType == SPKMediaItemTypeVideo;
+    if (item.sourceMediaObject && fileURL && !fileURL.isFileURL && (isImage || isVideo)) {
+        [[SPKNotificationCenter shared] dismissTransientProgressPill];
+        [SPKMediaQualityManager resolveDownloadLinkForMediaObject:item.sourceMediaObject
+                                                         photoURL:isImage ? fileURL : nil
+                                                         videoURL:isVideo ? fileURL : nil
+                                                        presenter:self
+                                                       sourceView:[self bottomBarAnchorView]
+                                                       completion:^(NSURL *url) {
+                                                           NSString *linkString = url.absoluteString;
+                                                           [weakSelf copyDownloadLinks:linkString.length > 0 ? @[ linkString ] : @[]];
+                                                       }];
+        return;
+    }
+    NSString *linkString = [self downloadLinkStringForItem:item];
     [self copyDownloadLinks:linkString.length > 0 ? @[ linkString ] : @[]];
 }
 

@@ -83,6 +83,29 @@ NS_ASSUME_NONNULL_BEGIN
                               qualityOverride:(nullable NSString *)qualityOverride
                                   destination:(SPKDownloadDestination)destination;
 
+/// The URL a "copy download link" action hands out, chosen by the same photo and video
+/// quality preferences as a download. A link must be one playable file, so videos pick
+/// among progressive variants only (DASH streams are video-only or need an FFmpeg merge).
+/// `photoQualityOverride` (`max` / `high` / `medium` / `low`) replaces the photo
+/// preference, which is how a batch quality prompt applies its choice. With no override
+/// and no picker available, Always Ask resolves to the best tier. Falls back to
+/// `videoURL` / `photoURL` when the media yields no option.
++ (nullable NSURL *)downloadLinkURLForMediaObject:(nullable id)mediaObject
+                                         photoURL:(nullable NSURL *)photoURL
+                                         videoURL:(nullable NSURL *)videoURL
+                             photoQualityOverride:(nullable NSString *)photoQualityOverride;
+
+/// Single-item copy-link flow: resolves like the method above, but when the relevant
+/// quality preference is Always Ask it presents the quality sheet, limited to options
+/// that are one playable file. `completion` runs with the chosen URL on the main queue,
+/// and does not run when the sheet is dismissed without a choice.
++ (void)resolveDownloadLinkForMediaObject:(nullable id)mediaObject
+                                 photoURL:(nullable NSURL *)photoURL
+                                 videoURL:(nullable NSURL *)videoURL
+                                presenter:(nullable UIViewController *)presenter
+                               sourceView:(nullable UIView *)sourceView
+                               completion:(void (^)(NSURL *_Nullable url))completion;
+
 + (UIViewController *)encodingSettingsViewController;
 + (NSArray *)encodingSettingsSearchSections;
 

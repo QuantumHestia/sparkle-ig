@@ -3031,6 +3031,56 @@ static void SPKMediaPerformOptionDownload(
     return option.primaryURL ?: photoURL ?: videoURL;
 }
 
+static NSURL *SPKMediaDownloadLinkURL(SPKMediaAnalysis *analysis, NSString *photoQualityOverride,
+                                      NSURL *photoURL, NSURL *videoURL) {
+    SPKMediaOption *option = nil;
+    if (analysis.isVideo) {
+        NSString *quality = [SPKUtils getStringPref:@"downloads_video_quality"];
+        NSArray<SPKMediaOption *> *progressive = analysis.progressiveVideoOptions;
+        option = SPKMediaTieredOption(progressive, quality) ?: progressive.firstObject;
+    } else {
+        NSString *quality = photoQualityOverride.length > 0 ? photoQualityOverride : [SPKUtils getStringPref:@"downloads_photo_quality"];
+        option = SPKMediaResolveDefaultOption(analysis, [quality isEqualToString:@"always_ask"] ? @"max" : quality);
+    }
+    return option.primaryURL ?: videoURL ?: photoURL;
+}
+
++ (NSURL *)downloadLinkURLForMediaObject:(id)mediaObject
+                                photoURL:(NSURL *)photoURL
+                                videoURL:(NSURL *)videoURL
+                    photoQualityOverride:(NSString *)photoQualityOverride {
+    SPKMediaAnalysis *analysis = SPKMediaAnalyze(mediaObject, photoURL, videoURL, SPKDownloadDestinationClipboard, NO);
+    return SPKMediaDownloadLinkURL(analysis, photoQualityOverride, photoURL, videoURL);
+}
+
++ (void)resolveDownloadLinkForMediaObject:(id)mediaObject
+                                 photoURL:(NSURL *)photoURL
+                                 videoURL:(NSURL *)videoURL
+                                presenter:(UIViewController *)presenter
+                               sourceView:(UIView *)sourceView
+                               completion:(void (^)(NSURL *url))completion {
+    if (!completion)
+        return;
+    SPKMediaAnalysis *analysis = SPKMediaAnalyze(mediaObject, photoURL, videoURL, SPKDownloadDestinationClipboard, NO);
+    NSString *quality = [SPKUtils getStringPref:analysis.isVideo ? @"downloads_video_quality" : @"downloads_photo_quality"];
+    NSArray<SPKMediaOption *> *choices = analysis.isVideo ? analysis.progressiveVideoOptions : analysis.photoOptions;
+    UIViewController *resolvedPresenter = presenter ?: topMostController();
+    if (![quality isEqualToString:@"always_ask"] || !resolvedPresenter || choices.count < 2) {
+        completion(SPKMediaDownloadLinkURL(analysis, nil, photoURL, videoURL));
+        return;
+    }
+
+    // A link can only point at one file, so the video sheet drops the DASH sections.
+    if (analysis.isVideo) {
+        analysis.videoSections = @[ SPKMediaSection(SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_READY_PLAY_TEXT"), choices) ];
+    }
+    SPKMediaPresentOptionsSheet(resolvedPresenter, sourceView, analysis, SPKDownloadDestinationClipboard,
+                                ^(SPKMediaOption *option) {
+                                    completion(option.primaryURL ?: videoURL ?: photoURL);
+                                },
+                                nil);
+}
+
 + (UIViewController *)encodingSettingsViewController {
     return [[SPKMediaEncodingSettingsViewController alloc] init];
 }

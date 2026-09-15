@@ -350,7 +350,6 @@ static NSString *SPKDownloadURLNounForActionSource(SPKActionButtonSource source)
     case SPKActionButtonSourceReels:
         return SPKL(@"COMMON_MEDIA_TYPE_REEL");
     case SPKActionButtonSourceFeed:
-    case SPKActionButtonSourceProfile:
         return SPKL(@"MESSAGES_DELETED_MESSAGES_MODELS_POST_TEXT");
     case SPKActionButtonSourceInstants:
         return SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_INSTANT_TEXT");
@@ -369,7 +368,6 @@ static NSString *SPKCopiedDownloadURLTitleForSource(SPKActionButtonSource source
     case SPKActionButtonSourceStories:
     case SPKActionButtonSourceReels:
     case SPKActionButtonSourceFeed:
-    case SPKActionButtonSourceProfile:
     case SPKActionButtonSourceInstants:
         return [NSString stringWithFormat:SPKL(@"ACTION_BUTTON_SOURCE_DOWNLOAD_URL_COPIED_FORMAT"), SPKDownloadURLNounForActionSource(source), urlWord];
     default:
@@ -2116,15 +2114,17 @@ static NSArray<SPKDownloadItemRequest *> *SPKBulkDownloadItemsFromEntries(NSArra
     return items;
 }
 
-static NSArray<NSString *> *SPKBulkDownloadLinksFromEntries(NSArray<SPKResolvedMediaEntry *> *entries, id media) {
+static NSArray<NSString *> *SPKBulkDownloadLinksFromEntries(NSArray<SPKResolvedMediaEntry *> *entries, id media, NSString *photoQualityOverride) {
     NSMutableOrderedSet<NSString *> *links = [NSMutableOrderedSet orderedSet];
     for (SPKResolvedMediaEntry *entry in entries) {
         id metadataObject = entry.metadataObject ?: entry.mediaObject ?
                                                                       : media;
-        NSURL *bestURL = SPKBestDownloadURLForMediaObject(metadataObject) ?: entry.videoURL ?
-                                                                                            : entry.photoURL;
-        if (bestURL.absoluteString.length > 0) {
-            [links addObject:bestURL.absoluteString];
+        NSURL *linkURL = [SPKMediaQualityManager downloadLinkURLForMediaObject:metadataObject
+                                                                      photoURL:entry.photoURL
+                                                                      videoURL:entry.videoURL
+                                                          photoQualityOverride:photoQualityOverride];
+        if (linkURL.absoluteString.length > 0) {
+            [links addObject:linkURL.absoluteString];
         }
     }
     return links.array;
@@ -2582,8 +2582,20 @@ static void SPKPerformBatchDownloadWithQualityPrompt(NSArray<SPKResolvedMediaEnt
     if (selectedEntries.count == 0)
         return;
 
+    BOOL copiesLinks = [identifier isEqualToString:kSPKActionDownloadAllLinks];
     void (^performBatchDownloadWithQuality)(NSString *) = ^(NSString *qualityOverride) {
         void (^startDownload)(void) = ^{
+            if (copiesLinks) {
+                [[SPKNotificationCenter shared] dismissTransientProgressPill];
+                NSArray<NSString *> *links = SPKBulkDownloadLinksFromEntries(selectedEntries, media, qualityOverride);
+                if (links.count == 0) {
+                    SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINKS_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
+                    return;
+                }
+                [UIPasteboard generalPasteboard].string = [links componentsJoinedByString:@"\n"];
+                SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(source, links.count > 1), links.count > 1 ? SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)links.count) : nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+                return;
+            }
             NSArray<SPKDownloadItemRequest *> *bulkItems = SPKBulkDownloadItemsFromEntries(selectedEntries, source, username, media, qualityOverride, destination);
             [SPKDownloadHelpers performBulkDownloadIdentifier:identifier
                                                          items:bulkItems
@@ -2593,6 +2605,9 @@ static void SPKPerformBatchDownloadWithQualityPrompt(NSArray<SPKResolvedMediaEnt
         };
 
         NSString *effectiveQuality = qualityOverride.length > 0 ? qualityOverride : [SPKUtils getStringPref:@"downloads_photo_quality"];
+        // Without a presenter to ask, a link resolves Always Ask to Max.
+        if (copiesLinks && [effectiveQuality isEqualToString:@"always_ask"])
+            effectiveQuality = @"max";
         if ([effectiveQuality isEqualToString:@"max"] && [SPKUtils getBoolPref:@"downloads_fetch_4k_images"]) {
             NSString *topPK = SPKMediaPKForMediaObject(media);
             if (topPK.length > 0 && ![SPKMediaQualityManager hasWebPhotoCandidatesFetchedForPK:topPK]) {
@@ -2653,17 +2668,6 @@ static BOOL SPKExecuteBulkChildAction(NSString *identifier,
     NSArray<SPKResolvedMediaEntry *> *downloadableEntries = SPKDownloadableEntries(entries);
     if (downloadableEntries.count < 2) {
         SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_BULK_MEDIA_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-        return YES;
-    }
-
-    if ([identifier isEqualToString:kSPKActionDownloadAllLinks]) {
-        NSArray<NSString *> *bulkLinks = SPKBulkDownloadLinksFromEntries(downloadableEntries, media);
-        if (bulkLinks.count == 0) {
-            SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINKS_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-            return YES;
-        }
-        [UIPasteboard generalPasteboard].string = [bulkLinks componentsJoinedByString:@"\n"];
-        SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(context.source, YES), SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)bulkLinks.count), @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
         return YES;
     }
 
@@ -2842,19 +2846,26 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
     }
 
     if ([identifier isEqualToString:kSPKActionCopyDownloadLink]) {
-        NSURL *bestURL = currentEntry.videoURL ?: currentEntry.photoURL;
-        if (!bestURL) {
-            id mediaForCopy = currentEntry.metadataObject ?: currentEntry.mediaObject ?
-                                                                                      : media;
-            bestURL = SPKBestDownloadURLForMediaObject(mediaForCopy);
-        }
-        if (!bestURL) {
-            SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINK_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-            return YES;
-        }
-
-        [UIPasteboard generalPasteboard].string = bestURL.absoluteString ?: @"";
-        SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(context.source, NO), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+        id mediaForCopy = currentEntry.metadataObject ?: currentEntry.mediaObject ?
+                                                                                  : media;
+        // Copying never adopts the "Fetching 4K candidates" pill the way a download
+        // does, so it has to clear it or the pill spins forever.
+        [[SPKNotificationCenter shared] dismissTransientProgressPill];
+        SPKActionButtonSource source = context.source;
+        [SPKMediaQualityManager resolveDownloadLinkForMediaObject:mediaForCopy
+                                                         photoURL:currentEntry.photoURL
+                                                         videoURL:currentEntry.videoURL
+                                                        presenter:SPKActionContextPresenter(context)
+                                                       sourceView:SPKActionContextAnchorView(context)
+                                                       completion:^(NSURL *url) {
+                                                           NSURL *bestURL = url ?: SPKBestDownloadURLForMediaObject(mediaForCopy);
+                                                           if (!bestURL) {
+                                                               SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINK_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
+                                                               return;
+                                                           }
+                                                           [UIPasteboard generalPasteboard].string = bestURL.absoluteString ?: @"";
+                                                           SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(source, NO), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+                                                       }];
         return YES;
     }
 
@@ -3286,7 +3297,10 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
     BOOL isVideo = [SPKMediaQualityManager mediaObjectIsVideo:media];
     NSString *photoQuality = [SPKUtils getStringPref:@"downloads_photo_quality"] ?: @"high";
     BOOL isBulkAction = SPKIsBulkChildActionIdentifier(identifier);
-    BOOL shouldFetch4K = [SPKUtils getBoolPref:@"downloads_fetch_4k_images"] && 
+    // The profile button acts on an IGUser: its pk is a user id, which the web media
+    // endpoint can't resolve, and a profile picture has no 4K candidates anyway.
+    BOOL shouldFetch4K = [SPKUtils getBoolPref:@"downloads_fetch_4k_images"] &&
+                         context.source != SPKActionButtonSourceProfile &&
                          !isVideo && 
                          ([photoQuality isEqualToString:@"max"] || ([photoQuality isEqualToString:@"always_ask"] && !isBulkAction));
 
@@ -3322,6 +3336,7 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
         }
     }
     if (entries.count == 0) {
+        [[SPKNotificationCenter shared] dismissTransientProgressPill];
         SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_MEDIA_NOT_FOUND_TEXT"), nil, @"error_filled", SPKNotificationToneError);
         return NO;
     }
@@ -3554,16 +3569,6 @@ static NSArray<UIMenuElement *> *SPKBuildBulkMenuChildren(SPKActionButtonConfigu
                                                                                                                     NSArray<SPKResolvedMediaEntry *> *selectedEntries = [tapBulkEntries objectsAtIndexes:selectedIndexes];
                                                                                                                     if (selectedEntries.count == 0)
                                                                                                                         return;
-                                                                                                                    if ([destinationIdentifier isEqualToString:kSPKActionDownloadAllLinks]) {
-                                                                                                                        NSArray<NSString *> *links = SPKBulkDownloadLinksFromEntries(selectedEntries, tapBulkMedia);
-                                                                                                                        if (links.count == 0) {
-                                                                                                                            SPKNotify(destinationIdentifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINKS_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-                                                                                                                            return;
-                                                                                                                        }
-                                                                                                                        [UIPasteboard generalPasteboard].string = [links componentsJoinedByString:@"\n"];
-                                                                                                                        SPKNotify(destinationIdentifier, SPKCopiedDownloadURLTitleForSource(context.source, YES), SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)links.count), @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
-                                                                                                                        return;
-                                                                                                                    }
                                                                                                                     SPKDownloadDestination dest = [destinationIdentifier isEqualToString:kSPKActionDownloadAllGallery] ? SPKDownloadDestinationGallery : SPKDownloadDestinationPhotos;
                                                                                                                     UIViewController *presenter = SPKActionContextPresenter(context);
                                                                                                                     UIView *anchorView = SPKActionContextAnchorView(context);
