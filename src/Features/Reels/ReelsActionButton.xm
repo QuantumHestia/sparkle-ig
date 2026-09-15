@@ -428,17 +428,82 @@ static BOOL SPKReelsActionButtonLayoutIsCurrent(UIButton *button) {
            SPKReelsConstraintMatches(heightConstraint, kSPKReelsActionButtonSize);
 }
 
+// MARK: - Visibility
+
+static UIButton *SPKReelsHostedActionButton(UIView *verticalUFIView) {
+    for (UIView *subview in verticalUFIView.superview.subviews) {
+        if (subview.tag == kSPKReelsActionButtonTag && [subview isKindOfClass:[UIButton class]])
+            return (UIButton *)subview;
+    }
+    return nil;
+}
+
+// The button is a sibling of the UFI, so it must follow the UFI's fades itself.
+// Called from the UFI's alpha/hidden setters so the change lands in the same
+// call and inside the same animation block, never a stale mid-fade value.
+static void SPKReelsSyncActionButtonVisibility(UIView *verticalUFIView) {
+    UIButton *button = SPKReelsHostedActionButton(verticalUFIView);
+    if (!button)
+        return;
+    CGFloat alpha = verticalUFIView.hidden ? 0.0 : verticalUFIView.alpha;
+    if (ABS(button.alpha - alpha) > 0.001)
+        button.alpha = alpha;
+}
+
+// MARK: - UFI EDR anchor
+
+// Outside the [921341, 926003] capture-hiding tag range: the anchor draws nothing.
+static NSInteger const kSPKReelsUFIEDRAnchorTag = 927101;
+
+// The UFI layer rasterizes, and its cache only keeps extended range when a
+// sublayer asks for EDR. Instagram's own glyphs do not, so without an EDR
+// sublayer their HDR tint clamps to SDR. The action button used to supply that
+// sublayer by living inside the UFI; now that it lives beside it, this empty
+// view keeps the rasterized UFI in extended range.
+static void SPKEnsureReelsUFIEDRAnchor(UIView *verticalUFIView) {
+    UIView *anchor = [verticalUFIView viewWithTag:kSPKReelsUFIEDRAnchorTag];
+    if (anchor.superview == verticalUFIView)
+        return;
+
+    anchor = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 1.0, 1.0)];
+    anchor.tag = kSPKReelsUFIEDRAnchorTag;
+    anchor.userInteractionEnabled = NO;
+    anchor.backgroundColor = UIColor.clearColor;
+    anchor.isAccessibilityElement = NO;
+    SEL selector = NSSelectorFromString(@"setWantsExtendedDynamicRangeContent:");
+    if ([anchor.layer respondsToSelector:selector])
+        ((void (*)(id, SEL, BOOL))objc_msgSend)(anchor.layer, selector, YES);
+    [verticalUFIView insertSubview:anchor atIndex:0];
+}
+
 // MARK: - Installer (with media-change gate — Layer 1)
 
 void SPKInstallReelsActionButton(UIView *verticalUFIView) {
     if (!verticalUFIView)
         return;
 
-    UIButton *button = (UIButton *)[verticalUFIView viewWithTag:kSPKReelsActionButtonTag];
+    // Host the button beside the UFI, not inside it. The UFI layer rasterizes and
+    // casts a shadow from its whole subtree, so as a sublayer the button's
+    // silhouette became an opaque black shape whenever UIKit re-rendered it for
+    // the touch highlight and the context-menu morph. The UFI's bounds also do
+    // not contain the button, which sits above its top edge.
+    UIView *host = verticalUFIView.superview ?: verticalUFIView;
+    UIButton *legacyButton = (UIButton *)[verticalUFIView viewWithTag:kSPKReelsActionButtonTag];
+    if (legacyButton && host != verticalUFIView)
+        [legacyButton removeFromSuperview];
+
+    UIButton *button = SPKReelsHostedActionButton(verticalUFIView);
     if (![SPKUtils getBoolPref:@"reels_action_btn"]) {
         [button removeFromSuperview];
+        [[verticalUFIView viewWithTag:kSPKReelsUFIEDRAnchorTag] removeFromSuperview];
         return;
     }
+
+    SPKEnsureReelsUFIEDRAnchor(verticalUFIView);
+    SPKReelsSyncActionButtonVisibility(verticalUFIView);
+    // Siblings are added and reordered on cell reuse; keep the button on top.
+    if (button && host.subviews.lastObject != button)
+        [host bringSubviewToFront:button];
 
     // This must run before the layout/media early return: HDR/EDR changes can
     // update Instagram's like tint without changing the reel or our constraints.
@@ -458,7 +523,8 @@ void SPKInstallReelsActionButton(UIView *verticalUFIView) {
         return;
     }
 
-    button = SPKActionButtonWithTag(verticalUFIView, kSPKReelsActionButtonTag);
+    button = button ?: SPKActionButtonWithTag(host, kSPKReelsActionButtonTag);
+    SPKReelsSyncActionButtonVisibility(verticalUFIView);
     SPKConfigureActionButton(button, SPKReelsActionContext(verticalUFIView));
 
     // Store the resolved media + carousel index for change detection on next call
@@ -492,9 +558,7 @@ void SPKInstallReelsActionButton(UIView *verticalUFIView) {
     widthConstraint.constant = kSPKReelsActionButtonSize;
     heightConstraint.constant = kSPKReelsActionButtonSize;
 
-    verticalUFIView.clipsToBounds = NO;
-    verticalUFIView.layer.masksToBounds = NO;
-    [verticalUFIView bringSubviewToFront:button];
+    [host bringSubviewToFront:button];
     SPKApplyButtonStyle(button, SPKActionButtonSourceReels);
     SPKApplyReelsNativeUFIColor(button, SPKReelsNativeUFIColor(verticalUFIView));
 }
@@ -506,6 +570,21 @@ void SPKInstallReelsActionButton(UIView *verticalUFIView) {
     %orig;
     SPK_PERF_SCOPE(@"ReelsActionButton.layoutSubviews");
     SPKInstallReelsActionButton((UIView *)self);
+}
+
+- (void)setAlpha:(CGFloat)alpha {
+    %orig;
+    SPKReelsSyncActionButtonVisibility((UIView *)self);
+}
+
+- (void)setHidden:(BOOL)hidden {
+    %orig;
+    SPKReelsSyncActionButtonVisibility((UIView *)self);
+}
+
+- (void)didMoveToSuperview {
+    %orig;
+    SPKReelsSyncActionButtonVisibility((UIView *)self);
 }
 %end
 

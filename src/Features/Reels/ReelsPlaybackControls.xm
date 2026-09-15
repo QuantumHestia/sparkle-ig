@@ -383,7 +383,15 @@ static UIColor *SPKReelsNativeUFITint(UIView *verticalUFI) {
 /// The topmost element of the action column the indicator sits above: Sparkle's
 /// action button when it is shown, otherwise Instagram's like button.
 static UIView *SPKReelsIndicatorAnchor(UIView *verticalUFI) {
-    UIView *actionButton = [verticalUFI viewWithTag:kSPKReelsActionButtonTag];
+    // The action button is hosted beside the UFI (a sibling in its superview),
+    // not inside it.
+    UIView *actionButton = nil;
+    for (UIView *subview in verticalUFI.superview.subviews) {
+        if (subview.tag == kSPKReelsActionButtonTag) {
+            actionButton = subview;
+            break;
+        }
+    }
     if (actionButton && !actionButton.hidden && actionButton.alpha > 0.01)
         return actionButton;
     id likeButton = SPKReelsPlaybackSend(verticalUFI, @"ufiLikeButton");

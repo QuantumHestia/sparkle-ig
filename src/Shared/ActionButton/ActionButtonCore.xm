@@ -85,7 +85,6 @@ static const void *kSPKActionButtonIconHeightConstraintAssocKey = &kSPKActionBut
 static const void *kSPKActionButtonMenuSignatureAssocKey = &kSPKActionButtonMenuSignatureAssocKey;
 static const void *kSPKActionButtonLastMenuActionAssocKey = &kSPKActionButtonLastMenuActionAssocKey;
 static const void *kSPKActionButtonConfigurationObserverAssocKey = &kSPKActionButtonConfigurationObserverAssocKey;
-static const void *kSPKActionButtonMenuHiddenAlphaAssocKey = &kSPKActionButtonMenuHiddenAlphaAssocKey;
 static NSDictionary<NSString *, NSString *> *SPKPendingRepostFeedback = nil;
 
 @interface SPKResolvedMediaEntry : NSObject
@@ -123,45 +122,6 @@ static BOOL SPKActionMenuButtonIsReels(UIButton *button) {
     return context.source == SPKActionButtonSourceReels;
 }
 
-static void SPKStabilizeReelsActionButtonIcon(UIButton *button) {
-    if (!SPKActionMenuButtonIsReels(button) || ![button isKindOfClass:[SPKChromeButton class]])
-        return;
-
-    SPKChromeButton *chromeButton = (SPKChromeButton *)button;
-    // Do not reset the tint here. ReelsActionButton.xm mirrors Instagram's
-    // native UFI tint (including HDR/EDR) and this helper runs during every
-    // iOS 26 context-menu preview/open/close transition.
-    chromeButton.iconView.hidden = NO;
-    chromeButton.iconView.alpha = 1.0;
-    chromeButton.iconView.layer.opacity = 1.0;
-    chromeButton.iconView.layer.hidden = NO;
-    [chromeButton.iconView.superview bringSubviewToFront:chromeButton.iconView];
-    [chromeButton setNeedsLayout];
-    [chromeButton layoutIfNeeded];
-}
-
-static void SPKSetReelsActionButtonMenuHidden(UIButton *button, BOOL hidden) {
-    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0"))
-        return;
-    if (!SPKActionMenuButtonIsReels(button))
-        return;
-
-    if (hidden) {
-        if (!objc_getAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey)) {
-            objc_setAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey, @(button.alpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }
-        button.alpha = 0.0;
-        button.layer.opacity = 0.0;
-        return;
-    }
-
-    NSNumber *storedAlpha = objc_getAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey);
-    CGFloat alpha = storedAlpha ? storedAlpha.doubleValue : 1.0;
-    button.alpha = alpha;
-    button.layer.opacity = alpha;
-    objc_setAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 static BOOL SPKActionMenuButtonIsStories(UIButton *button) {
     SPKActionButtonContext *context = SPKActionButtonContextFromButton(button);
     return context.source == SPKActionButtonSourceStories;
@@ -177,40 +137,17 @@ static void SPKReapplyStoriesActionButtonDynamicRange(UIButton *button) {
     SPKStoryApplyDynamicRangeToButton(button);
 }
 
-static UITargetedPreview *SPKReelsActionButtonMenuPreview(UIButton *button) {
-    if (!SPKActionMenuButtonIsReels(button) || ![button isKindOfClass:[SPKChromeButton class]])
-        return nil;
+static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
+    if (!SPKActionMenuButtonIsReels(button) || CGRectIsEmpty(button.bounds))
+        return [[UITargetedPreview alloc] initWithView:button];
 
-    SPKStabilizeReelsActionButtonIcon(button);
-
-    CGRect bounds = button.bounds;
-    if (CGRectIsEmpty(bounds)) {
-        CGFloat side = 44.0;
-        bounds = CGRectMake(0.0, 0.0, side, side);
-    }
-
-    UIView *previewView = [[UIView alloc] initWithFrame:bounds];
-    previewView.userInteractionEnabled = NO;
-    previewView.backgroundColor = UIColor.clearColor;
-    previewView.clipsToBounds = NO;
-
+    // Reels floats the bare glyph over the video. The default preview parameters
+    // paint an SDR platter behind the preview, which read as a dim square around
+    // the EDR glyph on HDR reels during the highlight and the menu morph.
     UIPreviewParameters *parameters = [[UIPreviewParameters alloc] init];
     parameters.backgroundColor = UIColor.clearColor;
-    parameters.visiblePath = [UIBezierPath bezierPathWithOvalInRect:bounds];
-
-    if (button.superview) {
-        CGPoint center = [button.superview convertPoint:CGPointMake(CGRectGetMidX(button.bounds), CGRectGetMidY(button.bounds)) fromView:button];
-        UIPreviewTarget *target = [[UIPreviewTarget alloc] initWithContainer:button.superview center:center];
-        return [[UITargetedPreview alloc] initWithView:previewView parameters:parameters target:target];
-    }
-    return [[UITargetedPreview alloc] initWithView:previewView parameters:parameters];
-}
-
-static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
-    UITargetedPreview *reelsPreview = SPKReelsActionButtonMenuPreview(button);
-    if (reelsPreview)
-        return reelsPreview;
-    return [[UITargetedPreview alloc] initWithView:button];
+    parameters.visiblePath = [UIBezierPath bezierPathWithOvalInRect:button.bounds];
+    return [[UITargetedPreview alloc] initWithView:button parameters:parameters];
 }
 
 @implementation SPKResolvedMediaEntry
@@ -253,13 +190,10 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     if (!context)
         return;
 
-    SPKStabilizeReelsActionButtonIcon(self);
     SPKReapplyStoriesActionButtonDynamicRange(self);
     [animator addAnimations:^{
-        SPKStabilizeReelsActionButtonIcon(self);
         SPKReapplyStoriesActionButtonDynamicRange(self);
     }];
-    SPKSetReelsActionButtonMenuHidden(self, YES);
 
     objc_setAssociatedObject(self, kSPKActionButtonLastMenuActionAssocKey, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (context.source == SPKActionButtonSourceStories) {
@@ -276,19 +210,15 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     (void)interaction;
     (void)configuration;
 
-    SPKStabilizeReelsActionButtonIcon(self);
     SPKReapplyStoriesActionButtonDynamicRange(self);
     [animator addAnimations:^{
-        SPKStabilizeReelsActionButtonIcon(self);
         SPKReapplyStoriesActionButtonDynamicRange(self);
     }];
-    SPKSetReelsActionButtonMenuHidden(self, NO);
 
     [animator addCompletion:^{
         SPKActionMenuButton *strongSelf = self;
         if (!strongSelf)
             return;
-        SPKStabilizeReelsActionButtonIcon(strongSelf);
         SPKReapplyStoriesActionButtonDynamicRange(strongSelf);
 
         SPKActionButtonContext *context = SPKActionButtonContextFromButton(strongSelf);
