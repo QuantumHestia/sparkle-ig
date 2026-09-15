@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Επισκεπτόμενα Προφίλ";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Εικόνα Προφίλ";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Πάτα παρατεταμένα μια φωτογραφία προφίλ για να ανοίξει σε μεγέθυνση.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Αποθηκευμένα";
+"PROFILE_TABS_HEADER" = "Καρτέλες";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Προσθέτει τις αποθηκευμένες συλλογές σου ως καρτέλα στο δικό σου προφίλ. Ανανέωσε το προφίλ σου για εφαρμογή.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Καρτέλα αποθηκευμένων";
 "PROFILE_TITLE" = "Προφίλ";
 "REACTION_CONTEXT_FORMAT" = "Στο \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Το πάτημα εκτελεί την προεπιλεγμένη ενέργεια. Το παρατεταμένο πάτημα ανοίγει το πλήρες μενού ενεργειών.";

@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "방문한 프로필";
 "PROFILE_PROFILE_PICTURE_HEADER" = "프로필 사진";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "프로필 사진을 길게 눌러 확대해서 엽니다.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "저장됨";
+"PROFILE_TABS_HEADER" = "탭";
+"PROFILE_TABS_SAVED_TAB_HELP" = "저장한 컬렉션을 내 프로필의 탭으로 추가합니다. 적용하려면 프로필을 새로고침하세요.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "저장됨 탭";
 "PROFILE_TITLE" = "프로필";
 "REACTION_CONTEXT_FORMAT" = "\"%@\"에서";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "탭하면 기본 동작을 실행하고, 길게 누르면 전체 동작 메뉴를 엽니다.";

@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Aplankyti profiliai";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profilio nuotrauka";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Ilgai paspauskite profilio nuotrauką, kad atvertumėte ją padidintą.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Išsaugota";
+"PROFILE_TABS_HEADER" = "Skirtukai";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Prideda išsaugotas kolekcijas kaip skirtuką jūsų profilyje. Norėdami pritaikyti, atnaujinkite profilį.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Išsaugotų skirtukas";
 "PROFILE_TITLE" = "Profilis";
 "REACTION_CONTEXT_FORMAT" = "Prie \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Palietimas vykdo numatytąjį veiksmą. Ilgas paspaudimas atveria visą veiksmų meniu.";

@@ -82,6 +82,51 @@
 
 @interface IGProfileViewController : UIViewController
 - (instancetype)initWithConfiguration:(id)configuration accountSwitcherPresenter:(nullable id)presenter isMainProfileSurface:(BOOL)isMainProfileSurface;
+- (nullable id)user;
+// TabManager category. Page identifiers are NSNumber profile tab types.
+- (nullable id)dynamicPageViewController:(id)pageController viewControllerForPageWithIdentifier:(id)identifier;
+- (BOOL)dynamicPageViewController:(id)pageController canDisplayPlaceholderViewForPageWithIdentifier:(id)identifier;
+- (void)_tabControlValueChanged:(id)control;
+@end
+
+// Profile tab strip on builds without the Swift tabs plugin (410).
+@interface IGSegmentedTabControl : UIControl
+@property (copy, nonatomic) NSArray *segments;
+@property (nonatomic) long long selectedIndex;
+@property (weak, nonatomic) id delegate;
+@end
+
+@interface IGDynamicPageViewController : UIViewController
+@property (weak, nonatomic) id dataSource;
+@property (readonly, nonatomic) UICollectionView *collectionView;
+- (NSArray *)objectsForListAdapter:(id)listAdapter;
+@end
+
+// Owner collections config for the Saved page (same initializer on 410 and 446+).
+@interface IGSavedMediaCollectionsOwnerDataSourceConfiguration : NSObject
+- (instancetype)initWithUser:(id)user andLauncherSet:(id)launcherSet showOnlyPublicCollections:(BOOL)showOnlyPublicCollections;
+@end
+
+// Instagram's Saved collections page. Still conforms to IGProfileTabViewController.
+// The first initializer is 446+, the second is 410.
+@interface IGSavedMediaCollectionsViewController : IGViewController
+@property (nonatomic, weak) id profileTabDelegate;
+- (instancetype)initWithUserSession:(id)userSession
+            dataSourceConfiguration:(id)configuration
+                preferredEdgeInsets:(nullable id)preferredEdgeInsets
+                 disableFeedPreview:(BOOL)disableFeedPreview
+                               type:(unsigned long long)type;
+- (instancetype)initWithUserSession:(id)userSession
+            dataSourceConfiguration:(id)configuration
+               enableAddPlaceholder:(BOOL)enableAddPlaceholder
+                        entryModule:(nullable id)entryModule
+                preferredEdgeInsets:(nullable id)preferredEdgeInsets
+                 disableFeedPreview:(BOOL)disableFeedPreview
+                               type:(unsigned long long)type;
+- (void)updateContentInsets;
+- (void)viewDidLayoutSubviews;
+- (nullable UIScrollView *)scrollView;
+- (void)setRefreshControlBackgroundColor:(id)color;
 @end
 
 @interface IGProfileMenuSheetViewController : IGViewController

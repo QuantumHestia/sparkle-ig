@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Hồ sơ Đã truy cập";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Ảnh Hồ sơ";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Nhấn giữ ảnh đại diện để mở ảnh ở dạng phóng to.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Đã lưu";
+"PROFILE_TABS_HEADER" = "Tab";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Thêm các bộ sưu tập đã lưu của bạn thành một tab trên trang cá nhân. Làm mới trang cá nhân để áp dụng.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Tab Đã lưu";
 "PROFILE_TITLE" = "Hồ sơ";
 "REACTION_CONTEXT_FORMAT" = "Trên \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Chạm để chạy hành động mặc định. Nhấn giữ để mở toàn bộ menu hành động.";

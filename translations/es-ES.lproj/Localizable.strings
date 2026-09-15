@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Perfiles visitados";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Foto de perfil";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Mantén pulsada una foto de perfil para abrirla ampliada.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Guardado";
+"PROFILE_TABS_HEADER" = "Pestañas";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Añade tus colecciones guardadas como una pestaña en tu propio perfil. Actualiza tu perfil para aplicarlo.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Pestaña de guardados";
 "PROFILE_TITLE" = "Perfil";
 "REACTION_CONTEXT_FORMAT" = "En \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Un toque ejecuta la acción predeterminada. Una pulsación larga abre el menú de acciones completo.";

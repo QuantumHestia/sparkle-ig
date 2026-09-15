@@ -71,6 +71,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Unlock native message previews from the inbox long-press menu on supported Instagram versions.
   - Block doom-scrolling.
   - Build a custom tab bar with a live preview: reorder or hide destinations, choose launch and swipe behavior, trade a hidden tab for one-tap access to Saved collections in the custom layout, and drop the bar entirely when a single tab is left.
+  - Bring back a Saved tab on your own profile, right beside your posts, tagged, and reels.
 - **Custom app font**:
   - Import your own `.otf`/`.ttf` font and use it across Instagram and Sparkle, matched per weight and previewed face by face before you pick it.
 - **Language packs**:

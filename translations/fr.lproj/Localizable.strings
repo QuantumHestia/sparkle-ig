@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Profils visités";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Photo de profil";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Appuyez longuement sur une photo de profil pour l'ouvrir en grand.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Enregistrés";
+"PROFILE_TABS_HEADER" = "Onglets";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Ajoute tes collections enregistrées sous forme d'onglet sur ton propre profil. Actualise ton profil pour appliquer.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Onglet Enregistrés";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "Sur \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Un appui lance l'action par défaut. Un appui long ouvre le menu d'actions complet.";

@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Відвідані профілі";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Фото профілю";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Утримуйте фото профілю, щоб відкрити його збільшеним.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Збережене";
+"PROFILE_TABS_HEADER" = "Вкладки";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Додає ваші збережені добірки як вкладку у вашому профілі. Оновіть профіль, щоб застосувати.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Вкладка «Збережене»";
 "PROFILE_TITLE" = "Профіль";
 "REACTION_CONTEXT_FORMAT" = "На \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Дотик виконує типову дію. Довге натискання відкриває повне меню дій.";

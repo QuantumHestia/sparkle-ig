@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Profiluri vizitate";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Fotografie de profil";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Apasă lung pe o poză de profil pentru a o deschide mărită.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Salvate";
+"PROFILE_TABS_HEADER" = "File";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Adaugă colecțiile tale salvate ca filă pe propriul profil. Reîmprospătează profilul pentru a aplica.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Fila Salvate";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "La \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "O atingere execută acțiunea implicită. Apăsarea lungă deschide meniul complet de acțiuni.";

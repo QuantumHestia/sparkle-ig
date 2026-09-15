@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Profili visitati";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Foto Profilo";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Tieni premuta un'immagine del profilo per aprirla ingrandita.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Salvati";
+"PROFILE_TABS_HEADER" = "Schede";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Aggiunge le tue raccolte salvate come scheda sul tuo profilo. Aggiorna il profilo per applicare.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Scheda Salvati";
 "PROFILE_TITLE" = "Profilo";
 "REACTION_CONTEXT_FORMAT" = "Su \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Un tocco esegue l'azione predefinita. Una pressione prolungata apre il menu azioni completo.";

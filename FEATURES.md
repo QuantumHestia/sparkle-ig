@@ -346,6 +346,9 @@ Its own page, reached from a single row on the Messages topic that shows how man
 ### Profile Picture
 - **Long Press to Expand**: Long-press a profile picture to open it expanded.
 
+### Tabs
+- **Saved Tab**: Adds your saved collections as a tab at the end of your own profile's tab strip, using Instagram's own Saved page (header collapse and pull to refresh included). Refresh your profile to apply.
+
 ### Indicators
 - **Following Indicator**: Shows whether the profile follows you back, under their stats. Choose **Off**, **Icon**, **Text**, or **Icon & Text**.
 - **Colorful Indicator**: Turn on to use the colored green/red instead of the native gray.

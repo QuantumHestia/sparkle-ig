@@ -1781,6 +1781,10 @@
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Visited Profiles";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profile Picture";
 "PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Long press a profile picture to open it expanded.";
+"PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Saved";
+"PROFILE_TABS_HEADER" = "Tabs";
+"PROFILE_TABS_SAVED_TAB_HELP" = "Adds your saved collections as a tab on your own profile. Refresh your profile to apply.";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Saved Tab";
 "PROFILE_TITLE" = "Profile";
 "REACTION_CONTEXT_FORMAT" = "On \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Tap runs the default action. Long press opens the full action menu.";

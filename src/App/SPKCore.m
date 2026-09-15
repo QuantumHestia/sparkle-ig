@@ -91,6 +91,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"msgs_deleted_log_reactions" : @(NO),
         @"msgs_deleted_log_respect_seen_list" : @(NO),
         @"profile_photo_zoom" : @(NO),
+        @"profile_saved_tab" : @(NO),
         @"profile_follow_indicator" : @(NO),
         // The mode (`profile_follow_indicator_mode`) and colorful
         // (`profile_follow_indicator_colorful`) keys are intentionally left
