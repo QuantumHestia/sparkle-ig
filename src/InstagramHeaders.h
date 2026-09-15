@@ -790,9 +790,18 @@
 // per-surface Direct and Profile plugins were replaced by this single manager,
 // and the upsell is no longer a separate presenter: both entry points call one
 // presentPeek… and pass the real-vs-upsell decision in `peekMode` (0 = real).
+// IG 447 changed `peekMode` from an integer to an
+// IGConsumerSubsStoryPeekModeObjc instance, so the hooks declare it per version.
 @interface _TtC29IGConsumerSubsStoryPeekPlugin30IGConsumerSubsStoryPeekManager : NSObject
-- (void)presentPeekWithReelPK:(id)pk source:(id)source pogPosition:(long long)position peekMode:(long long)mode context:(id)context actions:(id)actions presenting:(id)presenting;
-- (void)presentPeekWithViewModel:(id)model source:(id)source pogPosition:(long long)position peekMode:(long long)mode context:(id)context actions:(id)actions presenting:(id)presenting;
+@end
+
+// IGConsumerSubsStoryPeekManaging.IGConsumerSubsStoryPeekModeObjc — IG 447+ boxed
+// peek mode. Wraps a Swift enum (standard/freemium × nux/peek/upsell) that is not
+// readable from Obj-C; the factories build the standard cases.
+@interface _TtC31IGConsumerSubsStoryPeekManaging31IGConsumerSubsStoryPeekModeObjc : NSObject
++ (instancetype)peek;
++ (instancetype)nux;
++ (instancetype)upsell;
 @end
 
 @interface IGUFIInteractionCountsView : UIView

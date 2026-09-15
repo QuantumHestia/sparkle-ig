@@ -71,14 +71,18 @@ static inline BOOL SPKUnlockStoryPreviewEnabled(void) {
 }
 %end
 
+%end
+
 // IG 441 replaced the per-surface Direct/Profile plugins with one manager, and
 // dropped the separate upsell presenter: the real-vs-upsell choice now rides in
 // `peekMode` on a single entry point (1 = upsell, 0 = real).
 //
 // This is not belt-and-suspenders on 441 — device logs show both entry points
 // arriving with mode 1 even while the eligibility gate above is forced, so this
-// is what actually unlocks the peek there. Binds nothing on 440 and earlier,
-// where this class does not exist.
+// is what actually unlocks the peek there. Only installed on 441-446, where the
+// mode is still an integer.
+%group SPKUnlockStoryPreviewIntegerModeHooks
+
 // Demangled: IGConsumerSubsStoryPeekPlugin.IGConsumerSubsStoryPeekManager
 %hook _TtC29IGConsumerSubsStoryPeekPlugin30IGConsumerSubsStoryPeekManager
 
@@ -102,6 +106,74 @@ static inline BOOL SPKUnlockStoryPreviewEnabled(void) {
 
 %end
 
+// IG 447 boxed `peekMode` into an IGConsumerSubsStoryPeekModeObjc instance, so the
+// integer force above would hand IG a nil mode and crash. Every entry point now
+// receives a mode object instead: the feed tray asks the mode resolver, the
+// DM/profile paths go through the manager, and all of them end at the
+// coordinator. Replace whatever mode arrives with the standard real peek. The
+// wrapped Swift enum is not readable from Obj-C, so upsell and first-run
+// education are not told apart; both become the real peek.
+static Class SPKStoryPeekModeClass(void) {
+    return objc_getClass("_TtC31IGConsumerSubsStoryPeekManaging31IGConsumerSubsStoryPeekModeObjc");
+}
+
+static id SPKRealStoryPeekMode(id mode, NSString *site) {
+    if (!mode || !SPKUnlockStoryPreviewEnabled())
+        return mode;
+    Class modeClass = SPKStoryPeekModeClass();
+    if (!modeClass || ![mode isKindOfClass:modeClass] || ![modeClass respondsToSelector:@selector(peek)])
+        return mode;
+    id real = [modeClass peek];
+    if (!real)
+        return mode;
+    if (site)
+        SPKLog(@"Peek", @"[Sparkle] peek mode %@ forced to real (%@)", mode, site);
+    return real;
+}
+
+%group SPKUnlockStoryPreviewObjectModeHooks
+
+// Demangled: IGConsumerSubsStoryPeekPlugin.IGConsumerSubsStoryPeekManager
+%hook _TtC29IGConsumerSubsStoryPeekPlugin30IGConsumerSubsStoryPeekManager
+
+- (void)presentPeekWithReelPK:(id)pk source:(id)source pogPosition:(long long)position peekMode:(id)mode context:(id)context actions:(id)actions presenting:(id)presenting {
+    %orig(pk, source, position, SPKRealStoryPeekMode(mode, @"reelPK"), context, actions, presenting);
+}
+
+- (void)presentPeekWithViewModel:(id)model source:(id)source pogPosition:(long long)position peekMode:(id)mode context:(id)context actions:(id)actions presenting:(id)presenting {
+    %orig(model, source, position, SPKRealStoryPeekMode(mode, @"viewModel"), context, actions, presenting);
+}
+
+%end
+
+// Demangled: IGConsumerSubsStoryPeek.IGConsumerSubsStoryPeekModeResolver
+// Feed story tray. A nil result means IG will not peek at all for this gesture,
+// so only an existing mode is upgraded; a tap is never turned into a peek.
+%hook _TtC23IGConsumerSubsStoryPeek35IGConsumerSubsStoryPeekModeResolver
+
++ (id)longPressModeForEntryPoint:(long long)point viewModel:(id)model userSession:(id)session {
+    return SPKRealStoryPeekMode(%orig, @"resolver long press");
+}
+
++ (id)tapModeForEntryPoint:(long long)point viewModel:(id)model userSession:(id)session {
+    return SPKRealStoryPeekMode(%orig, @"resolver tap");
+}
+
+%end
+
+// Demangled: IGConsumerSubsStoryPeek.IGConsumerSubsStoryPeekCoordinator
+// Catch-all for entry points not hooked above. Every known path has already been
+// forced by the time it gets here, so this site does not log.
+%hook _TtC23IGConsumerSubsStoryPeek34IGConsumerSubsStoryPeekCoordinator
+
+- (void)launchPeekViewControllerBelow:(id)below viewModel:(id)model story:(id)story peekMode:(id)mode pogPosition:(long long)position from:(id)from gesture:(long long)gesture abortedPeekHandler:(id)handler {
+    %orig(below, model, story, SPKRealStoryPeekMode(mode, nil), position, from, gesture, handler);
+}
+
+%end
+
+%end
+
 void SPKInstallUnlockStoryPreviewHooksIfEnabled(void) {
     if (!SPKUnlockStoryPreviewEnabled())
         return;
@@ -109,5 +181,11 @@ void SPKInstallUnlockStoryPreviewHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         %init(SPKUnlockStoryPreviewHooks);
+        // The mode wrapper class only exists once `peekMode` became an object.
+        if (SPKStoryPeekModeClass()) {
+            %init(SPKUnlockStoryPreviewObjectModeHooks);
+        } else {
+            %init(SPKUnlockStoryPreviewIntegerModeHooks);
+        }
     });
 }
