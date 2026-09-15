@@ -155,6 +155,13 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
 
 @implementation SPKActionMenuButton
 
+- (void)setAlpha:(CGFloat)alpha {
+    UIView *source = self.spk_alphaSource;
+    if (source)
+        alpha = source.hidden ? 0.0 : source.alpha;
+    [super setAlpha:alpha];
+}
+
 - (UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction
     previewForHighlightingMenuWithConfiguration:(UIContextMenuConfiguration *)configuration {
     (void)interaction;

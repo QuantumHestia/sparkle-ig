@@ -56,6 +56,9 @@ FOUNDATION_EXPORT NSString *const kSPKActionProfileCopyLink;
 FOUNDATION_EXPORT NSString *const SPKActionButtonConfigurationDidChangeNotification;
 
 @interface SPKActionMenuButton : SPKChromeButton
+/// When set, the button's alpha always mirrors this view's effective visibility,
+/// whoever writes it. Hosts that fade their subviews wholesale cannot strand it.
+@property (nonatomic, weak, nullable) UIView *spk_alphaSource;
 @end
 
 typedef id _Nullable (^SPKActionButtonMediaResolver)(id context);

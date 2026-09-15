@@ -73,6 +73,28 @@ static void SPKApplyReelsNativeUFIColor(UIButton *button, UIColor *color) {
     }
 }
 
+// The UFI casts one shadow from its whole subtree. The button lives beside the
+// UFI, so it misses that shadow; copy it onto the icon so both columns match,
+// including when Instagram changes the shadow for EDR reels. When the UFI casts
+// none, the style's default glyph shadow stays.
+static void SPKMirrorReelsUFIShadow(UIButton *button, UIView *verticalUFIView) {
+    if (![button isKindOfClass:[SPKChromeButton class]] || !verticalUFIView)
+        return;
+    CALayer *source = verticalUFIView.layer;
+    if (source.shadowOpacity <= 0.0 || !source.shadowColor)
+        return;
+
+    CALayer *target = ((SPKChromeButton *)button).iconView.layer;
+    if (target.shadowOpacity != source.shadowOpacity)
+        target.shadowOpacity = source.shadowOpacity;
+    if (target.shadowRadius != source.shadowRadius)
+        target.shadowRadius = source.shadowRadius;
+    if (!CGSizeEqualToSize(target.shadowOffset, source.shadowOffset))
+        target.shadowOffset = source.shadowOffset;
+    if (!CGColorEqualToColor(target.shadowColor, source.shadowColor))
+        target.shadowColor = source.shadowColor;
+}
+
 // MARK: - View hierarchy helpers
 
 // MARK: - Deterministic resolution from IGUnifiedVideoCollectionView (Layer 2)
@@ -440,11 +462,16 @@ static UIButton *SPKReelsHostedActionButton(UIView *verticalUFIView) {
 
 // The button is a sibling of the UFI, so it must follow the UFI's fades itself.
 // Called from the UFI's alpha/hidden setters so the change lands in the same
-// call and inside the same animation block, never a stale mid-fade value.
+// call and inside the same animation block, never a stale mid-fade value. The
+// controls overlay also fades every subview of its container, ours included, and
+// only restores its own controls; the alpha source makes those writes follow the
+// UFI instead of stranding the button at zero until the next layout pass.
 static void SPKReelsSyncActionButtonVisibility(UIView *verticalUFIView) {
     UIButton *button = SPKReelsHostedActionButton(verticalUFIView);
     if (!button)
         return;
+    if ([button isKindOfClass:[SPKActionMenuButton class]] && ((SPKActionMenuButton *)button).spk_alphaSource != verticalUFIView)
+        ((SPKActionMenuButton *)button).spk_alphaSource = verticalUFIView;
     CGFloat alpha = verticalUFIView.hidden ? 0.0 : verticalUFIView.alpha;
     if (ABS(button.alpha - alpha) > 0.001)
         button.alpha = alpha;
@@ -507,8 +534,10 @@ void SPKInstallReelsActionButton(UIView *verticalUFIView) {
 
     // This must run before the layout/media early return: HDR/EDR changes can
     // update Instagram's like tint without changing the reel or our constraints.
-    if (button)
+    if (button) {
         SPKApplyReelsNativeUFIColor(button, SPKReelsNativeUFIColor(verticalUFIView));
+        SPKMirrorReelsUFIShadow(button, verticalUFIView);
+    }
 
     // Resolve current media to detect whether we need to reconfigure
     id currentMedia = SPKReelsMediaProvider(verticalUFIView);
@@ -561,6 +590,7 @@ void SPKInstallReelsActionButton(UIView *verticalUFIView) {
     [host bringSubviewToFront:button];
     SPKApplyButtonStyle(button, SPKActionButtonSourceReels);
     SPKApplyReelsNativeUFIColor(button, SPKReelsNativeUFIColor(verticalUFIView));
+    SPKMirrorReelsUFIShadow(button, verticalUFIView);
 }
 
 %group SPKReelsActionButtonHooks

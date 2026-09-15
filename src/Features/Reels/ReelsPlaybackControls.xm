@@ -410,6 +410,21 @@ static UIColor *SPKReelsNativeUFITint(UIView *verticalUFI) {
     return like.imageView.tintColor ?: like.tintColor ?: UIColor.whiteColor;
 }
 
+/// Copies the action button's glyph shadow, which itself mirrors the UFI's, so
+/// the speed text and the button read as one column.
+static void SPKReelsMirrorShadow(CALayer *source, CALayer *target) {
+    if (!source || !target || !source.shadowColor)
+        return;
+    if (target.shadowOpacity != source.shadowOpacity)
+        target.shadowOpacity = source.shadowOpacity;
+    if (target.shadowRadius != source.shadowRadius)
+        target.shadowRadius = source.shadowRadius;
+    if (!CGSizeEqualToSize(target.shadowOffset, source.shadowOffset))
+        target.shadowOffset = source.shadowOffset;
+    if (!CGColorEqualToColor(target.shadowColor, source.shadowColor))
+        target.shadowColor = source.shadowColor;
+}
+
 /// The topmost element of the action column the indicator sits above: Sparkle's
 /// action button when it is shown, otherwise Instagram's like button.
 static UIView *SPKReelsIndicatorAnchor(UIView *verticalUFI) {
@@ -422,7 +437,10 @@ static UIView *SPKReelsIndicatorAnchor(UIView *verticalUFI) {
             break;
         }
     }
-    if (actionButton && !actionButton.hidden && actionButton.alpha > 0.01)
+    // Alpha is deliberately ignored: the button follows the UFI's fades, and a
+    // layout pass at the start of a fade-in would otherwise anchor to the like
+    // button and overlap the action button until the next pass.
+    if (actionButton && !actionButton.hidden)
         return actionButton;
     id likeButton = SPKReelsPlaybackSend(verticalUFI, @"ufiLikeButton");
     return [likeButton isKindOfClass:[UIView class]] ? (UIView *)likeButton : nil;
@@ -452,6 +470,8 @@ static void SPKReelsUpdateSpeedBadge(UIView *verticalUFI, UIView *moreButton) {
     indicator.accessibilityValue = label;
 
     textLabel.textColor = SPKReelsNativeUFITint(verticalUFI);
+    if ([anchor isKindOfClass:[SPKChromeButton class]])
+        SPKReelsMirrorShadow(((SPKChromeButton *)anchor).iconView.layer, textLabel.layer);
     SPKChromeEnableExtendedDynamicRangeContent(indicator);
     SPKChromeEnableExtendedDynamicRangeContent(textLabel);
 
