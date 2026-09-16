@@ -37,6 +37,9 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"interface_custom_font" : @"",
         // Device-global Sparkle language. "auto" follows Instagram, then iOS.
         @"interface_language" : @"auto",
+        // Keeps installed language packs level with the release they came from. Device-global for
+        // the same reason the language is: one pack directory serves every account.
+        @"language_pack_auto_update" : @(YES),
         @"tools_settings_shortcut" : @(YES),
         @"tools_shortcut_haptics" : @(YES),
         @"gallery_quick_access_tab" : @"direct-inbox-tab",

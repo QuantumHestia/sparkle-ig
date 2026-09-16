@@ -73,6 +73,51 @@ NSArray<NSString *> *SPKInstalledLanguagePackCodes(void) {
     return codes;
 }
 
+#pragma mark - Provenance
+
+// Which published pack an installed language currently is. Stored device-global alongside
+// `interface_language` rather than through the account-scoped preference helpers, because the packs
+// themselves live in one shared directory: a pack installed while one account is active is the same
+// file every other account reads, so an account-scoped record of it would disagree with the disk.
+static NSString *const kSPKLanguagePackProvenanceKey = @"language_pack_provenance";
+
+static NSDictionary *SPKProvenanceRecords(void) {
+    NSDictionary *records = [NSUserDefaults.standardUserDefaults dictionaryForKey:kSPKLanguagePackProvenanceKey];
+    return [records isKindOfClass:[NSDictionary class]] ? records : @{};
+}
+
+void SPKLanguagePackRecordProvenance(NSString *code, NSString *sourceURL, NSString *sha256) {
+    if (code.length == 0)
+        return;
+    NSMutableDictionary *records = [SPKProvenanceRecords() mutableCopy];
+    NSMutableDictionary *entry = [NSMutableDictionary dictionary];
+    if (sourceURL.length)
+        entry[@"url"] = sourceURL;
+    if (sha256.length)
+        entry[@"sha256"] = sha256.lowercaseString;
+    entry[@"installedAt"] = @([NSDate date].timeIntervalSince1970);
+    records[code] = entry;
+    [NSUserDefaults.standardUserDefaults setObject:records forKey:kSPKLanguagePackProvenanceKey];
+}
+
+NSString *SPKLanguagePackRecordedSHA256(NSString *code) {
+    if (code.length == 0)
+        return nil;
+    NSDictionary *entry = SPKProvenanceRecords()[code];
+    NSString *sha = [entry isKindOfClass:[NSDictionary class]] ? entry[@"sha256"] : nil;
+    return [sha isKindOfClass:[NSString class]] && sha.length ? sha : nil;
+}
+
+void SPKLanguagePackForgetProvenance(NSString *code) {
+    if (code.length == 0)
+        return;
+    NSMutableDictionary *records = [SPKProvenanceRecords() mutableCopy];
+    if (!records[code])
+        return;
+    [records removeObjectForKey:code];
+    [NSUserDefaults.standardUserDefaults setObject:records forKey:kSPKLanguagePackProvenanceKey];
+}
+
 // A .strings file is an old-style property list, so the system parser reads it
 // without a hand-written lexer and rejects a malformed one for us.
 static NSDictionary<NSString *, NSString *> *SPKCatalogAtPath(NSString *path) {
@@ -80,6 +125,195 @@ static NSDictionary<NSString *, NSString *> *SPKCatalogAtPath(NSString *path) {
         return nil;
     NSDictionary *catalog = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:path] error:nil];
     return [catalog isKindOfClass:[NSDictionary class]] ? catalog : nil;
+}
+
+#pragma mark - Catalog sanitizing
+
+// Every value in a catalog reaches -[NSString stringWithFormat:] or
+// +[NSString localizedStringWithFormat:] at some call site, with the arguments the English wording
+// implies. A pack is data from outside the app, and since one can now arrive over the network
+// rather than only from a file the user chose, a value that declares MORE conversions than English
+// does would read arguments that were never passed: garbage pointers formatted as objects, which
+// crashes at best and prints adjacent stack at worst. So a pack is normalized against English on
+// install, and any entry that would change the argument list is dropped back to its English text.
+//
+// This runs once per install, never per lookup, so it costs nothing at runtime.
+
+/// Ordered conversion signature of a format string, e.g. "%@ has %ld" → ("@", "ld"). Returns nil
+/// when the string uses something a catalog has no business containing: `%n` writes through a
+/// pointer argument, and `*` width/precision consumes an extra argument the call site never passes.
+static NSArray<NSString *> *SPKFormatSignature(NSString *format) {
+    if (format.length == 0)
+        return @[];
+    NSMutableArray<NSString *> *ordered = [NSMutableArray array];
+    NSMutableDictionary<NSNumber *, NSString *> *positional = [NSMutableDictionary dictionary];
+    NSUInteger length = format.length;
+    for (NSUInteger i = 0; i < length; i++) {
+        if ([format characterAtIndex:i] != '%')
+            continue;
+        if (++i >= length)
+            return nil;  // trailing '%'
+        if ([format characterAtIndex:i] == '%')
+            continue;  // literal percent
+
+        // Optional explicit argument position, "%2$@".
+        NSUInteger digitsStart = i, position = 0;
+        while (i < length && isdigit([format characterAtIndex:i]))
+            position = position * 10 + (NSUInteger)([format characterAtIndex:i++] - '0');
+        BOOL hasPosition = (i < length && i > digitsStart && [format characterAtIndex:i] == '$');
+        if (hasPosition)
+            i++;
+        else
+            i = digitsStart;  // those digits were flags/width, not a position
+
+        while (i < length && strchr("-+ #0'", [format characterAtIndex:i]))  // flags
+            i++;
+        while (i < length && isdigit([format characterAtIndex:i]))           // width
+            i++;
+        if (i < length && [format characterAtIndex:i] == '*')
+            return nil;  // width from an argument
+        if (i < length && [format characterAtIndex:i] == '.') {              // precision
+            i++;
+            if (i < length && [format characterAtIndex:i] == '*')
+                return nil;
+            while (i < length && isdigit([format characterAtIndex:i]))
+                i++;
+        }
+        NSUInteger modifierStart = i;
+        while (i < length && strchr("hlLqzjt", [format characterAtIndex:i]))  // length modifier
+            i++;
+        if (i >= length)
+            return nil;  // ran out before the conversion character
+        unichar conversion = [format characterAtIndex:i];
+        if (conversion == 'n')
+            return nil;  // writes through a pointer argument
+        if (!strchr("diouxXeEfgGaAcsSpv@", conversion))
+            return nil;  // not a conversion we recognise, so not one we can vouch for
+        NSString *signature = [format substringWithRange:NSMakeRange(modifierStart, i - modifierStart + 1)];
+        if (hasPosition) {
+            if (position == 0)
+                return nil;
+            positional[@(position)] = signature;
+        } else {
+            [ordered addObject:signature];
+        }
+    }
+    // A format mixing positional and implicit conversions is ambiguous; refuse rather than guess.
+    if (positional.count > 0) {
+        if (ordered.count > 0)
+            return nil;
+        NSArray<NSNumber *> *keys = [positional.allKeys sortedArrayUsingSelector:@selector(compare:)];
+        for (NSNumber *key in keys)
+            [ordered addObject:positional[key]];
+    }
+    return ordered;
+}
+
+/// English's catalog, the shape every pack is measured against.
+static NSDictionary<NSString *, NSString *> *SPKEnglishCatalog(void) {
+    static NSDictionary *english = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        english = SPKCatalogAtPath(SPKResourcePath([@"en.lproj" stringByAppendingPathComponent:kSPKCatalogFileName]));
+    });
+    return english;
+}
+
+/// Rewrites the installed catalog at `lprojPath` with every unsafe entry removed. An entry goes
+/// when it is not a string pair, names a key English does not have, or would change the argument
+/// list English established. Dropped keys fall back to English at lookup, which is exactly what an
+/// untranslated key already does, so the cost of being strict here is only ever English text.
+static NSUInteger SPKSanitizeInstalledCatalog(NSString *lprojPath) {
+    NSString *catalogPath = [lprojPath stringByAppendingPathComponent:kSPKCatalogFileName];
+    NSDictionary *catalog = SPKCatalogAtPath(catalogPath);
+    NSDictionary<NSString *, NSString *> *english = SPKEnglishCatalog();
+    if (catalog.count == 0 || english.count == 0)
+        return 0;
+
+    NSMutableDictionary<NSString *, NSString *> *clean = [NSMutableDictionary dictionaryWithCapacity:catalog.count];
+    NSUInteger dropped = 0;
+    for (id key in catalog) {
+        id value = catalog[key];
+        NSString *englishValue = [key isKindOfClass:[NSString class]] ? english[key] : nil;
+        if (![key isKindOfClass:[NSString class]] || ![value isKindOfClass:[NSString class]] || !englishValue) {
+            dropped++;
+            continue;
+        }
+        NSArray<NSString *> *packSignature = SPKFormatSignature(value);
+        NSArray<NSString *> *englishSignature = SPKFormatSignature(englishValue);
+        if (!packSignature || !englishSignature || ![packSignature isEqualToArray:englishSignature]) {
+            dropped++;
+            continue;
+        }
+        clean[key] = value;
+    }
+    if (dropped == 0)
+        return 0;
+
+    NSData *data = [NSPropertyListSerialization dataWithPropertyList:clean
+                                                              format:NSPropertyListBinaryFormat_v1_0
+                                                             options:0
+                                                               error:NULL];
+    if (data)
+        [data writeToFile:catalogPath atomically:YES];
+    return dropped;
+}
+
+/// Plural rules are format strings too, and reach +localizedStringWithFormat: the same way. English
+/// owns which keys exist and what they take, so a pack's file is kept only when every key it defines
+/// is one English defines with the same argument shape; otherwise it is removed and plurals fall
+/// back to English wholesale. Partial repair is not worth it — a stringsdict is a handful of keys.
+static BOOL SPKPluralFileIsSafe(NSString *pluralPath) {
+    NSDictionary *pack = [NSDictionary dictionaryWithContentsOfURL:[NSURL fileURLWithPath:pluralPath] error:nil];
+    if (![pack isKindOfClass:[NSDictionary class]])
+        return NO;
+    NSDictionary *english = [NSDictionary dictionaryWithContentsOfURL:
+                                              [NSURL fileURLWithPath:SPKResourcePath([@"en.lproj" stringByAppendingPathComponent:kSPKPluralFileName])]
+                                                               error:nil];
+    if (![english isKindOfClass:[NSDictionary class]])
+        return NO;
+
+    for (id key in pack) {
+        if (![key isKindOfClass:[NSString class]])
+            return NO;
+        NSDictionary *entry = pack[key], *englishEntry = english[key];
+        if (![entry isKindOfClass:[NSDictionary class]] || ![englishEntry isKindOfClass:[NSDictionary class]])
+            return NO;
+        NSArray *signature = SPKFormatSignature(entry[@"NSStringLocalizedFormatKey"]);
+        NSArray *englishSignature = SPKFormatSignature(englishEntry[@"NSStringLocalizedFormatKey"]);
+        if (!signature || !englishSignature || ![signature isEqualToArray:englishSignature])
+            return NO;
+        // Each variable block spells out the conversion its plural cases use; anything but a plain
+        // integer there would take an argument the count-based call site never supplies.
+        for (id variable in entry) {
+            if ([variable isEqual:@"NSStringLocalizedFormatKey"])
+                continue;
+            NSDictionary *rules = entry[variable];
+            if (![rules isKindOfClass:[NSDictionary class]])
+                return NO;
+            NSString *valueType = rules[@"NSStringFormatValueTypeKey"];
+            if (![valueType isKindOfClass:[NSString class]])
+                return NO;
+            static NSSet<NSString *> *allowedTypes;
+            static dispatch_once_t once;
+            dispatch_once(&once, ^{
+                allowedTypes = [NSSet setWithArray:@[ @"d", @"i", @"u", @"ld", @"lu", @"lld", @"llu", @"zd", @"zu", @"jd", @"ju" ]];
+            });
+            if (![allowedTypes containsObject:valueType])
+                return NO;
+            for (id plural in rules) {
+                if ([plural isEqual:@"NSStringFormatSpecTypeKey"] || [plural isEqual:@"NSStringFormatValueTypeKey"])
+                    continue;
+                NSString *text = rules[plural];
+                if (![text isKindOfClass:[NSString class]])
+                    return NO;
+                NSArray *caseSignature = SPKFormatSignature(text);
+                if (!caseSignature || caseSignature.count > 1)
+                    return NO;
+            }
+        }
+    }
+    return YES;
 }
 
 /// A value no translation would change: a single technical token or brand name
@@ -253,6 +487,23 @@ static NSUInteger SPKEnglishStringCount(void) {
             return nil;
         }
 
+        // Normalize before anything reads it: from here on the catalog is treated as Sparkle's own
+        // strings, so it has to be unable to misuse the call sites that format it.
+        NSUInteger dropped = SPKSanitizeInstalledCatalog(destination);
+        if (dropped > 0)
+            SPKWarnLog(@"i18n", @"Dropped %lu unsafe or unknown entr%@ from the %@ pack",
+                       (unsigned long)dropped, dropped == 1 ? @"y" : @"ies", code);
+        NSString *plurals = [destination stringByAppendingPathComponent:kSPKPluralFileName];
+        if ([fm fileExistsAtPath:plurals] && !SPKPluralFileIsSafe(plurals)) {
+            SPKWarnLog(@"i18n", @"Discarded the %@ pack's plural rules: they do not match English's arguments", code);
+            [fm removeItemAtPath:plurals error:nil];
+        }
+
+        // Provisionally a file import, with no published identity. The network importer overwrites
+        // this with the URL and hash it verified, which is what separates a pack that tracks a
+        // release from one the user built themselves and must not have replaced under them.
+        SPKLanguagePackRecordProvenance(code, nil, nil);
+
         [SPKStrings languagePacksDidChange];
         SPKLanguagePack *pack = [self packAtPath:destination code:code];
         SPKLog(@"i18n", @"Imported language pack %@ (%lu strings)", code, (unsigned long)pack.stringCount);
@@ -277,6 +528,7 @@ static NSUInteger SPKEnglishStringCount(void) {
         return NO;
     }
 
+    SPKLanguagePackForgetProvenance(pack.code);
     [SPKStrings languagePacksDidChange];
     // The selected language just stopped existing, so fall back to following the
     // system rather than leaving a dangling override behind.

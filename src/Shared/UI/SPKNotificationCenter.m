@@ -102,6 +102,7 @@ SPK_NOTIF_CONST(kSPKNotificationGalleryImport, "gallery_import");
 SPK_NOTIF_CONST(kSPKNotificationSettingsExport, "settings_export");
 SPK_NOTIF_CONST(kSPKNotificationSettingsImport, "settings_import");
 SPK_NOTIF_CONST(kSPKNotificationSettingsClearCache, "settings_clear_cache");
+SPK_NOTIF_CONST(kSPKNotificationLanguagePackUpdate, "language_pack_update");
 SPK_NOTIF_CONST(kSPKNotificationCopyDescription, "copy_description");
 SPK_NOTIF_CONST(kSPKNotificationCopyNoteText, "copy_note_text");
 SPK_NOTIF_CONST(kSPKNotificationShareLongPressCopyLink, "share_long_press_copy_link");
@@ -283,6 +284,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationSettingsExport, SPKL(@"UI_NOTIFICATION_CENTER_EXPORT_SETTINGS_TEXT"), @"arrow_up"),
               SPKNotificationItem(kSPKNotificationSettingsImport, SPKL(@"UI_NOTIFICATION_CENTER_IMPORT_SETTINGS_TEXT"), @"arrow_down"),
               SPKNotificationItem(kSPKNotificationSettingsClearCache, SPKL(@"GENERAL_GENERAL_CLEAR_CACHE_TITLE"), @"trash"),
+              SPKNotificationItem(kSPKNotificationLanguagePackUpdate, SPKL(@"UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT"), @"translate"),
               SPKNotificationItem(kSPKNotificationCopyDescription, SPKL(@"UI_NOTIFICATION_CENTER_COPY_DESCRIPTION_TEXT"), @"copy"),
               SPKNotificationItem(kSPKNotificationCopyNoteText, SPKL(@"MESSAGES_NOTES_COPY_NOTE_TEXT_TITLE"), @"copy"),
               SPKNotificationItem(kSPKNotificationShareLongPressCopyLink, SPKL(@"GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE"), @"link"),

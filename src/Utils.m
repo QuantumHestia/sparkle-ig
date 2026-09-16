@@ -1037,6 +1037,15 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             // per-account key would read the global default on every cold launch.
             @"interface_custom_font",
             @"interface_language",
+            // Language packs live in one shared directory, so a pack installed or
+            // refreshed under one account is the file every other account reads.
+            // Scoping the settings that govern them per account would let one
+            // account's preference decide what another account sees on disk.
+            @"language_pack_auto_update",
+            @"language_pack_provenance",
+            @"language_pack_last_update_check",
+            @"language_pack_last_update_attempt",
+            @"langpack_catalog_url",
             @"interface_liquid_glass",
             @"interface_liquid_glass_tabbar_mode",
             @"interface_scroll_edge_style",

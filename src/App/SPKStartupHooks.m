@@ -1,6 +1,7 @@
 #import "SPKStartupHooks.h"
 
 #import "../Utils.h"
+#import "../Shared/i18n/SPKLanguagePackUpdater.h"
 #import "SPKHookBisect.h"
 #import "SPKStabilityGuard.h"
 
@@ -315,6 +316,10 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
         return;
     }
     SPKHookBisectSetCurrentSurface(@"General UI");
+    // Not a hook: the language packs already installed ask the catalog whether newer builds of
+    // themselves exist. It throttles itself to once a day and delays past launch, so it costs a
+    // no-op call here on every other launch.
+    [SPKLanguagePackUpdater checkForUpdatesIfDue];
     SPK_INSTALL(SPKInstallAccountSwitchHooksIfNeeded);
     SPK_INSTALL(SPKInstallTweakGeneralUIHooksIfNeeded);
     SPK_INSTALL(SPKInstallSharedLinkCleanupHooksIfEnabled);

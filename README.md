@@ -132,7 +132,7 @@ You can build from source locally, or fork the repo and run the **Build and Pack
 
 By default, **long-press the Home tab** or the **Profile settings button** to open Sparkle Settings. You can also enable *Show Settings on App Launch*. If you hide the Home tab, the long-press automatically moves to another visible tab so Settings is always reachable.
 
-Tap the **Translate** button in the top-right of Sparkle Settings for the language sheet. English is the only language Sparkle ships; the same sheet imports community language packs from zip archives, exports the English strings a translation starts from, and removes an installed pack with a swipe. Importing only makes a language available; switching to it is a separate tap. A System Default row that follows Instagram appears once a pack is installed. A restart applies the choice across every Instagram account. Anything untranslated falls back to English.
+Tap the **Translate** button in the top-right of Sparkle Settings for the language sheet. English is the only language Sparkle ships; **Add a Language** opens the published list, where one tap installs a translation; its more menu imports a pack from Files or a link and exports the English strings a translation starts from. A swipe removes an installed pack. Installed packs refresh themselves when a release publishes newer ones, so the screens a release adds arrive translated rather than in English; it checks once a day, only for languages you already have, and never replaces a pack you imported from a file. Importing only makes a language available; switching to it is a separate tap. A System Default row that follows Instagram appears once a pack is installed. A restart applies the choice across every Instagram account. Anything untranslated falls back to English.
 
 ## Screenshots
 
@@ -237,9 +237,9 @@ Contributions are greatly appreciated! Feel free to open a pull request.
 
 ### Help translate
 
-Sparkle ships English only. The 16 catalogs in `translations/` were produced by machine translation and no native speaker has reviewed them, which is why they are a starting point rather than something users are given by default. Expect unnatural phrasing, terms that should have stayed in English, and help text that describes the wrong setting.
+Sparkle ships English only. The 24 catalogs in `translations/` were produced by machine translation and no native speaker has reviewed them, which is why they are a starting point rather than something users are given by default. Expect unnatural phrasing, terms that should have stayed in English, and help text that describes the wrong setting.
 
-If you read one of these languages, correcting it is the single most useful contribution you can make, and it needs no build: edit `translations/<locale>.lproj/Localizable.strings`, run `tools/lint-i18n.py --locale <locale>`, open a pull request. **A reviewed language ships with Sparkle.** Until then, anyone can install it from the language sheet with **Import Language Pack**, and you can test your own work the same way.
+If you read one of these languages, correcting it is the single most useful contribution you can make, and it needs no build: edit `translations/<locale>.lproj/Localizable.strings`, run `tools/lint-i18n.py --locale <locale>`, open a pull request. **A reviewed language ships with Sparkle.** Until then, anyone can install it from the language sheet with **Add a Language**, and you can test your own work from that screen's more menu with **Import from Files**.
 
 For a single correction, no checkout is needed: tap the Translate button in Sparkle Settings, choose **Report a Translation Issue** at the bottom of the language sheet, or [start one](https://github.com/efibalogh/sparkle-ig/issues/new?template=3-translation.yaml) directly. The form asks for the language, where the text appears, what it says now, and what it should say.
 
