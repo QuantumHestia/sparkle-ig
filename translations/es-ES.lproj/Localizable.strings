@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ocultar búsquedas de tendencias";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Mantén pulsada la pestaña Explorar para abrir un enlace compatible de Instagram desde el portapapeles. Si no contiene un enlace válido, Instagram abre la búsqueda normalmente.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Abrir enlace del portapapeles";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Muestra los mosaicos de la cuadrícula de Explorar como cuadrados en lugar del diseño más alto 3:4. Vuelve a abrir Explorar para aplicarlo.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Cuadrícula cuadrada";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass y desenfoque";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra de pestañas en forma de píldora";
 "INTERFACE_LIQUID_GLASS_HELP" = "Fuerza la interfaz nativa Liquid Glass de Instagram. Requiere reiniciar.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Pestañas";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Añade tus colecciones guardadas como una pestaña en tu propio perfil. Actualiza tu perfil para aplicarlo.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Pestaña de guardados";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Muestra las miniaturas de las cuadrículas de publicaciones y etiquetas como cuadrados en lugar del diseño más alto 3:4, y usa un icono cuadrado para la pestaña de cuadrícula. Vuelve a abrir un perfil para aplicarlo.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Cuadrícula cuadrada";
 "PROFILE_TITLE" = "Perfil";
 "REACTION_CONTEXT_FORMAT" = "En \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Un toque ejecuta la acción predeterminada. Una pulsación larga abre el menú de acciones completo.";

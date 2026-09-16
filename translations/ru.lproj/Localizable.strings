@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Скрыть популярные поиски";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Удерживайте вкладку «Интересное», чтобы открыть поддерживаемую ссылку Instagram из буфера обмена. Если в буфере нет подходящей ссылки, Instagram обычно открывает поиск.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Открыть ссылку из буфера обмена";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Показывает плитки сетки «Интересное» квадратами вместо более высокой раскладки 3:4. Откройте «Интересное» заново, чтобы применить.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Квадратная сетка";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass и размытие";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Панель вкладок в виде пилюли";
 "INTERFACE_LIQUID_GLASS_HELP" = "Принудительно включает встроенный интерфейс Liquid Glass в Instagram. Требуется перезапуск.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Вкладки";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Добавляет ваши сохранённые подборки как вкладку в вашем профиле. Обновите профиль, чтобы применить.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Вкладка «Сохранённое»";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Показывает миниатюры в сетках публикаций и отметок квадратами вместо более высокой раскладки 3:4 и использует квадратный значок для вкладки сетки. Откройте профиль заново, чтобы применить.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Квадратная сетка";
 "PROFILE_TITLE" = "Профиль";
 "REACTION_CONTEXT_FORMAT" = "На \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Нажатие выполняет действие по умолчанию. Долгое нажатие открывает полное меню действий.";

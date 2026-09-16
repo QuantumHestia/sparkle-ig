@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ascunde căutări trending";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Apasă lung fila Explore pentru a deschide un link Instagram acceptat din clipboard. Dacă clipboardul nu conține un link valid, Instagram deschide normal căutarea.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Deschide link din clipboard";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Afișează casetele din grila Explorează ca pătrate în loc de aspectul 3:4 mai înalt. Redeschide Explorează pentru a aplica.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grilă pătrată";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass și estompare";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Bară file în formă de pastilă";
 "INTERFACE_LIQUID_GLASS_HELP" = "Forțează interfața nativă Liquid Glass a Instagram. Necesită repornire.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "File";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adaugă colecțiile tale salvate ca filă pe propriul profil. Reîmprospătează profilul pentru a aplica.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Fila Salvate";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Afișează miniaturile din grilele de postări și etichete ca pătrate în loc de aspectul 3:4 mai înalt și folosește o pictogramă pătrată pentru fila grilei. Redeschide un profil pentru a aplica.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Grilă pătrată";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "La \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "O atingere execută acțiunea implicită. Apăsarea lungă deschide meniul complet de acțiuni.";

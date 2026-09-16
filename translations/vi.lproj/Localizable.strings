@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ẩn Tìm kiếm Xu hướng";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Nhấn giữ tab Explore để mở liên kết Instagram được hỗ trợ từ bộ nhớ tạm. Nếu bộ nhớ tạm không có liên kết hợp lệ, Instagram sẽ mở tìm kiếm như bình thường.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Mở Liên kết Clipboard";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Hiển thị các ô trong lưới Khám phá dạng hình vuông thay vì bố cục 3:4 cao hơn. Mở lại Khám phá để áp dụng.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Lưới vuông";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Làm mờ";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Tab Bar Hình Viên";
 "INTERFACE_LIQUID_GLASS_HELP" = "Buộc bật giao diện Liquid Glass gốc của Instagram. Cần khởi động lại.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Thêm các bộ sưu tập đã lưu của bạn thành một tab trên trang cá nhân. Làm mới trang cá nhân để áp dụng.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Tab Đã lưu";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Hiển thị ảnh thu nhỏ trong lưới bài viết và được gắn thẻ dạng hình vuông thay vì bố cục 3:4 cao hơn, và dùng biểu tượng vuông cho tab lưới. Mở lại trang cá nhân để áp dụng.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Lưới vuông";
 "PROFILE_TITLE" = "Hồ sơ";
 "REACTION_CONTEXT_FORMAT" = "Trên \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Chạm để chạy hành động mặc định. Nhấn giữ để mở toàn bộ menu hành động.";

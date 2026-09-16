@@ -48,7 +48,7 @@
         SPKTopicSection(SPKL(@"INTERFACE_EXPLORE_SEARCH_HEADER"), @[
             ({
                 SPKSetting *s = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE")
-                                                           icon:SPKSettingsIcon(@"explore_grid")
+                                                           icon:SPKSettingsIcon(@"grid_tall")
                                                     defaultsKey:@"interface_hide_explore_grid"];
                 s.switchChangeHandler = ^(BOOL isOn) {
                     SPKPreferenceSetObject(@(isOn), @"interface_hide_explore_grid");
@@ -57,6 +57,10 @@
                 s.helpText = SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP");
                 s;
             }),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE")
+                                           icon:SPKSettingsIcon(@"grid_square")
+                                    defaultsKey:@"interface_explore_square_grid"],
+                               SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE")
                                            icon:SPKSettingsIcon(@"trending")
                                     defaultsKey:@"interface_hide_trending_searches"

@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Ocultar Pesquisas em Tendência";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Mantenha pressionada a aba Explorar para abrir um link compatível do Instagram na área de transferência. Sem um link válido, o Instagram abre a busca normalmente.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Abrir Link da Área de Transferência";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Mostra os blocos da grade do Explorar como quadrados em vez do layout 3:4 mais alto. Abra o Explorar novamente para aplicar.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grade quadrada";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass e Desfoque";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barra de Abas em Formato de Pílula";
 "INTERFACE_LIQUID_GLASS_HELP" = "Força a interface nativa Liquid Glass do Instagram. Requer reiniciar.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Abas";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adiciona suas coleções salvas como uma aba no seu próprio perfil. Atualize seu perfil para aplicar.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Aba Salvos";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Mostra as miniaturas das grades de publicações e marcações como quadrados em vez do layout 3:4 mais alto e usa um ícone quadrado na aba da grade. Abra um perfil novamente para aplicar.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Grade quadrada";
 "PROFILE_TITLE" = "Perfil";
 "REACTION_CONTEXT_FORMAT" = "Em \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Um toque executa a ação padrão. Um toque longo abre o menu de ações completo.";

@@ -105,6 +105,7 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
 
 ### Explore & Search
 - **Hide Explore Posts Grid**: Hides the suggested-post grid on Explore. This follows the active account when **Per-Account Settings** is enabled.
+- **Square Grid**: Shows Explore grid tiles as squares instead of the taller 3:4 layout. Reopen Explore to apply.
 - **Hide Trending Searches** *(restart)*: Hides trending searches under the Explore search bar.
 - **Open Clipboard Link**: Long-press the Explore tab to open an Instagram URL from the clipboard. When the Reels slot shows Saved, post and reel links use the same native single-post push as the Gallery so deep links do not disturb the tab destination.
 
@@ -350,6 +351,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 
 ### Tabs
 - **Saved Tab**: Adds your saved collections as a tab at the end of your own profile's tab strip, using Instagram's own Saved page (header collapse and pull to refresh included). Refresh your profile to apply.
+- **Square Grid**: Shows thumbnails on the posts and tagged grids as squares instead of the taller 3:4 layout, and uses a square icon for the grid tab. Reopen a profile to apply.
 
 ### Indicators
 - **Following Indicator**: Shows whether the profile follows you back, under their stats. Choose **Off**, **Icon**, **Text**, or **Icon & Text**.
@@ -455,7 +457,7 @@ Every surface has the same **Filter Mode**: `All` saves everything except what y
 ### Quality
 - **Fetch 4K Images**: Mimics a desktop web browser to retrieve 4K/high-resolution image candidates from the web version of the Instagram API (fetched on-demand when downloading, copying, or displaying the quality picker — including downloads and copies started from the full-screen media preview).
 - **Default Photo Quality**: `Max` / `High` / `Medium` / `Low` (or `Always Ask`). `Max` leverages web 4K image candidates when enabled; disabling the 4K switch automatically adjusts the setting to `High` and disables `Max`.
-- **Quality Picker Sheet ("Always Ask")**: Cleanly groups photo candidates into dedicated **Web API** and **Mobile API** sections, removes cropped grid thumbnails (e.g. 1:1 cropped square thumbnails on non-1:1 posts), deduplicates identical resolutions, and strips technical subtitle clutter (`11.8 Megapixels • 4:5`). In bulk downloads, presents a single **Batch Quality** action sheet (`Max`, `High`, `Medium`, `Low`) to choose quality once for all items in the batch.
+- **Quality Picker Sheet ("Always Ask")**: Cleanly groups photo candidates into dedicated **Web API** and **Mobile API** sections, removes cropped grid thumbnails (e.g. 1:1 cropped square thumbnails on non-1:1 posts), deduplicates identical resolutions, and strips technical subtitle clutter (`11.8 Megapixels • 3:4`). In bulk downloads, presents a single **Batch Quality** action sheet (`Max`, `High`, `Medium`, `Low`) to choose quality once for all items in the batch.
 - **Copied Download Links**: Copy Download URL follows the same photo and video quality settings as a download, including the picker sheet (single item) and the Batch Quality sheet (bulk) when set to `Always Ask`. Video links only offer ready-to-play files, since a DASH stream alone is silent or needs a merge.
 - **Enhanced Media Resolution**: Requests higher-resolution media for downloads.
 - **Default Video Quality**: Save/share quality. `High` merges DASH video + audio; `Default` uses ready-to-play files; `Always Ask` prompts each time. **Requires FFmpegKit** for the merge/quality options.

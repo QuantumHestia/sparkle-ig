@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Sembunyikan Pencarian Populer";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Tekan lama tab Explore untuk membuka tautan Instagram yang didukung dari clipboard-mu. Jika clipboard tidak berisi tautan yang valid, Instagram akan membuka pencarian seperti biasa.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Buka Tautan dari Clipboard";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Menampilkan ubin grid Jelajahi sebagai persegi, bukan tata letak 3:4 yang lebih tinggi. Buka ulang Jelajahi untuk menerapkan.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grid Persegi";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Bilah Tab Berbentuk Pil";
 "INTERFACE_LIQUID_GLASS_HELP" = "Memaksa mengaktifkan antarmuka Liquid Glass bawaan Instagram. Memerlukan mulai ulang.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Menambahkan koleksi tersimpanmu sebagai tab di profil sendiri. Segarkan profilmu untuk menerapkannya.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Tab Tersimpan";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Menampilkan thumbnail di grid postingan dan tandai sebagai persegi, bukan tata letak 3:4 yang lebih tinggi, serta memakai ikon persegi untuk tab grid. Buka ulang profil untuk menerapkan.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Grid Persegi";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "Pada \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Ketuk menjalankan aksi default. Tekan lama membuka menu aksi lengkap.";

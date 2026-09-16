@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Απόκρυψη Αναζητήσεων Τάσης";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Πατήστε παρατεταμένα την καρτέλα Εξερεύνηση για να ανοίξετε έναν υποστηριζόμενο σύνδεσμο Instagram από το πρόχειρο. Αν το πρόχειρο δεν περιέχει έγκυρο σύνδεσμο, το Instagram ανοίγει κανονικά την αναζήτηση.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Άνοιγμα Συνδέσμου Clipboard";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Εμφανίζει τα πλακίδια του πλέγματος Εξερεύνησης ως τετράγωνα αντί για την ψηλότερη διάταξη 3:4. Άνοιξε ξανά την Εξερεύνηση για εφαρμογή.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Τετράγωνο πλέγμα";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Θόλωμα";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Γραμμή Καρτέλας Σχήματος Χαπιού";
 "INTERFACE_LIQUID_GLASS_HELP" = "Επιβάλλει το εγγενές περιβάλλον Liquid Glass του Instagram. Απαιτεί επανεκκίνηση.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Καρτέλες";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Προσθέτει τις αποθηκευμένες συλλογές σου ως καρτέλα στο δικό σου προφίλ. Ανανέωσε το προφίλ σου για εφαρμογή.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Καρτέλα αποθηκευμένων";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Εμφανίζει τις μικρογραφίες στα πλέγματα δημοσιεύσεων και επισημάνσεων ως τετράγωνα αντί για την ψηλότερη διάταξη 3:4 και χρησιμοποιεί τετράγωνο εικονίδιο για την καρτέλα πλέγματος. Άνοιξε ξανά ένα προφίλ για εφαρμογή.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Τετράγωνο πλέγμα";
 "PROFILE_TITLE" = "Προφίλ";
 "REACTION_CONTEXT_FORMAT" = "Στο \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Το πάτημα εκτελεί την προεπιλεγμένη ενέργεια. Το παρατεταμένο πάτημα ανοίγει το πλήρες μενού ενεργειών.";

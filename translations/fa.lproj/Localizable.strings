@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "پنهان‌سازی جستجوهای پرطرفدار";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "تب اکسپلور را لمس طولانی کنید تا لینک پشتیبانی‌شده اینستاگرامی از کلیپ‌بورد شما باز شود. اگر کلیپ‌بورد حاوی لینک معتبری نباشد، اینستاگرام جستجو را به‌طور معمول باز می‌کند.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "باز کردن لینک کلیپ‌بورد";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "کاشی‌های شبکه اکسپلور را به‌جای چیدمان بلندتر ۳:۴ به‌صورت مربع نشان می‌دهد. برای اعمال، اکسپلور را دوباره باز کن.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "شبکه مربعی";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "شیشه مایع و تاری";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "نوار تب کپسولی‌شکل";
 "INTERFACE_LIQUID_GLASS_HELP" = "رابط بومی Liquid Glass اینستاگرام را به‌اجبار فعال می‌کند. نیاز به راه‌اندازی مجدد دارد.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "برگه‌ها";
 "PROFILE_TABS_SAVED_TAB_HELP" = "مجموعه‌های ذخیره‌شده شما را به‌عنوان یک برگه در پروفایل خودتان اضافه می‌کند. برای اعمال، پروفایل خود را تازه کنید.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "برگه ذخیره‌شده‌ها";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "تصاویر کوچک شبکه پست‌ها و تگ‌ها را به‌جای چیدمان بلندتر ۳:۴ به‌صورت مربع نشان می‌دهد و برای زبانه شبکه از نماد مربعی استفاده می‌کند. برای اعمال، نمایه را دوباره باز کن.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "شبکه مربعی";
 "PROFILE_TITLE" = "پروفایل";
 "REACTION_CONTEXT_FORMAT" = "روی \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "ضربه‌زدن اقدام پیش‌فرض را اجرا می‌کند. فشار طولانی منوی کامل اقدامات را باز می‌کند.";

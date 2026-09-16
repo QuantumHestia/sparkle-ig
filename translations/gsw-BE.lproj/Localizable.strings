@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trend-Suechi Verstecke";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Lang drücke dr Explore-Tab, für en unterstützte Instagram-Link us dyner Zwüschenablag ufzmache. Wenn i dr Zwüschenablag kei güutige Link isch, macht Instagram d'Suechi ganz normal uf.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Zwüschenablag-Link Ufmache";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Zeigt d Kachle im Entdecke-Raster als Quadrat statt im höchere 3:4-Layout. Mach Entdecke nomol uf, damit s gilt.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Quadratischs Raster";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass u Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pillenförmige Tab-Balke";
 "INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt s'native Liquid-Glass-Interface vo Instagram. Bruucht en Neustart.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Tabs";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Füegt dyni gspeicherete Sammlige as Tab uf dym eigete Profil dezue. Aktualisier dy Profil zum's aawände.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Gspeicheret-Tab";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Zeigt d Vorschaubilder im Beiträg- und Markierigs-Raster als Quadrat statt im höchere 3:4-Layout und bruucht es quadratischs Symbol für de Raster-Tab. Mach es Profil nomol uf, damit s gilt.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Quadratischs Raster";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "Uf \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Aatippe führt d'Standard-Aktion us. Lang drücke macht s ganze Aktione-Menü uf.";

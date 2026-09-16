@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trendingsuchen ausblenden";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Bietet an, einen Instagram-Link aus der Zwischenablage zu öffnen, sobald du die Suche öffnest.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Link aus Zwischenablage öffnen";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Zeigt die Kacheln im Entdecken-Raster als Quadrate statt im höheren 3:4-Layout. Öffne Entdecken erneut, um die Änderung anzuwenden.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Quadratisches Raster";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass & Unschärfe";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Pillenförmige Tab-Leiste";
 "INTERFACE_LIQUID_GLASS_HELP" = "Erzwingt die native Liquid-Glass-Oberfläche von Instagram. Erfordert einen Neustart.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Tabs";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Fügt deine gespeicherten Sammlungen als Tab zu deinem eigenen Profil hinzu. Aktualisiere dein Profil, um die Änderung anzuwenden.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Gespeichert-Tab";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Zeigt Vorschaubilder in den Raster für Beiträge und Markierungen als Quadrate statt im höheren 3:4-Layout und verwendet ein quadratisches Symbol für den Raster-Tab. Öffne ein Profil erneut, um die Änderung anzuwenden.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Quadratisches Raster";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "Bei \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Tippen führt die Standardaktion aus. Langes Drücken öffnet das vollständige Aktionsmenü.";

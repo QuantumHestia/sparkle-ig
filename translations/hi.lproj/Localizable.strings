@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "ट्रेंडिंग सर्च छिपाएं";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "सर्च पर फ़ोकस करने पर क्लिपबोर्ड में मौजूद Instagram लिंक खोलने का विकल्प देता है।";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "क्लिपबोर्ड लिंक खोलें";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "एक्सप्लोर ग्रिड की टाइलों को लंबे 3:4 लेआउट के बजाय चौकोर दिखाता है। लागू करने के लिए एक्सप्लोर फिर से खोलें।";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "चौकोर ग्रिड";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass और Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "गोली के आकार का टैब बार";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram का मूल Liquid Glass इंटरफ़ेस जबरन चालू करता है। रीस्टार्ट आवश्यक है।";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "टैब";
 "PROFILE_TABS_SAVED_TAB_HELP" = "आपके सहेजे गए कलेक्शन को आपकी अपनी प्रोफ़ाइल पर एक टैब के रूप में जोड़ता है। लागू करने के लिए अपनी प्रोफ़ाइल रीफ़्रेश करें।";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "सहेजे गए टैब";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "पोस्ट और टैग किए गए ग्रिड के थंबनेल को लंबे 3:4 लेआउट के बजाय चौकोर दिखाता है और ग्रिड टैब के लिए चौकोर आइकन का उपयोग करता है। लागू करने के लिए प्रोफ़ाइल फिर से खोलें।";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "चौकोर ग्रिड";
 "PROFILE_TITLE" = "प्रोफ़ाइल";
 "REACTION_CONTEXT_FORMAT" = "\"%@\" पर";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "यह सेटिंग टैप करने पर डिफ़ॉल्ट कार्रवाई चलाती है। लंबे समय तक दबाने पर पूरा कार्रवाई मेन्यू खुलता है।";

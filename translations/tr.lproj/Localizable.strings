@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Trend Aramaları Gizle";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Desteklenen bir Instagram bağlantısını panodan açmak için Explore sekmesine uzun basın. Pano geçerli bir bağlantı içermiyorsa Instagram normal şekilde aramayı açar.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Pano Bağlantısını Aç";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Keşfet ızgarasındaki kutucukları daha uzun 3:4 düzeni yerine kare olarak gösterir. Uygulamak için Keşfet'i yeniden açın.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Kare Izgara";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass ve Bulanıklık";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Hap Şeklindeki Sekme Çubuğu";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram'ın yerel Liquid Glass arayüzünü zorunlu kılar. Yeniden başlatma gerektirir.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Sekmeler";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Kaydedilen koleksiyonlarını kendi profilinde bir sekme olarak ekler. Uygulamak için profilini yenile.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Kaydedilenler Sekmesi";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Gönderi ve etiketlenenler ızgaralarındaki küçük resimleri daha uzun 3:4 düzeni yerine kare olarak gösterir ve ızgara sekmesi için kare simge kullanır. Uygulamak için profili yeniden açın.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Kare Izgara";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "\"%@\" için";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Dokunmak varsayılan işlemi çalıştırır. Uzun basmak tam işlem menüsünü açar.";

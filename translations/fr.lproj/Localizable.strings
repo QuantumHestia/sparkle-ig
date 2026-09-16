@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Masquer les recherches tendance";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Appuyez longuement sur l'onglet Explorer pour ouvrir un lien Instagram pris en charge depuis le presse-papiers. Sans lien valide, Instagram ouvre normalement la recherche.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Ouvrir le lien du presse-papiers";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Affiche les vignettes de la grille Explorer en carrés au lieu de la mise en page 3:4 plus haute. Rouvrez Explorer pour appliquer.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Grille carrée";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass et flou";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Barre d'onglets en forme de pilule";
 "INTERFACE_LIQUID_GLASS_HELP" = "Force l'interface Liquid Glass native d'Instagram. Nécessite un redémarrage.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Onglets";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Ajoute tes collections enregistrées sous forme d'onglet sur ton propre profil. Actualise ton profil pour appliquer.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Onglet Enregistrés";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Affiche les miniatures des grilles de publications et d’identifications en carrés au lieu de la mise en page 3:4 plus haute, et utilise une icône carrée pour l’onglet grille. Rouvrez un profil pour appliquer.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Grille carrée";
 "PROFILE_TITLE" = "Profil";
 "REACTION_CONTEXT_FORMAT" = "Sur \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Un appui lance l'action par défaut. Un appui long ouvre le menu d'actions complet.";

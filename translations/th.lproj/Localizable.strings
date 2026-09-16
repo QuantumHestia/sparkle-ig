@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "ซ่อนคำค้นหายอดนิยม";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "กดแท็บสำรวจค้างไว้เพื่อเปิดลิงก์ Instagram ที่รองรับจากคลิปบอร์ดของคุณ หากคลิปบอร์ดไม่มีลิงก์ที่ถูกต้อง Instagram จะเปิดหน้าค้นหาตามปกติ";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "เปิดลิงก์จากคลิปบอร์ด";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "แสดงช่องในตารางสำรวจเป็นสี่เหลี่ยมจัตุรัสแทนเลย์เอาต์ 3:4 ที่สูงกว่า เปิดหน้าสำรวจใหม่เพื่อใช้";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "ตารางสี่เหลี่ยมจัตุรัส";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass และเบลอ";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "แถบแท็บทรงแคปซูล";
 "INTERFACE_LIQUID_GLASS_HELP" = "บังคับเปิดใช้งานอินเทอร์เฟซ Liquid Glass ดั้งเดิมของ Instagram ต้องรีสตาร์ท";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "แท็บ";
 "PROFILE_TABS_SAVED_TAB_HELP" = "เพิ่มคอลเลกชันที่บันทึกไว้ของคุณเป็นแท็บบนโปรไฟล์ของคุณเอง รีเฟรชโปรไฟล์ของคุณเพื่อให้มีผล";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "แท็บที่บันทึกไว้";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "แสดงภาพขนาดย่อในตารางโพสต์และที่ถูกแท็กเป็นสี่เหลี่ยมจัตุรัสแทนเลย์เอาต์ 3:4 ที่สูงกว่า และใช้ไอคอนสี่เหลี่ยมจัตุรัสสำหรับแท็บตาราง เปิดโปรไฟล์ใหม่เพื่อใช้";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "ตารางสี่เหลี่ยมจัตุรัส";
 "PROFILE_TITLE" = "โปรไฟล์";
 "REACTION_CONTEXT_FORMAT" = "บน \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "การแตะจะเรียกใช้การทำงานเริ่มต้น การกดค้างจะเปิดเมนูการทำงานทั้งหมด";

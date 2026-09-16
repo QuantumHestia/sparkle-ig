@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Приховати популярні пошуки";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Утримуйте вкладку Explore, щоб відкрити підтримуване посилання Instagram із буфера обміну. Якщо буфер не містить дійсного посилання, Instagram відкриє пошук як зазвичай.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Відкрити посилання зі буфера обміну";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Показує плитки сітки «Цікаве» квадратами замість вищого макета 3:4. Відкрийте «Цікаве» знову, щоб застосувати.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Квадратна сітка";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass та розмиття";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Таблетка-подібна панель вкладок";
 "INTERFACE_LIQUID_GLASS_HELP" = "Примусово вмикає вбудований інтерфейс Liquid Glass в Instagram. Потрібен перезапуск.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Вкладки";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Додає ваші збережені добірки як вкладку у вашому профілі. Оновіть профіль, щоб застосувати.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Вкладка «Збережене»";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Показує мініатюри в сітках дописів і позначок квадратами замість вищого макета 3:4 і використовує квадратний значок для вкладки сітки. Відкрийте профіль знову, щоб застосувати.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Квадратна сітка";
 "PROFILE_TITLE" = "Профіль";
 "REACTION_CONTEXT_FORMAT" = "На \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Дотик виконує типову дію. Довге натискання відкриває повне меню дій.";

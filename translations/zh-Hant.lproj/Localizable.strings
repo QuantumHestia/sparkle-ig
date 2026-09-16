@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "隱藏熱門搜尋";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "長按探索分頁，即可開啟剪貼簿中支援的 Instagram 連結。若剪貼簿中沒有有效連結，Instagram 會正常開啟搜尋。";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "開啟剪貼簿連結";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "將「探索」網格方塊顯示為正方形，而非較高的 3:4 版面。重新開啟「探索」以套用。";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "方形網格";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 與模糊效果";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "藥丸形分頁列";
 "INTERFACE_LIQUID_GLASS_HELP" = "強制啟用 Instagram 原生的 Liquid Glass 介面。需要重新啟動。";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "分頁";
 "PROFILE_TABS_SAVED_TAB_HELP" = "在你自己的個人檔案加入已儲存收藏作為一個分頁。重新整理個人檔案即可套用。";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "已儲存分頁";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "將貼文和被標註網格中的縮圖顯示為正方形，而非較高的 3:4 版面，並為網格分頁使用方形圖示。重新開啟個人檔案以套用。";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "方形網格";
 "PROFILE_TITLE" = "個人檔案";
 "REACTION_CONTEXT_FORMAT" = "於「%@」";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "點一下會執行預設動作。長按會開啟完整的操作選單。";

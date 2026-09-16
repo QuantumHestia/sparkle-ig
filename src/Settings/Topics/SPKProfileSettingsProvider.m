@@ -150,7 +150,11 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SAVED_TAB_TITLE")
                                            icon:SPKSettingsIcon(@"save")
                                     defaultsKey:@"profile_saved_tab"],
-                               SPKL(@"PROFILE_TABS_SAVED_TAB_HELP"))
+                               SPKL(@"PROFILE_TABS_SAVED_TAB_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SQUARE_GRID_TITLE")
+                                           icon:SPKSettingsIcon(@"grid_square")
+                                    defaultsKey:@"profile_square_grid"],
+                               SPKL(@"PROFILE_TABS_SQUARE_GRID_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"PROFILE_INDICATORS_HEADER"), @[

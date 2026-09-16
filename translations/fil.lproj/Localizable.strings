@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "Itago ang mga Trending Search";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "I-long press ang Explore tab para buksan ang isang suportadong Instagram link mula sa clipboard mo. Kung walang valid na link sa clipboard, bubuksan ng Instagram ang search nang normal.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "Buksan ang Link sa Clipboard";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "Ipinapakita ang mga tile sa Explore grid bilang square sa halip ng mas mataas na 3:4 na layout. Buksan muli ang Explore para ilapat.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "Square na Grid";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass at Blur";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "Tab Bar na Hugis-Pildoras";
 "INTERFACE_LIQUID_GLASS_HELP" = "Sapilitang ina-enable ang native na Liquid Glass interface ng Instagram. Kailangan ng restart.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "Mga Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Idinaragdag ang mga naka-save mong collection bilang tab sa sarili mong profile. I-refresh ang profile mo para mag-apply.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "Saved Tab";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "Ipinapakita ang mga thumbnail sa mga grid ng post at naka-tag bilang square sa halip ng mas mataas na 3:4 na layout, at gumagamit ng square na icon para sa grid tab. Buksan muli ang isang profile para ilapat.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "Square na Grid";
 "PROFILE_TITLE" = "Profile";
 "REACTION_CONTEXT_FORMAT" = "Sa \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Isinasagawa ng tap ang default action. Binubuksan ng long press ang buong action menu.";

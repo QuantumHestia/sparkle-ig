@@ -1159,3 +1159,39 @@ typedef FLEXAlertAction *_Nonnull (^FLEXAlertActionHandler)(void (^handler)(NSAr
 @interface IGFollowButtonViewConfiguration : NSObject
 + (instancetype)defaultButtonConfiguration;
 @end
+
+// Grid thumbnail cell section controller (profile, tagged and saved grids). Its
+// item size is where the tall 4:5 grid turns into a cell height on every build.
+typedef struct {
+    CGFloat columnSpacing;
+    CGFloat rowSpacing;
+    UIEdgeInsets insets;
+    CGFloat mediasPerRow;
+    CGFloat aspectRatio;
+    CGFloat cellCornerRadius;
+} SPKGridLayoutConfiguration;
+
+// Loading placeholder for media grids; its layout configuration sets the
+// placeholder tile shape independently of the real thumbnails.
+@interface IGDSShimmeringGridModel : NSObject
+- (instancetype)initWithLayoutConfiguration:(SPKGridLayoutConfiguration)configuration pattern:(id)pattern contentInset:(UIEdgeInsets)inset shimmering:(BOOL)shimmering;
+@end
+
+@interface IGDSShimmeringGridView : UIView
+- (CGSize)layoutDataSourceCollectionView:(id)view layout:(id)layout sizeForItemAtIndexPath:(NSIndexPath *)path;
+@end
+
+// Explore grid tile section controllers (photos and Reels). Explore's waterfall
+// layout places tiles from these item sizes.
+@interface IGDiscoveryMediaSectionController : NSObject
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+@end
+
+@interface IGDiscoveryTopReelsSectionController : NSObject
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+@end
+
+@interface IGMediaThumbnailSectionController : NSObject
+@property (nonatomic, readonly, weak) UIViewController *viewController;
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+@end

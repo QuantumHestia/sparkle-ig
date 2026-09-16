@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "隐藏热门搜索";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "长按 Explore 标签即可打开剪贴板中的受支持 Instagram 链接。如果剪贴板不含有效链接，Instagram 会正常打开搜索。";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "打开剪贴板链接";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "将“探索”网格方块显示为正方形，而不是更高的 3:4 布局。重新打开“探索”以应用。";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "方形网格";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "液态玻璃和模糊";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "药丸形标签栏";
 "INTERFACE_LIQUID_GLASS_HELP" = "强制启用 Instagram 原生的 Liquid Glass 界面。需要重启。";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "标签页";
 "PROFILE_TABS_SAVED_TAB_HELP" = "将你收藏的合集作为标签页添加到你自己的主页。刷新主页即可生效。";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "收藏标签页";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "将帖子和被标记网格中的缩略图显示为正方形，而不是更高的 3:4 布局，并为网格标签使用方形图标。重新打开主页以应用。";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "方形网格";
 "PROFILE_TITLE" = "个人档案";
 "REACTION_CONTEXT_FORMAT" = "在 \"%@\" 上";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "点按执行默认操作。长按打开完整操作菜单。";

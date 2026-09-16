@@ -27,6 +27,7 @@ static NSDictionary *SPKBootstrapDefaults(void) {
         @"interface_hide_reels_tab" : @(NO),
         @"interface_hide_msgs_tab" : @(NO),
         @"interface_hide_explore_tab" : @(NO),
+        @"interface_explore_square_grid" : @(NO),
         @"interface_hide_create_tab" : @(NO),
         @"interface_hide_profile_tab" : @(NO),
         @"interface_hide_tab_bar_in_messages_only" : @(NO),
@@ -95,6 +96,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"msgs_deleted_log_respect_seen_list" : @(NO),
         @"profile_photo_zoom" : @(NO),
         @"profile_saved_tab" : @(NO),
+        @"profile_square_grid" : @(NO),
         @"profile_follow_indicator" : @(NO),
         // The mode (`profile_follow_indicator_mode`) and colorful
         // (`profile_follow_indicator_colorful`) keys are intentionally left

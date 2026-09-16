@@ -1016,6 +1016,8 @@
 "INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE" = "인기 검색 숨기기";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_HELP" = "Explore 탭을 길게 눌러 클립보드의 지원되는 Instagram 링크를 엽니다. 클립보드에 유효한 링크가 없으면 Instagram이 평소처럼 검색을 엽니다.";
 "INTERFACE_EXPLORE_SEARCH_OPEN_CLIPBOARD_LINK_TITLE" = "클립보드 링크 열기";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP" = "탐색 그리드 타일을 더 긴 3:4 레이아웃 대신 정사각형으로 표시합니다. 적용하려면 탐색을 다시 여세요.";
+"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE" = "정사각형 그리드";
 "INTERFACE_LIQUID_GLASS_BLUR_HEADER" = "Liquid Glass 및 흐림";
 "INTERFACE_LIQUID_GLASS_BLUR_PILL_SHAPED_TAB_BAR_TITLE" = "알약 모양 탭 바";
 "INTERFACE_LIQUID_GLASS_HELP" = "Instagram의 기본 Liquid Glass 인터페이스를 강제로 활성화합니다. 재시작이 필요합니다.";
@@ -1817,6 +1819,8 @@
 "PROFILE_TABS_HEADER" = "탭";
 "PROFILE_TABS_SAVED_TAB_HELP" = "저장한 컬렉션을 내 프로필의 탭으로 추가합니다. 적용하려면 프로필을 새로고침하세요.";
 "PROFILE_TABS_SAVED_TAB_TITLE" = "저장됨 탭";
+"PROFILE_TABS_SQUARE_GRID_HELP" = "게시물 및 태그된 그리드의 썸네일을 더 긴 3:4 레이아웃 대신 정사각형으로 표시하고 그리드 탭에 정사각형 아이콘을 사용합니다. 적용하려면 프로필을 다시 여세요.";
+"PROFILE_TABS_SQUARE_GRID_TITLE" = "정사각형 그리드";
 "PROFILE_TITLE" = "프로필";
 "REACTION_CONTEXT_FORMAT" = "\"%@\"에서";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "탭하면 기본 동작을 실행하고, 길게 누르면 전체 동작 메뉴를 엽니다.";
