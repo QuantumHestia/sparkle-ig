@@ -125,6 +125,7 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 // has to stop clearing it, and the header chips have to stay put until the
 // fingers lift (removing them mid-drag shifts the rows under them).
 @property (nonatomic, weak, nullable) UIPinchGestureRecognizer *gridDensityPinch;
+@property (nonatomic, weak, nullable) UIGestureRecognizer *multiSelectOneFingerPan;
 @property (nonatomic, assign) BOOL multiSelectDragActive;
 @property (nonatomic, assign) BOOL multiSelectDragOpenedSelection;
 @property (nonatomic, strong, nullable) UISelectionFeedbackGenerator *multiSelectDragFeedback;
@@ -298,6 +299,16 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     [self refreshBottomToolbarItems];
     [self.navigationController setToolbarHidden:NO animated:animated];
     [self updateCollectionInsets];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    // UIKit adds its selection recognizers with the interaction rather than at
+    // init, and recomputes their enabled state whenever it revisits the
+    // collection view's selection support, so the one-finger pan is caught here
+    // instead of only once at setup.
+    [self disableOneFingerMultiSelectPan];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -639,6 +650,32 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     self.gridDensityPinch.enabled = !listMode;
     self.collectionView.allowsMultipleSelection = listMode;
     self.collectionView.allowsMultipleSelectionDuringEditing = listMode;
+    [self disableOneFingerMultiSelectPan];
+}
+
+/// Supporting multiple selection brings in a second selection recognizer beside
+/// the two-finger drag: a one-finger pan that starts a sweep from a swipe across
+/// the list's short axis. That turns an ordinary horizontal swipe into a
+/// selection, including one that begins at the scroll indicator, so only the
+/// two-finger drag is left switched on. If a future iOS drops the recognizer
+/// this finds nothing and the gesture set is whatever that release ships.
+- (void)disableOneFingerMultiSelectPan {
+    if (self.multiSelectOneFingerPan) {
+        self.multiSelectOneFingerPan.enabled = NO;
+        return;
+    }
+
+    Class oneFingerPanClass = NSClassFromString(@"_UIMultiSelectOneFingerPanGesture");
+    if (!oneFingerPanClass) {
+        return;
+    }
+    for (UIGestureRecognizer *recognizer in self.collectionView.gestureRecognizers) {
+        if ([recognizer isKindOfClass:oneFingerPanClass]) {
+            recognizer.enabled = NO;
+            self.multiSelectOneFingerPan = recognizer;
+            break;
+        }
+    }
 }
 
 #pragma mark - Grid Density
