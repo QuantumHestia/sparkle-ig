@@ -6,6 +6,7 @@
 #import "SPKLanguagePackURLImporter.h"
 #import "SPKStrings.h"
 #import "../UI/SPKNotificationCenter.h"
+#import "../../Tweak.h"
 #import "../../Utils.h"
 
 NSString *const kSPKLanguagePackAutoUpdateKey = @"language_pack_auto_update";
@@ -13,10 +14,10 @@ static NSString *const kSPKLastUpdateCheckKey = @"language_pack_last_update_chec
 // Separate from the last SUCCESSFUL check: without it, a device that simply has no network would
 // re-attempt the whole fetch on every single launch, because nothing would ever have been recorded.
 static NSString *const kSPKLastUpdateAttemptKey = @"language_pack_last_update_attempt";
+// The Sparkle version whose packs are already on disk. Stamped only after a check completes, so an
+// update installed while offline stays pending across launches instead of being marked done.
+static NSString *const kSPKSyncedVersionKey = @"language_pack_synced_version";
 
-// Long enough that launching repeatedly costs nothing, short enough that a release published while
-// the app sits open still lands the next morning.
-static const NSTimeInterval kSPKUpdateCheckInterval = 24 * 60 * 60;
 // Held off the very first moments of launch: the check is background work competing with the feed,
 // and nothing about it is urgent.
 static const NSTimeInterval kSPKUpdateCheckLaunchDelay = 12.0;
@@ -56,20 +57,29 @@ static const NSTimeInterval kSPKUpdateRetryInterval = 60 * 60;
     return tracked;
 }
 
++ (BOOL)packsAreBehindTheInstalledVersion {
+    id synced = [NSUserDefaults.standardUserDefaults objectForKey:kSPKSyncedVersionKey];
+    // A missing stamp means packs installed before this became version-driven. Treating that as
+    // pending costs one check and puts every existing user on the same footing as a new one.
+    return ![synced isKindOfClass:[NSString class]] || ![synced isEqualToString:SPKVersionString];
+}
+
 + (void)checkForUpdatesIfDue {
     if (![self autoUpdateEnabled])
         return;
     if ([self trackedPacks].count == 0)
         return;  // nothing installed that tracks a release — no reason to touch the network
-    NSDate *last = [self lastCheckDate];
-    NSDate *now = [NSDate date];
-    if (last && [now timeIntervalSinceDate:last] < kSPKUpdateCheckInterval)
+    // Each pack is an asset of a published release, so its contents cannot change between releases.
+    // Polling on a timer would spend a request a day to be told that; the version moving is the only
+    // event that can make a pack stale, and it is also what keeps a pack and the binary reading it in
+    // step, so a pack never describes strings this build does not have.
+    if (![self packsAreBehindTheInstalledVersion])
         return;
     // Back off after a failure instead of retrying on every launch.
     NSTimeInterval lastAttempt = [NSUserDefaults.standardUserDefaults doubleForKey:kSPKLastUpdateAttemptKey];
-    if (lastAttempt > 0 && now.timeIntervalSince1970 - lastAttempt < kSPKUpdateRetryInterval)
+    if (lastAttempt > 0 && NSDate.date.timeIntervalSince1970 - lastAttempt < kSPKUpdateRetryInterval)
         return;
-    [NSUserDefaults.standardUserDefaults setDouble:now.timeIntervalSince1970 forKey:kSPKLastUpdateAttemptKey];
+    [NSUserDefaults.standardUserDefaults setDouble:NSDate.date.timeIntervalSince1970 forKey:kSPKLastUpdateAttemptKey];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSPKUpdateCheckLaunchDelay * NSEC_PER_SEC)),
                    dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), ^{
@@ -77,14 +87,33 @@ static const NSTimeInterval kSPKUpdateRetryInterval = 60 * 60;
     });
 }
 
++ (void)checkForUpdatesNow:(nullable void (^)(NSInteger refreshed, NSError *_Nullable error))completion {
+    // Deliberately ignores the version stamp and the retry backoff: this runs because the user asked,
+    // and the case it exists for is a pack republished under a release that is already installed.
+    [self performCheckWithCompletion:completion];
+}
+
 + (void)performCheck {
+    [self performCheckWithCompletion:nil];
+}
+
++ (void)performCheckWithCompletion:(nullable void (^)(NSInteger, NSError *_Nullable))completion {
+    void (^report)(NSInteger, NSError *_Nullable) = ^(NSInteger refreshed, NSError *_Nullable failure) {
+        if (!completion)
+            return;
+        dispatch_async(dispatch_get_main_queue(), ^{ completion(refreshed, failure); });
+    };
+
     NSDictionary<NSString *, NSString *> *tracked = [self trackedPacks];
-    if (tracked.count == 0)
+    if (tracked.count == 0) {
+        report(0, nil);
         return;
+    }
 
     [SPKLanguagePackCatalog fetchEntriesWithCompletion:^(NSArray<SPKLanguageCatalogEntry *> *entries, NSError *error) {
         if (!entries) {
             SPKLog(@"i18n", @"[LangPackUpdate] catalog unavailable, leaving packs as they are");
+            report(0, error);
             return;
         }
         // Only rows naming a language already installed, and only where the published hash differs
@@ -105,12 +134,16 @@ static const NSTimeInterval kSPKUpdateRetryInterval = 60 * 60;
                 [stale addObject:entry];
         }
         [NSUserDefaults.standardUserDefaults setDouble:[NSDate date].timeIntervalSince1970 forKey:kSPKLastUpdateCheckKey];
+        // Reaching the catalog is what the stamp records, not finding work in it. Stamping only on a
+        // refresh would leave a user whose packs were already current re-checking on every launch.
+        [NSUserDefaults.standardUserDefaults setObject:SPKVersionString forKey:kSPKSyncedVersionKey];
         if (stale.count == 0) {
             SPKLog(@"i18n", @"[LangPackUpdate] %lu tracked pack(s), all current", (unsigned long)tracked.count);
+            report(0, nil);
             return;
         }
         SPKLog(@"i18n", @"[LangPackUpdate] %lu pack(s) out of date", (unsigned long)stale.count);
-        [self installSequentially:stale index:0 updated:[NSMutableArray array]];
+        [self installSequentially:stale index:0 updated:[NSMutableArray array] completion:report];
     }];
 }
 
@@ -118,12 +151,14 @@ static const NSTimeInterval kSPKUpdateRetryInterval = 60 * 60;
 /// that this is invisible, so there is nothing to gain from racing several downloads at launch.
 + (void)installSequentially:(NSArray<SPKLanguageCatalogEntry *> *)entries
                       index:(NSUInteger)index
-                    updated:(NSMutableArray<NSString *> *)updated {
+                    updated:(NSMutableArray<NSString *> *)updated
+                 completion:(void (^)(NSInteger, NSError *_Nullable))completion {
     if (index >= entries.count) {
         if (updated.count > 0) {
             [SPKStrings languagePacksDidChange];
             [self announceUpdated:updated];
         }
+        completion((NSInteger)updated.count, nil);
         return;
     }
     SPKLanguageCatalogEntry *entry = entries[index];
@@ -139,7 +174,7 @@ static const NSTimeInterval kSPKUpdateRetryInterval = 60 * 60;
             // now would only spend the user's data on the same failure, so the next check gets it.
             SPKWarnLog(@"i18n", @"[LangPackUpdate] could not refresh %@: %@", entry.code, error.localizedDescription);
         }
-        [self installSequentially:entries index:index + 1 updated:updated];
+        [self installSequentially:entries index:index + 1 updated:updated completion:completion];
     }];
 }
 

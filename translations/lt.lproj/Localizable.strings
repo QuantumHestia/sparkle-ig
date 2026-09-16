@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Kalbų paketai";
 "LANGUAGE_PACK_ADD_FOOTER" = "Atsisiųskite paskelbtą vertimą arba importuokite savo iš failo ar nuorodos.";
 "LANGUAGE_PACK_ADD_TITLE" = "Pridėti kalbą";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Kalbų paketai atnaujinti";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Palaikyti kalbas atnaujintas";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Galimos";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Kol kas nepaskelbta jokių kalbų.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Įdiegtos";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Įkeliamos kalbos";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Palieskite, kad bandytumėte dar kartą";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Tikrinama";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Atsisiuntimas neatitiko to, ko tikėjosi sąrašas.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Tikrinti naujinius";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "Išversta %ld%%";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Ištrinti kalbų paketą";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Nepavyko ištrinti kalbų paketo";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Daugiau kalbos paketo parinkčių";
 "LANGUAGE_PACK_TOO_LARGE" = "Šis failas yra per didelis, kad būtų kalbos paketas.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Kalbų paketai atnaujinti";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Tikrina kartą per dieną ir atnaujina tik jau turimas kalbas, kad naujos versijos pridėti ekranai atkeliautų išversti. Iš failo įdiegtas paketas niekada nekeičiamas.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Tikrina po kiekvieno Sparkle naujinio ir atnaujina tik tas kalbas, kurias jau turite, kad naujos laidos pridedami ekranai atkeliautų išversti. Iš failo įdiegtas paketas niekada nekeičiamas.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Atnaujinimai";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Yra atnaujinimas";
 "LANGUAGE_PACK_URL_BLOCKED" = "Šis adresas nurodo vietą, iš kurios Sparkle nesisiųs.";

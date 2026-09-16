@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "भाषा पैक";
 "LANGUAGE_PACK_ADD_FOOTER" = "कोई प्रकाशित अनुवाद डाउनलोड करें, या फ़ाइल या लिंक से अपना खुद का इंपोर्ट करें।";
 "LANGUAGE_PACK_ADD_TITLE" = "भाषा जोड़ें";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "भाषा पैक अप टू डेट हैं";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "भाषाओं को अपडेट रखें";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "उपलब्ध";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "अभी तक कोई भाषा प्रकाशित नहीं हुई है।";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "इंस्टॉल किए गए";
 "LANGUAGE_PACK_CATALOG_LOADING" = "भाषाएं लोड हो रही हैं";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "फिर से कोशिश करने के लिए टैप करें";
+"LANGUAGE_PACK_CHECKING_TITLE" = "जाँच जारी है";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "डाउनलोड सूची में अपेक्षित से मेल नहीं खाया।";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "अपडेट देखें";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% अनूदित";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "भाषा पैक हटाएँ";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "भाषा पैक हटाया नहीं जा सका";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "भाषा पैक के अधिक विकल्प";
 "LANGUAGE_PACK_TOO_LARGE" = "वह फ़ाइल भाषा पैक बनने के लिए बहुत बड़ी है।";
 "LANGUAGE_PACK_UPDATED_TOAST" = "भाषा पैक अपडेट किए गए";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "दिन में एक बार जांच करता है और केवल आपके पास मौजूद भाषाओं को रीफ्रेश करता है, ताकि नए रिलीज़ में जुड़ने वाली स्क्रीन अनूदित होकर आएं। फ़ाइल से इंस्टॉल किया गया पैक कभी बदला नहीं जाता।";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "हर Sparkle अपडेट के बाद जाँचता है और केवल उन्हीं भाषाओं को रीफ़्रेश करता है जो आपके पास पहले से हैं, ताकि नए रिलीज़ में जुड़ने वाली स्क्रीन अनुवादित मिलें. फ़ाइल से इंस्टॉल किया गया पैक कभी नहीं बदला जाता.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "अपडेट";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "अपडेट उपलब्ध है";
 "LANGUAGE_PACK_URL_BLOCKED" = "वह पता किसी ऐसी जगह की ओर इशारा करता है जहां से Sparkle डाउनलोड नहीं करेगा।";

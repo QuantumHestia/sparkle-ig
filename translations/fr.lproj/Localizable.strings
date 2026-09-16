@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Packs de langue";
 "LANGUAGE_PACK_ADD_FOOTER" = "Téléchargez une traduction publiée, ou importez la vôtre depuis un fichier ou un lien.";
 "LANGUAGE_PACK_ADD_TITLE" = "Ajouter une langue";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Les packs de langue sont à jour";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Garder les langues à jour";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Disponibles";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Aucune langue n'est encore publiée.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Installées";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Chargement des langues";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Touchez pour réessayer";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Vérification";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Le téléchargement ne correspondait pas à ce que la liste attendait.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Rechercher des mises à jour";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% traduit";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Supprimer le pack de langue";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Impossible de supprimer le pack de langue";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Plus d'options de pack de langue";
 "LANGUAGE_PACK_TOO_LARGE" = "Ce fichier est trop volumineux pour être un pack de langue.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Packs de langue mis à jour";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Vérifie une fois par jour et actualise uniquement les langues que vous avez déjà, afin que les écrans ajoutés par une nouvelle version arrivent traduits. Un pack installé depuis un fichier n'est jamais remplacé.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Vérifie après chaque mise à jour de Sparkle et n'actualise que les langues que vous avez déjà, pour que les écrans ajoutés par une nouvelle version arrivent traduits. Un pack installé depuis un fichier n'est jamais remplacé.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Mises à jour";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Mise à jour disponible";
 "LANGUAGE_PACK_URL_BLOCKED" = "Cette adresse pointe vers un endroit depuis lequel Sparkle ne téléchargera pas.";

@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Sprachpakete";
 "LANGUAGE_PACK_ADD_FOOTER" = "Lade eine veröffentlichte Übersetzung herunter oder importiere deine eigene aus einer Datei oder einem Link.";
 "LANGUAGE_PACK_ADD_TITLE" = "Sprache hinzufügen";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Sprachpakete sind aktuell";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Sprachen aktuell halten";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Verfügbar";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Es sind noch keine Sprachen veröffentlicht.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Installiert";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Sprachen werden geladen";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Zum erneuten Versuch tippen";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Wird geprüft";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Der Download entsprach nicht dem, was die Liste erwartet hat.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Nach Updates suchen";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% übersetzt";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Sprachpaket löschen";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Sprachpaket konnte nicht gelöscht werden";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Weitere Sprachpaket-Optionen";
 "LANGUAGE_PACK_TOO_LARGE" = "Diese Datei ist zu groß, um ein Sprachpaket zu sein.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Sprachpakete aktualisiert";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Prüft einmal täglich und aktualisiert nur die Sprachen, die du bereits hast, damit die von einem neuen Release hinzugefügten Bildschirme übersetzt ankommen. Ein aus einer Datei installiertes Paket wird nie ersetzt.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Prüft nach jedem Sparkle-Update und aktualisiert nur die Sprachen, die du bereits hast, damit die Bildschirme einer neuen Version übersetzt ankommen. Ein aus einer Datei installiertes Paket wird nie ersetzt.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Aktualisierungen";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Aktualisierung verfügbar";
 "LANGUAGE_PACK_URL_BLOCKED" = "Diese Adresse verweist auf einen Ort, von dem Sparkle nicht herunterladen wird.";

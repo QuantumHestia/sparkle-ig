@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "بسته‌های زبان";
 "LANGUAGE_PACK_ADD_FOOTER" = "یک ترجمه منتشرشده را دانلود کنید یا مورد خودتان را از فایل یا پیوند وارد کنید.";
 "LANGUAGE_PACK_ADD_TITLE" = "افزودن زبان";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "بسته‌های زبان به‌روز هستند";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "به‌روز نگه‌داشتن زبان‌ها";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "در دسترس";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "هنوز هیچ زبانی منتشر نشده است.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "نصب‌شده";
 "LANGUAGE_PACK_CATALOG_LOADING" = "در حال بارگذاری زبان‌ها";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "برای تلاش مجدد ضربه بزنید";
+"LANGUAGE_PACK_CHECKING_TITLE" = "در حال بررسی";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "فایل دانلودشده با چیزی که فهرست انتظار داشت مطابقت نداشت.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "بررسی به‌روزرسانی‌ها";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "بسته زبان، %ld%% ترجمه‌شده";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "حذف بسته زبان";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "حذف بسته زبان ممکن نشد";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "گزینه‌های بیشتر بسته زبان";
 "LANGUAGE_PACK_TOO_LARGE" = "آن فایل برای یک بسته زبان بیش از حد بزرگ است.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "بسته‌های زبان به‌روزرسانی شدند";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "هر روز یک‌بار بررسی می‌کند و فقط زبان‌هایی را که از قبل دارید تازه می‌کند، تا صفحات جدیدی که یک نسخه اضافه می‌کند ترجمه‌شده برسند. بسته‌ای که از فایل نصب کرده‌اید هرگز جایگزین نمی‌شود.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "پس از هر به‌روزرسانی Sparkle بررسی می‌کند و فقط زبان‌هایی را که دارید تازه می‌کند تا صفحه‌هایی که نسخه جدید اضافه می‌کند ترجمه‌شده برسند. بسته‌ای که از یک فایل نصب کرده‌اید هرگز جایگزین نمی‌شود.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "به‌روزرسانی‌ها";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "به‌روزرسانی موجود است";
 "LANGUAGE_PACK_URL_BLOCKED" = "آن آدرس به جایی اشاره می‌کند که Sparkle از آن دانلود نمی‌کند.";

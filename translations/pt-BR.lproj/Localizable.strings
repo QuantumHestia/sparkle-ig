@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Pacotes de idioma";
 "LANGUAGE_PACK_ADD_FOOTER" = "Baixe uma tradução publicada, ou importe a sua de um arquivo ou de um link.";
 "LANGUAGE_PACK_ADD_TITLE" = "Adicionar um idioma";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Os pacotes de idioma estão atualizados";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Manter os idiomas atualizados";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Disponíveis";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Nenhum idioma foi publicado ainda.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Instalados";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Carregando idiomas";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Toque para tentar novamente";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Verificando";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "O download não correspondeu ao que a lista esperava.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Verificar atualizações";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% traduzido";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Excluir pacote de idioma";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Não foi possível excluir o pacote de idioma";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Mais opções de pacote de idioma";
 "LANGUAGE_PACK_TOO_LARGE" = "Esse arquivo é grande demais para ser um pacote de idioma.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Pacotes de idioma atualizados";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Verifica uma vez por dia e atualiza somente os idiomas que você já tem, para que as telas adicionadas por um novo lançamento cheguem traduzidas. Um pacote instalado de um arquivo nunca é substituído.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Verifica após cada atualização do Sparkle e atualiza apenas os idiomas que você já tem, para que as telas adicionadas por uma nova versão cheguem traduzidas. Um pacote instalado de um arquivo nunca é substituído.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Atualizações";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Atualização disponível";
 "LANGUAGE_PACK_URL_BLOCKED" = "Esse endereço aponta para um lugar de onde o Sparkle não vai baixar.";

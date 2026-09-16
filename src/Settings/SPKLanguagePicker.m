@@ -66,6 +66,7 @@ NSString *SPKLanguageDisplayName(NSString *code) {
 
 @property (nonatomic, copy) NSArray<NSString *> *languageCodes;
 @property (nonatomic, copy) NSArray<SPKLanguagePack *> *installedPacks;
+@property (nonatomic, assign) BOOL checkingForUpdates;
 
 @end
 
@@ -158,6 +159,17 @@ NSString *SPKLanguageDisplayName(NSString *code) {
                     : [SPKSetting switchCellWithTitle:SPKL(@"LANGUAGE_PACK_AUTO_UPDATE_TITLE")
                                           defaultsKey:kSPKLanguagePackAutoUpdateKey];
 
+    // The automatic check only runs when the version moves, which is the only thing that can change a
+    // pack published as a release asset. A pack rebuilt and republished under a release the user
+    // already has is invisible to that, so this is the way to pick one up.
+    SPKSetting *checkNowRow =
+        [SPKSetting buttonCellWithTitle:self.checkingForUpdates ? SPKL(@"LANGUAGE_PACK_CHECKING_TITLE")
+                                                                : SPKL(@"LANGUAGE_PACK_CHECK_NOW_TITLE")
+                               subtitle:nil
+                                   icon:nil
+                                 action:^{ [weakSelf checkForPackUpdates]; }];
+    checkNowRow.userInfo = @{ @"hidesDisclosure" : @(YES) };
+
     // Reporting and contributing are different jobs with different destinations:
     // one fills in a form, the other opens the guide that needs no build.
     SPKSetting *reportRow = [SPKSetting linkCellWithTitle:SPKL(@"LANGUAGE_REPORT_ISSUE_TITLE")
@@ -171,7 +183,7 @@ NSString *SPKLanguageDisplayName(NSString *code) {
     [self replaceSections:@[
         SPKTopicSection(@"", languageRows, SPKL(@"LANGUAGE_LIST_FOOTER")),
         SPKTopicSection(SPKL(@"LANGUAGE_PACKS_HEADER"), @[ addRow ], SPKL(@"LANGUAGE_PACK_ADD_FOOTER")),
-        SPKTopicSection(SPKL(@"LANGUAGE_PACK_UPDATES_HEADER"), @[ autoUpdateRow ], SPKL(@"LANGUAGE_PACK_UPDATES_FOOTER")),
+        SPKTopicSection(SPKL(@"LANGUAGE_PACK_UPDATES_HEADER"), @[ autoUpdateRow, checkNowRow ], SPKL(@"LANGUAGE_PACK_UPDATES_FOOTER")),
         SPKTopicSection(@"", @[ reportRow, contributeRow ], SPKL(@"LANGUAGE_HELP_FOOTER")),
     ]];
 }
@@ -295,9 +307,37 @@ NSString *SPKLanguageDisplayName(NSString *code) {
                                       }];
 }
 
-/// When the check last succeeded, or nil before it ever has. This is the one fact worth stating:
-/// with the setting on, a check has already run, so the useful thing is not a button that repeats it
-/// but the date proving it happened.
+/// Runs the check the user asked for, ignoring the version stamp the automatic one goes by. A refresh
+/// announces itself with its own pill naming the languages, so the only case left to report here is
+/// finding nothing, which otherwise looks like the button did nothing at all.
+- (void)checkForPackUpdates {
+    if (self.checkingForUpdates)
+        return;
+    self.checkingForUpdates = YES;
+    [self rebuildSections];
+
+    __weak typeof(self) weakSelf = self;
+    [SPKLanguagePackUpdater checkForUpdatesNow:^(NSInteger refreshed, NSError *error) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf)
+            return;
+        strongSelf.checkingForUpdates = NO;
+        if (refreshed > 0)
+            [strongSelf reloadLanguages];  // also rebuilds, and the pack list itself has changed
+        else
+            [strongSelf rebuildSections];
+
+        if (error) {
+            [strongSelf presentErrorWithTitle:SPKL(@"LANGUAGE_PACK_CATALOG_ERROR")
+                                      message:error.localizedDescription];
+        } else if (refreshed == 0) {
+            SPKNotify(kSPKNotificationLanguagePackUpdate, SPKL(@"LANGUAGE_PACK_ALL_CURRENT_TOAST"), nil,
+                      @"translate", SPKNotificationToneForIconResource(@"translate"));
+        }
+    }];
+}
+
+/// When the check last succeeded, or nil before it ever has.
 - (nullable NSString *)lastCheckedSubtitle {
     NSDate *last = [SPKLanguagePackUpdater lastCheckDate];
     if (!last)
@@ -307,8 +347,8 @@ NSString *SPKLanguageDisplayName(NSString *code) {
     // the screen. The shared helper keeps the device's regional variant when the language is merely
     // being followed, which is what preserves its 12/24-hour clock.
     formatter.locale = [SPKUtils spk_activeFormattingLocale];
-    // The subtitle gets one line, so the date has to stay short. Checks run daily, which makes
-    // "Today at 03:24" the normal reading; once the date is old enough to spell out, the time of day
+    // The subtitle gets one line, so the date has to stay short. A check that just ran makes
+    // "Today at 03:24" the useful reading; once the date is old enough to spell out, the time of day
     // stops being the interesting part, so it goes and the date alone still fits.
     BOOL relative = [NSCalendar.currentCalendar isDateInToday:last] || [NSCalendar.currentCalendar isDateInYesterday:last];
     formatter.dateStyle = NSDateFormatterMediumStyle;

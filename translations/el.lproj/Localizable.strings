@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Πακέτα γλώσσας";
 "LANGUAGE_PACK_ADD_FOOTER" = "Κατεβάστε μια δημοσιευμένη μετάφραση ή εισαγάγετε τη δική σας από ένα αρχείο ή έναν σύνδεσμο.";
 "LANGUAGE_PACK_ADD_TITLE" = "Προσθήκη γλώσσας";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Τα πακέτα γλωσσών είναι ενημερωμένα";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Διατήρηση γλωσσών ενημερωμένων";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Διαθέσιμα";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Δεν έχουν δημοσιευτεί ακόμη γλώσσες.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Εγκατεστημένα";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Φόρτωση γλωσσών";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Πατήστε για να δοκιμάσετε ξανά";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Γίνεται έλεγχος";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Η λήψη δεν αντιστοιχούσε σε αυτό που ανέμενε η λίστα.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Έλεγχος για ενημερώσεις";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% μεταφρασμένο";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Διαγραφή πακέτου γλώσσας";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Δεν ήταν δυνατή η διαγραφή του πακέτου γλώσσας";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Περισσότερες επιλογές πακέτου γλώσσας";
 "LANGUAGE_PACK_TOO_LARGE" = "Αυτό το αρχείο είναι πολύ μεγάλο για να είναι πακέτο γλώσσας.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Τα πακέτα γλώσσας ενημερώθηκαν";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Ελέγχει μία φορά την ημέρα και ανανεώνει μόνο τις γλώσσες που ήδη έχετε, ώστε οι οθόνες που προσθέτει μια νέα έκδοση να φτάνουν μεταφρασμένες. Ένα πακέτο που εγκαταστήσατε από αρχείο δεν αντικαθίσταται ποτέ.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Ελέγχει μετά από κάθε ενημέρωση του Sparkle και ανανεώνει μόνο τις γλώσσες που έχετε ήδη, ώστε οι οθόνες που προσθέτει μια νέα έκδοση να φτάνουν μεταφρασμένες. Ένα πακέτο που εγκαταστήσατε από αρχείο δεν αντικαθίσταται ποτέ.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Ενημερώσεις";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Διαθέσιμη ενημέρωση";
 "LANGUAGE_PACK_URL_BLOCKED" = "Αυτή η διεύθυνση οδηγεί κάπου από όπου το Sparkle δεν θα κάνει λήψη.";

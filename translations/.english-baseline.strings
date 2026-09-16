@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Language Packs";
 "LANGUAGE_PACK_ADD_FOOTER" = "Download a published translation, or import your own from a file or a link.";
 "LANGUAGE_PACK_ADD_TITLE" = "Add a Language";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Language packs are up to date";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Keep Languages Up to Date";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Available";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "No languages are published yet.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Installed";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Loading languages";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Tap to try again";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Checking";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "The download did not match what the list expected.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Check for Updates";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% translated";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Delete language pack";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Could Not Delete Language Pack";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "More language pack options";
 "LANGUAGE_PACK_TOO_LARGE" = "That file is too large to be a language pack.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Language packs updated";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Checks once a day and refreshes only the languages you already have, so the screens a new release adds arrive translated. A pack you installed from a file is never replaced.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Checks after each Sparkle update and refreshes only the languages you already have, so the screens a new release adds arrive translated. A pack you installed from a file is never replaced.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Updates";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Update available";
 "LANGUAGE_PACK_URL_BLOCKED" = "That address points somewhere Sparkle will not download from.";

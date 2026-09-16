@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Dil Paketleri";
 "LANGUAGE_PACK_ADD_FOOTER" = "Yayınlanmış bir çeviri indirin veya kendinizinkini bir dosyadan ya da bağlantıdan içe aktarın.";
 "LANGUAGE_PACK_ADD_TITLE" = "Dil Ekle";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Dil paketleri güncel";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Dilleri Güncel Tut";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Kullanılabilir";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Henüz yayınlanmış dil yok.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Yüklü";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Diller yükleniyor";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Tekrar denemek için dokunun";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Denetleniyor";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "İndirilen dosya, listenin beklediğiyle eşleşmedi.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Güncellemeleri denetle";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% çevrildi";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Dil paketini sil";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Dil paketi silinemedi";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Diğer dil paketi seçenekleri";
 "LANGUAGE_PACK_TOO_LARGE" = "Bu dosya bir dil paketi olamayacak kadar büyük.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Dil paketleri güncellendi";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Günde bir kez kontrol eder ve yalnızca zaten sahip olduğunuz dilleri yeniler, böylece yeni bir sürümün eklediği ekranlar çevrilmiş olarak gelir. Bir dosyadan yüklediğiniz paket asla değiştirilmez.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Her Sparkle güncellemesinden sonra denetler ve yalnızca zaten sahip olduğunuz dilleri yeniler, böylece yeni bir sürümün eklediği ekranlar çevrilmiş olarak gelir. Dosyadan yüklediğiniz bir paket asla değiştirilmez.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Güncellemeler";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Güncelleme mevcut";
 "LANGUAGE_PACK_URL_BLOCKED" = "Bu adres, Sparkle'ın indirme yapmayacağı bir yeri gösteriyor.";

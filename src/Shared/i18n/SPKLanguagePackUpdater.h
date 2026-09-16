@@ -24,9 +24,19 @@ FOUNDATION_EXPORT NSString *const kSPKLanguagePackAutoUpdateKey;
 @property (class, nonatomic, assign) BOOL autoUpdateEnabled;
 
 /// Runs the check if auto-update is on, a pack that tracks a published build is installed, and the
-/// throttle has elapsed. Safe to call on every launch; returns immediately when there is nothing to
-/// do. Never reports anything on success beyond a single pill naming what it refreshed.
+/// packs on disk were fetched for an older Sparkle. Safe to call on every launch; returns immediately
+/// when there is nothing to do. Never reports anything on success beyond a single pill naming what it
+/// refreshed.
+///
+/// A pack is an asset of a published release, so a release is the only thing that can change one.
+/// Checking when the version moves rather than on a timer also keeps a pack and the binary reading it
+/// in step, so an installed pack never describes strings this build does not have.
 + (void)checkForUpdatesIfDue;
+
+/// Runs the same check immediately, whatever the version stamp says, and reports how many packs were
+/// refreshed. For the case the version trigger cannot see: a pack rebuilt and republished under a
+/// release the user already has.
++ (void)checkForUpdatesNow:(nullable void (^)(NSInteger refreshed, NSError *_Nullable error))completion;
 
 /// When the last successful check ran, or nil if one never has.
 + (nullable NSDate *)lastCheckDate;

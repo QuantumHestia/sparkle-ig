@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Мовні пакети";
 "LANGUAGE_PACK_ADD_FOOTER" = "Завантажте опублікований переклад або імпортуйте власний з файлу чи посилання.";
 "LANGUAGE_PACK_ADD_TITLE" = "Додати мову";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Мовні пакети оновлені";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Підтримувати мови в актуальному стані";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Доступні";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Поки що немає опублікованих мов.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Встановлені";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Завантаження мов";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Торкніться, щоб повторити спробу";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Перевірка";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Завантажене не збіглося з тим, що очікував список.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Перевірити оновлення";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% перекладено";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Видалити мовний пакет";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Не вдалося видалити мовний пакет";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Додаткові параметри мовного пакета";
 "LANGUAGE_PACK_TOO_LARGE" = "Цей файл завеликий, щоб бути мовним пакетом.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Мовні пакети оновлено";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Перевіряє раз на день і оновлює лише вже встановлені вами мови, тому екрани, додані новим релізом, приходять перекладеними. Пакет, встановлений із файлу, ніколи не замінюється.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Перевіряє після кожного оновлення Sparkle та оновлює лише ті мови, які у вас уже є, щоб екрани, додані новим випуском, надходили перекладеними. Пакет, встановлений із файлу, ніколи не замінюється.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Оновлення";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Доступне оновлення";
 "LANGUAGE_PACK_URL_BLOCKED" = "Ця адреса вказує туди, звідки Sparkle не завантажуватиме.";

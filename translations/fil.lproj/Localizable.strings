@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Mga Language Pack";
 "LANGUAGE_PACK_ADD_FOOTER" = "Mag-download ng na-publish na translation, o mag-import ng sarili mo mula sa isang file o link.";
 "LANGUAGE_PACK_ADD_TITLE" = "Magdagdag ng Wika";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Napapanahon na ang mga language pack";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Panatilihing Updated ang mga Wika";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Available";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Wala pang na-publish na wika.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Naka-install";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Nilo-load ang mga wika";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "I-tap para subukan ulit";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Tinitingnan";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Hindi tumugma ang na-download sa inaasahan ng listahan.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Tingnan ang mga update";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "Language pack, %ld%% naisalin";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Burahin ang language pack";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Hindi Mabura ang Language Pack";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Higit pang opsyon para sa language pack";
 "LANGUAGE_PACK_TOO_LARGE" = "Masyadong malaki ang file na iyon para maging language pack.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Na-update ang mga language pack";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Nagche-check isang beses kada araw at ino-update lang ang mga wikang mayroon ka na, para dumating nang naisalin ang mga screen na idinagdag ng bagong release. Ang pack na na-install mo mula sa isang file ay hindi kailanman papalitan.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Nagche-check pagkatapos ng bawat update ng Sparkle at ina-update lang ang mga wikang mayroon ka na, para dumating nang nakasalin ang mga screen na idinaragdag ng bagong release. Hindi kailanman pinapalitan ang pack na na-install mo mula sa file.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Mga Update";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "May available na update";
 "LANGUAGE_PACK_URL_BLOCKED" = "Ang address na iyon ay tumuturo sa isang lugar na hindi dina-download ni Sparkle.";

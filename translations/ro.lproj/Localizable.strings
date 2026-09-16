@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Pachete de limbă";
 "LANGUAGE_PACK_ADD_FOOTER" = "Descarcă o traducere publicată sau importă-o pe a ta dintr-un fișier sau un link.";
 "LANGUAGE_PACK_ADD_TITLE" = "Adaugă o limbă";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "Pachetele de limbă sunt la zi";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Menține limbile la zi";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Disponibile";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Nu a fost publicată încă nicio limbă.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Instalate";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Se încarcă limbile";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Atinge pentru a încerca din nou";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Se verifică";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Descărcarea nu a corespuns cu ceea ce aștepta lista.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Caută actualizări";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% tradus";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Șterge pachetul de limbă";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Pachetul de limbă nu a putut fi șters";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Mai multe opțiuni pentru pachetul de limbă";
 "LANGUAGE_PACK_TOO_LARGE" = "Acest fișier este prea mare pentru a fi un pachet de limbă.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Pachetele de limbă au fost actualizate";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Verifică o dată pe zi și reîmprospătează doar limbile pe care le ai deja, astfel încât ecranele adăugate de o versiune nouă să ajungă traduse. Un pachet instalat dintr-un fișier nu este niciodată înlocuit.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Verifică după fiecare actualizare Sparkle și reîmprospătează doar limbile pe care le ai deja, astfel încât ecranele adăugate de o versiune nouă să ajungă traduse. Un pachet instalat dintr-un fișier nu este înlocuit niciodată.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Actualizări";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Actualizare disponibilă";
 "LANGUAGE_PACK_URL_BLOCKED" = "Această adresă indică un loc de unde Sparkle nu va descărca.";

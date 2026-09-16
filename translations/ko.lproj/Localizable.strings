@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "언어 팩";
 "LANGUAGE_PACK_ADD_FOOTER" = "공개된 번역을 다운로드하거나 파일 또는 링크에서 직접 가져오세요.";
 "LANGUAGE_PACK_ADD_TITLE" = "언어 추가";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "언어 팩이 최신 상태입니다";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "언어 최신 상태 유지";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "사용 가능";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "아직 공개된 언어가 없습니다.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "설치됨";
 "LANGUAGE_PACK_CATALOG_LOADING" = "언어 불러오는 중";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "탭하여 다시 시도";
+"LANGUAGE_PACK_CHECKING_TITLE" = "확인 중";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "다운로드한 내용이 목록에서 예상한 것과 일치하지 않습니다.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "업데이트 확인";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% 번역됨";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "언어 팩 삭제";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "언어 팩을 삭제할 수 없음";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "언어 팩 추가 옵션";
 "LANGUAGE_PACK_TOO_LARGE" = "해당 파일이 너무 커서 언어 팩이 될 수 없습니다.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "언어 팩이 업데이트되었습니다";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "하루에 한 번 확인하며 이미 설치된 언어만 새로 고치므로, 새 릴리스에서 추가된 화면도 번역된 상태로 제공됩니다. 파일에서 설치한 팩은 절대 교체되지 않습니다.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Sparkle을 업데이트할 때마다 확인하고 이미 설치된 언어만 새로 고칩니다. 새 릴리스가 추가하는 화면이 번역된 상태로 도착합니다. 파일에서 설치한 팩은 교체되지 않습니다.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "업데이트";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "업데이트 사용 가능";
 "LANGUAGE_PACK_URL_BLOCKED" = "해당 주소는 Sparkle이 다운로드하지 않는 위치를 가리킵니다.";

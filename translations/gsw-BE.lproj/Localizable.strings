@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "Sprachpakete";
 "LANGUAGE_PACK_ADD_FOOTER" = "Lad e veröffentlechti Übersetzig ache, oder importier dyni eigeni us emene Datei oder Link.";
 "LANGUAGE_PACK_ADD_TITLE" = "Sprache Dezuefüege";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "D'Sprachpaket si aktuell";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "Sprache Immer Aktuell Haute";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "Verfüegbar";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "Bis jitz isch na kei Sprache veröffentlecht.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "Installiert";
 "LANGUAGE_PACK_CATALOG_LOADING" = "Sprache wärde glade";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "Tippe zum's nomau probiere";
+"LANGUAGE_PACK_CHECKING_TITLE" = "Am Prüefe";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "Dr Download het nid mit dem übereigstimmt, wo d'Lischte erwartet het.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "Nach Updates luege";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "Sprachpaket, %ld%% übersetzt";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "Sprachpaket lösche";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "Sprachpaket Het Nid Chönne Glöscht Wärde";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "Meh Optione für s Sprachpaket";
 "LANGUAGE_PACK_TOO_LARGE" = "Die Datei isch z'gross für es Sprachpaket.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "Sprachpakete aktualisiert";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "Prüeft eimau am Tag u aktualisiert nume d'Sprache, wo du scho hesch, so dass d'Screens vomene neue Release übersetzt akoo. Es Paket, wo du us emene Datei installiert hesch, wird nie ersetzt.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "Prüeft nach jedem Sparkle-Update u frischt nume di Sprache uf, wo du scho hesch, damit d'Sytene, wo ne neui Version derzuetuet, übersetzt cho. Es Paket, wo du us ere Datei installiert hesch, wird nie ersetzt.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "Updates";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "Update verfüegbar";
 "LANGUAGE_PACK_URL_BLOCKED" = "Die Adrässe zeigt uf en Ort, vo wo Sparkle nid abelade wird.";

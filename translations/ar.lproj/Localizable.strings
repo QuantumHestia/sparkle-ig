@@ -1037,6 +1037,7 @@
 "LANGUAGE_PACKS_HEADER" = "حزم اللغة";
 "LANGUAGE_PACK_ADD_FOOTER" = "نزّل ترجمة منشورة، أو استورد ترجمتك الخاصة من ملف أو رابط.";
 "LANGUAGE_PACK_ADD_TITLE" = "إضافة لغة";
+"LANGUAGE_PACK_ALL_CURRENT_TOAST" = "حزم اللغات محدّثة";
 "LANGUAGE_PACK_AUTO_UPDATE_TITLE" = "إبقاء اللغات محدثة";
 "LANGUAGE_PACK_CATALOG_AVAILABLE_HEADER" = "متاحة";
 "LANGUAGE_PACK_CATALOG_EMPTY" = "لا توجد لغات منشورة بعد.";
@@ -1045,7 +1046,9 @@
 "LANGUAGE_PACK_CATALOG_INSTALLED_HEADER" = "مثبّتة";
 "LANGUAGE_PACK_CATALOG_LOADING" = "جارٍ تحميل اللغات";
 "LANGUAGE_PACK_CATALOG_RETRY_SUBTITLE" = "اضغط للمحاولة مرة أخرى";
+"LANGUAGE_PACK_CHECKING_TITLE" = "جارٍ التحقق";
 "LANGUAGE_PACK_CHECKSUM_MISMATCH" = "لم يتطابق التنزيل مع ما توقعته القائمة.";
+"LANGUAGE_PACK_CHECK_NOW_TITLE" = "التحقق من التحديثات";
 "LANGUAGE_PACK_COVERAGE_SUBTITLE_FORMAT" = "%ld%% مُترجم";
 "LANGUAGE_PACK_DELETE_ACCESSIBILITY_LABEL" = "حذف حزمة اللغة";
 "LANGUAGE_PACK_DELETE_ERROR_TITLE" = "تعذّر حذف حزمة اللغة";
@@ -1068,7 +1071,7 @@
 "LANGUAGE_PACK_MORE_ACCESSIBILITY_LABEL" = "خيارات إضافية لحزمة اللغة";
 "LANGUAGE_PACK_TOO_LARGE" = "هذا الملف كبير جدًا ليكون حزمة لغة.";
 "LANGUAGE_PACK_UPDATED_TOAST" = "تم تحديث حزم اللغات";
-"LANGUAGE_PACK_UPDATES_FOOTER" = "يتحقق مرة واحدة يوميًا ويحدّث فقط اللغات المثبتة لديك، بحيث تصل الشاشات التي تضيفها إصدارة جديدة مترجمة. الحزمة التي تُثبّتها من ملف لا تُستبدل أبدًا.";
+"LANGUAGE_PACK_UPDATES_FOOTER" = "يتحقق بعد كل تحديث لـ Sparkle ويحدّث اللغات المثبّتة لديك فقط، حتى تصل الشاشات التي يضيفها إصدار جديد مترجمة. الحزمة التي ثبّتها من ملف لا تُستبدل أبدًا.";
 "LANGUAGE_PACK_UPDATES_HEADER" = "التحديثات";
 "LANGUAGE_PACK_UPDATE_AVAILABLE_SUBTITLE" = "يتوفر تحديث";
 "LANGUAGE_PACK_URL_BLOCKED" = "هذا العنوان يشير إلى مكان لن يُنزّل منه Sparkle.";
