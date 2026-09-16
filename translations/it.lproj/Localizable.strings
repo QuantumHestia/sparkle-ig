@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Hai smesso di seguire";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Profili visitati";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Foto Profilo";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Tieni premuta un'immagine del profilo per aprirla ingrandita.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Tieni premuta la foto profilo in una pagina del profilo per aprirla ingrandita.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Salvati";
 "PROFILE_TABS_HEADER" = "Schede";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Aggiunge le tue raccolte salvate come scheda sul tuo profilo. Aggiorna il profilo per applicare.";

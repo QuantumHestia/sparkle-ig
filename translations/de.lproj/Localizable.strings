@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Du hast entfolgt";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Besuchte Profile";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profilbild";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Drücke lange auf ein Profilbild, um es vergrößert zu öffnen.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Drücke auf einer Profilseite lange auf das Profilbild, um es vergrößert zu öffnen.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Gespeichert";
 "PROFILE_TABS_HEADER" = "Tabs";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Fügt deine gespeicherten Sammlungen als Tab zu deinem eigenen Profil hinzu. Aktualisiere dein Profil, um die Änderung anzuwenden.";

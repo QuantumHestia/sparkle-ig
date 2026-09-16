@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Вы перестали следить";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Посещённые профили";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Фото профиля";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Удерживайте фото профиля, чтобы открыть его увеличенным.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Нажмите и удерживайте фото профиля на странице профиля, чтобы открыть его в увеличенном виде.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Сохранённое";
 "PROFILE_TABS_HEADER" = "Вкладки";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Добавляет ваши сохранённые подборки как вкладку в вашем профиле. Обновите профиль, чтобы применить.";

@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Nu mai urmărești";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Profiluri vizitate";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Fotografie de profil";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Apasă lung pe o poză de profil pentru a o deschide mărită.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Apasă lung pe fotografia de profil de pe o pagină de profil pentru a o deschide mărită.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Salvate";
 "PROFILE_TABS_HEADER" = "File";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adaugă colecțiile tale salvate ca filă pe propriul profil. Reîmprospătează profilul pentru a aplica.";

@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "คุณเลิกติดตาม";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "โปรไฟล์ที่เข้าชม";
 "PROFILE_PROFILE_PICTURE_HEADER" = "รูปโปรไฟล์";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "กดค้างที่รูปโปรไฟล์เพื่อเปิดดูแบบขยาย";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "กดค้างที่รูปโปรไฟล์ในหน้าโปรไฟล์เพื่อเปิดแบบขยาย";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "บันทึกไว้";
 "PROFILE_TABS_HEADER" = "แท็บ";
 "PROFILE_TABS_SAVED_TAB_HELP" = "เพิ่มคอลเลกชันที่บันทึกไว้ของคุณเป็นแท็บบนโปรไฟล์ของคุณเอง รีเฟรชโปรไฟล์ของคุณเพื่อให้มีผล";

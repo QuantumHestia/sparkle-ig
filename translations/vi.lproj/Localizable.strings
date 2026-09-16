@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Bạn Bỏ theo dõi";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Hồ sơ Đã truy cập";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Ảnh Hồ sơ";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Nhấn giữ ảnh đại diện để mở ảnh ở dạng phóng to.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Nhấn giữ ảnh đại diện trên trang cá nhân để mở ảnh phóng to.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Đã lưu";
 "PROFILE_TABS_HEADER" = "Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Thêm các bộ sưu tập đã lưu của bạn thành một tab trên trang cá nhân. Làm mới trang cá nhân để áp dụng.";

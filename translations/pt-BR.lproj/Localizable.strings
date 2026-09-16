@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Você deixou de seguir";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Perfis visitados";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Foto de Perfil";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Toque e segure uma foto de perfil para abri-la ampliada.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Toque e segure a foto de perfil em uma página de perfil para abri-la ampliada.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Salvos";
 "PROFILE_TABS_HEADER" = "Abas";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adiciona suas coleções salvas como uma aba no seu próprio perfil. Atualize seu perfil para aplicar.";

@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "आपने फॉलो छोड़ दिया";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "देखे गए प्रोफाइल";
 "PROFILE_PROFILE_PICTURE_HEADER" = "प्रोफाइल चित्र";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "प्रोफ़ाइल तस्वीर को बड़ा करके खोलने के लिए उसे देर तक दबाएँ।";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "प्रोफ़ाइल पेज पर प्रोफ़ाइल फ़ोटो को देर तक दबाएँ ताकि वह बड़ी होकर खुले।";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "सहेजे गए";
 "PROFILE_TABS_HEADER" = "टैब";
 "PROFILE_TABS_SAVED_TAB_HELP" = "आपके सहेजे गए कलेक्शन को आपकी अपनी प्रोफ़ाइल पर एक टैब के रूप में जोड़ता है। लागू करने के लिए अपनी प्रोफ़ाइल रीफ़्रेश करें।";

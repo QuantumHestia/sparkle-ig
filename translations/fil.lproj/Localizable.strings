@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Hindi Mo Na Sinusundan";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Mga Binisitang Profile";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Larawan ng Profile";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "I-long press ang isang profile picture para buksan ito nang pinalaki.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "I-long press ang profile picture sa isang profile page para buksan ito nang naka-expand.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Saved";
 "PROFILE_TABS_HEADER" = "Mga Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Idinaragdag ang mga naka-save mong collection bilang tab sa sarili mong profile. I-refresh ang profile mo para mag-apply.";

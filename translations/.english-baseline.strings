@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "You Unfollowed";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Visited Profiles";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Profile Picture";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Long press a profile picture to open it expanded.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Long press the profile picture on a profile page to open it expanded.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Saved";
 "PROFILE_TABS_HEADER" = "Tabs";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Adds your saved collections as a tab on your own profile. Refresh your profile to apply.";

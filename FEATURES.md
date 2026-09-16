@@ -190,7 +190,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Confirm Mark as Seen**: Asks before the eye button marks a story as seen (and advances, if enabled). In Toggle mode, asks only when turning receipts on.
 
 ### Instagram Plus (not available in v410.1.0)
-- **Unlock Story Preview**: Unlocks the Instagram Plus "Story Preview" — long-pressing a story shows the real preview (photo, video, auto-advance) instead of the blurred upgrade upsell, without appearing on the viewer list. Also removes the "Try Instagram Plus" row from the long-press menu. Works from the feed story tray and DMs.
+- **Unlock Story Preview**: Unlocks the Instagram Plus "Story Preview" — long-pressing a story shows the real preview (photo, video, auto-advance) instead of the blurred upgrade upsell, without appearing on the viewer list. Also removes the "Try Instagram Plus" row from the long-press menu. Works from the feed story tray, feed posts and reels, profiles, and DMs.
 - **Hide Viewer List Plus Button**: Hides the Instagram Plus button in your story's viewer list.
 
 ### Creation
@@ -347,7 +347,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Copy Info Default**: What Copy Info copies: `ID`, `Username`, `Name`, `Bio`, or `Profile Link`.
 
 ### Profile Picture
-- **Long Press to Expand**: Long-press a profile picture to open it expanded.
+- **Long Press to Expand**: Long-press the profile picture on a profile page to open it expanded. With **Unlock Story Preview** on, long-pressing a profile picture that has a story ring shows the story preview instead, and its **View profile picture** row opens the expanded photo.
 
 ### Tabs
 - **Saved Tab**: Adds your saved collections as a tab at the end of your own profile's tab strip, using Instagram's own Saved page (header collapse and pull to refresh included). Refresh your profile to apply.

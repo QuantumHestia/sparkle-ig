@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "ألغيت المتابعة";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "الملفات الشخصية المزارة";
 "PROFILE_PROFILE_PICTURE_HEADER" = "صورة الملف الشخصي";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "اضغط مطولاً على صورة شخصية لفتحها بعرض موسّع.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "اضغط مطولاً على الصورة الشخصية في صفحة الملف الشخصي لفتحها بعرض موسّع.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "المحفوظات";
 "PROFILE_TABS_HEADER" = "علامات التبويب";
 "PROFILE_TABS_SAVED_TAB_HELP" = "تضيف مجموعاتك المحفوظة كعلامة تبويب في ملفك الشخصي. حدّث ملفك الشخصي للتطبيق.";

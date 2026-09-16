@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Dejaste de seguir";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Perfiles visitados";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Foto de perfil";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Mantén presionada una foto de perfil para abrirla ampliada.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Mantén presionada la foto de perfil en una página de perfil para abrirla ampliada.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Guardado";
 "PROFILE_TABS_HEADER" = "Pestañas";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Añade tus colecciones guardadas como una pestaña en tu propio perfil. Actualiza tu perfil para aplicarlo.";

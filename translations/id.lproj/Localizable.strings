@@ -1814,7 +1814,7 @@
 "PROFILE_PROFILE_ANALYZER_UNFOLLOWED_TEXT" = "Anda Berhenti Mengikuti";
 "PROFILE_PROFILE_ANALYZER_VISITED_PROFILES_TEXT" = "Profil yang Dikunjungi";
 "PROFILE_PROFILE_PICTURE_HEADER" = "Foto Profil";
-"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Tekan lama foto profil untuk membukanya dalam tampilan diperluas.";
+"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP" = "Tekan lama foto profil di halaman profil untuk membukanya dalam tampilan besar.";
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Tersimpan";
 "PROFILE_TABS_HEADER" = "Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Menambahkan koleksi tersimpanmu sebagai tab di profil sendiri. Segarkan profilmu untuk menerapkannya.";
