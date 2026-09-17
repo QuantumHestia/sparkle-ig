@@ -1844,6 +1844,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Gỡ nút đăng lại khỏi reels. Cần khởi động lại.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Ẩn ô bình luận ở dưới cùng trong trình xem reels để chừa thêm chỗ cho chú thích trên màn hình ngắn. Cần khởi động lại.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Ẩn thanh bình luận trong trình xem";
+"REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Hiển thị thời điểm reel được đăng lại bên dưới tên trong bảng mở ra từ bong bóng đăng lại.";
+"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Hiện ngày đăng lại";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Khóa trình xem ở reel hiện tại để bạn không thể vuốt sang reel khác. Cần khởi động lại.";
 "REELS_LIMITS_DISABLE_SCROLLING_REELS_TITLE" = "Tắt Reels Cuộn";
 "REELS_LIMITS_DOOM_SCROLLING_LIMIT_HELP" = "Số reels được tải trước khi việc cuộn dừng lại.";

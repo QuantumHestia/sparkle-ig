@@ -101,7 +101,11 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                            icon:SPKSettingsIcon(@"repost")
                                     defaultsKey:@"reels_hide_repost_btn"
                                 requiresRestart:YES],
-                               SPKL(@"REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP"))
+                               SPKL(@"REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE")
+                                           icon:SPKSettingsIcon(@"calendar")
+                                    defaultsKey:@"reels_show_repost_date"],
+                               SPKL(@"REELS_LAYOUT_SHOW_REPOST_DATE_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"FEED_METRICS_HEADER"), @[

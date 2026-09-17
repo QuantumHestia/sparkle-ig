@@ -636,6 +636,22 @@
 - (void)animationCoordinatorDidUpdate:(id)coordinator;
 @end
 
+// Header of the reply sheet opened from a reel's "reposted this" bubble; the
+// Repost Date feature places the repost's creation date beside its title.
+@interface IGDirectMessageModalTitleView : UIView
+@end
+
+@interface IGDate : NSObject
+@property (readonly, nonatomic) long long microseconds;
+@property (readonly, nonatomic) NSDate *date;
+@end
+
+@interface IGRepostModel : NSObject
+@property (readonly, copy, nonatomic) NSString *pk;
+@property (readonly, copy, nonatomic) NSString *mediaId;
+@property (readonly, copy, nonatomic) IGDate *createdAtDate;
+@end
+
 // Inbox row view model — its `socialContextText` carries the "Active Xh ago"
 // presence line rendered into the cell's social-context label (Full Last Active).
 @interface IGDSSegmentedPillBarView : UIView

@@ -1844,6 +1844,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "릴스에서 리포스트 버튼을 제거합니다. 다시 시작해야 적용됩니다.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "릴스 뷰어 하단의 댓글 입력창을 숨겨 화면이 작은 기기에서 캡션 공간을 더 확보합니다. 다시 시작해야 적용됩니다.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "뷰어 댓글 표시줄 숨기기";
+"REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "리포스트 말풍선에서 열리는 시트의 이름 아래에 릴스가 리포스트된 시간을 표시합니다.";
+"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "리포스트 날짜 표시";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "뷰어를 현재 릴에 고정하여 다른 릴로 스와이프할 수 없게 합니다. 다시 시작해야 적용됩니다.";
 "REELS_LIMITS_DISABLE_SCROLLING_REELS_TITLE" = "릴 스크롤 비활성화";
 "REELS_LIMITS_DOOM_SCROLLING_LIMIT_HELP" = "스크롤이 멈추기 전까지 불러올 릴의 개수입니다.";

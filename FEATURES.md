@@ -225,6 +225,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 ### Layout
 - **Hide Reels Header**, **Hide Repost Button** **(restart)**, **Hide Suggested Accounts**.
 - **Hide Viewer Comment Bar**: Removes the bottom "Add a comment..." field from the Reels viewer, reclaiming vertical space for captions on shorter displays. **(restart)**
+- **Show Repost Date**: Tap the bubble showing who reposted a reel to see when they reposted it, on its own line under their name. Shows the time for today and the date for older reposts.
 
 ### Metrics
 - **Hide Like / Comment / Repost / Reshare / Save Count**.

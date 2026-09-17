@@ -1844,6 +1844,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Убирает кнопку репоста из reels. Требуется перезапуск.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Скрывает нижнее поле комментариев в просмотрщике reels, чтобы на невысоких экранах оставалось больше места для подписей. Требуется перезапуск.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Скрыть панель комментариев";
+"REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Показывает, когда рилс был репостнут, под именем в окне, которое открывается из пузыря репоста.";
+"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Показывать дату репоста";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Фиксирует просмотрщик на текущем ролике, чтобы вы не могли пролистать к другому. Требуется перезапуск.";
 "REELS_LIMITS_DISABLE_SCROLLING_REELS_TITLE" = "Отключить прокрутку Reels";
 "REELS_LIMITS_DOOM_SCROLLING_LIMIT_HELP" = "Сколько роликов загружается, прежде чем прокрутка остановится.";

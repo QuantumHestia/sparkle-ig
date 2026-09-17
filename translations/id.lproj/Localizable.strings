@@ -1844,6 +1844,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Menghapus tombol posting ulang dari reels. Memerlukan restart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Menyembunyikan kolom komentar bawah di penampil reels untuk memberi lebih banyak ruang bagi keterangan pada layar yang lebih pendek. Memerlukan restart.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Sembunyikan Bilah Komentar Penampil";
+"REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Menampilkan kapan reel di-repost di bawah nama pada lembar yang terbuka dari gelembung repost.";
+"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Tampilkan Tanggal Repost";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Mengunci penampil ke reel saat ini sehingga Anda tidak dapat menggeser ke reel lain. Memerlukan restart.";
 "REELS_LIMITS_DISABLE_SCROLLING_REELS_TITLE" = "Nonaktifkan Gulir Reels";
 "REELS_LIMITS_DOOM_SCROLLING_LIMIT_HELP" = "Berapa banyak reels yang dimuat sebelum pengguliran berhenti.";

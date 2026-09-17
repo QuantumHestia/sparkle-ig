@@ -71,6 +71,7 @@ FOUNDATION_EXPORT void SPKInstallDisableStorySeenHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallStickerInteractConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoryPollVoteCountsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideReelsHeaderHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallRepostDateHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideReelsViewerCommentBarHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallReelsPlaybackHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallReelsPlaybackControlsHooksIfEnabled(void);
@@ -241,6 +242,7 @@ void SPKInstallReelsSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallReelsPlaybackHooksIfNeeded);
     SPK_INSTALL(SPKInstallReelsPlaybackControlsHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideReelsHeaderHooksIfEnabled);
+    SPK_INSTALL(SPKInstallRepostDateHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideReelsViewerCommentBarHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableScrollingReelsHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideRepostButtonHooksIfEnabled);

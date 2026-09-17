@@ -1844,6 +1844,8 @@
 "REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP" = "Αφαιρεί το κουμπί αναδημοσίευσης από τα reels. Απαιτεί επανεκκίνηση.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_HELP" = "Κρύβει το κάτω πεδίο σχολίων στην προβολή reels ώστε να μένει περισσότερος χώρος για λεζάντες σε κοντές οθόνες. Απαιτεί επανεκκίνηση.";
 "REELS_LAYOUT_HIDE_VIEWER_COMMENT_BAR_TITLE" = "Απόκρυψη γραμμής σχολίων προβολής";
+"REELS_LAYOUT_SHOW_REPOST_DATE_HELP" = "Εμφανίζει πότε αναδημοσιεύτηκε ένα reel κάτω από το όνομα στο φύλλο που ανοίγει από τη φούσκα αναδημοσίευσης.";
+"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE" = "Εμφάνιση ημερομηνίας αναδημοσίευσης";
 "REELS_LIMITS_DISABLE_SCROLLING_HELP" = "Κλειδώνει την προβολή στο τρέχον reel ώστε να μην μπορείτε να σύρετε προς άλλο. Απαιτεί επανεκκίνηση.";
 "REELS_LIMITS_DISABLE_SCROLLING_REELS_TITLE" = "Απενεργοποίηση Κύλισης Reels";
 "REELS_LIMITS_DOOM_SCROLLING_LIMIT_HELP" = "Πόσα reels φορτώνονται πριν σταματήσει η κύλιση.";
