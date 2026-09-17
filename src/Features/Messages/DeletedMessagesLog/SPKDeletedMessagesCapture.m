@@ -914,7 +914,10 @@ static void spkCollectImageURL(id obj, int depth, NSMutableSet *visited, NSStrin
 #pragma mark - Snapshot builder
 
 // Returns nil for system / placeholder / non-user rows.
-static NSDictionary *spkBuildSnapshot(id message, NSString *ownerHint) {
+// `threadContext` is the open chat when the message was seen. The caller reads
+// it on the main thread, because the builder can run on a background queue and
+// the active context is only updated on the main thread.
+static NSDictionary *spkBuildSnapshotWithContext(id message, NSString *ownerHint, SPKDirectThreadContext *threadContext) {
     NSString *sid = spkSidFromMessage(message);
     if (!sid.length)
         return nil;
@@ -940,7 +943,7 @@ static NSDictionary *spkBuildSnapshot(id message, NSString *ownerHint) {
     // happens while the chat is foregrounded (the common case). Read-time
     // grouping falls back to a multi-sender heuristic when this isn't available.
     if (threadId.length) {
-        SPKDirectThreadContext *ctx = SPKDirectActiveThreadContext();
+        SPKDirectThreadContext *ctx = threadContext;
         if (ctx && [ctx.threadId isEqualToString:threadId]) {
             if (ctx.isGroup)
                 snap[@"is_group"] = @YES;
@@ -1458,7 +1461,50 @@ static NSDictionary *spkBuildSnapshot(id message, NSString *ownerHint) {
     return snap;
 }
 
+// Off the main thread there is no safe way to read the open chat, so the
+// snapshot is built without it.
+static NSDictionary *spkBuildSnapshot(id message, NSString *ownerHint) {
+    SPKDirectThreadContext *threadContext = NSThread.isMainThread ? SPKDirectActiveThreadContext() : nil;
+    return spkBuildSnapshotWithContext(message, ownerHint, threadContext);
+}
+
 #pragma mark - Media download
+
+// Pre-downloads for messages that haven't been unsent yet. A backlog can
+// deliver many of them at once, so only a few run at a time and the rest wait
+// their turn. Downloads for a real unsend don't go through this.
+static const long kSPKStagedDownloadSlots = 2;
+static const NSTimeInterval kSPKStagedDownloadSlotTimeout = 180;
+
+static void spkRunStagedDownload(void (^start)(dispatch_block_t done)) {
+    static dispatch_queue_t gate;
+    static dispatch_semaphore_t slots;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        gate = dispatch_queue_create("com.sparkle.deletedmessages.staged-gate",
+                                     dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_UTILITY, 0));
+        slots = dispatch_semaphore_create(kSPKStagedDownloadSlots);
+    });
+    dispatch_async(gate, ^{
+        dispatch_semaphore_wait(slots, DISPATCH_TIME_FOREVER);
+        NSObject *lock = [NSObject new];
+        __block BOOL released = NO;
+        dispatch_block_t done = ^{
+            @synchronized(lock) {
+                if (released)
+                    return;
+                released = YES;
+            }
+            dispatch_semaphore_signal(slots);
+        };
+        // A download that never reports back must not hold its slot forever.
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSPKStagedDownloadSlotTimeout * NSEC_PER_SEC)),
+                       dispatch_get_global_queue(QOS_CLASS_UTILITY, 0), done);
+        dispatch_async(spkDownloadQueue(), ^{
+            start(done);
+        });
+    });
+}
 
 // Tiny helper: download a URL into a temp file synchronously on the
 // download queue. Used during video+audio mux. Completion is dispatched on
@@ -1555,7 +1601,7 @@ static void spkDownloadAndMuxVideo(NSString *videoURL, NSString *audioURL,
         [[NSFileManager defaultManager] removeItemAtPath:abs error:nil];
     }
 
-    dispatch_async(spkDownloadQueue(), ^{
+    void (^start)(dispatch_block_t) = ^(dispatch_block_t done) {
         __block NSURL *vFile = nil, *aFile = nil;
         dispatch_semaphore_t sema = dispatch_semaphore_create(0);
         spkDownloadToTempFile(vURL, ^(NSURL *f, NSError *e) {
@@ -1575,6 +1621,8 @@ static void spkDownloadAndMuxVideo(NSString *videoURL, NSString *audioURL,
                 [[NSFileManager defaultManager] removeItemAtURL:vFile error:nil];
             if (aFile)
                 [[NSFileManager defaultManager] removeItemAtURL:aFile error:nil];
+            if (done)
+                done();
             return;
         }
         [SPKMediaFFmpeg mergeVideoFileURL:vFile
@@ -1586,6 +1634,8 @@ static void spkDownloadAndMuxVideo(NSString *videoURL, NSString *audioURL,
                             sourceBitrate:0
                                  progress:nil
                                completion:^(NSURL *outURL, NSError *err) {
+                                   if (done)
+                                       done();
                                    [[NSFileManager defaultManager] removeItemAtURL:vFile error:nil];
                                    [[NSFileManager defaultManager] removeItemAtURL:aFile error:nil];
                                    if (err || !outURL)
@@ -1611,7 +1661,14 @@ static void spkDownloadAndMuxVideo(NSString *videoURL, NSString *audioURL,
                                    }
                                }
                                 cancelOut:nil];
-    });
+    };
+    if (staged) {
+        spkRunStagedDownload(start);
+    } else {
+        dispatch_async(spkDownloadQueue(), ^{
+            start(nil);
+        });
+    }
 }
 
 static void spkDownloadMedia(NSString *urlString, NSString *messageId,
@@ -1648,52 +1705,69 @@ static void spkDownloadMedia(NSString *urlString, NSString *messageId,
         [[NSFileManager defaultManager] removeItemAtPath:abs error:nil];
     }
 
-    dispatch_async(spkDownloadQueue(), ^{
+    void (^handle)(NSData *, NSURLResponse *, NSError *) = ^(NSData *data, NSURLResponse *resp, NSError *err) {
+        if (err || !data.length)
+            return;
+        NSString *detectedExt = SPKFileExtensionForMediaResponse(data, resp, url);
+        if (!detectedExt.length)
+            detectedExt = ext;
+        if (!isThumbnail && kind == SPKDeletedMessageKindVoice)
+            detectedExt = @"m4a";
+        NSString *writeName = fname;
+        NSString *writePath = abs;
+        if (![detectedExt.lowercaseString isEqualToString:ext.lowercaseString]) {
+            writeName = staged
+                            ? [SPKDeletedMessagesStorage reserveRelativeStagedMediaPathForMessageId:messageId extension:detectedExt ownerPK:ownerPk thumbnail:isThumbnail]
+                            : (isThumbnail
+                                   ? [NSString stringWithFormat:@"thumb_%@.%@", messageId, detectedExt]
+                                   : [SPKDeletedMessagesStorage reserveRelativeMediaPathForMessageId:messageId extension:detectedExt ownerPK:ownerPk]);
+            writePath = staged
+                            ? [SPKDeletedMessagesStorage absoluteStagedPathForRelativePath:writeName ownerPK:ownerPk]
+                            : [SPKDeletedMessagesStorage absolutePathForRelativePath:writeName ownerPK:ownerPk];
+        }
+        if (![data writeToFile:writePath atomically:YES])
+            return;
+        NSString *mimeType = SPKMIMETypeForImageFormat(SPKImageFormatForData(data)) ?: resp.MIMEType;
+        if (staged) {
+            if (!spkPersistStagedPath(writeName, messageId, ownerPk, isThumbnail, mimeType)) {
+                [[NSFileManager defaultManager] removeItemAtPath:writePath error:nil];
+            }
+            return;
+        }
+        for (SPKDeletedMessage *m in [SPKDeletedMessagesStorage allMessagesForOwnerPK:ownerPk]) {
+            if (![m.messageId isEqualToString:messageId])
+                continue;
+            if (isThumbnail)
+                m.thumbnailPath = writeName;
+            else {
+                m.mediaPath = writeName;
+                m.mediaMimeType = mimeType;
+            }
+            [SPKDeletedMessagesStorage saveMessage:m forOwnerPK:ownerPk];
+            break;
+        }
+    };
+    void (^start)(dispatch_block_t) = ^(dispatch_block_t done) {
         NSURLSessionDataTask *task = [spkSharedSession() dataTaskWithURL:url
                                                        completionHandler:^(NSData *data, NSURLResponse *resp, NSError *err) {
-                                                           if (err || !data.length)
-                                                               return;
-                                                           NSString *detectedExt = SPKFileExtensionForMediaResponse(data, resp, url);
-                                                           if (!detectedExt.length)
-                                                               detectedExt = ext;
-                                                           if (!isThumbnail && kind == SPKDeletedMessageKindVoice)
-                                                               detectedExt = @"m4a";
-                                                           NSString *writeName = fname;
-                                                           NSString *writePath = abs;
-                                                           if (![detectedExt.lowercaseString isEqualToString:ext.lowercaseString]) {
-                                                               writeName = staged
-                                                                               ? [SPKDeletedMessagesStorage reserveRelativeStagedMediaPathForMessageId:messageId extension:detectedExt ownerPK:ownerPk thumbnail:isThumbnail]
-                                                                               : (isThumbnail
-                                                                                      ? [NSString stringWithFormat:@"thumb_%@.%@", messageId, detectedExt]
-                                                                                      : [SPKDeletedMessagesStorage reserveRelativeMediaPathForMessageId:messageId extension:detectedExt ownerPK:ownerPk]);
-                                                               writePath = staged
-                                                                               ? [SPKDeletedMessagesStorage absoluteStagedPathForRelativePath:writeName ownerPK:ownerPk]
-                                                                               : [SPKDeletedMessagesStorage absolutePathForRelativePath:writeName ownerPK:ownerPk];
-                                                           }
-                                                           if (![data writeToFile:writePath atomically:YES])
-                                                               return;
-                                                           NSString *mimeType = SPKMIMETypeForImageFormat(SPKImageFormatForData(data)) ?: resp.MIMEType;
-                                                           if (staged) {
-                                                               if (!spkPersistStagedPath(writeName, messageId, ownerPk, isThumbnail, mimeType)) {
-                                                                   [[NSFileManager defaultManager] removeItemAtPath:writePath error:nil];
-                                                               }
-                                                               return;
-                                                           }
-                                                           for (SPKDeletedMessage *m in [SPKDeletedMessagesStorage allMessagesForOwnerPK:ownerPk]) {
-                                                               if (![m.messageId isEqualToString:messageId])
-                                                                   continue;
-                                                               if (isThumbnail)
-                                                                   m.thumbnailPath = writeName;
-                                                               else {
-                                                                   m.mediaPath = writeName;
-                                                                   m.mediaMimeType = mimeType;
-                                                               }
-                                                               [SPKDeletedMessagesStorage saveMessage:m forOwnerPK:ownerPk];
-                                                               break;
-                                                           }
+                                                           handle(data, resp, err);
+                                                           if (done)
+                                                               done();
                                                        }];
         [task resume];
-    });
+    };
+    if (staged) {
+        spkRunStagedDownload(start);
+    } else {
+        dispatch_async(spkDownloadQueue(), ^{
+            start(nil);
+        });
+    }
+}
+
+static BOOL spkURLIsGiphy(NSString *urlString) {
+    NSString *host = urlString.length ? [NSURL URLWithString:urlString].host.lowercaseString : nil;
+    return [host isEqualToString:@"giphy.com"] || [host hasSuffix:@".giphy.com"];
 }
 
 static void spkStageRecoverySnapshot(NSDictionary *snapshot, NSString *ownerPk) {
@@ -1706,6 +1780,10 @@ static void spkStageRecoverySnapshot(NSDictionary *snapshot, NSString *ownerPk) 
         return;
     NSString *mediaURL = snapshot[@"media_url"];
     NSString *audioURL = snapshot[@"audio_url"];
+    // Giphy links are permanent, so a GIF or sticker served from Giphy can be
+    // downloaded when it is actually unsent.
+    if (!disappearing && spkURLIsGiphy(mediaURL))
+        return;
     if (kind == SPKDeletedMessageKindVideo && mediaURL.length && audioURL.length) {
         spkDownloadAndMuxVideo(mediaURL, audioURL, messageId, ownerPk, YES);
     } else if (mediaURL.length) {
@@ -1803,26 +1881,153 @@ static id spkFindMessageInFetchedThread(id value, NSString *sid, NSInteger depth
 
 #pragma mark - Public hooks
 
-void spkDMCaptureNoteInsert(id message, NSString *ownerPk, NSString *threadId, BOOL persistCandidate) {
-    if (!message)
-        return;
+// Pre-capturing a message means building a snapshot (deep ivar and URL walks)
+// and staging media. Instagram applies a sync backlog message by message on the
+// main thread, so that work is queued here and done on spkCaptureQueue instead.
+// Unsends are finalized on the same serial queue, and a message's insert is
+// always queued before its unsend, so the candidate is saved before the unsend
+// looks for it. Until then the weak ref below still resolves the live message.
+
+static NSMutableArray<NSArray *> *spkInsertJobs;
+static BOOL spkInsertDrainScheduled;
+
+static NSObject *spkInsertJobsLock(void) {
+    static NSObject *o;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        o = [NSObject new];
+    });
+    return o;
+}
+
+static void spkSaveCandidateForMessage(id message, NSString *ownerPk, NSString *threadId, SPKDirectThreadContext *threadContext) {
     @try {
-        NSString *sid = spkSidFromMessage(message);
-        if (!sid.length)
-            return;
-        @synchronized(spkMessageRefsLock()) {
-            [spkMessageRefs() setObject:message forKey:sid];
-        }
-        if (persistCandidate && ownerPk.length) {
-            NSMutableDictionary *snapshot = [spkBuildSnapshot(message, ownerPk) mutableCopy];
-            if (!snapshot[@"thread_id"] && threadId.length)
-                snapshot[@"thread_id"] = threadId;
-            if (snapshot.count) {
-                [SPKDeletedMessagesStorage savePendingCandidateSnapshot:spkJSONSafeSnapshot(snapshot) forOwnerPK:ownerPk];
-                spkStageRecoverySnapshot(snapshot, ownerPk);
-            }
+        NSMutableDictionary *snapshot = [spkBuildSnapshotWithContext(message, ownerPk, threadContext) mutableCopy];
+        if (!snapshot[@"thread_id"] && threadId.length)
+            snapshot[@"thread_id"] = threadId;
+        if (snapshot.count) {
+            [SPKDeletedMessagesStorage savePendingCandidateSnapshot:spkJSONSafeSnapshot(snapshot) forOwnerPK:ownerPk];
+            spkStageRecoverySnapshot(snapshot, ownerPk);
         }
     } @catch (__unused id e) {
+    }
+}
+
+static void spkDrainInsertJobs(void) {
+    for (;;) {
+        NSArray<NSArray *> *batch = nil;
+        @synchronized(spkInsertJobsLock()) {
+            if (!spkInsertJobs.count) {
+                spkInsertDrainScheduled = NO;
+                return;
+            }
+            batch = spkInsertJobs;
+            spkInsertJobs = [NSMutableArray array];
+        }
+        for (NSArray *job in batch) {
+            @autoreleasepool {
+                id threadId = job[2], context = job[3];
+                spkSaveCandidateForMessage(job[0], job[1], threadId == NSNull.null ? nil : threadId,
+                                           context == NSNull.null ? nil : context);
+            }
+        }
+    }
+}
+
+// Leaving the foreground is the last point the app reliably runs. Queued
+// captures are finished and written out under a background task, so messages
+// that arrived just before the app was closed keep their candidates.
+static void spkObserveBackgroundForInsertJobsOnce(void) {
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        [NSNotificationCenter.defaultCenter addObserverForName:UIApplicationDidEnterBackgroundNotification
+                                                        object:nil
+                                                         queue:NSOperationQueue.mainQueue
+                                                    usingBlock:^(__unused NSNotification *note) {
+                                                        UIApplication *app = UIApplication.sharedApplication;
+                                                        __block UIBackgroundTaskIdentifier task = UIBackgroundTaskInvalid;
+                                                        void (^finish)(void) = ^{
+                                                            if (task == UIBackgroundTaskInvalid)
+                                                                return;
+                                                            [app endBackgroundTask:task];
+                                                            task = UIBackgroundTaskInvalid;
+                                                        };
+                                                        task = [app beginBackgroundTaskWithName:@"com.sparkle.deletedmessages.capture"
+                                                                              expirationHandler:finish];
+                                                        dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), ^{
+                                                            dispatch_sync(spkCaptureQueue(), ^{
+                                                                spkDrainInsertJobs();
+                                                            });
+                                                            [SPKDeletedMessagesStorage flushPendingStores];
+                                                            dispatch_async(dispatch_get_main_queue(), finish);
+                                                        });
+                                                    }];
+    });
+}
+
+static void spkEnqueueCandidateCapture(id message, NSString *ownerPk, NSString *threadId) {
+    spkObserveBackgroundForInsertJobsOnce();
+    NSArray *job = @[ message, [ownerPk copy], threadId.length ? [threadId copy] : NSNull.null,
+                      SPKDirectActiveThreadContext() ?: NSNull.null ];
+    BOOL schedule = NO;
+    @synchronized(spkInsertJobsLock()) {
+        if (!spkInsertJobs)
+            spkInsertJobs = [NSMutableArray array];
+        [spkInsertJobs addObject:job];
+        if (!spkInsertDrainScheduled) {
+            spkInsertDrainScheduled = YES;
+            schedule = YES;
+        }
+    }
+    if (!schedule)
+        return;
+    // Utility QoS keeps a backlog from competing with Instagram's UI for CPU.
+    // An unsend queued behind it raises the queue's priority while it waits.
+    dispatch_block_t drain = dispatch_block_create_with_qos_class(DISPATCH_BLOCK_ENFORCE_QOS_CLASS, QOS_CLASS_UTILITY, 0, ^{
+        spkDrainInsertJobs();
+    });
+    dispatch_async(spkCaptureQueue(), drain);
+}
+
+// Disappearing and view-once media, and stickers, whose links can expire before
+// an unsend. Mirrors what spkStageRecoverySnapshot stages, using only direct
+// ivar reads so it stays cheap on the main thread.
+static BOOL spkMessageHasExpiringMedia(id message) {
+    @try {
+        id content = spkAnyIvar(message, "_content") ?: spkAnyIvar(message, "_messageContent") ?: spkAnyIvar(message, "_payload");
+        if (!content) {
+            @try {
+                content = [message valueForKey:@"content"];
+            } @catch (__unused id e) {
+            }
+        }
+        id media = spkAnyIvar(content, "_media");
+        if (!media)
+            return NO;
+        return spkAnyIvar(media, "_visualMedia") || spkAnyIvar(media, "_sticker") || spkTryObjectSelector(media, @"sticker");
+    } @catch (__unused id e) {
+        // Unknown shape: capture it rather than risk losing it.
+        return YES;
+    }
+}
+
+void spkDMCaptureNoteInsert(id message, NSString *ownerPk, NSString *threadId, SPKDMCandidateMode candidateMode) {
+    if (!message)
+        return;
+    @autoreleasepool {
+        @try {
+            NSString *sid = spkSidFromMessage(message);
+            if (!sid.length)
+                return;
+            @synchronized(spkMessageRefsLock()) {
+                [spkMessageRefs() setObject:message forKey:sid];
+            }
+            BOOL capture = candidateMode == SPKDMCandidateModeAll
+                           || (candidateMode == SPKDMCandidateModeExpiringMediaOnly && spkMessageHasExpiringMedia(message));
+            if (capture && ownerPk.length)
+                spkEnqueueCandidateCapture(message, ownerPk, threadId);
+        } @catch (__unused id e) {
+        }
     }
 }
 
@@ -2018,6 +2223,18 @@ static NSMutableSet<NSString *> *spkPendingFetches(void) {
     return set;
 }
 
+static const NSTimeInterval kSPKPendingFetchCooldown = 60;
+
+// Guarded by spkPendingFetches().
+static NSMutableDictionary<NSString *, NSDate *> *spkLastFetchAttempts(void) {
+    static NSMutableDictionary<NSString *, NSDate *> *attempts;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        attempts = [NSMutableDictionary dictionary];
+    });
+    return attempts;
+}
+
 static void spkFetchThreadForPendingRemoval(id applicator, NSString *sid, NSString *thread, NSString *owner) {
     id cache = spkDirectCacheFromApplicator(applicator);
     if (!cache || !sid.length || !thread.length || !owner.length)
@@ -2026,6 +2243,14 @@ static void spkFetchThreadForPendingRemoval(id applicator, NSString *sid, NSStri
     @synchronized(spkPendingFetches()) {
         if ([spkPendingFetches() containsObject:fetchKey])
             return;
+        // A removal Instagram's cache can't resolve would otherwise be fetched
+        // again on every sync pass.
+        NSDate *last = spkLastFetchAttempts()[fetchKey];
+        if (last && -last.timeIntervalSinceNow < kSPKPendingFetchCooldown)
+            return;
+        if (spkLastFetchAttempts().count > 500)
+            [spkLastFetchAttempts() removeAllObjects];
+        spkLastFetchAttempts()[fetchKey] = [NSDate date];
         [spkPendingFetches() addObject:fetchKey];
     }
 
@@ -2094,39 +2319,61 @@ void spkDMCaptureNoteRemoveKeys(NSArray *keys, id applicator,
         }
     }
 
+    SPKDirectThreadContext *threadContext = SPKDirectActiveThreadContext();
     dispatch_async(spkCaptureQueue(), ^{
         for (id key in keys) {
             NSString *sid = spkExtractKeySid(key);
             NSDictionary *snap = [SPKDeletedMessagesStorage pendingCandidateSnapshotForMessageId:sid ownerPK:owner];
             if (!snap && strongRefs[sid])
-                snap = spkBuildSnapshot(strongRefs[sid], owner);
+                snap = spkBuildSnapshotWithContext(strongRefs[sid], owner, threadContext);
             if (snap)
                 spkFinalizeSnapshot(snap, sid, thread, owner);
         }
     });
 }
 
+// Called around every sync pass, which during a backlog means hundreds of times
+// in a row. A retry already queued for an owner reads the latest pending list
+// when it runs, so further requests before then are dropped.
+static NSMutableSet<NSString *> *spkQueuedRetryOwners(void) {
+    static NSMutableSet<NSString *> *set;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        set = [NSMutableSet set];
+    });
+    return set;
+}
+
 void spkDMCaptureRetryPendingRemovals(id applicator, NSString *ownerPk) {
     if (!spkCaptureEnabled() || !ownerPk.length)
         return;
     NSString *owner = [ownerPk copy];
-    NSArray<NSDictionary *> *pending = [SPKDeletedMessagesStorage pendingRemovalsForOwnerPK:owner];
-    if (!pending.count)
-        return;
+    @synchronized(spkQueuedRetryOwners()) {
+        if ([spkQueuedRetryOwners() containsObject:owner])
+            return;
+        [spkQueuedRetryOwners() addObject:owner];
+    }
+    SPKDirectThreadContext *threadContext = SPKDirectActiveThreadContext();
     dispatch_async(spkCaptureQueue(), ^{
+        @synchronized(spkQueuedRetryOwners()) {
+            [spkQueuedRetryOwners() removeObject:owner];
+        }
+        NSArray<NSDictionary *> *pending = [SPKDeletedMessagesStorage pendingRemovalsForOwnerPK:owner];
         for (NSDictionary *entry in pending) {
-            NSString *sid = entry[@"message_id"];
-            NSString *thread = entry[@"thread_id"];
-            NSDictionary *snap = [SPKDeletedMessagesStorage pendingCandidateSnapshotForMessageId:sid ownerPK:owner];
-            if (!snap) {
-                id message = spkFallbackLookupMessage(applicator, sid, thread);
-                if (message)
-                    snap = spkBuildSnapshot(message, owner);
+            @autoreleasepool {
+                NSString *sid = entry[@"message_id"];
+                NSString *thread = entry[@"thread_id"];
+                NSDictionary *snap = [SPKDeletedMessagesStorage pendingCandidateSnapshotForMessageId:sid ownerPK:owner];
+                if (!snap) {
+                    id message = spkFallbackLookupMessage(applicator, sid, thread);
+                    if (message)
+                        snap = spkBuildSnapshotWithContext(message, owner, threadContext);
+                }
+                if (snap)
+                    spkFinalizeSnapshot(snap, sid, thread, owner);
+                else
+                    spkFetchThreadForPendingRemoval(applicator, sid, thread, owner);
             }
-            if (snap)
-                spkFinalizeSnapshot(snap, sid, thread, owner);
-            else
-                spkFetchThreadForPendingRemoval(applicator, sid, thread, owner);
         }
     });
 }

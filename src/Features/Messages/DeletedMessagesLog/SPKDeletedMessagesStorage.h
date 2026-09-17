@@ -99,6 +99,9 @@ extern NSNotificationName const SPKDeletedMessagesDidChangeNotification;
 
 #pragma mark - Pending reconciliation and media recovery cache
 
+// Writes any pending-store changes still waiting on the batched flush, and
+// waits for them to reach disk.
++ (void)flushPendingStores;
 + (BOOL)savePendingCandidateSnapshot:(NSDictionary *)snapshot forOwnerPK:(NSString *)ownerPK;
 + (nullable NSDictionary *)pendingCandidateSnapshotForMessageId:(NSString *)messageId ownerPK:(NSString *)ownerPK;
 + (BOOL)patchPendingCandidateForMessageId:(NSString *)messageId values:(NSDictionary *)values ownerPK:(NSString *)ownerPK;

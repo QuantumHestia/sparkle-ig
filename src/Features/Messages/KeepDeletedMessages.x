@@ -429,12 +429,12 @@ static void spkCaptureMessage(id message) {
     spkTrackContentClass(sid, NSStringFromClass([message class]));
 }
 
-static void spkCaptureMessagesFromUpdate(id update, NSString *ownerPk, NSString *threadId, BOOL persistCandidates) {
+static void spkCaptureMessagesFromUpdate(id update, NSString *ownerPk, NSString *threadId, SPKDMCandidateMode candidateMode) {
     NSArray *inserts = spkIvar(update, "_insertMessages");
     if ([inserts isKindOfClass:NSArray.class]) {
         for (id m in inserts) {
             spkCaptureMessage(m);
-            spkDMCaptureNoteInsert(m, ownerPk, threadId, persistCandidates);
+            spkDMCaptureNoteInsert(m, ownerPk, threadId, candidateMode);
         }
     }
 
@@ -442,7 +442,7 @@ static void spkCaptureMessagesFromUpdate(id update, NSString *ownerPk, NSString 
     if ([replaces isKindOfClass:NSArray.class]) {
         for (id m in replaces) {
             spkCaptureMessage(m);
-            spkDMCaptureNoteInsert(m, ownerPk, threadId, persistCandidates);
+            spkDMCaptureNoteInsert(m, ownerPk, threadId, candidateMode);
         }
     }
 }
@@ -631,7 +631,10 @@ static BOOL spkProcessMessageUpdate(id update, NSString *ownerPk, NSString *thre
     if (!update || !ownerPk.length)
         return NO;
 
-    spkCaptureMessagesFromUpdate(update, ownerPk, threadId, loggingAllowed && spkDeletedLogEnabled());
+    SPKDMCandidateMode candidateMode = SPKDMCandidateModeNone;
+    if (loggingAllowed && spkDeletedLogEnabled())
+        candidateMode = spkKeepDeletedEnabled() ? SPKDMCandidateModeExpiringMediaOnly : SPKDMCandidateModeAll;
+    spkCaptureMessagesFromUpdate(update, ownerPk, threadId, candidateMode);
     if (loggingAllowed)
         spkProcessReactionMutations(update, ownerPk, threadId, applicator);
 
@@ -1176,9 +1179,11 @@ static void spkHandleApplyUpdates(id self, id updates, void (^invokeOriginal)(vo
 
     if (ownerPk.length && [updates isKindOfClass:NSArray.class]) {
         for (id update in (NSArray *)updates) {
-            NSSet *set = spkProcessCacheUpdate(update, ownerPk, self, detected, previews);
-            if (set.count)
-                [preserved unionSet:set];
+            @autoreleasepool {
+                NSSet *set = spkProcessCacheUpdate(update, ownerPk, self, detected, previews);
+                if (set.count)
+                    [preserved unionSet:set];
+            }
         }
     }
 

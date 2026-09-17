@@ -1,4 +1,5 @@
 #import "SPKDeletedMessagesStorage.h"
+#import <UIKit/UIKit.h>
 #import "SPKStrings.h"
 #import "../../../Shared/Avatars/SPKAvatarCache.h"
 #import "../../../Shared/SPKStoragePaths.h"
@@ -102,6 +103,229 @@ static BOOL spkWriteDictionary(NSString *path, NSDictionary *dict) {
     return data ? [data writeToFile:path atomically:YES] : NO;
 }
 
+#pragma mark - Pending store cache
+
+// The pending stores (candidates, removals) used to be re-read, parsed and
+// rewritten in full for every change. Candidates change once per incoming
+// message, and Instagram applies a sync backlog message by message on the main
+// thread without draining the autorelease pool, so each rewrite's temporaries
+// piled up until the app was killed for memory. The stores now live in memory,
+// loaded once per file, and are written back off the calling thread.
+//
+// The on-disk format is unchanged, so files written by older builds load as-is
+// and older builds can read what this writes. Everything that touches these
+// files goes through the functions below, on spkDMQueue.
+
+static const NSTimeInterval kSPKDMCandidateFlushDelay = 1.5;
+static const NSUInteger kSPKDMCandidateLimit = 2500;
+static const NSUInteger kSPKDMCandidatePruneSlack = 250;
+static const NSTimeInterval kSPKDMCandidateMaxAge = 14 * 24 * 60 * 60;
+static NSString *const kSPKDMCandidateCapturedAtKey = @"captured_at";
+// A recorded unsend whose content is still unresolved after this long never
+// will be: neither Instagram's cache nor a thread fetch has it.
+static const NSTimeInterval kSPKDMRemovalMaxAge = 30 * 24 * 60 * 60;
+
+static NSMutableDictionary<NSString *, NSMutableDictionary *> *spkPendingStores;
+static NSMutableSet<NSString *> *spkPendingDirtyPaths;
+static BOOL spkPendingFlushScheduled;
+
+static NSString *spkStagedMediaDirForOwner(NSString *pk);
+static void spkPendingFlushOnQueue(void);
+
+static dispatch_queue_t spkPendingWriterQueue(void) {
+    static dispatch_queue_t q;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        q = dispatch_queue_create("com.sparkle.deletedmessages.pending-writer", DISPATCH_QUEUE_SERIAL);
+    });
+    return q;
+}
+
+// Flushes everything outstanding and waits for the writes to land. Called when
+// the app leaves the foreground, the last point it reliably gets to run.
+static void spkPendingFlushAndWait(void) {
+    dispatch_sync(spkDMQueue(), ^{
+        spkPendingFlushOnQueue();
+    });
+    dispatch_sync(spkPendingWriterQueue(), ^{
+    });
+}
+
+static void spkPendingObserveLifecycleOnce(void) {
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        NSNotificationCenter *center = NSNotificationCenter.defaultCenter;
+        for (NSNotificationName name in @[ UIApplicationDidEnterBackgroundNotification, UIApplicationWillTerminateNotification ]) {
+            [center addObserverForName:name
+                                object:nil
+                                 queue:nil
+                            usingBlock:^(__unused NSNotification *note) {
+                                spkPendingFlushAndWait();
+                            }];
+        }
+    });
+}
+
+static NSNumber *spkPendingTimestamp(id value) {
+    return [value isKindOfClass:[NSNumber class]] ? value : nil;
+}
+
+// Drops staging candidates nobody is likely to need: older than the age limit,
+// then the oldest beyond the count limit. A candidate is only a pre-captured copy
+// of a message that still exists in Instagram; the deleted-messages log itself is
+// a separate file and is never touched here. Candidates that a recorded unsend is
+// still waiting on are always kept. Returns YES if anything changed.
+static BOOL spkPruneCandidates(NSMutableDictionary *candidates, NSDictionary *removals, NSString *pk) {
+    NSTimeInterval now = [NSDate date].timeIntervalSince1970;
+    BOOL changed = NO;
+    NSMutableArray<NSString *> *prunable = [NSMutableArray array];
+    NSMutableArray<NSString *> *dropped = [NSMutableArray array];
+
+    for (NSString *messageId in candidates.allKeys) {
+        NSMutableDictionary *entry = candidates[messageId];
+        if (![entry isKindOfClass:[NSMutableDictionary class]])
+            continue;
+        // Entries written before this field existed get the current time, so
+        // upgrading never ages anything out at once.
+        if (!spkPendingTimestamp(entry[kSPKDMCandidateCapturedAtKey])) {
+            entry[kSPKDMCandidateCapturedAtKey] = @(now);
+            changed = YES;
+        }
+        if (removals[messageId])
+            continue;
+        if (now - spkPendingTimestamp(entry[kSPKDMCandidateCapturedAtKey]).doubleValue > kSPKDMCandidateMaxAge)
+            [dropped addObject:messageId];
+        else
+            [prunable addObject:messageId];
+    }
+
+    if (prunable.count > kSPKDMCandidateLimit) {
+        [prunable sortUsingComparator:^NSComparisonResult(NSString *a, NSString *b) {
+            NSDictionary *ea = candidates[a], *eb = candidates[b];
+            NSComparisonResult r = [spkPendingTimestamp(ea[kSPKDMCandidateCapturedAtKey]) compare:spkPendingTimestamp(eb[kSPKDMCandidateCapturedAtKey])];
+            if (r != NSOrderedSame)
+                return r;
+            return [(spkPendingTimestamp(ea[@"sent_at"]) ?: @0) compare:(spkPendingTimestamp(eb[@"sent_at"]) ?: @0)];
+        }];
+        [dropped addObjectsFromArray:[prunable subarrayWithRange:NSMakeRange(0, prunable.count - kSPKDMCandidateLimit)]];
+    }
+
+    if (!dropped.count)
+        return changed;
+
+    // Staged media belongs to its candidate alone; the log keeps its own copy in a
+    // different directory once a message is finalized.
+    NSString *stagedDir = spkStagedMediaDirForOwner(pk);
+    NSMutableArray<NSString *> *stagedFiles = [NSMutableArray array];
+    for (NSString *messageId in dropped) {
+        NSDictionary *entry = candidates[messageId];
+        for (NSString *key in @[ @"staged_media_path", @"staged_thumbnail_path" ]) {
+            NSString *rel = [entry[key] isKindOfClass:[NSString class]] ? entry[key] : nil;
+            if (rel.length)
+                [stagedFiles addObject:[stagedDir stringByAppendingPathComponent:rel.lastPathComponent]];
+        }
+        [candidates removeObjectForKey:messageId];
+    }
+    if (stagedFiles.count) {
+        dispatch_async(spkPendingWriterQueue(), ^{
+            for (NSString *file in stagedFiles)
+                [[NSFileManager defaultManager] removeItemAtPath:file error:nil];
+        });
+    }
+    return YES;
+}
+
+static void spkPendingMarkDirtyOnQueue(NSString *path, BOOL immediate) {
+    if (!spkPendingDirtyPaths)
+        spkPendingDirtyPaths = [NSMutableSet set];
+    [spkPendingDirtyPaths addObject:path];
+    if (immediate) {
+        spkPendingFlushOnQueue();
+        return;
+    }
+    if (spkPendingFlushScheduled)
+        return;
+    spkPendingFlushScheduled = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(kSPKDMCandidateFlushDelay * NSEC_PER_SEC)), spkDMQueue(), ^{
+        spkPendingFlushScheduled = NO;
+        spkPendingFlushOnQueue();
+    });
+}
+
+static void spkPendingFlushOnQueue(void) {
+    if (!spkPendingDirtyPaths.count)
+        return;
+    for (NSString *path in spkPendingDirtyPaths) {
+        NSDictionary *store = spkPendingStores[path];
+        if (!store)
+            continue;
+        NSData *data = nil;
+        @autoreleasepool {
+            data = [NSJSONSerialization dataWithJSONObject:store options:0 error:nil];
+        }
+        if (!data)
+            continue;
+        dispatch_async(spkPendingWriterQueue(), ^{
+            @autoreleasepool {
+                [data writeToFile:path atomically:YES];
+            }
+        });
+    }
+    [spkPendingDirtyPaths removeAllObjects];
+}
+
+// Returns the live, mutable store for one pending file, loading it on first use.
+// Must run on spkDMQueue.
+static NSMutableDictionary *spkPendingStoreOnQueue(NSString *directory, NSString *pk) {
+    NSString *path = spkPendingJSONPath(directory, pk);
+    NSMutableDictionary *store = spkPendingStores[path];
+    if (store)
+        return store;
+
+    spkPendingObserveLifecycleOnce();
+    if (!spkPendingStores)
+        spkPendingStores = [NSMutableDictionary dictionary];
+
+    @autoreleasepool {
+        NSData *data = [NSData dataWithContentsOfFile:path];
+        if (data.length) {
+            id obj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            if ([obj isKindOfClass:[NSMutableDictionary class]]) {
+                store = obj;
+            } else {
+                // Keep an unreadable file instead of overwriting it with an empty store.
+                NSString *backup = [path stringByAppendingFormat:@".unreadable-%.0f", [NSDate date].timeIntervalSince1970];
+                [[NSFileManager defaultManager] moveItemAtPath:path toPath:backup error:nil];
+            }
+        }
+    }
+    if (!store)
+        store = [NSMutableDictionary dictionary];
+    spkPendingStores[path] = store;
+
+    if ([directory isEqualToString:kSPKDMPendingRemovalsDir]) {
+        NSTimeInterval now = [NSDate date].timeIntervalSince1970;
+        BOOL changed = NO;
+        for (NSString *messageId in store.allKeys) {
+            NSDictionary *entry = [store[messageId] isKindOfClass:[NSDictionary class]] ? store[messageId] : nil;
+            NSNumber *createdAt = spkPendingTimestamp(entry[@"created_at"]);
+            if (createdAt && now - createdAt.doubleValue > kSPKDMRemovalMaxAge) {
+                [store removeObjectForKey:messageId];
+                changed = YES;
+            }
+        }
+        if (changed)
+            spkPendingMarkDirtyOnQueue(path, NO);
+    }
+
+    if ([directory isEqualToString:kSPKDMPendingCandidatesDir]) {
+        NSDictionary *removals = spkPendingStoreOnQueue(kSPKDMPendingRemovalsDir, pk);
+        if (spkPruneCandidates(store, removals, pk))
+            spkPendingMarkDirtyOnQueue(path, NO);
+    }
+    return store;
+}
+
 static unsigned long long spkDirectorySize(NSString *dir) {
     NSDirectoryEnumerator *en = [[NSFileManager defaultManager] enumeratorAtPath:dir];
     unsigned long long total = 0;
@@ -115,7 +339,18 @@ static unsigned long long spkDirectorySize(NSString *dir) {
     return total;
 }
 
-static NSMutableDictionary *spkReadFlags(void) {
+// Sender flags are checked for every unsend, often on the main thread, and only
+// change when the user pins or blocks someone. The file is read once and kept
+// in memory; every write goes through spkWriteFlags, which updates this copy.
+// Code that replaces or removes the file by other means calls
+// spkInvalidateFlagsCacheOnQueue. Must be used on spkDMQueue.
+static NSMutableDictionary *spkFlagsCache;
+
+static void spkInvalidateFlagsCacheOnQueue(void) {
+    spkFlagsCache = nil;
+}
+
+static NSMutableDictionary *spkReadFlagsFromDisk(void) {
     NSData *data = [NSData dataWithContentsOfFile:spkFlagsPath()];
     if (!data.length)
         return [NSMutableDictionary dictionary];
@@ -123,9 +358,19 @@ static NSMutableDictionary *spkReadFlags(void) {
     return [obj isKindOfClass:[NSMutableDictionary class]] ? obj : [NSMutableDictionary dictionary];
 }
 
-static BOOL spkWriteFlags(NSDictionary *flags) {
+static NSMutableDictionary *spkReadFlags(void) {
+    if (!spkFlagsCache)
+        spkFlagsCache = spkReadFlagsFromDisk();
+    return spkFlagsCache;
+}
+
+static BOOL spkWriteFlags(NSMutableDictionary *flags) {
     NSData *data = [NSJSONSerialization dataWithJSONObject:(flags ?: @{}) options:0 error:nil];
-    return data ? [data writeToFile:spkFlagsPath() atomically:YES] : NO;
+    BOOL written = data ? [data writeToFile:spkFlagsPath() atomically:YES] : NO;
+    // If the write failed, reload from disk next time so memory never claims a
+    // change the file doesn't have.
+    spkFlagsCache = written ? flags : nil;
+    return written;
 }
 
 static NSMutableDictionary *spkFlagsForOwner(NSMutableDictionary *flags, NSString *ownerPK, BOOL create) {
@@ -153,7 +398,7 @@ static NSDictionary *spkSenderFlags(NSString *senderPK, NSString *ownerPK) {
         NSMutableDictionary *flags = spkReadFlags();
         NSDictionary *ownerFlags = spkFlagsForOwner(flags, ownerPK, NO);
         id senderFlags = ownerFlags[senderPK];
-        result = [senderFlags isKindOfClass:[NSDictionary class]] ? senderFlags : @{};
+        result = [senderFlags isKindOfClass:[NSDictionary class]] ? [senderFlags copy] : @{};
     });
     return result ?: @{};
 }
@@ -692,6 +937,7 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
 + (void)resetAll {
     dispatch_sync(spkDMQueue(), ^{
         [[NSFileManager defaultManager] removeItemAtPath:spkStorageDir() error:nil];
+        spkInvalidateFlagsCacheOnQueue();
     });
     spkPostChanged(nil);
 }
@@ -721,22 +967,28 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
 
 #pragma mark - Pending reconciliation and media recovery cache
 
++ (void)flushPendingStores {
+    spkPendingFlushAndWait();
+}
+
 + (BOOL)savePendingCandidateSnapshot:(NSDictionary *)snapshot forOwnerPK:(NSString *)ownerPK {
     NSString *messageId = [snapshot[@"message_id"] isKindOfClass:[NSString class]] ? snapshot[@"message_id"] : nil;
     if (!messageId.length)
         return NO;
-    __block BOOL ok = NO;
     dispatch_sync(spkDMQueue(), ^{
-        NSString *path = spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK);
-        NSMutableDictionary *all = spkReadDictionary(path);
+        NSMutableDictionary *all = spkPendingStoreOnQueue(kSPKDMPendingCandidatesDir, ownerPK);
         NSMutableDictionary *merged = [all[messageId] isKindOfClass:[NSDictionary class]]
                                           ? [all[messageId] mutableCopy]
                                           : [NSMutableDictionary dictionary];
         [merged addEntriesFromDictionary:snapshot];
+        if (!spkPendingTimestamp(merged[kSPKDMCandidateCapturedAtKey]))
+            merged[kSPKDMCandidateCapturedAtKey] = @([NSDate date].timeIntervalSince1970);
         all[messageId] = merged;
-        ok = spkWriteDictionary(path, all);
+        if (all.count > kSPKDMCandidateLimit + kSPKDMCandidatePruneSlack)
+            spkPruneCandidates(all, spkPendingStoreOnQueue(kSPKDMPendingRemovalsDir, ownerPK), ownerPK);
+        spkPendingMarkDirtyOnQueue(spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK), NO);
     });
-    return ok;
+    return YES;
 }
 
 + (NSDictionary *)pendingCandidateSnapshotForMessageId:(NSString *)messageId ownerPK:(NSString *)ownerPK {
@@ -744,7 +996,7 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
         return nil;
     __block NSDictionary *result = nil;
     dispatch_sync(spkDMQueue(), ^{
-        id candidate = spkReadDictionary(spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK))[messageId];
+        id candidate = spkPendingStoreOnQueue(kSPKDMPendingCandidatesDir, ownerPK)[messageId];
         if ([candidate isKindOfClass:[NSDictionary class]])
             result = [candidate copy];
     });
@@ -756,8 +1008,7 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
         return NO;
     __block BOOL ok = NO;
     dispatch_sync(spkDMQueue(), ^{
-        NSString *path = spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK);
-        NSMutableDictionary *all = spkReadDictionary(path);
+        NSMutableDictionary *all = spkPendingStoreOnQueue(kSPKDMPendingCandidatesDir, ownerPK);
         NSMutableDictionary *candidate = [all[messageId] isKindOfClass:[NSDictionary class]]
                                              ? [all[messageId] mutableCopy]
                                              : nil;
@@ -768,7 +1019,10 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
             return;
         [candidate addEntriesFromDictionary:values];
         all[messageId] = candidate;
-        ok = spkWriteDictionary(path, all);
+        // A staged media path is what lets an unsend keep its media, so persist it
+        // right away rather than on the batched flush.
+        spkPendingMarkDirtyOnQueue(spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK), stagesMedia);
+        ok = YES;
     });
     return ok;
 }
@@ -777,10 +1031,11 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
     if (!messageId.length)
         return;
     dispatch_sync(spkDMQueue(), ^{
-        NSString *path = spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK);
-        NSMutableDictionary *all = spkReadDictionary(path);
+        NSMutableDictionary *all = spkPendingStoreOnQueue(kSPKDMPendingCandidatesDir, ownerPK);
+        if (!all[messageId])
+            return;
         [all removeObjectForKey:messageId];
-        spkWriteDictionary(path, all);
+        spkPendingMarkDirtyOnQueue(spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK), NO);
     });
 }
 
@@ -790,10 +1045,8 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
                                ownerPK:(NSString *)ownerPK {
     if (!messageId.length)
         return NO;
-    __block BOOL ok = NO;
     dispatch_sync(spkDMQueue(), ^{
-        NSString *path = spkPendingJSONPath(kSPKDMPendingRemovalsDir, ownerPK);
-        NSMutableDictionary *all = spkReadDictionary(path);
+        NSMutableDictionary *all = spkPendingStoreOnQueue(kSPKDMPendingRemovalsDir, ownerPK);
         NSMutableDictionary *entry = [all[messageId] isKindOfClass:[NSDictionary class]]
                                          ? [all[messageId] mutableCopy]
                                          : [NSMutableDictionary dictionary];
@@ -805,15 +1058,23 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
         if (!entry[@"created_at"])
             entry[@"created_at"] = @([NSDate date].timeIntervalSince1970);
         all[messageId] = entry;
-        ok = spkWriteDictionary(path, all);
+        // A recorded unsend is the only trace of that deletion until it is
+        // resolved, so it is written immediately.
+        spkPendingMarkDirtyOnQueue(spkPendingJSONPath(kSPKDMPendingRemovalsDir, ownerPK), YES);
     });
-    return ok;
+    return YES;
 }
 
 + (NSArray<NSDictionary *> *)pendingRemovalsForOwnerPK:(NSString *)ownerPK {
     __block NSArray *result = nil;
     dispatch_sync(spkDMQueue(), ^{
-        result = [spkReadDictionary(spkPendingJSONPath(kSPKDMPendingRemovalsDir, ownerPK)).allValues copy];
+        NSMutableDictionary *all = spkPendingStoreOnQueue(kSPKDMPendingRemovalsDir, ownerPK);
+        if (!all.count)
+            return;
+        NSMutableArray *copies = [NSMutableArray arrayWithCapacity:all.count];
+        for (id entry in all.allValues)
+            [copies addObject:[entry copy]];
+        result = copies;
     });
     return result ?: @[];
 }
@@ -822,10 +1083,11 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
     if (!messageId.length)
         return;
     dispatch_sync(spkDMQueue(), ^{
-        NSString *path = spkPendingJSONPath(kSPKDMPendingRemovalsDir, ownerPK);
-        NSMutableDictionary *all = spkReadDictionary(path);
+        NSMutableDictionary *all = spkPendingStoreOnQueue(kSPKDMPendingRemovalsDir, ownerPK);
+        if (!all[messageId])
+            return;
         [all removeObjectForKey:messageId];
-        spkWriteDictionary(path, all);
+        spkPendingMarkDirtyOnQueue(spkPendingJSONPath(kSPKDMPendingRemovalsDir, ownerPK), YES);
     });
 }
 
@@ -874,8 +1136,7 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
 + (void)clearStagedMediaForOwnerPK:(NSString *)ownerPK {
     dispatch_sync(spkDMQueue(), ^{
         [[NSFileManager defaultManager] removeItemAtPath:spkStagedMediaDirForOwner(ownerPK) error:nil];
-        NSString *path = spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK);
-        NSMutableDictionary *all = spkReadDictionary(path);
+        NSMutableDictionary *all = spkPendingStoreOnQueue(kSPKDMPendingCandidatesDir, ownerPK);
         for (NSString *key in all.allKeys) {
             NSMutableDictionary *candidate = [all[key] mutableCopy];
             [candidate removeObjectForKey:@"staged_media_path"];
@@ -883,7 +1144,7 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
             candidate[@"staging_disabled"] = @YES;
             all[key] = candidate;
         }
-        spkWriteDictionary(path, all);
+        spkPendingMarkDirtyOnQueue(spkPendingJSONPath(kSPKDMPendingCandidatesDir, ownerPK), YES);
     });
     spkPostChanged(ownerPK);
 }
@@ -903,6 +1164,9 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
     NSString *parent = [destination stringByDeletingLastPathComponent];
     [fm createDirectoryAtPath:parent withIntermediateDirectories:YES attributes:nil error:nil];
     BOOL copied = [fm copyItemAtPath:sourcePath toPath:destination error:error];
+    dispatch_sync(spkDMQueue(), ^{
+        spkInvalidateFlagsCacheOnQueue();
+    });
     if (copied)
         spkPostChanged(nil);
     return copied;
@@ -960,7 +1224,7 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
     NSString *srcFlags = [sourcePath stringByAppendingPathComponent:kSPKDMSenderFlagsFile];
     if ([fm fileExistsAtPath:srcFlags]) {
         dispatch_sync(spkDMQueue(), ^{
-            NSMutableDictionary *live = spkReadDictionary(spkFlagsPath());
+            NSMutableDictionary *live = spkReadFlags();
             NSDictionary *incoming = spkReadDictionary(srcFlags);
             BOOL changed = NO;
             for (NSString *key in incoming) {
@@ -972,7 +1236,7 @@ static NSString *spkGeneratedGroupTitle(NSArray<SPKDeletedMessage *> *msgs, NSSt
                 }
             }
             if (changed)
-                spkWriteDictionary(spkFlagsPath(), live);
+                spkWriteFlags(live);
         });
     }
 

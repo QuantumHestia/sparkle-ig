@@ -22,10 +22,20 @@ NS_ASSUME_NONNULL_BEGIN
 extern "C" {
 #endif
 
+// Which incoming messages get a saved candidate snapshot.
+typedef NS_ENUM(NSInteger, SPKDMCandidateMode) {
+    SPKDMCandidateModeNone = 0,
+    SPKDMCandidateModeAll,
+    // Keep Deleted Messages stops Instagram from removing an unsent message, so
+    // its content can still be read from Instagram's cache at unsend time. Only
+    // media whose links expire needs to be captured when it arrives.
+    SPKDMCandidateModeExpiringMediaOnly,
+};
+
 void spkDMCaptureNoteInsert(id _Nullable message,
                             NSString *_Nullable ownerPk,
                             NSString *_Nullable threadId,
-                            BOOL persistCandidate);
+                            SPKDMCandidateMode candidateMode);
 
 // `keys` are the IGDirectMessageKey objects from the unsend delta. The
 // capture side extracts sids itself, persists pending removals, and falls back
