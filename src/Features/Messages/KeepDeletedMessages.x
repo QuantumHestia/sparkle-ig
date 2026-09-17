@@ -699,9 +699,13 @@ static BOOL spkProcessMessageUpdate(id update, NSString *ownerPk, NSString *thre
         return NO;
 
     if (loggingAllowed && previews) {
-        NSArray *resolvedPreviews = spkDMCapturePreviewMetadataForKeys(unsendKeys, applicator, ownerPk, threadId);
-        if (resolvedPreviews.count)
-            [previews addObjectsFromArray:resolvedPreviews];
+        // The user's own unsends never show a toast, so don't resolve them.
+        NSMutableArray *previewKeys = NSMutableArray.array;
+        for (id key in unsendKeys) {
+            if (!spkSidSentByOwner(spkServerIdFromKey(key), ownerPk))
+                [previewKeys addObject:key];
+        }
+        spkDMCaptureQueuePreviewMetadataForKeys(previewKeys, applicator, ownerPk, threadId, previews);
     }
     if (logOn)
         spkDMCaptureNoteRemoveKeys(unsendKeys, applicator, ownerPk, threadId);
@@ -1171,7 +1175,8 @@ static void spkHandleApplyUpdates(id self, id updates, void (^invokeOriginal)(vo
         spkDMCaptureRetryPendingRemovals(self, ownerPk);
     NSMutableSet *preserved = NSMutableSet.set;
     NSMutableSet *detected = NSMutableSet.set;
-    NSMutableArray<NSDictionary *> *previews = NSMutableArray.array;
+    // Filled on the capture queue; only read it from spkDMCaptureAfterQueuedWork.
+    NSMutableArray<NSDictionary *> *previews = toastOn ? NSMutableArray.array : nil;
 
     // Reaction previews accumulate into a global during processing; reset so we
     // only fire toasts for this pass.
@@ -1206,17 +1211,6 @@ static void spkHandleApplyUpdates(id self, id updates, void (^invokeOriginal)(vo
     BOOL foreground = currentPk.length && [currentPk isEqualToString:ownerPk];
     NSString *ownerName = foreground ? nil : spkOwnerUsernameFromApplicator(self);
 
-    // Build the toast set, excluding the user's own unsends — a self-unsend has
-    // the owner as its sender and shouldn't notify. Preserve/log above already
-    // ran and are unaffected.
-    NSMutableArray<NSDictionary *> *toastPreviews = NSMutableArray.array;
-    for (NSDictionary *preview in previews) {
-        NSString *psid = [preview[@"messageId"] isKindOfClass:NSString.class] ? preview[@"messageId"] : nil;
-        NSString *psender = [preview[@"senderPk"] isKindOfClass:NSString.class] ? preview[@"senderPk"] : nil;
-        BOOL ownUnsend = (psender.length && ownerPk.length && [psender isEqualToString:ownerPk]) || spkSidSentByOwner(psid, ownerPk);
-        if (!ownUnsend)
-            [toastPreviews addObject:preview];
-    }
     NSString *toastSid = nil;
     for (NSString *d in detected) {
         if (spkSidSentByOwner(d, ownerPk))
@@ -1232,17 +1226,33 @@ static void spkHandleApplyUpdates(id self, id updates, void (^invokeOriginal)(vo
             spkTrackSenderName(toastSid, toastSenderName);
     }
 
+    if (toastOn && detected.count) {
+        spkDMCaptureAfterQueuedWork(^{
+            NSArray<NSDictionary *> *resolvedPreviews = [previews copy];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                // Skip the user's own unsends: a self-unsend has the owner as its
+                // sender and shouldn't notify. Preserve/log are unaffected.
+                NSMutableArray<NSDictionary *> *toastPreviews = NSMutableArray.array;
+                for (NSDictionary *preview in resolvedPreviews) {
+                    NSString *psid = [preview[@"messageId"] isKindOfClass:NSString.class] ? preview[@"messageId"] : nil;
+                    NSString *psender = [preview[@"senderPk"] isKindOfClass:NSString.class] ? preview[@"senderPk"] : nil;
+                    BOOL ownUnsend = (psender.length && ownerPk.length && [psender isEqualToString:ownerPk]) || spkSidSentByOwner(psid, ownerPk);
+                    if (!ownUnsend)
+                        [toastPreviews addObject:preview];
+                }
+                if (toastPreviews.count) {
+                    for (NSDictionary *preview in toastPreviews)
+                        spkShowUnsentToast(preview, toastSenderName, toastSenderPk, nil, ownerName, toastSid);
+                } else if (toastSid.length) {
+                    spkShowUnsentToast(nil, toastSenderName, toastSenderPk, nil, ownerName, toastSid);
+                }
+            });
+        });
+    }
+
     dispatch_async(dispatch_get_main_queue(), ^{
         if (foreground)
             spkRefreshVisibleCellIndicators();
-        if (toastOn) {
-            if (toastPreviews.count) {
-                for (NSDictionary *preview in toastPreviews)
-                    spkShowUnsentToast(preview, toastSenderName, toastSenderPk, nil, ownerName, toastSid);
-            } else if (toastSid.length) {
-                spkShowUnsentToast(nil, toastSenderName, toastSenderPk, nil, ownerName, toastSid);
-            }
-        }
         if (reactionPreviews.count) {
             for (NSDictionary *preview in reactionPreviews)
                 spkShowUnsentReactionToast(preview, ownerName);

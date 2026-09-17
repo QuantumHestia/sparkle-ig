@@ -2062,6 +2062,12 @@ static NSString *spkExtractKeyMutationId(id key) {
     return nil;
 }
 
+static NSArray<NSDictionary *> *spkPreviewMetadataForKeys(NSArray *keys,
+                                                          NSDictionary<NSString *, id> *strongRefs,
+                                                          NSString *owner,
+                                                          NSString *thread,
+                                                          SPKDirectThreadContext *threadContext);
+
 static NSMutableDictionary<NSString *, id> *spkStrongRefsForKeys(NSArray *keys, id applicator, NSString *thread) {
     NSMutableDictionary<NSString *, id> *strongRefs = [NSMutableDictionary dictionary];
 
@@ -2089,20 +2095,42 @@ static NSMutableDictionary<NSString *, id> *spkStrongRefsForKeys(NSArray *keys, 
     return strongRefs;
 }
 
-NSArray<NSDictionary *> *spkDMCapturePreviewMetadataForKeys(NSArray *keys,
-                                                            id applicator,
-                                                            NSString *ownerPk,
-                                                            NSString *threadId) {
-    if (!keys.count)
-        return @[];
+// Building a preview can mean a full snapshot (deep ivar and URL walks), which
+// cost several milliseconds per unsend on the main thread.
+void spkDMCaptureQueuePreviewMetadataForKeys(NSArray *keys,
+                                             id applicator,
+                                             NSString *ownerPk,
+                                             NSString *threadId,
+                                             NSMutableArray<NSDictionary *> *collector) {
+    if (!keys.count || !collector)
+        return;
+    NSArray *keysCopy = [keys copy];
     NSString *owner = ownerPk.length ? [ownerPk copy] : @"";
     NSString *thread = threadId.length ? [threadId copy] : nil;
-    NSDictionary<NSString *, id> *strongRefs = spkStrongRefsForKeys(keys, applicator, thread);
+    NSDictionary<NSString *, id> *strongRefs = spkStrongRefsForKeys(keysCopy, applicator, thread);
+    SPKDirectThreadContext *threadContext = SPKDirectActiveThreadContext();
+    dispatch_async(spkCaptureQueue(), ^{
+        @autoreleasepool {
+            [collector addObjectsFromArray:spkPreviewMetadataForKeys(keysCopy, strongRefs, owner, thread, threadContext)];
+        }
+    });
+}
+
+void spkDMCaptureAfterQueuedWork(dispatch_block_t block) {
+    if (block)
+        dispatch_async(spkCaptureQueue(), block);
+}
+
+static NSArray<NSDictionary *> *spkPreviewMetadataForKeys(NSArray *keys,
+                                                          NSDictionary<NSString *, id> *strongRefs,
+                                                          NSString *owner,
+                                                          NSString *thread,
+                                                          SPKDirectThreadContext *threadContext) {
     NSMutableArray<NSDictionary *> *previews = [NSMutableArray arrayWithCapacity:keys.count];
     for (id key in keys) {
         NSString *sid = spkExtractKeySid(key);
         NSDictionary *snap = [SPKDeletedMessagesStorage pendingCandidateSnapshotForMessageId:sid ownerPK:owner]
-                                 ?: spkBuildSnapshot(strongRefs[sid], owner);
+                                 ?: spkBuildSnapshotWithContext(strongRefs[sid], owner, threadContext);
         if (!snap)
             continue;
         NSString *senderPk = snap[@"sender_pk"];
