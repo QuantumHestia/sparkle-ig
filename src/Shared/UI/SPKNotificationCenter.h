@@ -52,6 +52,7 @@ FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsCaptureBlocked;
 FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsUpload;
 FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsAutoSave;
 FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsAutoSaveUserRule;
+FOUNDATION_EXPORT NSString *const kSPKNotificationInstantsMarkSeen;
 
 FOUNDATION_EXPORT NSString *const kSPKNotificationProfileCopyInfo;
 FOUNDATION_EXPORT NSString *const kSPKNotificationProfileAnalyzerComplete;

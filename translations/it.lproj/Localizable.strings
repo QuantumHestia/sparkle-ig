@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Nessun istante salvato";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Istanti Salvati";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu istanti";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Contrassegnato come visto";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Impossibile identificare questo Instant";
+"INSTANTS_MARK_SEEN_TITLE" = "Contrassegna Come Visto";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Salvataggio automatico disattivato per @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Salvataggio automatico attivato per @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Ti consente di fare screenshot e registrazioni dello schermo nel visualizzatore di Instants senza che Instagram li rilevi.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Consenti Screenshot";
+"INSTANTS_PRIVACY_FOOTER" = "1. Consenti Screenshot impedisce a Instagram di rilevare screenshot e registrazioni dello schermo nel visualizzatore.\n2. Contrassegna Manualmente Come Visto mantiene gli Instants nel tuo vassoio dopo averli guardati. Gli Instants scadono comunque secondo il calendario di Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Privacy";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Impedisce che gli Instants siano contrassegnati come visti mentre li guardi, e aggiunge un pulsante occhio al visualizzatore per contrassegnarne uno come visto.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sostituisce il carattere in Instagram e in Sparkle. Importa file .otf, .ttf o .ttc. Il logo di Instagram e lo strumento testo delle storie mantengono i propri caratteri.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspetto";
 "INTERFACE_CAPTURE_HEADER" = "Cattura";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Modifiche elenco salvataggio automatico istanti";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Salvataggio automatico istanti avviato";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Cattura istantanea bloccata";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Contrassegna Instant Come Visto";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Caricamento Instant non riuscito";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Pacchetto lingua aggiornato";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Segna messaggi come letti";

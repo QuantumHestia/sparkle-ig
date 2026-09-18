@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Sin instantes guardados";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Momentos guardados";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu Instants";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Marcado como leído";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "No se pudo identificar este Instant";
+"INSTANTS_MARK_SEEN_TITLE" = "Marcar como Leído";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Guardado automático desactivado para @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Guardado automático activado para @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Te permite hacer capturas y grabaciones de pantalla en el visor de Instants sin que Instagram las detecte.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Permitir capturas de pantalla";
+"INSTANTS_PRIVACY_FOOTER" = "1. Permitir capturas de pantalla evita que Instagram detecte capturas de pantalla y grabaciones de pantalla en el visor.\n2. Marcar leído manualmente mantiene los Instants en tu bandeja después de verlos. Los Instants siguen expirando según el calendario de Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Privacidad";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Evita que los Instants se marquen como leídos mientras los ves, y agrega un botón de ojo al visor para marcar uno como leído.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sustituye la fuente en Instagram y en Sparkle. Importa archivos .otf, .ttf o .ttc. El logo de Instagram y la herramienta de texto de historias conservan sus propias fuentes.";
 "INTERFACE_APPEARANCE_HEADER" = "Apariencia";
 "INTERFACE_CAPTURE_HEADER" = "Captura";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Los cambios de la lista de guardado automático de instantes";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Guardado automático de instantes iniciado";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Captura de instante bloqueada";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Marcar Instant como Leído";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Error en la carga instantánea";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Paquete de idioma actualizado";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Marcar mensajes como vistos";

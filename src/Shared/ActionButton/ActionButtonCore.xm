@@ -31,6 +31,7 @@
 #import "../UI/SPKChrome.h"
 #import "../UI/SPKIGAlertPresenter.h"
 #import "../UI/SPKNotificationCenter.h"
+#import "../../Features/Instants/InstantsManualSeen.h"
 #import "ActionButtonCore.h"
 #import "SPKActionButtonConfiguration.h"
 #import "SPKActionDescriptor.h"
@@ -65,6 +66,11 @@ NSString *const kSPKActionToggleStorySeenUserRule = @"toggle_story_seen_user_rul
 NSString *const kSPKActionToggleStoryAutoSaveUserRule = @"toggle_story_auto_save_user_rule";
 NSString *const kSPKActionToggleDirectAutoSaveThreadRule = @"toggle_direct_auto_save_thread_rule";
 NSString *const kSPKActionToggleInstantsAutoSaveUserRule = @"toggle_instants_auto_save_user_rule";
+NSString *const kSPKActionInstantsMarkSeen = @"instants_mark_seen";
+
+/// Defined further down, next to the other Instants executors, but needed by the
+/// action-availability switch above it.
+static NSString *SPKInstantsMarkSeenMediaPKForContext(SPKActionButtonContext *context);
 NSString *const kSPKActionToggleProfileStorySeenUserRule = @"toggle_profile_story_seen_user_rule";
 NSString *const kSPKActionToggleProfileMessagesSeenUserRule = @"toggle_profile_messages_seen_user_rule";
 NSString *const kSPKActionStoryMentionsSheet = @"story_mentions_sheet";
@@ -2285,6 +2291,12 @@ static BOOL SPKIsActionVisible(SPKActionButtonContext *context,
                [SPKUtils getBoolPref:@"instants_auto_save"] &&
                SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context)).length > 0;
     }
+    if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
+        // Not a menu action. It backs the viewer's own eye button, which has no need of a
+        // menu row beside it, and the Instants menu is built once per button lifecycle so a
+        // row there could never track the snap on screen anyway.
+        return NO;
+    }
     if ([identifier isEqualToString:kSPKActionToggleProfileStorySeenUserRule]) {
         return context.source == SPKActionButtonSourceProfile &&
                SPKResolveMediaForContext(context) != nil;
@@ -3049,6 +3061,34 @@ static BOOL SPKExecuteToggleDirectAutoSaveThreadRuleAction(SPKActionButtonContex
     return YES;
 }
 
+/// The media PK of the Instant currently on screen, read straight off the resolved snap.
+/// Deliberately a PK read and nothing more: this runs during menu construction.
+static NSString *SPKInstantsMarkSeenMediaPKForContext(SPKActionButtonContext *context) {
+    id media = context ? SPKResolveMediaForContext(context) : nil;
+    if (!media)
+        return nil;
+    NSString *pk = SPKStringFromValue(SPKObjectForSelector(media, @"sourceMediaPK"));
+    if (pk.length == 0)
+        pk = SPKStringFromValue(SPKObjectForSelector(media, @"pk"));
+    return pk;
+}
+
+/// Releases one held Instant: stops keeping it unseen and marks it seen for real.
+static BOOL SPKExecuteInstantsMarkSeenAction(SPKActionButtonContext *context) {
+    NSString *pk = SPKInstantsMarkSeenMediaPKForContext(context);
+    if (pk.length == 0) {
+        SPKNotify(kSPKNotificationInstantsMarkSeen,
+                  SPKL(@"INSTANTS_MARK_SEEN_FAILED_TOAST"), nil, @"error_filled",
+                  SPKNotificationToneError);
+        return YES;
+    }
+    SPKInstantsManualSeenMarkMediaPK(pk);
+    SPKNotify(kSPKNotificationInstantsMarkSeen,
+              SPKL(@"INSTANTS_MARK_SEEN_DONE_TOAST"), nil, @"circle_check_filled",
+              SPKNotificationToneSuccess);
+    return YES;
+}
+
 static BOOL SPKExecuteToggleInstantsAutoSaveUserRuleAction(SPKActionButtonContext *context) {
     NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
     NSString *title = SPKInstantsAutoSaveConfirmationTitleForUsername(username);
@@ -3262,6 +3302,9 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
     if ([identifier isEqualToString:kSPKActionToggleInstantsAutoSaveUserRule]) {
         return SPKExecuteToggleInstantsAutoSaveUserRuleAction(context);
     }
+    if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
+        return SPKExecuteInstantsMarkSeenAction(context);
+    }
     if ([identifier isEqualToString:kSPKActionToggleStoryAutoSaveUserRule]) {
         return SPKExecuteToggleStoryAutoSaveUserRuleAction(context);
     }
@@ -3456,7 +3499,10 @@ void SPKApplyButtonStyle(UIButton *button, SPKActionButtonSource source) {
             button.layer.shadowRadius = 1.8;
             button.layer.shadowOffset = CGSizeMake(0.0, 1.0);
         }
-    } else if (source == SPKActionButtonSourceStories || source == SPKActionButtonSourceDirect || source == SPKActionButtonSourceInstants) {
+    } else if (source == SPKActionButtonSourceStories || source == SPKActionButtonSourceDirect) {
+        // Instants is deliberately absent: its viewer draws on a fully black background, so
+        // a drop shadow separates the glyph from nothing and only muddies it. The reset at
+        // the top of this function is the Instants style.
         if (isChrome) {
             SPKChromeButton *chromeButton = (SPKChromeButton *)button;
             chromeButton.iconView.layer.shadowColor = [UIColor blackColor].CGColor;

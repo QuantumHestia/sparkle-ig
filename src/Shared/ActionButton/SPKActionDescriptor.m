@@ -103,6 +103,9 @@
             [SPKActionDescriptor descriptorWithIdentifier:kSPKActionToggleInstantsAutoSaveUserRule
                                                     title:SPKL(@"INSTANTS_ACTION_TOGGLE_TITLE")
                                                  iconName:@"download"],
+            [SPKActionDescriptor descriptorWithIdentifier:kSPKActionInstantsMarkSeen
+                                                    title:SPKL(@"INSTANTS_MARK_SEEN_TITLE")
+                                                 iconName:@"eye"],
             [SPKActionDescriptor descriptorWithIdentifier:kSPKActionToggleProfileStorySeenUserRule
                                                     title:SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_TOGGLE_STORY_SEEN_TEXT")
                                                  iconName:@"eye"],

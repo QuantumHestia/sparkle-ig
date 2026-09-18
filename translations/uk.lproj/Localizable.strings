@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Немає збережених моментів";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Збережені Instants";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu миттєвих повідомлень";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Позначено як переглянуте";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Не вдалося ідентифікувати цей Instant";
+"INSTANTS_MARK_SEEN_TITLE" = "Позначити як переглянуте";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Автозбереження вимкнено для @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Автозбереження увімкнено для @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Дозволяє робити знімки та записи екрана у переглядачі Instants без виявлення їх Instagram.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Дозволити знімки екрана";
+"INSTANTS_PRIVACY_FOOTER" = "1. Дозволити знімки екрана припиняє виявлення Instagram знімків екрана та записів екрана у засобі перегляду.\n2. Ручне позначення як переглянуте зберігає Instants у вашому лотку після перегляду. Instants все ще закінчується за графіком Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Приватність";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Припиняє позначення Instants як переглянутих під час перегляду та додає кнопку ока до засобу перегляду для позначення як переглянутого.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Замінює шрифт в усьому Instagram і Sparkle. Імпортуйте файли .otf, .ttf або .ttc. Логотип Instagram і текстовий інструмент історій зберігають власні шрифти.";
 "INTERFACE_APPEARANCE_HEADER" = "Зовнішній вигляд";
 "INTERFACE_CAPTURE_HEADER" = "Захоплення";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Автозбереження списку змін Миттєвих повідомлень";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Автозбереження Миттєвих повідомлень розпочато";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Захоплення Миттєвих повідомлень заблоковано";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Позначити Instant як переглянуте";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Миттєве завантаження не вдалося";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Мовний пакет оновлено";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Позначити повідомлення як прочитані";

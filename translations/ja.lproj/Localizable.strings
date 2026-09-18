@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "保存されたインスタントなし";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "保存されたインスタンツ";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu 件の Instant";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "既読としてマークされました";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "このInstantを識別できませんでした";
+"INSTANTS_MARK_SEEN_TITLE" = "既読としてマーク";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "自動保存: @%@ はオフ";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "自動保存: @%@ はオン";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Instantsビューアでスクリーンショットや画面収録を撮っても、Instagramに検出されないようにします。";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "スクリーンショットを許可";
+"INSTANTS_PRIVACY_FOOTER" = "1. スクリーンショットを許可は、ビューアでInstagramがスクリーンショットと画面録画を検出するのを防ぎます。\n2. 手動で既読としてマークは、視聴後もInstantsをトレイに保持します。Instantsはまだ Instagramの独自のスケジュールに従って期限切れになります。";
 "INSTANTS_PRIVACY_HEADER" = "プライバシー";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "視聴中のInstantsが既読としてマークされるのを防ぎ、ビューアに目ボタンを追加して、1つを既読としてマークできるようにします。";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "InstagramとSparkle全体のフォントを置き換えます。.otf、.ttf、.ttcファイルをインポートできます。Instagramのロゴとストーリーズのテキストツールは独自のフォントのままです。";
 "INTERFACE_APPEARANCE_HEADER" = "外観";
 "INTERFACE_CAPTURE_HEADER" = "キャプチャ";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "インスタント自動保存リストの変更";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "インスタント自動保存が開始されました";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "インスタントキャプチャがブロックされました";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Instantを既読としてマーク";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "インスタントアップロード失敗";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "言語パックを更新しました";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "メッセージを既読にする";

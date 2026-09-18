@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "هیچ Instant ذخیره‌شده‌ای نیست";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Instantهای ذخیره‌شده";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu Instant";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "علامت‌گذاری‌شده به‌عنوان دیده‌شده";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "نمی‌توان این Instant را شناسایی کند";
+"INSTANTS_MARK_SEEN_TITLE" = "علامت‌گذاری به‌عنوان دیده‌شده";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "ذخیره خودکار برای @%@ خاموش شد";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "ذخیره خودکار برای @%@ روشن شد";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "به شما اجازه می‌دهد در نمایشگر Instants اسکرین‌شات و اسکرین‌ریکورد بگیرید، بدون اینکه اینستاگرام متوجه آن شود.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "اجازه گرفتن اسکرین‌شات";
+"INSTANTS_PRIVACY_FOOTER" = "1. اجازه گرفتن اسکرین‌شات Instagram را از تشخیص اسکرین‌شات و ضبط‌های صفحه در نمایش‌گر باز می‌دارد.\n2. علامت‌گذاری دستی دیده‌شده Instants را در سینی شما بعد از تماشا نگاه می‌دارد. Instants هنوز بر اساس برنامه‌ی خود Instagram منقضی می‌شوند.";
 "INSTANTS_PRIVACY_HEADER" = "حریم خصوصی";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Instants را از علامت‌گذاری به‌عنوان دیده‌شده در حین تماشا متوقف می‌کند و یک دکمه‌ی چشم به نمایش‌گر اضافه می‌کند تا یکی را به‌عنوان دیده‌شده علامت‌گذاری کند.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "فونت را در سراسر اینستاگرام و Sparkle جایگزین می‌کند. فایل‌های .otf، .ttf یا .ttc را درون‌ریزی کنید. لوگوی اینستاگرام و ابزار متن استوری فونت مخصوص خودشان را حفظ می‌کنند.";
 "INTERFACE_APPEARANCE_HEADER" = "ظاهر";
 "INTERFACE_CAPTURE_HEADER" = "ضبط صفحه";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "تغییرات فهرست ذخیره خودکار اینستنت‌ها";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "ذخیره خودکار اینستنت‌ها شروع شد";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "ضبط اینستنت مسدود شد";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "علامت‌گذاری Instant به‌عنوان دیده‌شده";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "آپلود اینستنت ناموفق بود";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "بسته زبان به‌روزرسانی شد";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "علامت‌گذاری پیام‌ها به‌عنوان دیده‌شده";

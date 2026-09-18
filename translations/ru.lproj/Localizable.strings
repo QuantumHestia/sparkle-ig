@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Нет сохраненных моментов";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Сохраненные Instants";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu Instants";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Отмечено как просмотренное";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Не удалось идентифицировать этот Instant";
+"INSTANTS_MARK_SEEN_TITLE" = "Отметить как просмотренное";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Автосохранение отключено для @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Автосохранение включено для @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Позволяет делать скриншоты и записи экрана в просмотрщике Instants без обнаружения со стороны Instagram.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Разрешить скриншоты";
+"INSTANTS_PRIVACY_FOOTER" = "1. Разрешить скриншоты останавливает Instagram от обнаружения скриншотов и записей экрана в средстве просмотра.\n2. Вручную отметить как просмотренное сохраняет Instants в вашем лотке после их просмотра. Instants все еще истекают по расписанию Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Приватность";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Предотвращает отметку Instants как просмотренных при их просмотре и добавляет кнопку со значком глаза в средство просмотра для отметки как просмотренного.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Заменяет шрифт во всём Instagram и Sparkle. Импортируйте файлы .otf, .ttf или .ttc. Логотип Instagram и инструмент текста в историях сохраняют свои шрифты.";
 "INTERFACE_APPEARANCE_HEADER" = "Внешний вид";
 "INTERFACE_CAPTURE_HEADER" = "Захват";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Изменения в списке автосохранения моментов";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Автосохранение моментов начато";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Захват момента заблокирован";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Отметить Instant как просмотренное";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Ошибка загрузки Instant";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Языковой пакет обновлён";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Пометить сообщения как просмотренные";

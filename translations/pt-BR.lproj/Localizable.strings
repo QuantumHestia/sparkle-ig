@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Nenhum instante salvo";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Instantes salvos";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu instantes";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Marcado como visto";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Não foi possível identificar este Instant";
+"INSTANTS_MARK_SEEN_TITLE" = "Marcar Como Visto";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Salvamento automático desativado para @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Salvamento automático ativado para @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Permite fazer capturas e gravações de tela no visualizador de Instants sem que o Instagram as detecte.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Permitir Capturas de Tela";
+"INSTANTS_PRIVACY_FOOTER" = "1. Permitir Capturas de Tela impede que o Instagram detecte capturas de tela e gravações de tela no visualizador.\n2. Marcar Manualmente Como Visto mantém os Instants na sua bandeja após assisti-los. Os Instants ainda expiram no cronograma do Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Privacidade";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Impede que os Instants sejam marcados como vistos enquanto você os assiste, e adiciona um botão de olho ao visualizador para marcar um como visto.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Substitui a fonte no Instagram e no Sparkle. Importe arquivos .otf, .ttf ou .ttc. O logo do Instagram e a ferramenta de texto dos stories mantêm as próprias fontes.";
 "INTERFACE_APPEARANCE_HEADER" = "Aparência";
 "INTERFACE_CAPTURE_HEADER" = "Captura";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Mudanças na lista de salvamento automático de Instants";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Salvamento automático de Instants iniciado";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Captura do Instant bloqueada";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Marcar Instant Como Visto";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Falha ao enviar Instant";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Pacote de idioma atualizado";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Marcar mensagens como visto";

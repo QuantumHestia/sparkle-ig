@@ -43,8 +43,12 @@ static NSArray *SPKInstantsSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"warning")
                                     defaultsKey:@"instants_allow_screenshot"],
                                SPKL(@"INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_MESSAGING_MANUALLY_MARK_SEEN_TITLE")
+                                           icon:SPKSettingsIcon(@"eye")
+                                    defaultsKey:@"instants_manual_seen"],
+                               SPKL(@"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP")),
         ],
-                        nil),
+                        SPKL(@"INSTANTS_PRIVACY_FOOTER")),
         SPKTopicSection(SPKL(@"INSTANTS_CREATION_HEADER"), @[
             ({
                 SPKSetting *s = [SPKSetting switchCellWithTitle:SPKL(@"INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE") icon:SPKSettingsIcon(@"instants") defaultsKey:@"instants_disable_creation"];

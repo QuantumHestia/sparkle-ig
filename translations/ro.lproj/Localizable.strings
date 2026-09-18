@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Niciun instant salvat";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Instante salvate";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu instants";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Marcat ca vizionat";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Nu s-a putut identifica acest Instant";
+"INSTANTS_MARK_SEEN_TITLE" = "Marcează ca Vizionat";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Salvare automată oprit pentru @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Salvare automată pornit pentru @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Îți permite să faci capturi și înregistrări de ecran în vizualizatorul Instants fără ca Instagram să le detecteze.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Permite capturi ecran";
+"INSTANTS_PRIVACY_FOOTER" = "1. Permite capturi ecran oprește Instagram din detectarea capturii de ecran și înregistrării ecranului în vizualizator.\n2. Marcează manual ca vizionat păstrează Instants în tava după ce le vizualizezi. Instants expiră încă conform calendarului propriului Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Confidențialitate";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Oprește Instants din a fi marcate ca vizionate în timp ce le vizualizezi, și adaugă un buton ochi la vizualizator pentru a marca una ca vizionată.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Înlocuiește fontul în Instagram și în Sparkle. Importă fișiere .otf, .ttf sau .ttc. Sigla Instagram și instrumentul de text al poveștilor își păstrează propriile fonturi.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspect";
 "INTERFACE_CAPTURE_HEADER" = "Captură";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Instants salvează automat modificări de listă";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Salvare automată Instants pornită";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Captura instant blocată";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Marcează Instant ca Vizionat";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Încărcarea Instants a eșuat";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Pachetul de limbă a fost actualizat";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Marchează mesajele ca vizualizate";

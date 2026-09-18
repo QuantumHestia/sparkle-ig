@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Không có Instant đã lưu";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Các khoảnh khắc đã lưu";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu Instants";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Đã đánh dấu là đã xem";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Không thể xác định Instant này";
+"INSTANTS_MARK_SEEN_TITLE" = "Đánh dấu là đã xem";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Tắt tự động lưu cho @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Bật tự động lưu cho @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Cho phép chụp màn hình và quay màn hình trong trình xem Instants mà Instagram không phát hiện.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Cho phép Chụp màn hình";
+"INSTANTS_PRIVACY_FOOTER" = "1. Cho phép Chụp màn hình ngăn Instagram phát hiện ảnh chụp màn hình và bản ghi màn hình trong trình xem.\n2. Đánh dấu Đã xem Thủ công giữ Instants trong khay của bạn sau khi bạn xem chúng. Instants vẫn hết hạn theo lịch trình của Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Quyền riêng tư";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Ngăn Instants được đánh dấu là đã xem khi bạn xem chúng và thêm nút mắt vào trình xem để đánh dấu một nút là đã xem.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Thay phông chữ trên toàn Instagram và Sparkle. Nhập tệp .otf, .ttf hoặc .ttc. Logo Instagram và công cụ chữ trong tin vẫn giữ phông riêng.";
 "INTERFACE_APPEARANCE_HEADER" = "Giao diện";
 "INTERFACE_CAPTURE_HEADER" = "Chụp";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Thay đổi danh sách tự động lưu Instant";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Đã bắt đầu Tự động lưu Instant";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Bị chặn Chụp Instant";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Đánh dấu Instant là đã xem";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Tải lên nhanh thất bại";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Đã cập nhật gói ngôn ngữ";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Đánh dấu Tin nhắn là Đã xem";

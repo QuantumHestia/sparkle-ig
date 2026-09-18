@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "ไม่มี instants ที่บันทึกไว้";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Instants ที่บันทึกไว้";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu instants";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "ทำเครื่องหมายว่าเห็นแล้ว";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "ไม่สามารถระบุ Instant นี้";
+"INSTANTS_MARK_SEEN_TITLE" = "ทำเครื่องหมายว่าเห็นแล้ว";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "ปิดการบันทึกอัตโนมัติสำหรับ @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "เปิดการบันทึกอัตโนมัติสำหรับ @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "ให้คุณจับภาพหน้าจอและบันทึกหน้าจอในตัวดู Instants ได้โดยไม่ให้ Instagram ตรวจจับ";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "อนุญาตการจับภาพหน้าจอ";
+"INSTANTS_PRIVACY_FOOTER" = "1. อนุญาตการจับภาพหน้าจอหยุด Instagram จากการตรวจจับการจับภาพหน้าจอและการบันทึกหน้าจอในตัวดู\n2. ทำเครื่องหมายว่าเห็นแล้วด้วยตนเองเก็บ Instants ในถาดของคุณหลังจากดู พวกเขา Instants ยังคงหมดอายุตามตารางเวลาของ Instagram";
 "INSTANTS_PRIVACY_HEADER" = "ความเป็นส่วนตัว";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "หยุดการทำเครื่องหมายว่า Instants ถูกมองเห็นขณะที่คุณดูพวกเขาและเพิ่มปุ่มตาในตัวดูเพื่อทำเครื่องหมายว่า ดู";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "เปลี่ยนแบบอักษรทั่วทั้ง Instagram และ Sparkle นำเข้าไฟล์ .otf, .ttf หรือ .ttc โลโก้ Instagram และเครื่องมือข้อความในสตอรียังคงใช้แบบอักษรของตัวเอง";
 "INTERFACE_APPEARANCE_HEADER" = "รูปลักษณ์";
 "INTERFACE_CAPTURE_HEADER" = "การจับภาพ";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "การเปลี่ยนแปลงรายชื่อบันทึกอินสแตนต์อัตโนมัติ";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "เริ่มบันทึกอินสแตนต์อัตโนมัติแล้ว";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "การจับภาพอินสแตนต์ถูกบล็อก";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "ทำเครื่องหมาย Instant ว่าเห็นแล้ว";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "อัปโหลดอินสแตนต์ไม่สำเร็จ";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "อัปเดตแพ็กภาษาแล้ว";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "ทำเครื่องหมายว่าอ่านข้อความแล้ว";

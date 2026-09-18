@@ -79,6 +79,7 @@ SPK_NOTIF_CONST(kSPKNotificationInstantsCaptureBlocked, "instants_capture_blocke
 SPK_NOTIF_CONST(kSPKNotificationInstantsUpload, "instants_upload");
 SPK_NOTIF_CONST(kSPKNotificationInstantsAutoSave, "instants_auto_save");
 SPK_NOTIF_CONST(kSPKNotificationInstantsAutoSaveUserRule, "toggle_instants_auto_save_user_rule");
+SPK_NOTIF_CONST(kSPKNotificationInstantsMarkSeen, "instants_mark_seen");
 
 SPK_NOTIF_CONST(kSPKNotificationProfileCopyInfo, "profile_copy_info");
 SPK_NOTIF_CONST(kSPKNotificationProfileAnalyzerComplete, "profile_analyzer_complete");
@@ -246,6 +247,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
           @"items" : @[
               SPKNotificationItem(kSPKNotificationInstantsCaptureBlocked, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT"), @"lock"),
               SPKNotificationItem(kSPKNotificationInstantsUpload, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT"), @"warning"),
+              SPKNotificationItem(kSPKNotificationInstantsMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT"), @"eye"),
           ]},
         @{@"title" : SPKL(@"PROFILE_TITLE"),
           @"items" : @[

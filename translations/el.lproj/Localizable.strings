@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Δεν υπάρχουν αποθηκευμένες στιγμές";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Αποθηκευμένα Στιγμιαία";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu στιγμιαία";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Σημειώθηκε ως Αναγνώσιμο";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Δεν ήταν δυνατή η ταυτοποίηση αυτής της Στιγμής";
+"INSTANTS_MARK_SEEN_TITLE" = "Σήμανση ως Αναγνώσιμη";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Αυτόματη αποθήκευση απενεργοποιημένη για @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Αυτόματη αποθήκευση ενεργοποιημένη για @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Σας επιτρέπει να τραβάτε στιγμιότυπα και εγγραφές οθόνης στην προβολή Instants χωρίς να τα εντοπίζει το Instagram.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Αποδοχή Στιγμιοτύπων";
+"INSTANTS_PRIVACY_FOOTER" = "1. Αποδοχή Στιγμιοτύπων σταματά το Instagram από το να ανιχνεύει στιγμιότυπα και εγγραφές στον προβολέα.\n2. Χειροκίνητη Σήμανση ως Αναγνώσιμη κρατά τις Στιγμές στη σάσκα σας μετά που τις δείτε. Οι Στιγμές εξακολουθούν να λήγουν σύμφωνα με το δικό τους χρονοδιάγραμμα του Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Ιδιωτικότητα";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Σταματά τη σήμανση των Στιγμών ως Αναγνώσιμες καθώς τις παρακολουθείτε, και προσθέτει ένα κουμπί οφθαλμού στον προβολέα για να σημειώσετε ένα ως αναγνώσιμο.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Αντικαθιστά τη γραμματοσειρά σε όλο το Instagram και το Sparkle. Εισήγαγε αρχεία .otf, .ttf ή .ttc. Το λογότυπο του Instagram και το εργαλείο κειμένου των ιστοριών κρατούν τις δικές τους γραμματοσειρές.";
 "INTERFACE_APPEARANCE_HEADER" = "Εμφάνιση";
 "INTERFACE_CAPTURE_HEADER" = "Σύλληψη";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Αλλαγές λίστας αυτόματης αποθήκευσης στιγμιαίων";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Ξεκίνησε η αυτόματη αποθήκευση στιγμιαίων";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Στιγμιαία σύλληψη φραγμένη";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Σήμανση Στιγμής ως Αναγνώσιμη";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Αποτυχία Άμεσης Ανάρτησης";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Το πακέτο γλώσσας ενημερώθηκε";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Σήμανση μηνυμάτων ως διαβασμένα";

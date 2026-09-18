@@ -325,6 +325,7 @@ Its own page, reached from a single row on the Messages topic that shows how man
 
 ### Privacy
 - **Allow Screenshots**: Bypasses screenshot/screen-recording detection in the Instants viewer.
+- **Manually Mark Seen**: Stops Instants from being marked seen as you watch them, so they stay in your tray, and adds an eye button to the viewer that marks the Instant on screen as seen. Each one is held out of Instagram's local seen state as it is consumed, the tray is refreshed when the viewer closes, and the seen state is never synced to the server, so a refresh does not clear them either. Instants still expire on Instagram's own schedule.
 
 ### Creation
 - **Disable Instants Creation**: Hard-blocks the Instant shutter (photo and video); the shutter is darkened and capture is blocked, with an optional notification + haptic. Received Instants still work.

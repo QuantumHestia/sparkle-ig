@@ -997,11 +997,16 @@
 "INSTANTS_INSTANTS_SAVED_USERS_NO_SAVED_INSTANTS_TEXT" = "Kei Gspeicherti Instants";
 "INSTANTS_INSTANTS_SAVED_USERS_SAVED_INSTANTS_TEXT" = "Gspeicherti Instants";
 "INSTANTS_INSTANTS_SAVED_USERS_VALUE_INSTANTS_FORMAT" = "%lu Instants";
+"INSTANTS_MARK_SEEN_DONE_TOAST" = "Als gseh markiert";
+"INSTANTS_MARK_SEEN_FAILED_TOAST" = "Konnte diese Instant nöd identifiziere";
+"INSTANTS_MARK_SEEN_TITLE" = "Als Gseh Markiere";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_OFF_TITLE_FORMAT" = "Auto-Speichere us für @%@";
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Auto-Speichere aa für @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Lat di Screenshots u Biudschirmufnahm im Instants-Aaluegr mache, ohni dass Instagram das merkt.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Screenshots Erlaube";
+"INSTANTS_PRIVACY_FOOTER" = "1. Screenshots Erlaube stopp Instagram vo de Detection vo Screenshots u Bildschirm-Recordings im Viewer.\n2. Manuell als gseh markiere behalt Instants in dim Täller nach em Aluege. Instants verfalle immer no nach Instagrams Zitpla.";
 "INSTANTS_PRIVACY_HEADER" = "Privatsphäre";
+"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Stopp Instants vo gseh markiert z werden während du sie aluegsch, u fügt e Aug-Knopf zum Viewer hinzu zum e als gseh markiere.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt d'Schriftart i Instagram u Sparkle. Importier .otf-, .ttf- oder .ttc-Dateie. S'Instagram-Logo u s'Story-Text-Tool behaute ihri eigeti Schriftart.";
 "INTERFACE_APPEARANCE_HEADER" = "Ussgseh";
 "INTERFACE_CAPTURE_HEADER" = "Ufnahm";
@@ -2236,6 +2241,7 @@
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_LIST_CHANGES_TEXT" = "Änderige vor Instants-Auto-Speichere-Lischte";
 "UI_NOTIFICATION_CENTER_INSTANTS_AUTO_SAVE_STARTED_TEXT" = "Instants-Auto-Speichere gstartet";
 "UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT" = "Instant-Ufnahm blockiert";
+"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT" = "Instant als Gseh Markiere";
 "UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT" = "Instant-Upload fählgschlage";
 "UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT" = "Sprachpaket aktualisiert";
 "UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE" = "Nachrichte als gseh markiere";

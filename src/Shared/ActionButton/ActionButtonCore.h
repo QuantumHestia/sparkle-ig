@@ -44,6 +44,7 @@ FOUNDATION_EXPORT NSString *const kSPKActionToggleStorySeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleStoryAutoSaveUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleDirectAutoSaveThreadRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleInstantsAutoSaveUserRule;
+FOUNDATION_EXPORT NSString *const kSPKActionInstantsMarkSeen;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleProfileStorySeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleProfileMessagesSeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionStoryMentionsSheet;
