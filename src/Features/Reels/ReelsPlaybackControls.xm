@@ -474,6 +474,9 @@ static void SPKReelsUpdateSpeedBadge(UIView *verticalUFI, UIView *moreButton) {
         SPKReelsMirrorShadow(((SPKChromeButton *)anchor).iconView.layer, textLabel.layer);
     SPKChromeEnableExtendedDynamicRangeContent(indicator);
     SPKChromeEnableExtendedDynamicRangeContent(textLabel);
+    // The UFI rasterizes. With an EDR sublayer but no EDR on the UFI layer
+    // itself, its cache clamps Instagram's HDR glyphs until something redraws it.
+    SPKChromeEnableExtendedDynamicRangeContent(verticalUFI);
 
     CGSize size = [textLabel sizeThatFits:CGSizeMake(CGFLOAT_MAX, 28.0)];
     size.width = MAX(size.width, 44.0);

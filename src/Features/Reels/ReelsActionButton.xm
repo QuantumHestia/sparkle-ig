@@ -477,30 +477,22 @@ static void SPKReelsSyncActionButtonVisibility(UIView *verticalUFIView) {
         button.alpha = alpha;
 }
 
-// MARK: - UFI EDR anchor
+// MARK: - UFI EDR
 
-// Outside the [921341, 926003] capture-hiding tag range: the anchor draws nothing.
-static NSInteger const kSPKReelsUFIEDRAnchorTag = 927101;
-
-// The UFI layer rasterizes, and its cache only keeps extended range when a
-// sublayer asks for EDR. Instagram's own glyphs do not, so without an EDR
-// sublayer their HDR tint clamps to SDR. The action button used to supply that
-// sublayer by living inside the UFI; now that it lives beside it, this empty
-// view keeps the rasterized UFI in extended range.
-static void SPKEnsureReelsUFIEDRAnchor(UIView *verticalUFIView) {
-    UIView *anchor = [verticalUFIView viewWithTag:kSPKReelsUFIEDRAnchorTag];
-    if (anchor.superview == verticalUFIView)
+// The UFI layer rasterizes, and its cache clamps to SDR unless the layer itself
+// wants EDR, so Instagram's glyphs and counts rendered their HDR tint dim until
+// a touch or a cell reuse redrew them. The action button used to set this by
+// living inside the UFI (the icon's ancestor walk reached the UFI layer); now
+// that it lives beside it, set it directly.
+static void SPKEnableReelsUFIEDR(UIView *verticalUFIView) {
+    CALayer *layer = verticalUFIView.layer;
+    SEL getter = NSSelectorFromString(@"wantsExtendedDynamicRangeContent");
+    SEL setter = NSSelectorFromString(@"setWantsExtendedDynamicRangeContent:");
+    if (![layer respondsToSelector:getter] || ![layer respondsToSelector:setter])
         return;
-
-    anchor = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 1.0, 1.0)];
-    anchor.tag = kSPKReelsUFIEDRAnchorTag;
-    anchor.userInteractionEnabled = NO;
-    anchor.backgroundColor = UIColor.clearColor;
-    anchor.isAccessibilityElement = NO;
-    SEL selector = NSSelectorFromString(@"setWantsExtendedDynamicRangeContent:");
-    if ([anchor.layer respondsToSelector:selector])
-        ((void (*)(id, SEL, BOOL))objc_msgSend)(anchor.layer, selector, YES);
-    [verticalUFIView insertSubview:anchor atIndex:0];
+    if (((BOOL (*)(id, SEL))objc_msgSend)(layer, getter))
+        return;
+    ((void (*)(id, SEL, BOOL))objc_msgSend)(layer, setter, YES);
 }
 
 // MARK: - Installer (with media-change gate — Layer 1)
@@ -522,11 +514,10 @@ void SPKInstallReelsActionButton(UIView *verticalUFIView) {
     UIButton *button = SPKReelsHostedActionButton(verticalUFIView);
     if (![SPKUtils getBoolPref:@"reels_action_btn"]) {
         [button removeFromSuperview];
-        [[verticalUFIView viewWithTag:kSPKReelsUFIEDRAnchorTag] removeFromSuperview];
         return;
     }
 
-    SPKEnsureReelsUFIEDRAnchor(verticalUFIView);
+    SPKEnableReelsUFIEDR(verticalUFIView);
     SPKReelsSyncActionButtonVisibility(verticalUFIView);
     // Siblings are added and reordered on cell reuse; keep the button on top.
     if (button && host.subviews.lastObject != button)
