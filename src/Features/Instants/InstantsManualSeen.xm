@@ -428,14 +428,60 @@ static void replaced_instantsSyncSeenSnaps(id self, SEL _cmd, id sessionId, id o
         orig_instantsSyncSeenSnaps(self, _cmd, sessionId, onSuccess, onFailure);
 }
 
+// MARK: - Seen Request Filter
+
+/// The sync above is not the only way a seen state reaches the server. Instagram also builds
+/// `IGXDTMarkQuickSnapSeenRequest` from another caller, batching every snap in its local
+/// history (device-confirmed: twelve ids, including one just held unseen, sent right after a
+/// camera switch with the sync still blocked). Every seen mutation is built from this input
+/// object, so emptying its id list here covers callers the sync hook never sees. The request
+/// still goes out, with nothing to mark, so no caller is left waiting on a missing reply.
+typedef id (*SPKInstantsSeenRequestInitIMP)(id, SEL, id);
+typedef void (*SPKInstantsSeenRequestSetIMP)(id, SEL, id);
+static SPKInstantsSeenRequestInitIMP orig_seenRequestInitWithMediaIds = NULL;
+static SPKInstantsSeenRequestSetIMP orig_seenRequestSetMediaIds = NULL;
+
+static id SPKInstantsManualSeenFilteredMediaIds(id ids) {
+    if (!SPKInstantsManualSeenIsEnabled() || ![ids isKindOfClass:NSArray.class] || [(NSArray *)ids count] == 0)
+        return ids;
+    SPKLog(@"Instants", @"manual seen: stripped %lu id(s) from a seen request",
+           (unsigned long)[(NSArray *)ids count]);
+    return @[];
+}
+
+static id replaced_seenRequestInitWithMediaIds(id self, SEL _cmd, id ids) {
+    return orig_seenRequestInitWithMediaIds(self, _cmd, SPKInstantsManualSeenFilteredMediaIds(ids));
+}
+
+static void replaced_seenRequestSetMediaIds(id self, SEL _cmd, id ids) {
+    orig_seenRequestSetMediaIds(self, _cmd, SPKInstantsManualSeenFilteredMediaIds(ids));
+}
+
+static void SPKInstallInstantsSeenRequestFilter(void) {
+    Class requestClass = objc_getClass("IGXDTMarkQuickSnapSeenRequest");
+    if (!requestClass) {
+        SPKLog(@"Instants", @"manual seen: seen-request filter skipped, class unavailable");
+        return;
+    }
+    if (class_getInstanceMethod(requestClass, @selector(initWithMediaIds:)))
+        MSHookMessageEx(requestClass, @selector(initWithMediaIds:), (IMP)replaced_seenRequestInitWithMediaIds,
+                        (IMP *)&orig_seenRequestInitWithMediaIds);
+    if (class_getInstanceMethod(requestClass, @selector(setMediaIds:)))
+        MSHookMessageEx(requestClass, @selector(setMediaIds:), (IMP)replaced_seenRequestSetMediaIds,
+                        (IMP *)&orig_seenRequestSetMediaIds);
+    SPKLog(@"Instants", @"manual seen: seen-request filter installed (init=%@ set=%@)",
+           orig_seenRequestInitWithMediaIds ? @"YES" : @"NO", orig_seenRequestSetMediaIds ? @"YES" : @"NO");
+}
+
 void SPKInstallInstantsManualSeenHooksIfEnabled(void) {
     static BOOL sInstalled = NO;
     if (sInstalled)
         return;
     sInstalled = YES;
 
-    // Installed regardless of the pref: the hook re-reads it at call time, so the toggle
+    // Installed regardless of the pref: the hooks re-read it at call time, so the toggle
     // works without a restart.
+    SPKInstallInstantsSeenRequestFilter();
     Class serviceClass = objc_getClass("_TtC18IGQuickSnapService18IGQuickSnapService");
     SEL sel = @selector(syncSeenSnapsWithServerWithDirectSessionId:onSuccess:onFailure:);
     if (!serviceClass || !class_getInstanceMethod(serviceClass, sel)) {
