@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Paglikha";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Laktawan ang Camera Pagkatapos ng Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Nilalaktawan ang camera page na binubuksan ng Instagram pagkatapos matingnan ang huling Instant.";
+"INSTANTS_INBOX_HEADER" = "Inbox";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Pigilan ang stack ng Instants na lumabas sa iyong inbox. Alternatibo sa opisyal na setting ng Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Itago ang Instants sa Inbox";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Idinagdag si @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Magdagdag ng mga user na hindi dapat i-auto-save ang mga instant, dito o mula sa instant action menu.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Magdagdag ng mga user na dapat i-save nang awtomatiko ang mga instant habang binubuksan mo, dito o mula sa instant action menu.";

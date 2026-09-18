@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "बनाना";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Instants के बाद कैमरा छोड़ें";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "आखिरी Instant देखने के बाद Instagram द्वारा खोला जाने वाला कैमरा पेज छोड़ देता है।";
+"INSTANTS_INBOX_HEADER" = "इनबॉक्स";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "आपके इनबॉक्स में Instants स्टैक दिखना बंद करें। Instagram की आधिकारिक सेटिंग का एक विकल्प।";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "इनबॉक्स में Instants छिपाएँ";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "जोड़ा गया @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "जिन उपयोगकर्ताओं के Instants कभी भी ऑटो-सेव नहीं होने चाहिए, उन्हें यहाँ या Instant एक्शन मेन्यू से जोड़ें।";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "जिन उपयोगकर्ताओं के Instants खोलते ही ऑटो-सेव होने चाहिए, उन्हें यहाँ या Instant एक्शन मेन्यू से जोड़ें।";

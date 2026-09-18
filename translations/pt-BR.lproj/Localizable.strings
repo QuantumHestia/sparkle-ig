@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Criação";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Pular Câmera Após Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Pula a página da câmera que o Instagram abre depois do último instant visto.";
+"INSTANTS_INBOX_HEADER" = "Caixa de entrada";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Impede que a pilha de Instants apareça na sua caixa de entrada. Uma alternativa à configuração oficial do Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Ocultar Instants na caixa de entrada";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Adicionado @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Adicione usuários cujos instantes nunca devem ser salvos automaticamente, aqui ou no menu de ação do instante.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Adicione usuários cujos instantes devem ser salvos automaticamente conforme você os abre, aqui ou no menu de ação do instante.";

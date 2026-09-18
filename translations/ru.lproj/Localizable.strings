@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Создание";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Пропустить камеру после Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Пропускает страницу камеры, которую Instagram открывает после просмотра последнего инстанта.";
+"INSTANTS_INBOX_HEADER" = "Входящие";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Убирает стопку Instants из входящих. Альтернатива официальной настройке Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Скрыть Instants во входящих";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Добавлено @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Добавьте пользователей, чьи моментальные снимки никогда не должны сохраняться автоматически, здесь или из меню действий с моментальным снимком.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Добавьте пользователей, чьи моментальные снимки должны сохраняться автоматически при их открытии, здесь или из меню действий с моментальным снимком.";

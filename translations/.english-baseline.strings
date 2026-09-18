@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Creation";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Skip Camera After Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Skips the camera page Instagram opens after the last Instant is viewed.";
+"INSTANTS_INBOX_HEADER" = "Inbox";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Stop the Instants stack from showing in your inbox. An alternative to the official Instagram setting.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Hide Instants in Inbox";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Added @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Add users whose instants should never be auto-saved, here or from the instant action menu.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Add users whose instants should be saved automatically as you open them, here or from the instant action menu.";

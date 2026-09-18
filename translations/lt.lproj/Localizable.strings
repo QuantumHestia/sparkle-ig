@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Kūrimas";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Praleisti kamerą po Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Praleidžia kameros puslapį, kurį Instagram atidaro peržiūrėjus paskutinį Instant įrašą.";
+"INSTANTS_INBOX_HEADER" = "Gautieji";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Neleidžia Instants rinkiniui rodytis gautuosiuose. Alternatyva oficialiam Instagram nustatymui.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Slėpti Instants gautuosiuose";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Pridėta @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Pridėkite naudotojus, kurių Instants įrašai niekada neturi būti įrašomi automatiškai, čia arba iš Instant veiksmų meniu.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Pridėkite naudotojus, kurių Instants įrašai turi būti įrašomi automatiškai juos atveriant, čia arba iš Instant veiksmų meniu.";

@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "الإنشاء";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "تخطي الكاميرا بعد Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "يتخطى صفحة الكاميرا التي يفتحها Instagram بعد مشاهدة آخر لحظة.";
+"INSTANTS_INBOX_HEADER" = "البريد الوارد";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "أوقف ظهور مجموعة اللحظات في بريدك الوارد. بديل لإعداد Instagram الرسمي.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "إخفاء اللحظات في البريد الوارد";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "تمت إضافة @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "إضافة مستخدمين يجب عدم حفظ لحظاتهم تلقائياً، هنا أو من قائمة إجراءات اللحظة.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "إضافة مستخدمين يجب حفظ لحظاتهم تلقائياً عند فتحها، هنا أو من قائمة إجراءات اللحظة.";

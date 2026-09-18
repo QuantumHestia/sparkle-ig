@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Oluşturma";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Instants Sonrasında Kamerayı Atla";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Instagram'ın son instant görüntülendikten sonra açtığı kamera sayfasını atlar.";
+"INSTANTS_INBOX_HEADER" = "Gelen Kutusu";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Instants yığınının gelen kutunda görünmesini engeller. Resmi Instagram ayarına bir alternatif.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Gelen Kutusunda Instants'ı Gizle";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "@%@ eklendi";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Instants'ı asla otomatik olarak kaydedilmemesi gereken kullanıcıları buraya veya Instant işlem menüsünden ekle.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Instants'ı açtıkça otomatik olarak kaydedilmesi gereken kullanıcıları buraya veya Instant işlem menüsünden ekle.";

@@ -86,6 +86,7 @@ FOUNDATION_EXPORT void SPKInstallInstantsAllowScreenshotHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsReactionConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsGalleryUploadHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsManualSeenHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallInstantsHideInInboxHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallVisualMsgModifierHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallNoSuggestedChatsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallChangeThemeConfirmHooksIfEnabled(void);
@@ -273,6 +274,7 @@ void SPKInstallMessagesSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallInstantsReactionConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallInstantsGalleryUploadHooksIfEnabled);
     SPK_INSTALL(SPKInstallInstantsManualSeenHooksIfEnabled);
+    SPK_INSTALL(SPKInstallInstantsHideInInboxHooksIfEnabled);
     SPK_INSTALL(SPKInstallVisualMsgModifierHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedChatsHooksIfEnabled);
     SPK_INSTALL(SPKInstallHiddenChatsHooksIfEnabled);

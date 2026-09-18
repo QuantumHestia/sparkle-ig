@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Creazione";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Salta Camera Dopo Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Salta la pagina della fotocamera che Instagram apre dopo l'ultimo instant visto.";
+"INSTANTS_INBOX_HEADER" = "Posta in arrivo";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Impedisce alla pila di Instants di comparire nella posta in arrivo. Un'alternativa all'impostazione ufficiale di Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Nascondi Instants nella posta in arrivo";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Aggiunto @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Aggiungi utenti i cui istanti non devono mai essere salvati automaticamente, qui o dal menu delle azioni dell'istante.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Aggiungi utenti i cui istanti devono essere salvati automaticamente man mano che li apri, qui o dal menu delle azioni dell'istante.";

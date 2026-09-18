@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "ساخت";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "رد کردن دوربین پس از Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "صفحه دوربینی را که اینستاگرام پس از دیدن آخرین Instant باز می‌کند، رد می‌کند.";
+"INSTANTS_INBOX_HEADER" = "صندوق ورودی";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "از نمایش دسته Instants در صندوق ورودی جلوگیری می‌کند. جایگزینی برای تنظیم رسمی Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "پنهان کردن Instants در صندوق ورودی";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "@%@ اضافه شد";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "کاربرانی را که هرگز نباید Instantهای‌شان به‌طور خودکار ذخیره شود، اینجا یا از منوی کنش Instant اضافه کنید.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "کاربرانی را که باید Instantهای‌شان همزمان با باز کردن به‌طور خودکار ذخیره شود، اینجا یا از منوی کنش Instant اضافه کنید.";

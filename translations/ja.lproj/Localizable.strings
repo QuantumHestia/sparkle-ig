@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "作成";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Instants 後にカメラをスキップ";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "最後のInstantを閲覧した後にInstagramが開くカメラ画面をスキップします。";
+"INSTANTS_INBOX_HEADER" = "受信箱";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "受信箱にインスタントのスタックを表示しないようにします。Instagram公式設定の代わりになります。";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "受信箱でインスタントを非表示";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "@%@を追加しました";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Instant が自動保存されないようにすべきユーザーを、ここまたは Instant のアクションメニューから追加します。";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Instant を開いたときに自動的に保存するユーザーを、ここまたは Instant のアクションメニューから追加します。";

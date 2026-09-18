@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "생성";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Instants 후 카메라 건너뛰기";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "마지막 Instant를 본 뒤 Instagram이 여는 카메라 화면을 건너뜁니다.";
+"INSTANTS_INBOX_HEADER" = "받은 메시지함";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "받은 메시지함에 Instants 스택이 표시되지 않게 합니다. Instagram 공식 설정의 대안입니다.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "받은 메시지함에서 Instants 숨기기";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "@%@ 추가됨";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Instant가 자동으로 저장되지 않아야 하는 사용자를 여기에서 또는 Instant 작업 메뉴에서 추가합니다.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Instant를 열 때 자동으로 저장되어야 하는 사용자를 여기에서 또는 Instant 작업 메뉴에서 추가합니다.";

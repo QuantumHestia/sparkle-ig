@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Pembuatan";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Lewati Kamera Setelah Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Melewati halaman kamera yang dibuka Instagram setelah Instant terakhir dilihat.";
+"INSTANTS_INBOX_HEADER" = "Kotak Masuk";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Hentikan tumpukan Instants agar tidak muncul di kotak masuk. Alternatif untuk pengaturan resmi Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Sembunyikan Instants di Kotak Masuk";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "@%@ ditambahkan";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Tambahkan pengguna yang instant-nya tidak boleh disimpan otomatis, di sini atau dari menu aksi instant.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Tambahkan pengguna yang instant-nya harus disimpan otomatis saat kamu membukanya, di sini atau dari menu aksi instant.";

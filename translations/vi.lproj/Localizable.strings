@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Tạo";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Bỏ qua Máy ảnh Sau Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Bỏ qua trang máy ảnh mà Instagram mở sau khi xem Instant cuối cùng.";
+"INSTANTS_INBOX_HEADER" = "Hộp thư";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Ngăn ngăn Instants hiển thị trong hộp thư. Một lựa chọn thay thế cho cài đặt chính thức của Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Ẩn Instants trong hộp thư";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Đã thêm @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Thêm người dùng mà Instants của họ không bao giờ được tự động lưu, tại đây hoặc từ menu hành động Instant.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Thêm người dùng có Instants cần được lưu tự động khi bạn mở chúng, tại đây hoặc từ menu hành động Instant.";

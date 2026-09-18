@@ -27,8 +27,46 @@ static NSArray *SPKInstantsSettingsSections(void);
 }
 @end
 
+static NSString *const kSPKInstantsHideInInboxKey = @"instants_hide_in_inbox";
+
+// With the inbox stack hidden there is no way to reach an Instant, so every other
+// row on the page is locked. Values are kept, only editing is blocked, and each
+// row's own enabled condition still applies once the lock lifts.
+static NSArray *SPKInstantsLockSectionsWhileHidden(NSArray *sections) {
+    for (NSDictionary *section in sections) {
+        for (SPKSetting *row in section[@"rows"]) {
+            if (![row isKindOfClass:SPKSetting.class] || [row.defaultsKey isEqualToString:kSPKInstantsHideInInboxKey])
+                continue;
+            BOOL (^ownEnabled)(void) = row.enabledProvider;
+            row.enabledProvider = ^BOOL {
+                if ([SPKUtils getBoolPref:kSPKInstantsHideInInboxKey])
+                    return NO;
+                return ownEnabled ? ownEnabled() : YES;
+            };
+        }
+    }
+    return sections;
+}
+
 static NSArray *SPKInstantsSettingsSections(void) {
-    return @[
+    return SPKInstantsLockSectionsWhileHidden(@[
+        SPKTopicSection(SPKL(@"INSTANTS_INBOX_HEADER"), @[
+            ({
+                SPKSetting *s = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INSTANTS_INBOX_HIDE_INSTANTS_TITLE")
+                                                                              icon:SPKSettingsIcon(@"circle_off")
+                                                                       defaultsKey:kSPKInstantsHideInInboxKey],
+                                                   SPKL(@"INSTANTS_INBOX_HIDE_INSTANTS_HELP"));
+                // Detaches a stack already mounted in the inbox now, rather than
+                // on the inbox's next layout pass.
+                s.switchChangeHandler = ^(BOOL isOn) {
+                    SPKPreferenceSetObject(@(isOn), kSPKInstantsHideInInboxKey);
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"SPKInstantsHideInInboxDidChangeNotification" object:nil];
+                };
+                s.reloadsTableOnSwitchChange = YES;
+                s;
+            }),
+        ],
+                        nil),
         SPKTopicSection(SPKL(@"FEED_ACTION_BUTTON_HEADER"), @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INSTANTS_ACTION_BUTTON_INSTANTS_ACTION_BUTTON_TITLE")
                                            icon:SPKSettingsIcon(@"action")
@@ -114,7 +152,7 @@ static NSArray *SPKInstantsSettingsSections(void) {
                                SPKL(@"INSTANTS_CONFIRMATION_CONFIRM_REACTION_HELP")),
         ],
                         nil),
-    ];
+    ]);
 }
 
 @implementation SPKInstantsSettingsProvider

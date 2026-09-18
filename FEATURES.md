@@ -319,6 +319,9 @@ Its own page, reached from a single row on the Messages topic that shows how man
 
 ## Instants
 
+### Inbox
+- **Hide Instants in Inbox**: Removes the Instants stack from the top of the Direct inbox, the same result as Instagram's own *Hide Instants in inbox* setting, which Instagram only offers to some accounts. Takes effect live: a stack already on screen is removed when the inbox next lays it out. Instants on profiles and in the camera are unaffected. While it is on, every other setting on this page is locked: values are kept, but they can't be changed until it is turned off.
+
 ### Action Button
 - **Instants Action Button**, **Default Tap Action**, **Configure Actions**: Actions resolve the currently visible Instant with its author, posted date, and full-resolution media. Bulk actions retain every Instant encountered during the current viewer session until it closes, including ones already tapped past.
 - **Toggle Instant Auto-Save**: Adds or removes the author of the Instant on screen from the Instants auto-save list, mirroring the equivalent story and chat actions. Shown only while *Auto-Save Instants* is on and the author can be read. See *Downloads › Auto-Save › Instants*.

@@ -190,6 +190,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"instants_camera_btn" : @(YES),
         @"instants_manual_seen" : @(NO),
         @"instants_advance_on_manual_seen" : @(NO),
+        @"instants_hide_in_inbox" : @(NO),
         @"msgs_disable_vanish_swipe_up" : @(NO),
         @"msgs_hide_vanish_screenshot" : @(NO),
         @"reels_disable_auto_unmute" : @(NO),

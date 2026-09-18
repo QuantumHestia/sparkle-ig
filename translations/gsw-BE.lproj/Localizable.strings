@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Erstellig";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Kamera nach Instants Überspringe";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Überspringt d'Kamera-Syte, wo Instagram ufmacht, nachdäm s'letschte Instant aagluegt worde isch.";
+"INSTANTS_INBOX_HEADER" = "Poschtiigang";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Verhinderet, dass dr Instants-Stapel i dim Poschtiigang erschiint. E Alternative zur offizielle Instagram-Iistellig.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Instants im Poschtiigang uusblände";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "@%@ dezuegfüegt";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Füeg da oder vom Instant-Aktion-Menü Benutzer dezue, vo dene d'Instants nie automatisch gspeicheret wärde sölle.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Füeg da oder vom Instant-Aktion-Menü Benutzer dezue, vo dene d'Instants automatisch gspeicheret wärde sölle, wenn du si ufmachsch.";

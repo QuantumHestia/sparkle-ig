@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Creare";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Omite cameră după Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Sare peste pagina camerei pe care Instagram o deschide după ultimul instant vizionat.";
+"INSTANTS_INBOX_HEADER" = "Mesaje primite";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Oprește afișarea teancului de Instants în mesajele primite. O alternativă la setarea oficială Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Ascunde Instants în mesajele primite";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Adăugat @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Adăugați utilizatori ale căror instante nu ar trebui salvate niciodată automat, aici sau din meniul de acțiune al instantului.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Adăugați utilizatori ale căror instante ar trebui salvate automat pe măsură ce le deschideți, aici sau din meniul de acțiune al instantului.";

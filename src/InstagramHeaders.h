@@ -597,6 +597,29 @@
 @interface IGDirectInboxSwiftViewController : UIViewController
 @end
 
+// Swift class (IGDirectInboxViewControllerSwift module), resolved through
+// SPKResolveIGClass. Owns the inbox's Instants peek presentation.
+@interface IGDirectInboxCameraMediaCoordinator : NSObject
+- (void)tryShowQuickSnapPeek;
+@end
+
+// Swift class (IGQuickSnapExperimentation module). The class methods are thin
+// @objc thunks; Swift callers inline the gate, so only ObjC call sites see a hook.
+@interface IGQuickSnapExperimentationHelper : NSObject
++ (BOOL)isQuicksnapEnabledInInbox:(id)session;
+@end
+
+// Swift class (IGQuickSnapPresentationManager module). The card view is shared
+// between the Direct inbox and the profile corner stack.
+@interface IGQuickSnapPresentationManager : NSObject
+@property (readonly, nonatomic) UIView *cardView;
+@end
+
+// Category on IGUserSession in IG; always respondsToSelector: before calling.
+@interface IGUserSession (SPKQuickSnapPresentation)
+- (IGQuickSnapPresentationManager *)quickSnapPresentationManager;
+@end
+
 // Aggregate unread counts behind the app's badges. The two Direct fields are the
 // only ones Sparkle touches.
 @interface IGBadgeData : NSObject

@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "Δημιουργία";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "Παράλειψη Κάμερας μετά Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "Παρακάμπτει τη σελίδα κάμερας που ανοίγει το Instagram μετά την προβολή του τελευταίου instant.";
+"INSTANTS_INBOX_HEADER" = "Εισερχόμενα";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "Σταματά την εμφάνιση της στοίβας Instants στα εισερχόμενά σου. Εναλλακτική στην επίσημη ρύθμιση του Instagram.";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "Απόκρυψη Instants στα εισερχόμενα";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "Προστέθηκε @%@";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "Προσθήκη χρηστών των οποίων τα στιγμιαία δεν πρέπει ποτέ να αποθηκεύονται αυτόματα, εδώ ή από το μενού ενέργειας στιγμιαίου.";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "Προσθήκη χρηστών των οποίων τα στιγμιαία θα πρέπει να αποθηκεύονται αυτόματα καθώς τα ανοίγετε, εδώ ή από το μενού ενέργειας στιγμιαίου.";

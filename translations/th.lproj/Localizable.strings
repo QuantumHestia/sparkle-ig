@@ -971,6 +971,9 @@
 "INSTANTS_CREATION_HEADER" = "การสร้าง";
 "INSTANTS_CREATION_SKIP_CAMERA_AFTER_INSTANTS_TITLE" = "ข้ามกล้องหลังดู Instants";
 "INSTANTS_CREATION_SKIP_CAMERA_HELP" = "ข้ามหน้ากล้องที่ Instagram เปิดขึ้นหลังจากดู Instant สุดท้าย";
+"INSTANTS_INBOX_HEADER" = "กล่องข้อความ";
+"INSTANTS_INBOX_HIDE_INSTANTS_HELP" = "หยุดไม่ให้กองของ Instants แสดงในกล่องข้อความ เป็นทางเลือกแทนการตั้งค่าอย่างเป็นทางการของ Instagram";
+"INSTANTS_INBOX_HIDE_INSTANTS_TITLE" = "ซ่อน Instants ในกล่องข้อความ";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADDED_VALUE_FORMAT" = "เพิ่ม @%@ แล้ว";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_NEVER_AUTO_SAVED_HERE_TEXT" = "เพิ่มผู้ใช้ที่ไม่ต้องการให้บันทึก instants โดยอัตโนมัติ ได้ที่นี่หรือจากเมนูการทำงานของ instant";
 "INSTANTS_INSTANTS_AUTO_SAVE_ADD_USERS_WHOSE_INSTANTS_SHOULD_SAVED_AUTOMATICALLY_OPEN_HERE_TEXT" = "เพิ่มผู้ใช้ที่ต้องการให้บันทึก instants โดยอัตโนมัติเมื่อคุณเปิดดู ได้ที่นี่หรือจากเมนูการทำงานของ instant";
