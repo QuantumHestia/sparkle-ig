@@ -3643,8 +3643,8 @@ static NSArray<UIMenuElement *> *SPKBuildBulkMenuChildren(SPKActionButtonConfigu
 // open time (via a UIDeferredMenuElement) — this is what makes a mixed carousel
 // track the CURRENT slide: video-only actions (Trim, View Thumbnail, audio)
 // reflect the visible item instead of whatever slide 0 was when the button was
-// first configured. Non-feed surfaces call it once (their menus are built
-// eagerly, as before).
+// first configured. Instants does the same for the snap on screen. Other
+// surfaces call it once (their menus are built eagerly, as before).
 static NSArray<UIMenuElement *> *SPKBuildActionMenuElements(SPKActionButtonContext *context,
                                                             SPKActionButtonConfiguration *configuration,
                                                             __weak UIButton *weakButton) {
@@ -3855,9 +3855,15 @@ void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context)
                                                                                             topicTitle:context.settingsTitle ?: SPKActionButtonTopicTitleForSource(context.source)
                                                                                       supportedActions:context.supportedActions ?: SPKActionButtonSupportedActionsForSource(context.source)
                                                                                        defaultSections:SPKActionButtonDefaultSectionsForSource(context.source)];
-    id bulkMedia = SPKResolveBulkMediaForContext(context);
-    NSArray<SPKResolvedMediaEntry *> *bulkEntries = SPKDownloadableEntries(SPKEntriesFromMedia(bulkMedia));
-    NSString *menuSignature = SPKActionButtonMenuSignature(context, configuration, visibleActions, defaultIdentifier, bulkEntries.count);
+    // Instants builds its menu contents when it opens (below), so the bulk count is read there
+    // instead. Resolving every snap's URLs here ran inside the header's layout pass.
+    BOOL defersMenu = context.source == SPKActionButtonSourceFeed || context.source == SPKActionButtonSourceInstants;
+    NSUInteger bulkEntryCount = 0;
+    if (context.source != SPKActionButtonSourceInstants) {
+        id bulkMedia = SPKResolveBulkMediaForContext(context);
+        bulkEntryCount = SPKDownloadableEntries(SPKEntriesFromMedia(bulkMedia)).count;
+    }
+    NSString *menuSignature = SPKActionButtonMenuSignature(context, configuration, visibleActions, defaultIdentifier, bulkEntryCount);
     NSString *existingSignature = objc_getAssociatedObject(button, kSPKActionButtonMenuSignatureAssocKey);
     if ([existingSignature isEqualToString:menuSignature] && button.menu != nil) {
         button.showsMenuAsPrimaryAction = shouldOpenMenuOnTap;
@@ -3905,10 +3911,11 @@ void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context)
         objc_setAssociatedObject(button, kSPKActionButtonTapActionAssocKey, newTapAction, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 
-    // Feed items are the only surface with in-line, laterally-swipeable mixed
-    // carousels whose current slide changes WITHOUT the bar re-laying-out, so its
-    // menu is resolved lazily at open time (video-only actions track the visible
-    // slide). Other surfaces build eagerly — same behavior as before.
+    // Feed items have in-line, laterally-swipeable mixed carousels whose current slide
+    // changes WITHOUT the bar re-laying-out, and the Instants button keeps one menu for
+    // the whole viewer session while the snap under it changes. Both resolve their menu
+    // lazily at open time, so video-only actions track what is on screen and the bulk
+    // resolve stays off the layout path. Other surfaces build eagerly.
     UIMenu *fullMenu;
     NSString *menuTitle = @"";
     // Profile pictures have no posted date — the media object is an IGUser. Skip the
@@ -3924,7 +3931,7 @@ void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context)
         }
     }
 
-    if (context.source == SPKActionButtonSourceFeed) {
+    if (defersMenu) {
         UIDeferredMenuElement *deferred = [UIDeferredMenuElement elementWithUncachedProvider:^(void (^completion)(NSArray<UIMenuElement *> *)) {
             completion(SPKBuildActionMenuElements(context, configuration, weakButton));
         }];

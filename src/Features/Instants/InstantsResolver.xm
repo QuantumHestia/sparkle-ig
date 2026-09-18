@@ -87,7 +87,7 @@ static id SPKInstantsLocateQuickSnapService(void) {
             for (UIWindow *window in ((UIWindowScene *)scene).windows) {
                 if (![window respondsToSelector:@selector(userSession)])
                     continue;
-                id session = [window valueForKey:@"userSession"];
+                id session = SPKKVCObject(window, @"userSession");
                 if (!session)
                     continue;
                 if ([session respondsToSelector:sharedQSSel]) {
@@ -997,7 +997,7 @@ static void SPKInstantsInitTracking(UIView *stackView) {
     // This is a Swift Array bridged to NSArray of SingleSnapView instances.
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -1028,7 +1028,7 @@ static void SPKInstantsInitTracking(UIView *stackView) {
     id state = SPKInstantsObjectValue(stackView, @[ @"state" ]);
     if (state && [state isKindOfClass:NSObject.class]) {
         @try {
-            id val = [state valueForKey:@"currentlyDisplayingQuickSnapIndex"];
+            id val = SPKKVCObject(state, @"currentlyDisplayingQuickSnapIndex");
             if ([val respondsToSelector:@selector(integerValue)]) {
                 initialIndex = [val integerValue];
             }
@@ -1208,7 +1208,7 @@ static NSInteger SPKInstantsActiveIndex(UIView *stackView) {
     // Primary: visual detection (always works if views are on screen)
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -1383,7 +1383,7 @@ static UIImageView *SPKInstantsImageViewInSnap(UIView *snap) {
             if (!hasImage) {
                 id spec = nil;
                 @try {
-                    spec = [imageView valueForKey:@"imageSpecifier"];
+                    spec = SPKKVCObject(imageView, @"imageSpecifier");
                 } @catch (__unused NSException *e) {
                 }
                 specURL = SPKURLFromValue(SPKObjectForSelector(spec, @"url") ?: SPKKVCObject(spec, @"url"));
@@ -2035,7 +2035,7 @@ static NSArray<SPKInstantsResolvedSnap *> *SPKInstantsResolveFromStackView(UIVie
     // Read currentImages directly from the stack view (it has its own copy, separate from state)
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -2246,7 +2246,7 @@ static NSString *SPKInstantsActiveSnapPKFromStackView(UIView *stackView) {
     // Read currentImages from the stack view directly
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -2277,18 +2277,18 @@ static NSString *SPKInstantsActiveSnapPKFromStackView(UIView *stackView) {
     // Fallback: try the state's viewModel items array at the same index (may work early)
     id state = nil;
     @try {
-        state = [stackView valueForKey:@"state"];
+        state = SPKKVCObject(stackView, @"state");
     } @catch (__unused NSException *e) {
     }
     if (state && [state isKindOfClass:NSObject.class]) {
         id viewModel = nil;
         @try {
-            viewModel = [state valueForKey:@"viewModel"];
+            viewModel = SPKKVCObject(state, @"viewModel");
         } @catch (__unused NSException *e) {
         }
         if (!viewModel) {
             @try {
-                viewModel = [state valueForKey:@"_viewModel"];
+                viewModel = SPKKVCObject(state, @"_viewModel");
             } @catch (__unused NSException *e) {
             }
         }
@@ -2353,7 +2353,7 @@ SPKInstantsResolverResult *SPKInstantsResolveForHeader(UIView *header, NSString 
 
     if (stackView) {
         @try {
-            currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+            currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
         } @catch (__unused NSException *e) {
         }
         if (!currentImages.count) {

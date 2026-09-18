@@ -25,6 +25,7 @@
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
 #import "../../Shared/UI/SPKNotificationCenter.h"
 #import "../../Utils.h"
+#import "InstantsModeViews.h"
 
 // One Sparkle button for the whole Instants camera screen: uploading a photo from
 // Photos/Gallery/Files, browsing what you have already saved, and the settings page all
@@ -122,57 +123,25 @@ static void SPKInstantsWalkViews(UIView *root, void (^visitor)(UIView *view, BOO
         return;
     BOOL stop = NO;
     NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:root];
-    while (queue.count > 0 && !stop) {
-        UIView *view = queue.firstObject;
-        [queue removeObjectAtIndex:0];
+    for (NSUInteger idx = 0; idx < queue.count && !stop; idx++) {
+        UIView *view = queue[idx];
         visitor(view, &stop);
         if (stop)
             break;
-        for (UIView *subview in view.subviews) {
-            [queue addObject:subview];
-        }
+        [queue addObjectsFromArray:view.subviews];
     }
 }
 
 static BOOL SPKInstantsViewIsVisible(UIView *view) {
-    return view && view.window && !view.hidden && view.alpha >= 0.05 && view.bounds.size.width > 1.0 && view.bounds.size.height > 1.0;
+    return SPKInstantsModeViewIsVisible(view);
 }
 
 static BOOL SPKInstantsHeaderHasVisibleCreationView(UIView *header) {
-    if (SPKInstantsViewIsVisible(sSPKInstantsVisibleCreationView) &&
-        SPKInstantsWindowForView(sSPKInstantsVisibleCreationView) == SPKInstantsWindowForView(header)) {
-        return YES;
-    }
-
-    UIWindow *window = SPKInstantsWindowForView(header);
-    if (!window)
-        return NO;
-    __block BOOL found = NO;
-    SPKInstantsWalkViews(window, ^(UIView *view, BOOL *stop) {
-        if (!SPKInstantsViewIsVisible(view))
-            return;
-        if ([NSStringFromClass(view.class) containsString:@"IGQuickSnapCreationView"]) {
-            found = YES;
-            *stop = YES;
-        }
-    });
-    return found;
+    return SPKInstantsWindowShowsCreationView(SPKInstantsWindowForView(header));
 }
 
 static BOOL SPKInstantsHeaderHasVisibleSnapView(UIView *header) {
-    UIWindow *window = SPKInstantsWindowForView(header);
-    if (!window)
-        return NO;
-    __block BOOL found = NO;
-    SPKInstantsWalkViews(window, ^(UIView *view, BOOL *stop) {
-        if (!SPKInstantsViewIsVisible(view))
-            return;
-        if ([NSStringFromClass(view.class) containsString:@"IGQuickSnapImmersiveViewerSingleSnapView"]) {
-            found = YES;
-            *stop = YES;
-        }
-    });
-    return found;
+    return SPKInstantsWindowShowsSnapView(SPKInstantsWindowForView(header));
 }
 
 static UIView *SPKInstantsHeaderOwnedView(UIView *header, NSString *key) {
@@ -180,7 +149,7 @@ static UIView *SPKInstantsHeaderOwnedView(UIView *header, NSString *key) {
         return nil;
     id view = nil;
     @try {
-        view = [header valueForKey:key];
+        view = SPKKVCObject(header, key);
     } @catch (__unused NSException *exception) {
     }
     if (![view isKindOfClass:UIView.class]) {
@@ -201,21 +170,6 @@ static UIView *SPKInstantsHeaderArchiveButton(UIView *header) {
         return archiveButton;
     }
     return nil;
-}
-
-static UIView *SPKInstantsHeaderInWindow(UIWindow *window) {
-    if (!window)
-        return nil;
-    __block UIView *header = nil;
-    SPKInstantsWalkViews(window, ^(UIView *view, BOOL *stop) {
-        if (!SPKInstantsViewIsVisible(view))
-            return;
-        if ([NSStringFromClass(view.class) containsString:@"IGQuickSnapNavigationV3HeaderButtonView"]) {
-            header = view;
-            *stop = YES;
-        }
-    });
-    return header;
 }
 
 static NSString *SPKInstantsControlText(UIView *view) {
@@ -1054,7 +1008,7 @@ static void replaced_creationViewLayoutSubviews(id self, SEL _cmd) {
             SPKInstantsClearPendingImageForCreationView(creationView);
             return;
         }
-        UIView *header = SPKInstantsHeaderInWindow(SPKInstantsWindowForView(creationView));
+        UIView *header = SPKInstantsVisibleHeaderInWindow(SPKInstantsWindowForView(creationView));
         if (header)
             SPKInstantsInstallGalleryButton(header);
     }
@@ -1200,6 +1154,7 @@ static void SPKHookInstanceMethod(const char *className, SEL selector, IMP repla
 extern "C" void SPKInstallInstantsGalleryUploadHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        SPKInstallInstantsModeViewHooks();
         SPKHookInstanceMethod("_TtC29IGQuickSnapCreationController23IGQuickSnapCreationView",
                               @selector(layoutSubviews),
                               (IMP)replaced_creationViewLayoutSubviews,

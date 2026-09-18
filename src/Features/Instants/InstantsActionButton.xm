@@ -5,6 +5,7 @@
 #import "../../Shared/i18n/SPKStrings.h"
 #import "../../AssetUtils.h"
 #import "InstantsManualSeen.h"
+#import "InstantsModeViews.h"
 #import "InstantsResolver.h"
 #import <objc/runtime.h>
 #import <substrate.h>
@@ -19,7 +20,7 @@ static UIView *SPKInstantsHeaderOwnedView(UIView *header, NSString *key) {
         return nil;
     id view = nil;
     @try {
-        view = [header valueForKey:key];
+        view = SPKKVCObject(header, key);
     } @catch (__unused NSException *e) {
     }
     if (![view isKindOfClass:UIView.class]) {
@@ -71,63 +72,12 @@ static BOOL SPKInstantsHeaderIsVisible(UIView *header) {
 
 /// YES when a snap is actually being consumed (viewed). The action button belongs only
 /// on the consumption header, not on the creation/camera header (which hosts the gallery
-/// upload button at the same anchor). Detected by the presence of a visible
-/// IGQuickSnapImmersiveViewerSingleSnapView in the same window.
-/// Visibility test for header-mode detection.
-///
-/// This MUST stay identical to `SPKInstantsViewIsVisible` in InstantsGalleryUpload.xm.
-/// The two features decide which of them owns the header's right-hand slot from the same
-/// signals, so any divergence lets both conclude they own it and draw on top of each
-/// other. A looser test here (no size check, alpha >= 0.01) previously counted a
-/// collapsed leftover snap view as "still consuming" while the gallery button, using the
-/// stricter test, saw the creation view and installed itself as well.
-static BOOL SPKInstantsModeViewIsVisible(UIView *view) {
-    return view && view.window && !view.hidden && view.alpha >= 0.05 &&
-           view.bounds.size.width > 1.0 && view.bounds.size.height > 1.0;
-}
-
-/// Whether the header's window currently shows a consumption snap view, and whether it
-/// shows the creation view, in a SINGLE traversal.
-///
-/// This runs from the header's `layoutSubviews`, so it is on a hot path: the previous
-/// shape called a one-needle search twice and therefore walked the entire window subview
-/// tree twice on every layout pass, allocating a fresh queue each time. One walk answers
-/// both questions, and it stops early once both are known.
-static void SPKInstantsWindowModeFlags(UIView *header, BOOL *outConsumption, BOOL *outCreation) {
-    BOOL sawSnap = NO;
-    BOOL sawCreation = NO;
-    UIWindow *window = header.window;
-    if (window) {
-        NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:window];
-        NSUInteger idx = 0;
-        while (idx < queue.count) {
-            UIView *view = queue[idx++];
-            if (SPKInstantsModeViewIsVisible(view)) {
-                NSString *name = NSStringFromClass(view.class);
-                if (!sawSnap && [name containsString:@"IGQuickSnapImmersiveViewerSingleSnapView"])
-                    sawSnap = YES;
-                if (!sawCreation && [name containsString:@"IGQuickSnapCreationView"])
-                    sawCreation = YES;
-                if (sawSnap && sawCreation)
-                    break;
-            }
-            for (UIView *sub in view.subviews)
-                [queue addObject:sub];
-        }
-    }
-    if (outConsumption)
-        *outConsumption = sawSnap;
-    if (outCreation)
-        *outCreation = sawCreation;
-}
-
+/// upload button at the same anchor).
 static BOOL SPKInstantsHeaderIsConsumption(UIView *header) {
-    BOOL consumption = NO;
-    BOOL creation = NO;
-    SPKInstantsWindowModeFlags(header, &consumption, &creation);
+    UIWindow *window = header.window;
     // Creation wins the slot: when the camera page is up, the gallery-upload button owns
     // this position, so the action button must stand down even if a snap view lingers.
-    return consumption && !creation;
+    return SPKInstantsWindowShowsSnapView(window) && !SPKInstantsWindowShowsCreationView(window);
 }
 
 // MARK: - Action Context
@@ -432,6 +382,7 @@ static void SPKInstallInstantsActionButtonHooksAttempt(NSUInteger attempt) {
                           @selector(layoutSubviews),
                           (IMP)replaced_instantsHeaderLayoutSubviews,
                           (IMP *)&orig_instantsHeaderLayoutSubviews);
+    SPKInstallInstantsModeViewHooks();
     SPKInstallInstantsResolverHooks();
     sSPKInstantsActionButtonHooksInstalled = YES;
     SPKLog(@"Instants", @"[Sparkle] Instants action button hooks installed");

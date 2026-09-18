@@ -2,6 +2,7 @@
 
 #import <objc/message.h>
 #import <objc/runtime.h>
+#import <os/lock.h>
 #import <os/log.h>
 #import <stdarg.h>
 
@@ -23,8 +24,81 @@ id SPKObjectForSelector(id target, NSString *selectorName) {
     return ((id (*)(id, SEL))objc_msgSend)(target, selector);
 }
 
-id SPKKVCObject(id target, NSString *key) {
+static BOOL SPKClassOverridesNSObjectMethod(Class cls, SEL selector) {
+    Method base = class_getInstanceMethod([NSObject class], selector);
+    Method own = class_getInstanceMethod(cls, selector);
+    return own && base && method_getImplementation(own) != method_getImplementation(base);
+}
+
+static BOOL SPKKVCKeyIsResolvableUncached(id target, Class cls, NSString *key) {
+    // Pure Swift classes have no KVC at all; the call used to throw an unrecognized
+    // selector, which came back as nil the same way.
+    if (![cls instancesRespondToSelector:@selector(valueForKey:)])
+        return NO;
+    // Classes with their own KVC (collections map the key over their elements, CALayer and
+    // Core Data answer arbitrary keys, and so on) keep their exact behaviour.
+    if (SPKClassOverridesNSObjectMethod(cls, @selector(valueForKey:)) ||
+        SPKClassOverridesNSObjectMethod(cls, @selector(valueForUndefinedKey:)))
+        return YES;
+
+    NSString *capitalized = [[key substringToIndex:1].uppercaseString stringByAppendingString:[key substringFromIndex:1]];
+    // Simple accessors, in Foundation's search order.
+    for (NSString *name in @[ [@"get" stringByAppendingString:capitalized], key,
+                              [@"is" stringByAppendingString:capitalized], [@"_" stringByAppendingString:key] ]) {
+        if ([target respondsToSelector:NSSelectorFromString(name)])
+            return YES;
+    }
+    // Collection proxies: countOf<Key> is required by both the array and the set pattern.
+    if ([target respondsToSelector:NSSelectorFromString([@"countOf" stringByAppendingString:capitalized])])
+        return YES;
+    // Direct instance variable access.
+    if ([cls respondsToSelector:@selector(accessInstanceVariablesDirectly)] && [cls accessInstanceVariablesDirectly]) {
+        for (NSString *name in @[ [@"_" stringByAppendingString:key], [@"_is" stringByAppendingString:capitalized],
+                                  key, [@"is" stringByAppendingString:capitalized] ]) {
+            Ivar ivar = class_getInstanceVariable(cls, name.UTF8String);
+            if (!ivar)
+                continue;
+            // KVC can only box an ivar whose type it can read. Swift stored properties of
+            // non-ObjC types (structs, enums, generics) carry an empty encoding, and KVC
+            // treats them as undefined and throws, so they count as a miss.
+            const char *encoding = ivar_getTypeEncoding(ivar);
+            return encoding && encoding[0] != '\0';
+        }
+    }
+    return NO;
+}
+
+BOOL SPKKVCKeyIsResolvable(id target, NSString *key) {
     if (!target || key.length == 0)
+        return NO;
+    Class cls = object_getClass(target);
+    if (!cls)
+        return NO;
+    // The answer depends only on the class and the key, and the same few classes are
+    // probed with the same keys over and over, so it is cached. Model objects are read
+    // off the main thread too, hence the lock.
+    static NSMutableDictionary<NSString *, NSNumber *> *cache;
+    static os_unfair_lock lock = OS_UNFAIR_LOCK_INIT;
+    NSString *cacheKey = [NSString stringWithFormat:@"%p|%@", (__bridge void *)cls, key];
+    os_unfair_lock_lock(&lock);
+    if (!cache)
+        cache = [NSMutableDictionary dictionary];
+    NSNumber *cached = cache[cacheKey];
+    os_unfair_lock_unlock(&lock);
+    if (cached)
+        return cached.boolValue;
+
+    BOOL resolvable = SPKKVCKeyIsResolvableUncached(target, cls, key);
+    os_unfair_lock_lock(&lock);
+    if (cache.count > 4096)
+        [cache removeAllObjects];
+    cache[cacheKey] = @(resolvable);
+    os_unfair_lock_unlock(&lock);
+    return resolvable;
+}
+
+id SPKKVCObject(id target, NSString *key) {
+    if (!SPKKVCKeyIsResolvable(target, key))
         return nil;
 
     @try {

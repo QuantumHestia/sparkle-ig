@@ -550,8 +550,12 @@ static id SPKObjectForSelector(id target, NSString *selectorName) {
     return ((id (*)(id, SEL))objc_msgSend)(target, selector);
 }
 
+// Declared here rather than by importing ActionButtonLookupUtils.h, whose other helpers
+// share names with this file's private statics.
+BOOL SPKKVCKeyIsResolvable(id target, NSString *key);
+
 static id SPKKVCObject(id target, NSString *key) {
-    if (!target || !key.length)
+    if (!SPKKVCKeyIsResolvable(target, key))
         return nil;
 
     @try {
