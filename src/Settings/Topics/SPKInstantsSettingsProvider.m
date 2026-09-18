@@ -43,12 +43,26 @@ static NSArray *SPKInstantsSettingsSections(void) {
                                            icon:SPKSettingsIcon(@"warning")
                                     defaultsKey:@"instants_allow_screenshot"],
                                SPKL(@"INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP")),
+        ],
+                        nil),
+        SPKTopicSection(SPKL(@"INSTANTS_SEEN_RECEIPTS_HEADER"), @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_MESSAGING_MANUALLY_MARK_SEEN_TITLE")
                                            icon:SPKSettingsIcon(@"eye")
                                     defaultsKey:@"instants_manual_seen"],
-                               SPKL(@"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP")),
+                               SPKL(@"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP")),
+            ({
+                SPKSetting *s = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE")
+                                                                              icon:SPKSettingsIcon(@"autoscroll")
+                                                                       defaultsKey:@"instants_advance_on_manual_seen"],
+                                                   SPKL(@"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP"));
+                // The eye button only exists while Manually Mark Seen is on.
+                s.enabledProvider = ^BOOL {
+                    return [SPKUtils getBoolPref:@"instants_manual_seen"];
+                };
+                s;
+            }),
         ],
-                        SPKL(@"INSTANTS_PRIVACY_FOOTER")),
+                        nil),
         SPKTopicSection(SPKL(@"INSTANTS_CREATION_HEADER"), @[
             ({
                 SPKSetting *s = [SPKSetting switchCellWithTitle:SPKL(@"INSTANTS_CREATION_DISABLE_INSTANTS_CREATION_TITLE") icon:SPKSettingsIcon(@"instants") defaultsKey:@"instants_disable_creation"];

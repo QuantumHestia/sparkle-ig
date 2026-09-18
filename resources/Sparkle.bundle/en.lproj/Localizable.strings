@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Auto-save on for @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Lets you take screenshots and screen recordings in the Instants viewer without Instagram detecting them.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Allow Screenshots";
-"INSTANTS_PRIVACY_FOOTER" = "1. Allow Screenshots stops Instagram from detecting screenshots and screen recordings in the viewer.\n2. Manually Mark Seen keeps Instants in your tray after you watch them. Instants still expire on Instagram's own schedule.";
 "INSTANTS_PRIVACY_HEADER" = "Privacy";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Stops Instants from being marked seen as you watch them, and adds an eye button to the viewer to mark one as seen.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Moves to the next Instant after the eye button marks one as seen.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Advance on Eye Button";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Seen Receipts";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stops Instants from being marked seen as you watch them, and adds an eye button to the viewer to mark one as seen.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Replaces the font across Instagram and Sparkle. Import .otf, .ttf, or .ttc files. Instagram's logo and the story text tool keep their own fonts.";
 "INTERFACE_APPEARANCE_HEADER" = "Appearance";
 "INTERFACE_CAPTURE_HEADER" = "Capture";

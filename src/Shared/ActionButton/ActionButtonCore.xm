@@ -31,6 +31,7 @@
 #import "../UI/SPKChrome.h"
 #import "../UI/SPKIGAlertPresenter.h"
 #import "../UI/SPKNotificationCenter.h"
+#import "../../Features/Instants/InstantsAdvance.h"
 #import "../../Features/Instants/InstantsManualSeen.h"
 #import "ActionButtonCore.h"
 #import "SPKActionButtonConfiguration.h"
@@ -3086,6 +3087,9 @@ static BOOL SPKExecuteInstantsMarkSeenAction(SPKActionButtonContext *context) {
     SPKNotify(kSPKNotificationInstantsMarkSeen,
               SPKL(@"INSTANTS_MARK_SEEN_DONE_TOAST"), nil, @"circle_check_filled",
               SPKNotificationToneSuccess);
+    // The release above is written synchronously, so the viewer can move on straight away.
+    if ([SPKUtils getBoolPref:@"instants_advance_on_manual_seen"])
+        SPKInstantsAdvanceViewer(context.view);
     return YES;
 }
 

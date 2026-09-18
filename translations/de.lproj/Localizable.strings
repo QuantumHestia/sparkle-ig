@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Automatisches Speichern aktiviert für @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Erlaubt Screenshots und Bildschirmaufnahmen im Instants-Viewer, ohne dass Instagram sie erkennt.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Screenshots erlauben";
-"INSTANTS_PRIVACY_FOOTER" = "1. Screenshots erlauben stoppt Instagram von der Erkennung von Screenshots und Bildschirmaufzeichnungen im Betrachter.\n2. Manuell als Gesehen markieren behält Instants in deinem Tablett, nachdem du sie angesehen hast. Instants verfallen immer noch nach Instagrams eigenem Zeitplan.";
 "INSTANTS_PRIVACY_HEADER" = "Datenschutz";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Stoppt, dass Instants als gesehen markiert werden, während du sie ansiehst, und fügt eine Augenschaltfläche zum Betrachter hinzu, um einen als gesehen zu markieren.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Wechselt zum nächsten Instant, nachdem die Augenschaltfläche einen als gesehen markiert hat.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Bei Augenschaltfläche voranschreiten";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Lesebestätigungen";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stoppt, dass Instants als gesehen markiert werden, während du sie ansiehst, und fügt eine Augenschaltfläche zum Betrachter hinzu, um einen als gesehen zu markieren.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt die Schrift in Instagram und Sparkle. Importiere .otf-, .ttf- oder .ttc-Dateien. Das Instagram-Logo und das Story-Textwerkzeug behalten ihre eigenen Schriften.";
 "INTERFACE_APPEARANCE_HEADER" = "Aussehen";
 "INTERFACE_CAPTURE_HEADER" = "Erfassung";

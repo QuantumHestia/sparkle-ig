@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Salvare automată pornit pentru @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Îți permite să faci capturi și înregistrări de ecran în vizualizatorul Instants fără ca Instagram să le detecteze.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Permite capturi ecran";
-"INSTANTS_PRIVACY_FOOTER" = "1. Permite capturi ecran oprește Instagram din detectarea capturii de ecran și înregistrării ecranului în vizualizator.\n2. Marcează manual ca vizionat păstrează Instants în tava după ce le vizualizezi. Instants expiră încă conform calendarului propriului Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Confidențialitate";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Oprește Instants din a fi marcate ca vizionate în timp ce le vizualizezi, și adaugă un buton ochi la vizualizator pentru a marca una ca vizionată.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Trece la următorul Instant după ce butonul ochi marchează unul ca vizionat.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Avansează pe buton ochi";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Chitanțe vizualizare";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Oprește Instants din a fi marcate ca vizionate în timp ce le vizualizezi, și adaugă un buton ochi la vizualizator pentru a marca una ca vizionată.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Înlocuiește fontul în Instagram și în Sparkle. Importă fișiere .otf, .ttf sau .ttc. Sigla Instagram și instrumentul de text al poveștilor își păstrează propriile fonturi.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspect";
 "INTERFACE_CAPTURE_HEADER" = "Captură";

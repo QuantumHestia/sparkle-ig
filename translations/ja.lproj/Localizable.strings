@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "自動保存: @%@ はオン";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Instantsビューアでスクリーンショットや画面収録を撮っても、Instagramに検出されないようにします。";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "スクリーンショットを許可";
-"INSTANTS_PRIVACY_FOOTER" = "1. スクリーンショットを許可は、ビューアでInstagramがスクリーンショットと画面録画を検出するのを防ぎます。\n2. 手動で既読としてマークは、視聴後もInstantsをトレイに保持します。Instantsはまだ Instagramの独自のスケジュールに従って期限切れになります。";
 "INSTANTS_PRIVACY_HEADER" = "プライバシー";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "視聴中のInstantsが既読としてマークされるのを防ぎ、ビューアに目ボタンを追加して、1つを既読としてマークできるようにします。";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "目ボタンでInstantを既読にした後、次のInstantに進みます。";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "アイボタンで進む";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "既読";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "視聴中のInstantsが既読としてマークされるのを防ぎ、ビューアに目ボタンを追加して、1つを既読としてマークできるようにします。";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "InstagramとSparkle全体のフォントを置き換えます。.otf、.ttf、.ttcファイルをインポートできます。Instagramのロゴとストーリーズのテキストツールは独自のフォントのままです。";
 "INTERFACE_APPEARANCE_HEADER" = "外観";
 "INTERFACE_CAPTURE_HEADER" = "キャプチャ";

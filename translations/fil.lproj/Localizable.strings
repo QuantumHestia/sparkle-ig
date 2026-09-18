@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Naka-on ang auto-save para kay @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Pinapayagan kang kumuha ng screenshot at screen recording sa Instants viewer nang hindi ito napapansin ng Instagram.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Payagan ang mga Screenshot";
-"INSTANTS_PRIVACY_FOOTER" = "1. Payagan ang mga Screenshot ay pumipigil sa Instagram na makita ang mga screenshot at recording ng screen sa viewer.\n2. Manu-manong Markahan Bilang Nakita ay nakapanatili ng Instants sa iyong tray pagkatapos mong panoorin ang mga ito. Ang mga Instants ay nag-expire pa rin ayon sa sariling schedule ng Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Pagkapribado";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Humihinto sa mga Instants na maging markado bilang nakita habang tinitingnan mo ang mga ito, at nagdadagdag ng eye button sa viewer upang markahan ang isa bilang nakita.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Lumilipat sa susunod na Instant pagkatapos markahan ng eye button ang isa bilang nakita.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Sumulong sa Eye Button";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Mga Resibo ng Nakita";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Humihinto sa mga Instants na maging markado bilang nakita habang tinitingnan mo ang mga ito, at nagdadagdag ng eye button sa viewer upang markahan ang isa bilang nakita.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Pinapalitan ang font sa buong Instagram at Sparkle. Mag-import ng .otf, .ttf, o .ttc na file. Pinapanatili ng logo ng Instagram at ng story text tool ang sarili nilang font.";
 "INTERFACE_APPEARANCE_HEADER" = "Hitsura";
 "INTERFACE_CAPTURE_HEADER" = "Pagkuha";

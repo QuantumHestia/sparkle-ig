@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Salvataggio automatico attivato per @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Ti consente di fare screenshot e registrazioni dello schermo nel visualizzatore di Instants senza che Instagram li rilevi.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Consenti Screenshot";
-"INSTANTS_PRIVACY_FOOTER" = "1. Consenti Screenshot impedisce a Instagram di rilevare screenshot e registrazioni dello schermo nel visualizzatore.\n2. Contrassegna Manualmente Come Visto mantiene gli Instants nel tuo vassoio dopo averli guardati. Gli Instants scadono comunque secondo il calendario di Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Privacy";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Impedisce che gli Instants siano contrassegnati come visti mentre li guardi, e aggiunge un pulsante occhio al visualizzatore per contrassegnarne uno come visto.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Passa all'Instant successivo dopo che il pulsante occhio ne ha contrassegnato uno come visto.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Avanza al Pulsante Occhio";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Ricevute Viste";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Impedisce che gli Instants siano contrassegnati come visti mentre li guardi, e aggiunge un pulsante occhio al visualizzatore per contrassegnarne uno come visto.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sostituisce il carattere in Instagram e in Sparkle. Importa file .otf, .ttf o .ttc. Il logo di Instagram e lo strumento testo delle storie mantengono i propri caratteri.";
 "INTERFACE_APPEARANCE_HEADER" = "Aspetto";
 "INTERFACE_CAPTURE_HEADER" = "Cattura";

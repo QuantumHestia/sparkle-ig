@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Guardado automático activado para @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Te permite hacer capturas y grabaciones de pantalla en el visor de Instants sin que Instagram las detecte.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Permitir capturas de pantalla";
-"INSTANTS_PRIVACY_FOOTER" = "1. Permitir capturas de pantalla evita que Instagram detecte capturas de pantalla y grabaciones de pantalla en el visor.\n2. Marcar leído manualmente mantiene los Instants en tu bandeja después de verlos. Los Instants siguen expirando según el calendario de Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Privacidad";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Evita que los Instants se marquen como leídos mientras los ves, y agrega un botón de ojo al visor para marcar uno como leído.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Pasa al siguiente Instant después de que el botón de ojo marque uno como leído.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Avanzar en botón de ojo";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Recibos de lectura";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Evita que los Instants se marquen como leídos mientras los ves, y agrega un botón de ojo al visor para marcar uno como leído.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Sustituye la fuente en Instagram y en Sparkle. Importa archivos .otf, .ttf o .ttc. El logo de Instagram y la herramienta de texto de historias conservan sus propias fuentes.";
 "INTERFACE_APPEARANCE_HEADER" = "Apariencia";
 "INTERFACE_CAPTURE_HEADER" = "Captura";

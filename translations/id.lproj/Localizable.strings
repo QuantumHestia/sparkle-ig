@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Simpan otomatis aktif untuk @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Memungkinkanmu mengambil tangkapan layar dan merekam layar di penampil Instants tanpa terdeteksi oleh Instagram.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Izinkan Tangkapan Layar";
-"INSTANTS_PRIVACY_FOOTER" = "1. Izinkan Tangkapan Layar mencegah Instagram mendeteksi tangkapan layar dan rekaman layar di penampil.\n2. Tandai Dilihat Manual menyimpan Instants di baki Anda setelah Anda menontonnya. Instants masih kadaluarsa sesuai jadwal Instagram sendiri.";
 "INSTANTS_PRIVACY_HEADER" = "Privasi";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Mencegah Instants ditandai terlihat saat Anda menontonnya, dan menambahkan tombol mata ke penampil untuk menandainya sebagai terlihat.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Pindah ke Instant berikutnya setelah tombol mata menandai satu sebagai dilihat.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Lanjut dengan Tombol Mata";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Tanda Dilihat";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Mencegah Instants ditandai terlihat saat Anda menontonnya, dan menambahkan tombol mata ke penampil untuk menandainya sebagai terlihat.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Mengganti font di seluruh Instagram dan Sparkle. Impor file .otf, .ttf, atau .ttc. Logo Instagram dan alat teks story tetap menggunakan fontnya sendiri.";
 "INTERFACE_APPEARANCE_HEADER" = "Tampilan";
 "INTERFACE_CAPTURE_HEADER" = "Tangkapan";

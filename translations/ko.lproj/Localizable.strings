@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "@%@ 자동 저장 켜짐";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Instagram이 감지하지 못하도록 Instants 뷰어에서 스크린샷과 화면 녹화를 허용합니다.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "스크린샷 허용";
-"INSTANTS_PRIVACY_FOOTER" = "1. 스크린샷 허용은 뷰어에서 Instagram이 스크린샷 및 화면 녹화를 감지하는 것을 방지합니다.\n2. 수동으로 읽음 표시는 시청 후에도 Instants를 받은편지함에 유지합니다. Instants는 여전히 Instagram 자체 일정에 따라 만료됩니다.";
 "INSTANTS_PRIVACY_HEADER" = "개인정보";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "시청 중 Instants가 읽음으로 표시되는 것을 방지하고 뷰어에 눈 버튼을 추가하여 하나를 읽음으로 표시합니다.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "눈 버튼으로 하나를 읽음으로 표시한 후 다음 Instant로 이동합니다.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "눈 버튼에서 진행";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "읽음 확인";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "시청 중 Instants가 읽음으로 표시되는 것을 방지하고 뷰어에 눈 버튼을 추가하여 하나를 읽음으로 표시합니다.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram과 Sparkle 전체의 글꼴을 교체합니다. .otf, .ttf, .ttc 파일을 가져올 수 있습니다. Instagram 로고와 스토리 텍스트 도구는 자체 글꼴을 유지합니다.";
 "INTERFACE_APPEARANCE_HEADER" = "모양";
 "INTERFACE_CAPTURE_HEADER" = "캡처";

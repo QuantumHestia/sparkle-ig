@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "@%@ के लिए स्वतः सहेजना चालू";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Instagram को उनका पता लगाने से रोकते हुए Instants व्यूअर में स्क्रीनशॉट और स्क्रीन रिकॉर्डिंग लेने देता है।";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "स्क्रीनशॉट की अनुमति दें";
-"INSTANTS_PRIVACY_FOOTER" = "1. स्क्रीनशॉट की अनुमति दें इंस्टाग्राम को व्यूअर में स्क्रीनशॉट और स्क्रीन रिकॉर्डिंग की पहचान करने से रोकता है।\n2. मैनुअल रूप से देखी गई चिह्नित करें इंस्टेंट्स को आपकी ट्रे में रखता है उन्हें देखने के बाद। इंस्टेंट्स अभी भी इंस्टाग्राम के अपने शेड्यूल के अनुसार समाप्त होते हैं।";
 "INSTANTS_PRIVACY_HEADER" = "गोपनीयता";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "इंस्टेंट्स को देखी गई चिह्नित होने से रोकता है जब आप उन्हें देख रहे हों, और व्यूअर में एक आंख बटन जोड़ता है।";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "आंख बटन द्वारा किसी इंस्टेंट को देखा गया चिह्नित करने के बाद अगले इंस्टेंट पर ले जाता है।";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "आंख बटन पर अग्रिम करें";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "देखी गई रसीदें";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "इंस्टेंट्स को देखी गई चिह्नित होने से रोकता है जब आप उन्हें देख रहे हों, और व्यूअर में एक आंख बटन जोड़ता है।";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram और Sparkle में फ़ॉन्ट बदल देता है। .otf, .ttf या .ttc फाइलें आयात करें। Instagram का लोगो और स्टोरी टेक्स्ट टूल अपने ही फ़ॉन्ट रखते हैं।";
 "INTERFACE_APPEARANCE_HEADER" = "दृश्य";
 "INTERFACE_CAPTURE_HEADER" = "कैप्चर";

@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Bật tự động lưu cho @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Cho phép chụp màn hình và quay màn hình trong trình xem Instants mà Instagram không phát hiện.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Cho phép Chụp màn hình";
-"INSTANTS_PRIVACY_FOOTER" = "1. Cho phép Chụp màn hình ngăn Instagram phát hiện ảnh chụp màn hình và bản ghi màn hình trong trình xem.\n2. Đánh dấu Đã xem Thủ công giữ Instants trong khay của bạn sau khi bạn xem chúng. Instants vẫn hết hạn theo lịch trình của Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Quyền riêng tư";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Ngăn Instants được đánh dấu là đã xem khi bạn xem chúng và thêm nút mắt vào trình xem để đánh dấu một nút là đã xem.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Chuyển sang Instant tiếp theo sau khi nút mắt đánh dấu một Instant là đã xem.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Tiến lên Khi Nhấn Nút Mắt";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Biên lai Được xem";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Ngăn Instants được đánh dấu là đã xem khi bạn xem chúng và thêm nút mắt vào trình xem để đánh dấu một nút là đã xem.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Thay phông chữ trên toàn Instagram và Sparkle. Nhập tệp .otf, .ttf hoặc .ttc. Logo Instagram và công cụ chữ trong tin vẫn giữ phông riêng.";
 "INTERFACE_APPEARANCE_HEADER" = "Giao diện";
 "INTERFACE_CAPTURE_HEADER" = "Chụp";

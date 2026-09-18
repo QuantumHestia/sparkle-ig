@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Sauvegarde automatique activée pour @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Permet de prendre des captures d'écran et des enregistrements d'écran dans la visionneuse d'Instants sans qu'Instagram les détecte.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Autoriser les captures d'écran";
-"INSTANTS_PRIVACY_FOOTER" = "1. Autoriser les captures d'écran empêche Instagram de détecter les captures d'écran et les enregistrements d'écran dans la visionneuse.\n2. Marquer manuellement comme vu conserve les Instants dans votre bac après les avoir regardés. Les Instants expirent toujours selon le calendrier d'Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Confidentialité";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Empêche les Instants d'être marqués comme vus pendant que vous les regardez, et ajoute un bouton d'œil à la visionneuse pour en marquer un comme vu.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Passe à l'Instant suivant après que le bouton œil en a marqué un comme vu.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Avancer au bouton oeil";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Accusés de lecture";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Empêche les Instants d'être marqués comme vus pendant que vous les regardez, et ajoute un bouton d'œil à la visionneuse pour en marquer un comme vu.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Remplace la police dans Instagram et Sparkle. Importez des fichiers .otf, .ttf ou .ttc. Le logo Instagram et l'outil texte des stories gardent leurs propres polices.";
 "INTERFACE_APPEARANCE_HEADER" = "Apparence";
 "INTERFACE_CAPTURE_HEADER" = "Capture";

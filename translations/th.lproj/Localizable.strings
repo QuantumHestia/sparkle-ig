@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "เปิดการบันทึกอัตโนมัติสำหรับ @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "ให้คุณจับภาพหน้าจอและบันทึกหน้าจอในตัวดู Instants ได้โดยไม่ให้ Instagram ตรวจจับ";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "อนุญาตการจับภาพหน้าจอ";
-"INSTANTS_PRIVACY_FOOTER" = "1. อนุญาตการจับภาพหน้าจอหยุด Instagram จากการตรวจจับการจับภาพหน้าจอและการบันทึกหน้าจอในตัวดู\n2. ทำเครื่องหมายว่าเห็นแล้วด้วยตนเองเก็บ Instants ในถาดของคุณหลังจากดู พวกเขา Instants ยังคงหมดอายุตามตารางเวลาของ Instagram";
 "INSTANTS_PRIVACY_HEADER" = "ความเป็นส่วนตัว";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "หยุดการทำเครื่องหมายว่า Instants ถูกมองเห็นขณะที่คุณดูพวกเขาและเพิ่มปุ่มตาในตัวดูเพื่อทำเครื่องหมายว่า ดู";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "ไปยัง Instant ถัดไปหลังจากปุ่มรูปตาทำเครื่องหมายว่าเห็นแล้ว";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "ไปต่อเมื่อกดปุ่มรูปตา";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "การแจ้งสถานะดูแล้ว";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "หยุดการทำเครื่องหมายว่า Instants ถูกมองเห็นขณะที่คุณดูพวกเขาและเพิ่มปุ่มตาในตัวดูเพื่อทำเครื่องหมายว่า ดู";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "เปลี่ยนแบบอักษรทั่วทั้ง Instagram และ Sparkle นำเข้าไฟล์ .otf, .ttf หรือ .ttc โลโก้ Instagram และเครื่องมือข้อความในสตอรียังคงใช้แบบอักษรของตัวเอง";
 "INTERFACE_APPEARANCE_HEADER" = "รูปลักษณ์";
 "INTERFACE_CAPTURE_HEADER" = "การจับภาพ";

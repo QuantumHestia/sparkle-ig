@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "启用 @%@ 的自动保存";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "允许你在 Instants 查看器中截屏和录屏，而不会被 Instagram 检测到。";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "允许截屏";
-"INSTANTS_PRIVACY_FOOTER" = "1. 允许截屏可防止 Instagram 在查看器中检测截屏和屏幕录制。\n2. 手动标记为已看可在您查看后在您的收件箱中保留 Instants。Instants 仍然会根据 Instagram 自己的日程过期。";
 "INSTANTS_PRIVACY_HEADER" = "隐私";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "防止 Instants 在您查看时被标记为已看，并在查看器中添加眼睛按钮来将其标记为已看。";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "眼睛按钮将一个 Instant 标记为已看后，跳到下一个 Instant。";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "在眼睛按钮上前进";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "已读回条";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "防止 Instants 在您查看时被标记为已看，并在查看器中添加眼睛按钮来将其标记为已看。";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "替换 Instagram 和 Sparkle 的字体。可导入 .otf、.ttf 或 .ttc 文件。Instagram 的标志和快拍文字工具保留自有字体。";
 "INTERFACE_APPEARANCE_HEADER" = "外观";
 "INTERFACE_CAPTURE_HEADER" = "捕获";

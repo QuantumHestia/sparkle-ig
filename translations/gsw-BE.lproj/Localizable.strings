@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Auto-Speichere aa für @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Lat di Screenshots u Biudschirmufnahm im Instants-Aaluegr mache, ohni dass Instagram das merkt.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Screenshots Erlaube";
-"INSTANTS_PRIVACY_FOOTER" = "1. Screenshots Erlaube stopp Instagram vo de Detection vo Screenshots u Bildschirm-Recordings im Viewer.\n2. Manuell als gseh markiere behalt Instants in dim Täller nach em Aluege. Instants verfalle immer no nach Instagrams Zitpla.";
 "INSTANTS_PRIVACY_HEADER" = "Privatsphäre";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Stopp Instants vo gseh markiert z werden während du sie aluegsch, u fügt e Aug-Knopf zum Viewer hinzu zum e als gseh markiere.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Gaht zum nächschte Instant, wenn de Aug-Knopf eine als gseh markiert het.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Wyter bi Auge-Symbol";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Gseh-Bestätigige";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Stopp Instants vo gseh markiert z werden während du sie aluegsch, u fügt e Aug-Knopf zum Viewer hinzu zum e als gseh markiere.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Ersetzt d'Schriftart i Instagram u Sparkle. Importier .otf-, .ttf- oder .ttc-Dateie. S'Instagram-Logo u s'Story-Text-Tool behaute ihri eigeti Schriftart.";
 "INTERFACE_APPEARANCE_HEADER" = "Ussgseh";
 "INTERFACE_CAPTURE_HEADER" = "Ufnahm";

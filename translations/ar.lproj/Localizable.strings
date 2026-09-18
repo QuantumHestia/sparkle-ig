@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "الحفظ التلقائي مفعّل لـ @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "يتيح التقاط لقطات الشاشة وتسجيلها في عارض Instants من دون أن يكتشفها Instagram.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "السماح بلقطات الشاشة";
-"INSTANTS_PRIVACY_FOOTER" = "1. السماح بلقطات الشاشة يوقف Instagram من اكتشاف لقطات الشاشة وتسجيلات الشاشة في العارض.\n2. تحديد المرئي يدويًا يبقي الـ Instants في صينيتك بعد مشاهدتك لها. الـ Instants لا تزال تنتهي صلاحيتها حسب جدول Instagram الخاص بها.";
 "INSTANTS_PRIVACY_HEADER" = "الخصوصية";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "توقف تحديد الـ Instants كمرئية أثناء مشاهدتك لها، وتضيف زر عين إلى العارض لتحديد واحد كمرئي.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "ينتقل إلى الـ Instant التالي بعد أن يحدد زر العين واحدًا كمرئي.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "التقدم على زر العين";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "الإيصالات المرئية";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "توقف تحديد الـ Instants كمرئية أثناء مشاهدتك لها، وتضيف زر عين إلى العارض لتحديد واحد كمرئي.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "يستبدل الخط في كل أنحاء Instagram وSparkle. استورد ملفات ‎.otf أو ‎.ttf أو ‎.ttc. يحتفظ شعار Instagram وأداة نص القصص بخطوطهما.";
 "INTERFACE_APPEARANCE_HEADER" = "المظهر";
 "INTERFACE_CAPTURE_HEADER" = "الالتقاط";

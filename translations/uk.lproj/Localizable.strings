@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Автозбереження увімкнено для @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Дозволяє робити знімки та записи екрана у переглядачі Instants без виявлення їх Instagram.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Дозволити знімки екрана";
-"INSTANTS_PRIVACY_FOOTER" = "1. Дозволити знімки екрана припиняє виявлення Instagram знімків екрана та записів екрана у засобі перегляду.\n2. Ручне позначення як переглянуте зберігає Instants у вашому лотку після перегляду. Instants все ще закінчується за графіком Instagram.";
 "INSTANTS_PRIVACY_HEADER" = "Приватність";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Припиняє позначення Instants як переглянутих під час перегляду та додає кнопку ока до засобу перегляду для позначення як переглянутого.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Переходить до наступного Instant після того, як кнопка ока позначить його як переглянутий.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Перейти при кнопці очей";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Сповіщення про прочитання";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Припиняє позначення Instants як переглянутих під час перегляду та додає кнопку ока до засобу перегляду для позначення як переглянутого.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Замінює шрифт в усьому Instagram і Sparkle. Імпортуйте файли .otf, .ttf або .ttc. Логотип Instagram і текстовий інструмент історій зберігають власні шрифти.";
 "INTERFACE_APPEARANCE_HEADER" = "Зовнішній вигляд";
 "INTERFACE_CAPTURE_HEADER" = "Захоплення";

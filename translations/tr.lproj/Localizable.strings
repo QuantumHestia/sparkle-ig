@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "Otomatik kaydet açık: @%@";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "Instagram'ın Instants görüntüleyicisinde ekran görüntülerini ve ekran kayıtlarını algılamadan almanızı sağlar.";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "Ekran Görüntülerine İzin Ver";
-"INSTANTS_PRIVACY_FOOTER" = "1. Ekran Görüntülerine İzin Ver, Instagram'ın görüntülemede ekran görüntülerini ve ekran kayıtlarını algılanmasını durdurur.\n2. Elle Görüldü Olarak İşaretle, Instants'ı izledikten sonra tepsininizde tutar. Instants hala Instagram'ın kendi zamanlamasına göre sona erer.";
 "INSTANTS_PRIVACY_HEADER" = "Gizlilik";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "Instants'ın onları izlerken görüldü olarak işaretlenmesini durdurur ve görüntülemede birini görüldü olarak işaretlemek için bir göz düğmesi ekler.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "Göz düğmesi birini görüldü olarak işaretledikten sonra sonraki Instant'a geçer.";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "Göz Düğmesinde İleri";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "Görüldü Fişleri";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "Instants'ın onları izlerken görüldü olarak işaretlenmesini durdurur ve görüntülemede birini görüldü olarak işaretlemek için bir göz düğmesi ekler.";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "Instagram ve Sparkle genelinde yazı tipini değiştirir. .otf, .ttf veya .ttc dosyaları içe aktar. Instagram logosu ve hikaye metin aracı kendi yazı tiplerini korur.";
 "INTERFACE_APPEARANCE_HEADER" = "Görünüm";
 "INTERFACE_CAPTURE_HEADER" = "Yakala";

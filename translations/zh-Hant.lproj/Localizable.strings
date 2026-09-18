@@ -1004,9 +1004,11 @@
 "INSTANTS_NOTIFICATION_AUTO_SAVE_ON_TITLE_FORMAT" = "已開啟 @%@ 的自動儲存";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_HELP" = "讓你可以在 Instants 檢視器中截圖及螢幕錄影，而不會被 Instagram 偵測到。";
 "INSTANTS_PRIVACY_ALLOW_SCREENSHOTS_TITLE" = "允許截圖";
-"INSTANTS_PRIVACY_FOOTER" = "1. 允許截圖可防止 Instagram 在檢視器中偵測截圖和螢幕錄製。\n2. 手動標示已讀可在檢視後將 Instants 保留在您的收件匣中。Instants 仍會根據 Instagram 自己的排程過期。";
 "INSTANTS_PRIVACY_HEADER" = "隱私";
-"INSTANTS_PRIVACY_MANUALLY_MARK_SEEN_HELP" = "防止 Instants 在檢視時被標示為已讀，並在檢視器中新增眼睛按鈕來將其標示為已讀。";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_HELP" = "眼睛按鈕將一個 Instant 標示為已讀後，跳到下一個 Instant。";
+"INSTANTS_SEEN_RECEIPTS_ADVANCE_AFTER_MARK_SEEN_TITLE" = "眼睛按鈕時前進";
+"INSTANTS_SEEN_RECEIPTS_HEADER" = "已讀回條";
+"INSTANTS_SEEN_RECEIPTS_MANUALLY_MARK_SEEN_HELP" = "防止 Instants 在檢視時被標示為已讀，並在檢視器中新增眼睛按鈕來將其標示為已讀。";
 "INTERFACE_APPEARANCE_APP_FONT_HELP" = "替換 Instagram 與 Sparkle 中的字型。可匯入 .otf、.ttf 或 .ttc 檔案。Instagram 的標誌與限時動態文字工具會保留原本的字型。";
 "INTERFACE_APPEARANCE_HEADER" = "外觀";
 "INTERFACE_CAPTURE_HEADER" = "擷取畫面";
