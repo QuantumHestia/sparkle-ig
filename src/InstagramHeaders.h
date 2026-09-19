@@ -42,6 +42,12 @@
 - (void)_superPresentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(id)completion;
 @end
 
+@interface IGDSDefaultPartialModalSheetViewController : UIViewController
+- (void)_didPan:(UIPanGestureRecognizer *)pan; // target of _verticalPanGesture
+- (BOOL)disablePanToClose;
+- (BOOL)disableVerticalPan;
+@end
+
 @interface IGMainFeedAppHeaderController : UIViewController
 - (void)_superPresentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(id)completion; // new
 @end
