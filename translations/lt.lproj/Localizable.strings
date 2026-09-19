@@ -1835,13 +1835,13 @@
 "REACTION_CONTEXT_FORMAT" = "Prie \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Palietimas vykdo numatytąjį veiksmą. Ilgas paspaudimas atveria visą veiksmų meniu.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels veiksmų mygtukas";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP" = "Reels lieka nutildyti, o ne patys įsijungia. Reikia paleisti iš naujo.";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE" = "Išjungti automatinį Reels įgarsinimą";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Išjungti Reels skirtuko atnaujinimą";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Pakartotinai palietus Reels skirtuką išlaikomas dabartinis įrašas, o ne įkeliamas naujas rinkinys.";
 "REELS_BEHAVIOR_HEADER" = "Elgsena";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Ilgai paspauskite Reels mygtuką „Daugiau“, kad valdytumėte atkūrimo greitį, peršokimą ir pristabdymą. Kai įrašas leidžiamas kitu greičiu, šalia mygtuko jį rodo ženklelis.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Atkūrimo valdikliai";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels prasideda be garso, kol bakstelėsite, kad jį įjungtumėte, o garsumo mygtukai jo nebeįjungia. Reikia paleisti iš naujo.";
+"REELS_BEHAVIOR_START_MUTED_TITLE" = "Paleisti Reels nutildytus";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ką daro palietimas ant įrašo: numatytasis Instagram veiksmas, pristabdymas ir leidimas arba nutildymas ir įgarsinimas.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Palietimo valdikliai";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Prašo patvirtinimo prieš dvigubu palietimu pažymint įrašą patiktuku.";

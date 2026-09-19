@@ -1835,13 +1835,13 @@
 "REACTION_CONTEXT_FORMAT" = "於「%@」";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "點一下會執行預設動作。長按會開啟完整的操作選單。";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels 操作按鈕";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP" = "Reels 會保持靜音,而不會自動取消靜音。需要重新啟動。";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE" = "停用 Reels 自動取消靜音";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "停用 Reels 分頁重新整理";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "再次點按 Reels 分頁會保留目前的影片,而不會載入新的一批。";
 "REELS_BEHAVIOR_HEADER" = "行為";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "長按 Reels 上的更多按鈕，即可使用播放速度、拖曳進度和暫停控制項。Reels 以其他速度播放時，按鈕旁的角標會顯示目前速度。";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制項";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 開始播放時會保持靜音,直到你點一下取消靜音,音量鍵也不會再開啟聲音。需要重新啟動。";
+"REELS_BEHAVIOR_START_MUTED_TITLE" = "靜音啟動 Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "點按 Reel 時會執行的動作:Instagram 預設、暫停與播放,或靜音與取消靜音。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "點按控制";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "在雙擊按讚 Reel 之前要求確認。";

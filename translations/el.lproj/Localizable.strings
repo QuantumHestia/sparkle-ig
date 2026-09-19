@@ -1835,13 +1835,13 @@
 "REACTION_CONTEXT_FORMAT" = "Στο \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Το πάτημα εκτελεί την προεπιλεγμένη ενέργεια. Το παρατεταμένο πάτημα ανοίγει το πλήρες μενού ενεργειών.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Κουμπί Ενέργειας Reels";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP" = "Τα reels μένουν σε σίγαση αντί να την αναιρούν μόνα τους. Απαιτεί επανεκκίνηση.";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE" = "Απενεργοποίηση Αυτόματης Ενεργοποίησης Ήχου Reels";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Απενεργοποίηση Ανανέωσης Καρτέλας Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Το ξαναπάτημα της καρτέλας Reels κρατά το τρέχον reel αντί να φορτώνει νέα σειρά.";
 "REELS_BEHAVIOR_HEADER" = "Συμπεριφορά";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Πατήστε παρατεταμένα το κουμπί «Περισσότερα» σε ένα reel για ταχύτητα, μετακίνηση και παύση. Όταν ένα reel παίζει με άλλη ταχύτητα, ένα σήμα δίπλα στο κουμπί την εμφανίζει.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Στοιχεία ελέγχου αναπαραγωγής";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Τα reels ξεκινούν χωρίς ήχο μέχρι να πατήσετε για να τον ενεργοποιήσετε, και τα κουμπιά έντασης δεν τον ενεργοποιούν πλέον. Απαιτεί επανεκκίνηση.";
+"REELS_BEHAVIOR_START_MUTED_TITLE" = "Έναρξη Reels σε σίγαση";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Τι κάνει ένα πάτημα σε ένα reel: η προεπιλογή του Instagram, παύση και αναπαραγωγή, ή σίγαση και άρση σίγασης.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Έλεγχοι Πατήματος";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Ζητά επιβεβαίωση πριν ένα διπλό πάτημα κάνει like σε ένα reel.";

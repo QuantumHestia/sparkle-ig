@@ -46,11 +46,11 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                 };
                 speedScope;
             }),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE")
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_START_MUTED_TITLE")
                                            icon:SPKSettingsIcon(@"volume_off")
                                     defaultsKey:@"reels_disable_auto_unmute"
                                 requiresRestart:YES],
-                               SPKL(@"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP")),
+                               SPKL(@"REELS_BEHAVIOR_START_MUTED_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE")
                                            icon:SPKSettingsIcon(@"arrow_cw")
                                     defaultsKey:@"reels_disable_tab_refresh"],

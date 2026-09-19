@@ -1835,13 +1835,13 @@
 "REACTION_CONTEXT_FORMAT" = "على \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "الضغط ينفذ الإجراء الافتراضي. الضغط المطول يفتح قائمة الإجراءات الكاملة.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "زر إجراء Reels";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP" = "تبقى Reels مكتومة بدل إلغاء الكتم تلقائياً. يتطلب إعادة تشغيل.";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE" = "تعطيل إلغاء الكتم التلقائي Reels";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "تعطيل تحديث علامة تبويب Reels";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "إعادة الضغط على تبويب Reels تبقي المقطع الحالي بدل تحميل مجموعة جديدة.";
 "REELS_BEHAVIOR_HEADER" = "السلوك";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "اضغط مطولًا على زر المزيد في الريل للتحكم في سرعة التشغيل والتقديم والإيقاف المؤقت. عند تشغيل الريل بسرعة أخرى، تظهر شارة بجانب الزر توضحها.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "عناصر التحكم في التشغيل";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "تبدأ Reels بدون صوت حتى تنقر لتشغيله، ولم تعد أزرار الصوت تشغّله. يتطلب إعادة تشغيل.";
+"REELS_BEHAVIOR_START_MUTED_TITLE" = "بدء Reels بدون صوت";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ما يفعله الضغط على Reel: الإجراء الافتراضي في Instagram، أو الإيقاف والتشغيل، أو الكتم وإلغاء الكتم.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "عناصر التحكم في الضغط";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "يطلب تأكيداً قبل أن يؤدي الضغط المزدوج إلى الإعجاب بـ Reel.";

@@ -1835,13 +1835,13 @@
 "REACTION_CONTEXT_FORMAT" = "On \"%@\"";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "Tap runs the default action. Long press opens the full action menu.";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels Action Button";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP" = "Reels stay muted instead of unmuting themselves. Requires a restart.";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE" = "Disable Auto-Unmuting Reels";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "Disable Reels Tab Refresh";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "Re-tapping the Reels tab keeps the current reel instead of loading a new set.";
 "REELS_BEHAVIOR_HEADER" = "Behavior";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Long press the more button on a reel for playback speed, seeking and pause controls. While a reel plays at another speed, a badge next to the button shows it.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Playback Controls";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels start without sound until you tap to unmute, and the volume buttons no longer turn it on. Requires a restart.";
+"REELS_BEHAVIOR_START_MUTED_TITLE" = "Start Reels Muted";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "What a tap on a reel does: Instagram's default, pause and play, or mute and unmute.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tap Controls";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Asks for confirmation before a double tap likes a reel.";

@@ -1835,13 +1835,13 @@
 "REACTION_CONTEXT_FORMAT" = "在 \"%@\" 上";
 "REELS_ACTION_BUTTON_ENABLED_HELP" = "点按执行默认操作。长按打开完整操作菜单。";
 "REELS_ACTION_BUTTON_REELS_ACTION_BUTTON_TITLE" = "Reels 操作按钮";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP" = "Reels 保持静音，不再自动取消静音。需要重启。";
-"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE" = "禁用 Reels 自动取消静音";
 "REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE" = "禁用 Reels 标签刷新";
 "REELS_BEHAVIOR_DISABLE_TAB_REFRESH_HELP" = "再次点按 Reels 标签会停留在当前 Reel，而不是加载一批新内容。";
 "REELS_BEHAVIOR_HEADER" = "行为";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "长按短视频的更多按钮即可控制播放速度、跳转和暂停。短视频以其他速度播放时，按钮旁的标记会显示当前速度。";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 开始播放时保持静音，直到你轻点取消静音，音量键也不会再打开声音。需要重启。";
+"REELS_BEHAVIOR_START_MUTED_TITLE" = "静音启动 Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "点按 Reel 时的行为：Instagram 默认、暂停与播放，或静音与取消静音。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "点击控制";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "双击点赞 Reel 前先询问确认。";
