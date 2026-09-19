@@ -256,6 +256,8 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"msgs_download_audio_messages" : @(NO),
         @"msgs_download_notes_audio" : @(NO),
         @"msgs_copy_note_text" : @(YES),
+        @"msgs_fake_location" : @(NO),
+        @"msgs_fake_location_map_button" : @(NO),
         @"msgs_upload_audio_messages" : @(NO),
         @"msgs_audio_upload_trim" : @(NO),
         @"msgs_upload_gallery_media" : @(NO),

@@ -5,6 +5,7 @@
 #import "../../Features/Messages/DeletedMessagesLog/SPKDeletedMessagesViewController.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
 #import "../../Shared/Gallery/SPKGalleryLockViewController.h"
+#import "../../Shared/Location/SPKFakeLocationSettingsViewController.h"
 #import "../../Shared/Messages/SPKDirectHiddenChats.h"
 #import "../../Shared/Messages/SPKDirectHiddenChatsLockManager.h"
 #import "../../Shared/Messages/SPKDirectSeenContext.h"
@@ -447,6 +448,16 @@ static NSArray *SPKMessagesSettingsSections(void) {
         return SPKHiddenChatsSettingsSections();
     };
 
+    SPKSetting *fakeLocationEntry = [SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_FAKE_LOCATION_TITLE")
+                                                               subtitle:@""
+                                                                   icon:SPKSettingsIcon(@"location")
+                                                         viewController:[[SPKFakeLocationSettingsViewController alloc] init]];
+    fakeLocationEntry.userInfo = @{ @"accessoryText" : SPKFakeLocationSettingsSummary() };
+    fakeLocationEntry.helpText = SPKL(@"MESSAGES_FAKE_LOCATION_HELP");
+    fakeLocationEntry.searchSectionsProvider = ^NSArray * {
+        return SPKFakeLocationSettingsSections();
+    };
+
     SPKSetting *activityNotifications = [SPKSetting navigationCellWithTitle:SPKL(@"MESSAGES_ACTIVITY_NOTIFICATIONS_TITLE")
                                                                    subtitle:@""
                                                                        icon:SPKSettingsIcon(@"activity")
@@ -582,21 +593,26 @@ static NSArray *SPKMessagesSettingsSections(void) {
                                SPKL(@"MESSAGES_VANISH_MODE_SCREEN_CAPTURE_HELP")),
         ],
                         nil),
-        SPKTopicSection(SPKL(@"MESSAGES_NOTES_HEADER"), @[
+        SPKTopicSection(SPKL(@"MESSAGES_NOTES_LOCATION_HEADER"), @[
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_NOTES_HIDE_NOTES_TRAY_TITLE")
                                            icon:SPKSettingsIcon(@"notes")
                                     defaultsKey:@"msgs_hide_notes_tray"],
                                SPKL(@"MESSAGES_NOTES_HIDE_NOTES_TRAY_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_NOTES_HIDE_FRIENDS_MAP_TITLE")
-                                           icon:SPKSettingsIcon(@"map")
-                                    defaultsKey:@"msgs_hide_friends_map"],
-                               SPKL(@"MESSAGES_NOTES_HIDE_FRIENDS_MAP_HELP")),
             SPKSettingWithHelp(SPKAudioGatedSwitch(SPKL(@"SETTINGS_MESSAGES_DOWNLOAD_NOTES_AUDIO_TEXT"), SPKSettingsIcon(@"audio"), @"msgs_download_notes_audio"),
                                SPKL(@"MESSAGES_NOTES_DOWNLOAD_AUDIO_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_NOTES_COPY_NOTE_TEXT_TITLE")
                                            icon:SPKSettingsIcon(@"copy")
                                     defaultsKey:@"msgs_copy_note_text"],
                                SPKL(@"MESSAGES_NOTES_COPY_NOTE_TEXT_HELP"))
+        ],
+                        nil),
+        // Continues the section above, so the info button there explains these too.
+        SPKTopicSection(@"", @[
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MESSAGES_NOTES_HIDE_FRIENDS_MAP_TITLE")
+                                           icon:SPKSettingsIcon(@"map")
+                                    defaultsKey:@"msgs_hide_friends_map"],
+                               SPKL(@"MESSAGES_NOTES_HIDE_FRIENDS_MAP_HELP")),
+            fakeLocationEntry,
         ],
                         nil),
         SPKTopicSection(SPKL(@"MESSAGES_DIRECT_MESSAGE_MENU_AUDIO_TITLE"), @[

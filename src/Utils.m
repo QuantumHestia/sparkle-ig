@@ -1100,6 +1100,10 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             // Instagram keeps one sound state for the whole app, and the hooks that
             // mute it install once per launch, before an account switch can matter.
             @"reels_disable_auto_unmute",
+            // Saved fake locations are a library of places, not a setting: every
+            // account picks from the same list, while the active place and the on
+            // switch stay per account.
+            @"msgs_fake_location_saved_places",
         ]];
     });
     if ([globalExact containsObject:key])

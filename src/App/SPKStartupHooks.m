@@ -95,6 +95,8 @@ FOUNDATION_EXPORT void SPKInstallDisableTypingStatusHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFullLastActiveHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallShhConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideFriendsMapHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallFakeLocationHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallFriendsMapFakeLocationButtonHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallKeepDeletedMessagesHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHiddenChatsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallPresenceNotificationsHooksIfEnabled(void);
@@ -171,6 +173,10 @@ void SPKInstallLaunchCriticalHooks(void) {
     SPK_INSTALL(SPKInstallTweakLaunchCriticalHooks);
     SPK_INSTALL(SPKInstallFollowingFeedHooksIfEnabled);
     SPK_INSTALL(SPKInstallAdBlockingEarlyHooksIfEnabled);
+    // Instagram starts locating (and the Friends Map uploads) as the session comes
+    // up. A fake location installed with the delayed Messages surface would let
+    // that first upload carry the real position.
+    SPK_INSTALL(SPKInstallFakeLocationHooksIfNeeded);
     SPK_INSTALL(SPKInstallStoryAdBlockingHooksIfEnabled);
     SPK_INSTALL(SPKInstallNavigationHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
@@ -285,6 +291,7 @@ void SPKInstallMessagesSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallPresenceNotificationsHooksIfEnabled);
     SPK_INSTALL(SPKInstallShhConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideFriendsMapHooksIfEnabled);
+    SPK_INSTALL(SPKInstallFriendsMapFakeLocationButtonHooksIfNeeded);
     SPK_INSTALL(SPKInstallKeepDeletedMessagesHooksIfEnabled);
     SPK_INSTALL(SPKInstallCallConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallDMAudioMsgConfirmHooksIfEnabled);

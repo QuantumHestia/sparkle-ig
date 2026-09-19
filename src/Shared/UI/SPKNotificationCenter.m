@@ -106,6 +106,7 @@ SPK_NOTIF_CONST(kSPKNotificationSettingsClearCache, "settings_clear_cache");
 SPK_NOTIF_CONST(kSPKNotificationLanguagePackUpdate, "language_pack_update");
 SPK_NOTIF_CONST(kSPKNotificationCopyDescription, "copy_description");
 SPK_NOTIF_CONST(kSPKNotificationCopyNoteText, "copy_note_text");
+SPK_NOTIF_CONST(kSPKNotificationFakeLocation, "fake_location");
 SPK_NOTIF_CONST(kSPKNotificationShareLongPressCopyLink, "share_long_press_copy_link");
 SPK_NOTIF_CONST(kSPKNotificationCopyComment, "copy_comment");
 SPK_NOTIF_CONST(kSPKNotificationCopyGIFLink, "copy_gif_link");
@@ -242,6 +243,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationPresenceTyping, SPKL(@"MESSAGES_ACTIVITY_USER_TYPING_TITLE"), @"keyboard"),
               SPKNotificationItem(kSPKNotificationPresenceRead, SPKL(@"MESSAGES_ACTIVITY_MESSAGE_READ_TITLE"), @"eye"),
               SPKNotificationItem(kSPKNotificationPresenceUserRule, SPKL(@"MESSAGES_ACTIVITY_LIST_CHANGES_TITLE"), @"activity"),
+              SPKNotificationItem(kSPKNotificationFakeLocation, SPKL(@"UI_NOTIFICATION_CENTER_FAKE_LOCATION_TEXT"), @"location"),
           ]},
         @{@"title" : SPKL(@"INSTANTS_CONFIRMATION_INSTANTS_TITLE"),
           @"items" : @[

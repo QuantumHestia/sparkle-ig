@@ -57,6 +57,8 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Hide any 1:1 or group chat from the DM inbox with a long press, reveal them again by holding the inbox title, and optionally mute them on Instagram itself, messages and calls both, so no push or vibration arrives while they stay hidden. Hidden chats stay out of the recipients Instagram suggests when sharing and can be kept out of the unread badge, and revealing them can be put behind Face ID, Touch ID, or a passcode of its own.
 - **Activity notifications**:
   - Get notified when a tracked user comes online, goes offline, starts typing, or reads a message you sent, and make Instagram's own green dot accurate with an early-installed presence refresh and no grace period.
+- **Fake location**:
+  - Show friends on the Friends Map a place you pick on a map or by search instead of where you are, switch it from a button on the map itself, and keep a list of saved places. Only Instagram sees the fake location, so Maps and other apps keep the real one.
 - **Profile Analyzer**:
   - Fetches your followers/following and surfaces mutuals, non-followbacks, and a durable change log (new/lost followers, profile updates) across scans.
 - **Per-account settings**:

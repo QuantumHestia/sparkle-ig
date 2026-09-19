@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
 #import <AVFoundation/AVFoundation.h>
+#import <CoreLocation/CoreLocation.h>
 #include <objc/NSObject.h>
 
 #ifdef __cplusplus
@@ -1239,4 +1240,25 @@ typedef struct {
 @interface IGMediaThumbnailSectionController : NSObject
 @property (nonatomic, readonly, weak) UIViewController *viewController;
 - (CGSize)sizeForItemAtIndex:(NSInteger)index;
+@end
+
+// Instagram's location stack (FBSharedFramework). IGThreadedLocationManager owns
+// the CLLocationManager on a private thread and is its delegate; IGLocationManager
+// sits on top as the threaded manager's delegate and caches the last fix that
+// features such as the Friends Map read and upload.
+@interface IGThreadedLocationManager : NSObject <CLLocationManagerDelegate>
+@property (readonly, copy, nonatomic) CLLocation *location;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations;
+@end
+
+@interface IGLocationManager : NSObject
+@property (retain) CLLocation *lastLocation;
+- (void)locationManager:(id)manager didUpdateLocations:(NSArray<CLLocation *> *)locations;
+@end
+
+// IGFriendsMapSecondaryButtonsStackController.IGFriendsMapSecondaryButtonsStackView:
+// the column of round chrome buttons (locate, settings) on the Friends Map. Swift,
+// laid out by hand; bound in hook groups through SPKResolveIGClass.
+@interface IGFriendsMapSecondaryButtonsStackView : UIView
+- (void)didTapLocateButton;
 @end

@@ -296,11 +296,19 @@ Its own page, reached from a single row on the Messages topic that shows how man
 - **Disable Swipe-Up Gesture**: Disables the gesture that enables vanish mode.
 - **Disable Screenshot Detection**: Allows screen capture while vanish mode is active.
 
-### Notes
-- **Hide Notes Tray**, **Hide Friends Map**.
+### Notes & Location
+- **Hide Notes Tray**.
 - **Download Notes Audio**: Long-press a note in the tray to add a "Save audio" row to its menu (Save Audio to Files, Share Audio, Save Audio to Gallery, Play Audio, or Copy Audio Download URL). Only appears on notes that carry audio. **(restart)**
 - **Copy Note Text**: Long-press a note to add a "Copy text" row to its menu. Only appears on text notes. **(restart)**
 - _Note actions are not supported on IG 410.1.0 (yet)._
+- **Hide Friends Map**.
+- **Fake Location**: Opens the page below.
+
+### Fake Location
+- **Use Fake Location**: Instagram sees the chosen location instead of where you are, so friends see it on the Friends Map. Instagram's other location features use it too, such as location stickers and nearby places. Only Instagram's own location stack is changed; Apple Maps, other apps, and the map picker's blue dot keep the real position. Instagram still needs location access, since it only uploads a location it believes it has. Turning it on, turning it off, and changing the place each ask the Friends Map to upload straight away rather than at Instagram's next scheduled update, and recentre an open map. Per account. Switching it on with no place set opens the picker first.
+- **Choose Location**: The place Instagram sees. Pick it on a map by panning under a fixed pin, or search for a place. The address is looked up as the map settles, and the coordinates are always shown beside it. The current-location button above the address card jumps back to where you really are.
+- **Show Button on Map**: Adds a button below Instagram's own buttons on the Friends Map, drawn to match them, with an icon that turns blue while the fake location is on. Its menu switches the fake location on or off, opens the picker, and opens these settings; a **Saved Places** submenu applies a saved place or saves the current one. Hidden from screenshots and recordings with Hide UI on Capture. Off by default.
+- **Saved Places**: **Add Place** picks a new one on the map, and **Save Current Location** keeps the active place. The saved places are listed below them: tap one to use it (this also turns the fake location on), or swipe left to rename or delete it. Saved places are shared by every account; the active place and the switch are per account.
 
 ### Audio
 - **Download Audio Messages**: Adds an "Audio Actions" row to a voice message's menu that expands in place into Save Audio to Files, Share Audio, Save Audio to Gallery, Play Audio, and Copy Audio Download URL. **(restart)**
