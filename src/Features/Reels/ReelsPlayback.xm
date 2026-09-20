@@ -131,29 +131,11 @@ static void SPKReelsApplyStartMuted(id announcer) {
 }
 %end
 
-// * Disable volume/mute button triggering unmutes
+// * Start reels muted by seeding the global sticky sound state
+// Volume presses, the ringer switch and unplugging headphones are left alone:
+// they write the sticky state themselves, so blocking them would turn a start
+// muted preference into a permanent mute lock and keep sound on after an unplug.
 %hook IGAudioStatusAnnouncer
-- (void)_muteSwitchStateChanged:(id)changed {
-    if (![SPKUtils getBoolPref:@"reels_disable_auto_unmute"]) {
-        %orig(changed);
-    }
-}
-- (void)_didPressVolumeButton:(id)button {
-    if (![SPKUtils getBoolPref:@"reels_disable_auto_unmute"]) {
-        %orig(button);
-    }
-}
-// 410 passes the notification, newer versions take no argument.
-- (void)_didUnplugHeadphones:(id)headphones {
-    if (![SPKUtils getBoolPref:@"reels_disable_auto_unmute"]) {
-        %orig(headphones);
-    }
-}
-- (void)_didUnplugHeadphones {
-    if (![SPKUtils getBoolPref:@"reels_disable_auto_unmute"]) {
-        %orig;
-    }
-}
 // IG may restore last session's sound state or reset it to unset here.
 - (void)_applicationDidBecomeActive {
     %orig;

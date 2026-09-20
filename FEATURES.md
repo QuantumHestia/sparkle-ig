@@ -216,7 +216,7 @@ On systems without Liquid Glass, the tab bar section is replaced by a focused to
 - **Tap Controls**: `Default`, `Pause/Play`, or `Mute/Unmute`.
 - **Playback Controls**: Long press a reel's more button for the same floating playback panel as Stories: speed from 0.5x to 2x, scrubbing, 5 second skips, and pause/play. While a reel plays at another speed, the speed is shown above the action button; tap it to reopen the panel. After pausing from the panel, tapping the reel resumes it. Video reels only.
 - **Keep Speed For**: `This Video`, `This Session` (until you leave Reels), or `Always`.
-- **Start Reels Muted**: Reels start without sound until you tap to unmute, in the Reels tab and in reels opened from Feed or elsewhere, and the volume buttons no longer turn sound on. **(restart)**
+- **Start Reels Muted**: Reels start without sound until you unmute them, in the Reels tab and in reels opened from Feed or elsewhere. **(restart)**
 - **Disable Reels Tab Refresh**: No refresh when re-tapping the Reels tab.
 
 ### Limits
