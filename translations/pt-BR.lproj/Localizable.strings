@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Limpar Cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Ícone Abrir Menu";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Configurações Por Conta";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Pré-visualização e Menu de Mídia";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Reconhece o texto na pré-visualização ampliada da foto e adiciona um botão para selecioná-lo e copiá-lo.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Selecionar texto nas fotos";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Comportamento";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Mantenha pressionado o botão Mais de um reel para controlar velocidade, avanço e pausa. Quando um reel toca em outra velocidade, um selo ao lado do botão a mostra.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Controles de reprodução";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Os reels começam sem som até você tocar para ativá-lo, e os botões de volume não o ativam mais. Requer reiniciar.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Os reels começam sem som até você ativá-lo. Requer reiniciar.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Iniciar Reels sem som";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "O que um toque em um reel faz: o padrão do Instagram, pausar e reproduzir, ou silenciar e ativar o som.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Controles de Toque";

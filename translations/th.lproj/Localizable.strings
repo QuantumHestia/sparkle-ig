@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "ล้างแคช";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "ไอคอนเปิดเมนู";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "การตั้งค่าแยกตามบัญชี";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "ตัวอย่างสื่อและเมนู";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "จดจำข้อความในตัวอย่างรูปภาพที่ขยาย และเพิ่มปุ่มสำหรับเลือกและคัดลอกข้อความนั้น";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "เลือกข้อความในรูปภาพ";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "พฤติกรรม";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "กดปุ่มเพิ่มเติมบนรีลค้างไว้เพื่อเปิดตัวควบคุมความเร็วการเล่น การเลื่อนตำแหน่ง และการหยุดชั่วคราว ขณะที่รีลเล่นด้วยความเร็วอื่น แบดจ์ข้างปุ่มจะแสดงไว้";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "ตัวควบคุมการเล่น";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels จะเริ่มโดยไม่มีเสียงจนกว่าคุณจะแตะเพื่อเปิดเสียง และปุ่มปรับระดับเสียงจะไม่เปิดเสียงอีกต่อไป ต้องรีสตาร์ทแอป";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels จะเริ่มโดยไม่มีเสียงจนกว่าคุณจะเปิดเสียง ต้องรีสตาร์ทแอป";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "เริ่ม Reels แบบปิดเสียง";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "การแตะที่รีลจะทำอะไร: ค่าเริ่มต้นของ Instagram, หยุด/เล่น หรือปิด/เปิดเสียง";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "การควบคุมด้วยการแตะ";

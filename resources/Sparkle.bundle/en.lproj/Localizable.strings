@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Clear Cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Open Menu Icon";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Per-Account Settings";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Media Preview & Menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Recognizes text in the expanded photo preview and adds a button to select and copy it.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Select Text in Photos";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Behavior";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Long press the more button on a reel for playback speed, seeking and pause controls. While a reel plays at another speed, a badge next to the button shows it.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Playback Controls";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels start without sound until you tap to unmute, and the volume buttons no longer turn it on. Requires a restart.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels start without sound until you unmute them. Requires a restart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Start Reels Muted";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "What a tap on a reel does: Instagram's default, pause and play, or mute and unmute.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tap Controls";

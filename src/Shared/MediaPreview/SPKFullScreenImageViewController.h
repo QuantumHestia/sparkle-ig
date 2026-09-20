@@ -15,6 +15,18 @@
 /// of the way rather than raise anything above it.
 - (void)mediaContent:(UIViewController *)controller
     didChangeLiveTextHighlight:(BOOL)highlighted;
+/// Picture in Picture took the video out of the viewer. The host gets out of the
+/// way (the floating window is the point of PiP) while keeping itself and its
+/// pages alive, so the window's restore button has something to return to.
+- (void)mediaContentWillStartPictureInPicture:(UIViewController *)controller;
+/// The restore button was pressed. The host puts itself back on screen and calls
+/// `completion` with whether the content is in a window again; AVKit animates the
+/// window back into the player only after that.
+- (void)mediaContent:(UIViewController *)controller
+    restorePictureInPictureWithCompletion:(void (^)(BOOL restored))completion;
+/// The session ended. If the host stepped aside and was never restored, this is
+/// where it finishes the dismissal it deferred.
+- (void)mediaContentDidStopPictureInPicture:(UIViewController *)controller;
 @end
 
 NS_ASSUME_NONNULL_BEGIN

@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "مسح الذاكرة المؤقتة";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "أيقونة فتح القائمة";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "إعدادات لكل حساب";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "معاينة الوسائط والقائمة";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "يتعرف على النص في معاينة الصورة الموسعة ويضيف زرًا لتحديده ونسخه.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "تحديد النص في الصور";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "السلوك";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "اضغط مطولًا على زر المزيد في الريل للتحكم في سرعة التشغيل والتقديم والإيقاف المؤقت. عند تشغيل الريل بسرعة أخرى، تظهر شارة بجانب الزر توضحها.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "عناصر التحكم في التشغيل";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "تبدأ Reels بدون صوت حتى تنقر لتشغيله، ولم تعد أزرار الصوت تشغّله. يتطلب إعادة تشغيل.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "تبدأ Reels بدون صوت حتى تشغّل الصوت. يتطلب إعادة تشغيل.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "بدء Reels بدون صوت";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ما يفعله الضغط على Reel: الإجراء الافتراضي في Instagram، أو الإيقاف والتشغيل، أو الكتم وإلغاء الكتم.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "عناصر التحكم في الضغط";

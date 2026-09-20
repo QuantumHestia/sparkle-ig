@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Önbelleği Temizle";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Menüyü Aç Simgesi";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Hesap Başına Ayarlar";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Medya Önizlemesi & Menü";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Büyütülmüş fotoğraf önizlemesindeki metni tanır ve seçip kopyalamak için bir düğme ekler.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Fotoğraflarda metin seç";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Davranış";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Oynatma hızı, sarma ve duraklatma kontrolleri için bir reel'deki daha fazla düğmesine uzun bas. Bir reel farklı hızda oynatılırken düğmenin yanındaki rozet hızı gösterir.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Oynatma Kontrolleri";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels, sesi açmak için dokunana kadar sessiz başlar ve ses düğmeleri artık sesi açmaz. Yeniden başlatma gerektirir.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels, sesi açana kadar sessiz başlar. Yeniden başlatma gerektirir.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels'i Sessiz Başlat";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Bir reel'e dokunmanın ne yapacağı: Instagram'ın varsayılanı, duraklat ve oynat, ya da sesi kapat ve aç.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Dokunuş Kontrolleri";

@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Cache leeren";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Symbol \"Menü öffnen\"";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Pro-Konto-Einstellungen";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Medienvorschau & Menü";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Erkennt Text in der vergrößerten Fotovorschau und fügt eine Schaltfläche zum Auswählen und Kopieren hinzu.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Text in Fotos auswählen";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Verhalten";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Halte die Mehr-Taste eines Reels gedrückt, um Geschwindigkeit, Spulen und Pause zu steuern. Läuft ein Reel mit anderer Geschwindigkeit, zeigt ein Badge neben der Taste sie an.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Wiedergabesteuerung";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels starten ohne Ton, bis du zum Einschalten tippst, und die Lautstärketasten schalten ihn nicht mehr ein. Erfordert einen Neustart.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels starten ohne Ton, bis du den Ton einschaltest. Erfordert einen Neustart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels stumm starten";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Was ein Tippen auf ein Reel bewirkt: Standard von Instagram, Pause und Wiedergabe oder stumm und laut.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tap-Steuerelemente";

@@ -1,6 +1,8 @@
 #import "SPKGeneralSettingsProvider.h"
 #import "SPKStrings.h"
 
+#import <AVKit/AVKit.h>
+
 #import "../../AssetUtils.h"
 #import "../../Shared/Account/SPKAccountManager.h"
 #import "../../Shared/ActionButton/ActionButtonCore.h"
@@ -14,8 +16,9 @@
 #import "../SPKTopicSettingsSupport.h"
 
 // Media Preview & Menu rows. Built rather than declared inline because the Live Text
-// toggle is omitted outright on systems whose VisionKit can't analyze images: it is
-// not a setting the user can act on there, so it isn't shown at all.
+// and Picture in Picture toggles are omitted outright where the system can't honor
+// them (no VisionKit image analysis, no PiP support): they are not settings the user
+// can act on there, so they aren't shown at all.
 static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
     NSMutableArray<SPKSetting *> *rows = [NSMutableArray array];
     [rows addObject:SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_SHOW_MEDIA_INFO_TITLE")
@@ -27,6 +30,12 @@ static NSArray<SPKSetting *> *SPKGeneralMediaPreviewRows(void) {
                                                                       icon:SPKSettingsIcon(@"text")
                                                                defaultsKey:@"general_preview_live_text"],
                                            SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP"))];
+    }
+    if ([AVPictureInPictureController isPictureInPictureSupported]) {
+        [rows addObject:SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE")
+                                                                      icon:SPKSettingsSystemIcon(@"pip", SPKSettingsCellIconPointSize, UIImageSymbolWeightSemibold)
+                                                               defaultsKey:@"general_preview_allow_pip"],
+                                           SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP"))];
     }
     [rows addObject:SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"GENERAL_MEDIA_PREVIEW_MENU_SHOW_DATE_MENU_TITLE")
                                                                   icon:SPKSettingsIcon(@"calendar")

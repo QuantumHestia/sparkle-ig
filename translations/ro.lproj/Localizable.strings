@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Șterge cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Pictogramă deschide meniu";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Setări pe cont";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Previzualizare media și meniu";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Recunoaște textul din previzualizarea extinsă a fotografiei și adaugă un buton pentru selectare și copiere.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Selectează textul din fotografii";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Comportament";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Apasă lung butonul Mai multe al unui reel pentru viteză, derulare și pauză. Când un reel rulează la altă viteză, o insignă de lângă buton o afișează.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Comenzi de redare";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels-urile pornesc fără sunet până atingi pentru a-l activa, iar butoanele de volum nu îl mai pornesc. Necesită repornire.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels-urile pornesc fără sunet până activezi sunetul. Necesită repornire.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Pornește Reels fără sunet";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ce face o atingere pe un reel: comportamentul implicit al Instagram, pauză și redare, sau sunet oprit și pornit.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Comenzi de atingere";

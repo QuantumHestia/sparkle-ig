@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Очистити кеш";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Іконка Відкрити меню";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Налаштування за аккаунтом";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Попередній перегляд медіа та меню";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Розпізнає текст у збільшеному перегляді фото та додає кнопку для виділення й копіювання.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Виділення тексту на фото";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Поведінка";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Утримуйте кнопку «Більше» в Reels, щоб керувати швидкістю, перемотуванням і паузою. Поки Reels відтворюється з іншою швидкістю, її показує значок біля кнопки.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Керування відтворенням";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels починаються без звуку, доки ви не торкнетеся, щоб увімкнути його, і кнопки гучності більше його не вмикають. Потрібен перезапуск.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels починаються без звуку, доки ви не ввімкнете його. Потрібен перезапуск.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Запускати Reels без звуку";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Що робить дотик до ролика: як типово в Instagram, пауза й відтворення, або вимкнення та ввімкнення звуку.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Керування натисканням";

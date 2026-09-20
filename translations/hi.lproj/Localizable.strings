@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "कैश साफ़ करें";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "मेनू खोलें आइकन";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "प्रति-खाता सेटिंग्स";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "मीडिया पूर्वावलोकन और मेनू";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "बड़े किए गए फ़ोटो प्रीव्यू में टेक्स्ट पहचानता है और उसे चुनने व कॉपी करने के लिए बटन जोड़ता है।";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "फ़ोटो में टेक्स्ट चुनें";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "व्यवहार";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "प्लेबैक गति, आगे-पीछे करने और रोकने के नियंत्रणों के लिए रील पर अधिक बटन को देर तक दबाएँ। जब कोई रील अलग गति पर चलती है, तो बटन के पास एक बैज उसे दिखाता है।";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "प्लेबैक नियंत्रण";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels तब तक बिना आवाज़ के शुरू होते हैं जब तक आप अनम्यूट करने के लिए टैप नहीं करते, और वॉल्यूम बटन अब आवाज़ चालू नहीं करते। रीस्टार्ट आवश्यक है।";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels तब तक बिना आवाज़ के शुरू होते हैं जब तक आप उन्हें अनम्यूट नहीं करते। रीस्टार्ट आवश्यक है।";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels को म्यूट करके शुरू करें";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "यह सेटिंग तय करती है कि Reel पर टैप करने से क्या होगा: Instagram की डिफ़ॉल्ट कार्रवाई, रोकना और चलाना, या म्यूट और अनम्यूट करना।";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "टैप नियंत्रण";

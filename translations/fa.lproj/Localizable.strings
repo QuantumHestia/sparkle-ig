@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "پاک کردن کش";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "آیکون باز کردن منو";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "تنظیمات مخصوص هر اکانت";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "پیش‌نمایش و منوی رسانه";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "متن موجود در پیش‌نمایش بزرگ‌شده عکس را تشخیص می‌دهد و دکمه‌ای برای انتخاب و کپی کردن آن اضافه می‌کند.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "انتخاب متن در عکس‌ها";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "رفتار";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "روی دکمه بیشتر یک ریلز فشار طولانی دهید تا کنترل‌های سرعت پخش، پیشروی و توقف نمایان شوند. تا وقتی ریلز با سرعتی دیگر پخش می‌شود، نشانی کنار دکمه آن را نشان می‌دهد.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "کنترل‌های پخش";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "ریلزها تا زمانی که برای فعال‌کردن صدا ضربه نزنید بی‌صدا شروع می‌شوند و دکمه‌های صدا دیگر آن را فعال نمی‌کنند. نیاز به راه‌اندازی مجدد دارد.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "ریلزها تا زمانی که صدا را فعال نکنید بی‌صدا شروع می‌شوند. نیاز به راه‌اندازی مجدد دارد.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "شروع ریلز بدون صدا";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ضربه روی ریل چه کاری انجام می‌دهد: پیش‌فرض اینستاگرام، توقف و پخش، یا بی‌صدا و باصدا کردن.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "کنترل‌های ضربه";

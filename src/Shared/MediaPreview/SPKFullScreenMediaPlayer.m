@@ -225,6 +225,15 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 /// chrome is visible so the value survives a chrome toggle.
 @property (nonatomic, assign) UIEdgeInsets mediaContentBarInsets;
 
+/// Set while a page's video plays in a Picture in Picture window and this viewer
+/// has stepped off screen for it. The dismissal skipped its usual cleanup, so the
+/// pages (and the player the window is drawing) are still alive to be restored.
+@property (nonatomic, assign) BOOL pictureInPictureHandoffActive;
+/// Keeps the viewer alive while it is off screen for the window, and remembers
+/// what to present again when the restore button is pressed.
+@property (nonatomic, strong, nullable) SPKFullScreenMediaPlayer *pictureInPictureSelfRetain;
+@property (nonatomic, strong, nullable) UIViewController *pictureInPicturePresentation;
+
 /// The content insets actually applied right now: the bar heights while the
 /// chrome is visible, zero (full-screen) while it's hidden. Animated alongside
 /// the bar fade in toggleToolbar so the media expands/contracts smoothly.
@@ -1350,6 +1359,94 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
         return;
     SPKMediaChromeSetBarsMaterialActive(self.navigationController, isZoomed);
     _pageScrollView.scrollEnabled = !isZoomed;
+}
+
+#pragma mark - Picture in Picture Handoff
+
+- (void)mediaContentWillStartPictureInPicture:(UIViewController *)controller {
+    if (self.pictureInPictureHandoffActive)
+        return;
+    UIViewController *presented = self.navigationController ?: self;
+    if (!presented.presentingViewController)
+        return;
+
+    self.pictureInPictureHandoffActive = YES;
+    self.pictureInPictureSelfRetain = self;
+    self.pictureInPicturePresentation = presented;
+
+    // Our zoom transition animates between the media and the view it was opened
+    // from, which is not where this is going: the window takes the media's place.
+    // Plain modal dismissal for this one trip; the delegate goes back on once the
+    // viewer is restored, because it is also what drives the interactive swipe.
+    presented.transitioningDelegate = nil;
+
+    // Deliberately none of the cleanup the other dismissal paths run: the pages
+    // stay built and the host's own playback stays suppressed until the window
+    // closes, either straight into -mediaContentDidStopPictureInPicture: or after
+    // a restore.
+    [presented dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)mediaContent:(UIViewController *)controller
+    restorePictureInPictureWithCompletion:(void (^)(BOOL restored))completion {
+    UIViewController *presented = self.pictureInPicturePresentation ?: (self.navigationController ?: self);
+    if (!self.pictureInPictureHandoffActive || presented.presentingViewController) {
+        // Never stepped aside (or already back): the content is in a window already.
+        completion(presented.view.window != nil);
+        return;
+    }
+
+    UIViewController *presenter = topMostController();
+    if (!presenter) {
+        completion(NO);
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    [presenter presentViewController:presented
+                            animated:YES
+                          completion:^{
+                              // Back on screen, so the zoom transition is meaningful
+                              // again. It also vends the dismissal's interaction
+                              // controller, and without it a swipe down dismisses the
+                              // moment it starts instead of tracking the finger.
+                              presented.transitioningDelegate = weakSelf;
+                              completion(YES);
+                          }];
+}
+
+- (void)mediaContentDidStopPictureInPicture:(UIViewController *)controller {
+    if (!self.pictureInPictureHandoffActive)
+        return;
+    self.pictureInPictureHandoffActive = NO;
+
+    UIViewController *presented = self.pictureInPicturePresentation;
+    self.pictureInPicturePresentation = nil;
+    if (presented.presentingViewController) {
+        // Restored: the viewer is back on screen and owns the player again.
+        [self releasePictureInPictureRetain];
+        return;
+    }
+
+    // The window closed without coming back, so this is where the dismissal that
+    // started the handoff actually finishes.
+    [self cleanupAll];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self restorePreviewPlaybackIfNeeded];
+    });
+    if ([self.delegate respondsToSelector:@selector(fullScreenMediaPlayerDidDismiss)]) {
+        [self.delegate fullScreenMediaPlayerDidDismiss];
+    }
+    [self releasePictureInPictureRetain];
+}
+
+// Dropping the self-reference inline can be the last release, running -dealloc
+// inside this call. Hand it to the next main-queue turn instead.
+- (void)releasePictureInPictureRetain {
+    SPKFullScreenMediaPlayer *retained = self.pictureInPictureSelfRetain;
+    _pictureInPictureSelfRetain = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        (void)retained;
+    });
 }
 
 - (void)mediaContent:(UIViewController *)controller

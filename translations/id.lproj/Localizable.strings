@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Hapus Cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Ikon Buka Menu";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Pengaturan Per-Akun";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Pratinjau & Menu Media";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Mengenali teks pada pratinjau foto yang diperluas dan menambahkan tombol untuk memilih serta menyalinnya.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Pilih Teks di Foto";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Perilaku";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Tekan lama tombol lainnya pada sebuah reel untuk kontrol kecepatan pemutaran, pencarian posisi, dan jeda. Selagi sebuah reel diputar dengan kecepatan lain, lencana di sebelah tombol menampilkannya.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Kontrol Pemutaran";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels dimulai tanpa suara sampai Anda mengetuk untuk membunyikannya, dan tombol volume tidak lagi menyalakannya. Memerlukan restart.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels dimulai tanpa suara sampai Anda membunyikannya. Memerlukan restart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Mulai Reels Tanpa Suara";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Apa yang dilakukan ketukan pada reel: default Instagram, jeda dan putar, atau bisukan dan bunyikan.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Kontrol Ketukan";

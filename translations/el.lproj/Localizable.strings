@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Εκκαθάριση Λανθάνουσας Μνήμης";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Εικονίδιο Ανοίγματος Μενού";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Ρυθμίσεις ανά Λογαριασμό";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Προεπιόπτρισμα Πολυμέσων & Μενού";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Αναγνωρίζει κείμενο στη μεγεθυμένη προεπισκόπηση φωτογραφίας και προσθέτει κουμπί για επιλογή και αντιγραφή.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Επιλογή κειμένου σε φωτογραφίες";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Συμπεριφορά";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Πατήστε παρατεταμένα το κουμπί «Περισσότερα» σε ένα reel για ταχύτητα, μετακίνηση και παύση. Όταν ένα reel παίζει με άλλη ταχύτητα, ένα σήμα δίπλα στο κουμπί την εμφανίζει.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Στοιχεία ελέγχου αναπαραγωγής";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Τα reels ξεκινούν χωρίς ήχο μέχρι να πατήσετε για να τον ενεργοποιήσετε, και τα κουμπιά έντασης δεν τον ενεργοποιούν πλέον. Απαιτεί επανεκκίνηση.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Τα reels ξεκινούν χωρίς ήχο μέχρι να τον ενεργοποιήσετε. Απαιτεί επανεκκίνηση.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Έναρξη Reels σε σίγαση";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Τι κάνει ένα πάτημα σε ένα reel: η προεπιλογή του Instagram, παύση και αναπαραγωγή, ή σίγαση και άρση σίγασης.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Έλεγχοι Πατήματος";

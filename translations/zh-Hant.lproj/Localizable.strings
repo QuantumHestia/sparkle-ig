@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "清除快取";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "開啟選單圖示";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "個別帳號設定";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "媒體預覽與選單";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "辨識展開的照片預覽中的文字，並新增按鈕以選取及複製。";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "在照片中選取文字";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "行為";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "長按 Reels 上的更多按鈕，即可使用播放速度、拖曳進度和暫停控制項。Reels 以其他速度播放時，按鈕旁的角標會顯示目前速度。";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制項";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 開始播放時會保持靜音,直到你點一下取消靜音,音量鍵也不會再開啟聲音。需要重新啟動。";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 開始播放時會保持靜音，直到你取消靜音。需要重新啟動。";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "靜音啟動 Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "點按 Reel 時會執行的動作:Instagram 預設、暫停與播放,或靜音與取消靜音。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "點按控制";

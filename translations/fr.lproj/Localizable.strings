@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Vider le cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Icône Ouvrir le menu";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Paramètres par compte";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Aperçu et menu des médias";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Reconnaît le texte dans l’aperçu photo agrandi et ajoute un bouton pour le sélectionner et le copier.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Sélectionner le texte des photos";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Comportement";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Appuyez longuement sur le bouton Plus d'un reel pour régler la vitesse, avancer et mettre en pause. Lorsqu'un reel est lu à une autre vitesse, un badge à côté du bouton l'indique.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Commandes de lecture";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Les reels démarrent sans son jusqu'à ce que vous touchiez pour l'activer, et les boutons de volume ne l'activent plus. Nécessite un redémarrage.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Les reels démarrent sans son jusqu'à ce que vous l'activiez. Nécessite un redémarrage.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Démarrer les Reels sans son";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ce que fait un appui sur un reel : le comportement par défaut d'Instagram, pause et lecture, ou couper et rétablir le son.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Contrôles d'appui";

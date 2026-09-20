@@ -877,6 +877,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Išvalyti talpyklą";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Meniu atidarymo piktograma";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Atskiri paskyrų nustatymai";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Medijos peržiūra ir meniu";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Atpažįsta tekstą išplėstoje nuotraukos peržiūroje ir prideda mygtuką jam pažymėti bei nukopijuoti.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Pažymėti tekstą nuotraukose";
@@ -1865,7 +1867,7 @@
 "REELS_BEHAVIOR_HEADER" = "Elgsena";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP" = "Ilgai paspauskite Reels mygtuką „Daugiau“, kad valdytumėte atkūrimo greitį, peršokimą ir pristabdymą. Kai įrašas leidžiamas kitu greičiu, šalia mygtuko jį rodo ženklelis.";
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Atkūrimo valdikliai";
-"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels prasideda be garso, kol bakstelėsite, kad jį įjungtumėte, o garsumo mygtukai jo nebeįjungia. Reikia paleisti iš naujo.";
+"REELS_BEHAVIOR_START_MUTED_HELP" = "Reels prasideda be garso, kol jo neįjungiate. Reikia paleisti iš naujo.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Paleisti Reels nutildytus";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ką daro palietimas ant įrašo: numatytasis Instagram veiksmas, pristabdymas ir leidimas arba nutildymas ir įgarsinimas.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Palietimo valdikliai";
