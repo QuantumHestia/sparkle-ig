@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu 件のメッセージが送信取消しされました";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ が %lu 件のメッセージを送信取消ししました";
 "COMMON_ACTION_CLOSE" = "閉じる";
+"COMMON_ACTION_OPEN_SETTINGS" = "設定を開く";
 "COMMON_DELETE_FAILED_TOAST" = "削除に失敗";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "フォローバック";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "リクエスト済み";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "音源ページとメディアのアクションボタンで音声アクションを有効にします。他の音声オプションを設定する前にオンにしてください。";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "そのボタンをタップしたときの動作です。長押しですべてのメニューが開きます。";
 "DOWNLOADS_AUTO_SAVE_HELP" = "表示したメディアを画面ごとに自動でダウンロードします。";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@、%2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram に通知の許可がないため、ダウンロードの完了をお知らせできません。iOS の設定で通知をオンにしてください。";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "通知がオフになっています";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%2$@ に%1$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "ダウンロードが完了しました";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "保存先のアルバムです。存在しない場合は作成されます。";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Instagram を離れた後もダウンロードを実行し続けます。変換と保存も含まれます。時間のかかるダウンロードでは、iOS がアプリを休止させないように無音のオーディオトラックを再生します。再生中の他の音声には影響しません。";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Instagram を離れている間にダウンロードが完了したら通知を送ります。タップするとダウンロード履歴が開きます。";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "ダウンロードしたメディアをPhotosの指定したアルバムとメインの写真ライブラリに追加します。";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "保存先に既存のコピーがないか確認します。自動保存では一致した項目を自動的にスキップし、手動ダウンロードでは処理方法を選択できます。";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "ダウンロード履歴に残す完了済みエントリ数を設定します。古い履歴エントリを削除しても、保存済みのメディアは削除されません。";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "オーディオダウンロード";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "オーディオページボタン";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "オーディオページのデフォルトアクション";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "バックグラウンドで続行";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "完了時に通知";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "デフォルト写真品質";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "デフォルト動画品質";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "重複ダウンロードを検出";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Instagramのウェブ画像データで4K候補を確認します。検索ごとに追加のウェブリクエストが1回発生します。";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. 4K画像を取得はInstagramのウェブ画像データで4K候補を確認し、追加リクエストを1回行います。\n2. Enhanced Media Resolutionは、Instagramが提供する写真または動画の最高解像度の候補を選択します。\n動画の品質およびエンコードオプションにはFFmpegKitが必要です。";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "ビデオのみ";
+"DOWNLOADS_SAVING_HEADER" = "保存";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "キャンセルしました";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "ダウンロードをキャンセルしました。";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "ビデオとオーディオをマージできません";

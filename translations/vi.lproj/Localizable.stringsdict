@@ -114,5 +114,37 @@
 			<string>%ld người dùng</string>
 		</dict>
 	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_FAILED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld thất bại</string>
+			<key>other</key>
+			<string>%ld thất bại</string>
+		</dict>
+	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Đã lưu %ld mục</string>
+			<key>other</key>
+			<string>Đã lưu %ld mục</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

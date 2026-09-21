@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu messages unsent";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ unsent %lu messages";
 "COMMON_ACTION_CLOSE" = "Close";
+"COMMON_ACTION_OPEN_SETTINGS" = "Open Settings";
 "COMMON_DELETE_FAILED_TOAST" = "Failed to delete";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Follow back";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Requested";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Enables audio actions on audio pages and media action buttons. Turn this on before configuring the other audio options.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "What a tap on that button does. Long press opens the full menu.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Automatically downloads media as you view it, surface by surface.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram is not allowed to send notifications, so it cannot tell you when downloads finish. Turn notifications on in iOS Settings.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Notifications are turned off";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ to %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Downloads finished";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "The album to save into. It is created if it does not exist.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Keeps downloads running after you leave Instagram, including conversion and saving. Longer downloads play a silent audio track so iOS does not suspend the app. Anything else playing is unaffected.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Sends a notification when downloads finish while you are away from Instagram. Tap it to open Download History.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Adds downloaded media to a named album in Photos as well as your main photo library.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Checks the selected destination for an existing copy before saving. Auto-saves skip matches automatically; manual downloads let you choose how to handle them.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Sets how many completed entries remain in Download History. Removing an old history entry does not delete its saved media.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Audio Downloads";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Audio Page Button";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Audio Page Default Action";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Continue in Background";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Notify When Finished";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Default Photo Quality";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Default Video Quality";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Detect Duplicate Downloads";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Checks Instagram's web image data for 4K candidates. This makes one additional web request for each lookup.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Fetch 4K Images checks Instagram's web image data for 4K candidates and makes one additional request.\n2. Enhanced Media Resolution selects the highest-resolution photo or video variant Instagram exposes.\nFFmpegKit is required for video quality and encoding options.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Video only";
+"DOWNLOADS_SAVING_HEADER" = "Saving";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Cancelled";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Download cancelled.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Unable to merge video and audio";

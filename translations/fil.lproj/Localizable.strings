@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu mensahe ang na-unsend";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "Na-unsend ni %@ ang %lu mensahe";
 "COMMON_ACTION_CLOSE" = "Isara";
+"COMMON_ACTION_OPEN_SETTINGS" = "Buksan ang Settings";
 "COMMON_DELETE_FAILED_TOAST" = "Nabigong burahin";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "I-follow back";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Hiniling na";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Nagbibigay-daan sa mga audio action sa audio page at media action button. I-on ito bago i-configure ang iba pang audio option.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Kung ano ang ginagawa ng tap sa button na iyon. Ang long press ay nagbubukas ng buong menu.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Awtomatikong dina-download ang media habang tinitingnan mo ito, surface by surface.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Hindi pinapayagan ang Instagram na magpadala ng notification, kaya hindi ka nito masasabihan kapag tapos na ang mga download. I-on ang mga notification sa iOS Settings.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Naka-off ang mga notification";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ sa %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Tapos na ang mga download";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Ang album na sasavehan. Gagawin ito kung wala pa.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Pinapatuloy ang mga download pagkatapos mong lumabas sa Instagram, pati ang conversion at pag-save. Ang mas mahahabang download ay nagpapatugtog ng tahimik na audio track para hindi i-suspend ng iOS ang app. Hindi naaapektuhan ang anumang iba pang tumutugtog.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Nagpapadala ng abiso kapag natapos ang mga download habang wala ka sa Instagram. I-tap ito para buksan ang Download History.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Idinaragdag ang na-download na media sa isang pinangalanang album sa Photos gayundin sa iyong main photo library.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Sinusuri ang napiling destinasyon para sa umiiral na kopya bago mag-save. Awtomatikong nilalaktawan ng auto-save ang mga match; sa manual na download, ikaw ang pipili kung paano haharapin ang mga ito.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Itinatakda kung ilang natapos na entry ang mananatili sa Download History. Ang pag-alis ng lumang history entry ay hindi bumubura sa na-save nitong media.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Mga Pag-download ng Audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Button ng Audio Page";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Default na Aksyon ng Audio Page";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Ipagpatuloy sa Background";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Abisuhan kapag tapos";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Default na Kalidad ng Larawan";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Default na Kalidad ng Video";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Tukuyin ang Duplicate na Pag-download";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Sinusuri ang web image data ng Instagram para sa mga kandidatong 4K. Gumagawa ito ng isang karagdagang web request kada lookup.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Sinusuri ng Fetch 4K Images ang web image data ng Instagram para sa mga kandidatong 4K at gumagawa ng isang karagdagang request.\n2. Pinipili ng Enhanced Media Resolution ang pinakamataas na resolution na variant ng larawan o video na inilalantad ng Instagram.\nKailangan ang FFmpegKit para sa mga opsyon sa kalidad ng video at encoding.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Video lang";
+"DOWNLOADS_SAVING_HEADER" = "Pag-save";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Nakansela";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Nakansela ang pag-download.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Hindi maisama ang video at audio";

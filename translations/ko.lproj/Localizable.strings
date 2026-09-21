@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu개의 메시지가 보내지지 않음으로 표시됨";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@이(가) %lu개의 메시지를 보내지 않음으로 표시함";
 "COMMON_ACTION_CLOSE" = "닫기";
+"COMMON_ACTION_OPEN_SETTINGS" = "설정 열기";
 "COMMON_DELETE_FAILED_TOAST" = "삭제 실패";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "맞팔로우";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "요청됨";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "오디오 페이지와 미디어 작업 버튼에서 오디오 작업을 활성화합니다. 다른 오디오 옵션을 설정하기 전에 켜세요.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "그 버튼을 탭했을 때의 동작입니다. 길게 누르면 전체 메뉴가 열립니다.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "미디어를 볼 때 화면별로 자동 다운로드합니다.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram에 알림 권한이 없어 다운로드 완료를 알려줄 수 없습니다. iOS 설정에서 알림을 켜세요.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "알림이 꺼져 있습니다";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%2$@에 %1$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "다운로드 완료";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "저장할 앨범입니다. 없으면 새로 만듭니다.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Instagram을 벗어난 뒤에도 다운로드를 계속 진행합니다. 변환과 저장도 포함됩니다. 오래 걸리는 다운로드는 iOS가 앱을 중단하지 않도록 무음 오디오 트랙을 재생합니다. 재생 중인 다른 오디오에는 영향을 주지 않습니다.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Instagram을 벗어나 있는 동안 다운로드가 끝나면 알림을 보냅니다. 탭하면 다운로드 기록이 열립니다.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "다운로드한 미디어를 사진 앱의 지정한 앨범과 기본 사진 보관함에 추가합니다.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "저장하기 전에 선택한 위치에 기존 사본이 있는지 확인합니다. 자동 저장은 일치하는 항목을 자동으로 건너뛰고, 수동 다운로드에서는 처리 방법을 선택할 수 있습니다.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "다운로드 기록에 남길 완료된 항목 수를 설정합니다. 오래된 기록 항목을 제거해도 저장된 미디어는 삭제되지 않습니다.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "오디오 다운로드";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "오디오 페이지 버튼";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "오디오 페이지 기본 동작";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "백그라운드에서 계속";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "완료되면 알림";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "기본 사진 화질";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "기본 동영상 화질";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "중복 다운로드 감지";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Instagram의 웹 이미지 데이터에서 4K 후보를 확인합니다. 조회할 때마다 웹 요청이 한 번 추가됩니다.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. 4K 이미지 가져오기는 Instagram의 웹 이미지 데이터에서 4K 후보를 확인하고 요청을 한 번 추가합니다.\n2. 향상된 미디어 해상도는 Instagram이 제공하는 사진 또는 동영상 변형 중 최고 해상도를 선택합니다.\n동영상 품질 및 인코딩 옵션에는 FFmpegKit이 필요합니다.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "동영상만";
+"DOWNLOADS_SAVING_HEADER" = "저장";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "취소됨";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "다운로드가 취소되었습니다.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "비디오 및 오디오를 병합할 수 없습니다.";

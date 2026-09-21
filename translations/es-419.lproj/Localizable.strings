@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu mensajes desinviados";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ desinvió %lu mensajes";
 "COMMON_ACTION_CLOSE" = "Cerrar";
+"COMMON_ACTION_OPEN_SETTINGS" = "Abrir Configuración";
 "COMMON_DELETE_FAILED_TOAST" = "Error al eliminar";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Seguir también";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Solicitado";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Activa las acciones de audio en las páginas de audio y los botones de acción de los medios. Actívalo antes de configurar las demás opciones de audio.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Qué hace un toque en ese botón. Una pulsación larga abre el menú completo.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Descarga los medios automáticamente mientras los ves, sección por sección.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram no tiene permiso para enviar notificaciones, así que no puede avisarte cuando terminan las descargas. Actívalas en la Configuración de iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Las notificaciones están desactivadas";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ en %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Descargas finalizadas";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "El álbum en el que guardar. Se crea si no existe.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Mantiene las descargas en curso después de que sales de Instagram, incluidas la conversión y el guardado. Las descargas más largas reproducen una pista de audio en silencio para que iOS no suspenda la app. Nada más de lo que esté sonando se ve afectado.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Envía una notificación cuando las descargas terminan mientras no estás en Instagram. Tócala para abrir el Historial de descargas.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Añade los medios descargados a un álbum con nombre de Fotos y también a tu fototeca principal.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Comprueba si ya existe una copia en el destino seleccionado antes de guardar. Los guardados automáticos omiten las coincidencias; las descargas manuales te permiten elegir qué hacer.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Establece cuántas entradas completadas permanecen en el historial de descargas. Eliminar una entrada antigua no elimina los medios guardados.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Descargas de audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Botón de página de audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Acción predeterminada de página de audio";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Continuar en segundo plano";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Avisar al terminar";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Calidad de foto predeterminada";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Calidad de video predeterminada";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Detectar descargas duplicadas";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Comprueba los datos de imágenes web de Instagram para buscar candidatos en 4K. Esto realiza una solicitud web adicional por cada consulta.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Buscar imágenes 4K comprueba los datos de imágenes web de Instagram para buscar candidatos en 4K y realiza una solicitud adicional.\n2. Resolución multimedia mejorada selecciona la variante de foto o video con mayor resolución que Instagram ofrece.\nSe requiere FFmpegKit para las opciones de calidad de video y codificación.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Solo video";
+"DOWNLOADS_SAVING_HEADER" = "Guardado";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Cancelado";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Descarga cancelada.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "No se puede combinar video y audio";

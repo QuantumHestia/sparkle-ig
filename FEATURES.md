@@ -464,9 +464,13 @@ Every surface has the same **Filter Mode**: `All` saves everything except what y
 ### Behavior
 - **Detect Duplicate Downloads**: Skips media already saved: Gallery checks are exact by persistent media identity; Photos checks cover saves Sparkle recorded while tracking is enabled. Existing Photos-library items cannot be discovered retroactively.
 - **Parallel Downloads**: Limits concurrent download work from 1–4 (default 2) across direct saves, carousel items, conversions, and DASH merge pipelines.
-- **History Limit**: Caps saved download actions at a configurable history limit (default 300 entries).
+- **Continue in Background**: Keeps downloads running after you leave Instagram, covering the transfer, any conversion, and the final save. iOS normally allows only a short window for this, so when a download outlasts it Sparkle plays a silent track to stay awake. The track mixes with other audio, claims no Now Playing entry, and stops the moment the queue empties or you return to the app. On by default.
+- **Notify When Finished**: Posts a system notification when the queue finishes while you are away, reporting how many items were saved and how many failed. Tapping it opens Download History. Only fires on a genuine finish in the background, never when you return to the app yourself, and only when *Continue in Background* is on. Notification permission is requested when you switch this on, never on its own; if Instagram is not allowed to send notifications, switching it on says so and offers to open iOS Settings. Off by default.
+
+### Saving
 - **Save to Custom Album**: Toggles saving Photos-destination downloads to a specific custom album in the iOS Photos app.
 - **Album Name**: Configures the title of the custom Photos album (defaults to "Sparkle", disabled when the toggle is off). If empty, saving falls back to the default Recents camera roll.
+- **History Limit**: Caps saved download actions at a configurable history limit (default 100 entries).
 
 ### Storage
 - Each download keeps a **staged copy on disk** so its history entry stays previewable on tap; this staged data (plus staged source/preview scratch) is what the **Storage Usage → Downloads** figure counts. Clearing a download from history — via **Clear Finished Downloads**, a swipe-delete, or the history-limit trim — frees its staged copy automatically. Media already saved to Photos or the Gallery is never affected. On launch, Sparkle also sweeps any **orphaned** staged leftovers no longer tied to a history entry (interrupted downloads, crash leftovers, or backlog from older builds), so the cache stays bounded by your history without any manual step.

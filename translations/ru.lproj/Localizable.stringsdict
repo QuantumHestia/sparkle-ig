@@ -138,5 +138,45 @@
 			<string>%ld пользователя</string>
 		</dict>
 	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_FAILED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld не удалась</string>
+			<key>few</key>
+			<string>%ld не удались</string>
+			<key>many</key>
+			<string>%ld не удались</string>
+			<key>other</key>
+			<string>%ld не удались</string>
+		</dict>
+	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Сохранён %ld объект</string>
+			<key>few</key>
+			<string>Сохранено %ld объекта</string>
+			<key>many</key>
+			<string>Сохранено %ld объектов</string>
+			<key>other</key>
+			<string>Сохранено %ld объекта</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

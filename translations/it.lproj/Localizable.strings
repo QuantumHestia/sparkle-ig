@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu messaggi annullati";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ ha annullato %lu messaggi";
 "COMMON_ACTION_CLOSE" = "Chiudi";
+"COMMON_ACTION_OPEN_SETTINGS" = "Apri Impostazioni";
 "COMMON_DELETE_FAILED_TOAST" = "Eliminazione non riuscita";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Segui anche tu";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Richiesto";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Abilita le azioni audio nelle pagine audio e nei pulsanti azione dei media. Attivala prima di configurare le altre opzioni audio.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Cosa fa un tocco su quel pulsante. Una pressione prolungata apre il menu completo.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Scarica automaticamente i media mentre li guardi, sezione per sezione.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram non ha il permesso di inviare notifiche, quindi non può avvisarti quando i download finiscono. Attiva le notifiche nelle Impostazioni di iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Le notifiche sono disattivate";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ in %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Download completati";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "L'album in cui salvare. Viene creato se non esiste.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Mantiene i download in corso dopo che esci da Instagram, conversione e salvataggio inclusi. I download più lunghi riproducono una traccia audio silenziosa affinché iOS non sospenda l'app. Nient'altro in riproduzione viene influenzato.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Invia una notifica quando i download finiscono mentre sei fuori da Instagram. Toccala per aprire la cronologia dei download.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Aggiunge i media scaricati a un album con nome in Foto oltre che alla libreria fotografica principale.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Controlla se esiste già una copia nella destinazione selezionata prima del salvataggio. I salvataggi automatici saltano automaticamente le corrispondenze; per i download manuali puoi scegliere come gestirle.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Imposta quante voci completate restano nella cronologia dei download. Rimuovere una vecchia voce dalla cronologia non elimina i media salvati.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Download Audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Pulsante pagina audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Azione predefinita pagina audio";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Continua in background";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Avvisa al termine";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Qualità foto predefinita";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Qualità video predefinita";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Rileva Download Duplicati";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Controlla i dati web delle immagini di Instagram per trovare candidati in 4K. Effettua una richiesta web aggiuntiva per ogni ricerca.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Recupero immagini 4K controlla i dati web delle immagini di Instagram per trovare candidati in 4K ed effettua una richiesta aggiuntiva.\n2. Risoluzione media avanzata seleziona la variante con la risoluzione più elevata che Instagram espone per foto o video.\nFFmpegKit è richiesto per le opzioni di qualità video e codifica.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Solo video";
+"DOWNLOADS_SAVING_HEADER" = "Salvataggio";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Annullato";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Download annullato.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Impossibile unire video e audio";

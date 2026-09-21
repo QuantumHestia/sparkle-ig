@@ -42,6 +42,7 @@ FOUNDATION_EXPORT void SPKInstallTweakStoryHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakReelsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakMessagesHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakGeneralUIHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallDownloadNotificationRoutingHooks(void);
 FOUNDATION_EXPORT void SPKInstallTweakLaunchCriticalHooks(void);
 FOUNDATION_EXPORT void SPKInstallOpenLinkFromClipboardHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideExploreGridHooksIfEnabled(void);
@@ -336,6 +337,9 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     [SPKLanguagePackUpdater checkForUpdatesIfDue];
     SPK_INSTALL(SPKInstallAccountSwitchHooksIfNeeded);
     SPK_INSTALL(SPKInstallTweakGeneralUIHooksIfNeeded);
+    // Installed regardless of the toggle: a notification posted before the user
+    // turned it off can still be tapped afterwards.
+    SPK_INSTALL(SPKInstallDownloadNotificationRoutingHooks);
     SPK_INSTALL(SPKInstallSharedLinkCleanupHooksIfEnabled);
     SPK_INSTALL(SPKInstallShareLongPressCopyHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);

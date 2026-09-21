@@ -9,6 +9,7 @@
 #import "../AutoSave/SPKAutoSaveSettingsViewController.h"
 #import "../MediaDownload/SPKMediaFFmpeg.h"
 #import "../MediaDownload/SPKMediaQualityManager.h"
+#import "SPKDownloadBackgroundKeeper.h"
 #import "SPKDownloadTypes.h"
 
 @implementation SPKDownloadsSettingsViewController
@@ -95,16 +96,34 @@
                                            label:SPKL(@"SETTINGS_STORAGE_USAGE_DOWNLOADS_TEXT")
                                    singularLabel:@"download"],
                                SPKL(@"DOWNLOADS_BEHAVIOR_PARALLEL_DOWNLOADS_HELP")),
-            SPKSettingWithHelp([SPKSetting stepperCellWithTitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_HISTORY_LIMIT_TITLE")
-                                        subtitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_VALUE_SAVED_VALUE_SUBTITLE")
-                                            icon:SPKSettingsIcon(@"history")
-                                     defaultsKey:kSPKDownloadHistoryLimitKey
-                                             min:50
-                                             max:1000
-                                            step:50
-                                           label:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_ENTRIES_TEXT")
-                                   singularLabel:@"entry"],
-                               SPKL(@"DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP")),
+            ({
+                SPKSetting *background = [SPKSetting switchCellWithTitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE")
+                                                                    icon:SPKSettingsIcon(@"exit")
+                                                             defaultsKey:kSPKDownloadBackgroundKey];
+                background.reloadsTableOnSwitchChange = YES; // grey out / re-enable the notification row live
+                background.helpText = SPKL(@"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP");
+                background;
+            }),
+            ({
+                SPKSetting *notify = [SPKSetting switchCellWithTitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE")
+                                                                icon:SPKSettingsIcon(@"notification")
+                                                         defaultsKey:kSPKDownloadBackgroundNotificationKey];
+                notify.switchChangeHandler = ^(BOOL isOn) {
+                    [[NSUserDefaults standardUserDefaults] setBool:isOn forKey:SPKEffectivePreferenceKey(kSPKDownloadBackgroundNotificationKey)];
+                    // Asked for only on the way on, so simply opening this page
+                    // never triggers a system permission prompt.
+                    if (isOn)
+                        [SPKDownloadBackgroundKeeper requestNotificationAuthorization];
+                };
+                notify.enabledProvider = ^BOOL {
+                    return [SPKUtils getBoolPref:kSPKDownloadBackgroundKey];
+                };
+                notify.helpText = SPKL(@"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP");
+                notify;
+            }),
+        ],
+                        nil),
+        SPKTopicSection(SPKL(@"DOWNLOADS_SAVING_HEADER"), @[
             ({
                 SPKSetting *toggle = [SPKSetting switchCellWithTitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_SAVE_CUSTOM_ALBUM_TITLE")
                                                                 icon:SPKSettingsIcon(@"photo_gallery")
@@ -125,6 +144,16 @@
                 album.helpText = SPKL(@"DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP");
                 album;
             }),
+            SPKSettingWithHelp([SPKSetting stepperCellWithTitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_HISTORY_LIMIT_TITLE")
+                                        subtitle:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_VALUE_SAVED_VALUE_SUBTITLE")
+                                            icon:SPKSettingsIcon(@"history")
+                                     defaultsKey:kSPKDownloadHistoryLimitKey
+                                             min:50
+                                             max:1000
+                                            step:50
+                                           label:SPKL(@"DOWNLOADS_DOWNLOADS_SETTINGS_ENTRIES_TEXT")
+                                   singularLabel:@"entry"],
+                               SPKL(@"DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP")),
         ],
                         nil),
         SPKTopicSection(SPKL(@"AUTO_SAVE_AUTO_SAVE_SETTINGS_QUALITY_HEADER"), @[

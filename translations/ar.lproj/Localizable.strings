@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "تم سحب %lu رسائل";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ قام بسحب %lu رسائل";
 "COMMON_ACTION_CLOSE" = "إغلاق";
+"COMMON_ACTION_OPEN_SETTINGS" = "فتح الإعدادات";
 "COMMON_DELETE_FAILED_TOAST" = "فشل الحذف";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "متابعة بالمثل";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "تم الطلب";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "يفعّل إجراءات الصوت في صفحات الصوت وأزرار إجراءات الوسائط. فعّل هذا قبل ضبط خيارات الصوت الأخرى.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "ما يفعله الضغط على ذلك الزر. الضغط المطول يفتح القائمة الكاملة.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "ينزّل الوسائط تلقائياً أثناء عرضها، واجهة تلو الأخرى.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@، %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "إنستغرام غير مسموح له بإرسال الإشعارات، لذا لا يمكنه إخبارك عند انتهاء التنزيلات. فعّل الإشعارات من إعدادات iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "الإشعارات مُعطّلة";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ إلى %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "انتهت التنزيلات";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "الألبوم الذي يتم الحفظ فيه. يُنشأ إن لم يكن موجوداً.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "يُبقي التنزيلات قيد التشغيل بعد مغادرتك إنستغرام، بما في ذلك التحويل والحفظ. تشغّل التنزيلات الأطول مقطعًا صوتيًا صامتًا حتى لا يعلّق iOS التطبيق. لا يتأثر أي صوت آخر قيد التشغيل.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "يرسل إشعارًا عند انتهاء التنزيلات وأنت بعيد عن إنستغرام. اضغط عليه لفتح سجل التنزيلات.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "يضيف الوسائط المنزّلة إلى ألبوم مسمى في Photos وإلى مكتبة الصور الرئيسية.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "يتحقق من وجود نسخة في الوجهة المحددة قبل الحفظ. يتخطى الحفظ التلقائي التطابقات تلقائياً، بينما تتيح التنزيلات اليدوية اختيار طريقة التعامل معها.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "يحدد عدد الإدخالات المكتملة التي تبقى في سجل التنزيلات. إزالة إدخال قديم من السجل لا تحذف الوسائط المحفوظة.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "تنزيلات الصوت";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "زر صفحة الصوت";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "الإجراء الافتراضي لصفحة الصوت";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "المتابعة في الخلفية";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "إشعار عند الانتهاء";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "جودة الصورة الافتراضية";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "جودة الفيديو الافتراضية";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "الكشف عن التنزيلات المكررة";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "يتحقق من بيانات صور Instagram على الويب للعثور على مرشحي 4K. يضيف ذلك طلب ويب واحداً لكل عملية بحث.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. يتحقق Fetch 4K Images من بيانات صور Instagram على الويب للعثور على مرشحي 4K، ويضيف طلباً واحداً.\n2. يختار Enhanced Media Resolution أعلى نسخة للصور أو الفيديو يكشفها Instagram.\nيلزم FFmpegKit لخيارات جودة الفيديو والترميز.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "فيديو فقط";
+"DOWNLOADS_SAVING_HEADER" = "الحفظ";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "تم الإلغاء";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "تم إلغاء التنزيل.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "تعذر دمج الفيديو والصوت";

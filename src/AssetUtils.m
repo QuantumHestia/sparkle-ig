@@ -155,6 +155,7 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"empty" : @{@"candidates" : @[ @"ig_icon_circle_x_outline_96" ]},
             @"error" : @{@"candidates" : @[ @"ig_icon_error_outline_24" ]},
             @"error_filled" : @{@"candidates" : @[ @"ig_icon_error_filled_24" ]},
+            @"exit" : @{@"candidates" : @[ @"ig_icon_exit_prism_outline_24", @"ig_icon_exit_outline_24" ]},
             @"expand" : @{@"candidates" : @[ @"ig_icon_fit_outline_24" ]},
             @"expand_reels" : @{@"candidates" : @[ @"ig_icon_fit_outline_44" ]},
             @"external_link" : @{@"candidates" : @[ @"ig_icon_external_link_outline_24" ]},

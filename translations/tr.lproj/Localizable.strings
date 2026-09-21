@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu ileti geri çekildi";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ %lu iletiyi geri çekti";
 "COMMON_ACTION_CLOSE" = "Kapat";
+"COMMON_ACTION_OPEN_SETTINGS" = "Ayarlar'ı aç";
 "COMMON_DELETE_FAILED_TOAST" = "Silinemedi";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Geri takip et";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "İstendi";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Ses sayfalarında ve medya işlem düğmelerinde ses işlemlerini etkinleştirir. Diğer ses seçeneklerini yapılandırmadan önce bunu açın.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "O düğmeye dokunmanın ne yapacağı. Uzun basmak tam menüyü açar.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Medyayı görüntüledikçe bölüm bölüm otomatik indirir.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram'ın bildirim gönderme izni yok, bu yüzden indirmeler bittiğinde size haber veremez. Bildirimleri iOS Ayarlar'dan açın.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Bildirimler kapalı";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%2$@ konumuna %1$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "İndirmeler tamamlandı";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Kaydedilecek albüm. Yoksa oluşturulur.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Instagram'dan çıktıktan sonra indirmelerin sürmesini sağlar; dönüştürme ve kaydetme dahil. Uzun süren indirmeler, iOS uygulamayı askıya almasın diye sessiz bir ses parçası çalar. Çalmakta olan başka hiçbir şey etkilenmez.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Siz Instagram'dan uzaktayken indirmeler bittiğinde bir bildirim gönderir. İndirme Geçmişi'ni açmak için bildirime dokunun.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "İndirilen medyayı ana fotoğraf arşivinizin yanı sıra Fotoğraflar'da adlandırılmış bir albüme ekler.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Kaydetmeden önce seçilen hedefte mevcut bir kopya olup olmadığını kontrol eder. Otomatik kayıtlar eşleşmeleri otomatik olarak atlar; manuel indirmelerde nasıl işlem yapılacağını seçebilirsiniz.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "İndirme Geçmişi'nde kaç tamamlanmış öğenin kalacağını belirler. Eski bir geçmiş öğesini kaldırmak, kayıtlı medyasını silmez.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Ses İndirmeleri";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Ses Sayfası Butonu";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Ses Sayfası Varsayılan Eylemi";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Arka planda devam et";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Bitince bildir";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Varsayılan Fotoğraf Kalitesi";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Varsayılan Video Kalitesi";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Yinelenen İndirmeleri Algıla";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Instagram'ın web görüntü verilerini 4K adayları için kontrol eder. Her arama için bir ek web isteği yapılır.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. 4K Görüntüleri Al, Instagram'ın web görüntü verilerini 4K adayları için kontrol eder ve bir ek istek yapar.\n2. Gelişmiş Medya Çözünürlüğü, Instagram'ın sunduğu en yüksek çözünürlüklü fotoğraf veya video varyantını seçer.\nFFmpegKit video kalitesi ve kodlama seçenekleri için gereklidir.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Yalnızca video";
+"DOWNLOADS_SAVING_HEADER" = "Kaydetme";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "İptal Edildi";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "İndirme iptal edildi.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Video ve ses birleştirilemedi";

@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu tin nhắn đã bị gỡ bỏ";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ đã gỡ bỏ %lu tin nhắn";
 "COMMON_ACTION_CLOSE" = "Đóng";
+"COMMON_ACTION_OPEN_SETTINGS" = "Mở Cài đặt";
 "COMMON_DELETE_FAILED_TOAST" = "Không xóa được";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Theo dõi lại";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Đã yêu cầu";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Bật các hành động âm thanh trên trang âm thanh và nút hành động phương tiện. Bật tùy chọn này trước khi cấu hình các tùy chọn âm thanh khác.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Việc xảy ra khi nhấn nút đó. Nhấn giữ mở menu đầy đủ.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Tự động tải phương tiện khi bạn xem, theo từng bề mặt.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram không được phép gửi thông báo nên không thể báo cho bạn khi tải xong. Hãy bật thông báo trong Cài đặt iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Thông báo đang tắt";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ vào %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Đã tải xong";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Album để lưu vào. Album sẽ được tạo nếu chưa tồn tại.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Giữ cho các lượt tải tiếp tục chạy sau khi bạn rời Instagram, bao gồm cả chuyển đổi và lưu. Những lượt tải lâu hơn sẽ phát một bản âm thanh im lặng để iOS không tạm dừng ứng dụng. Mọi thứ khác đang phát đều không bị ảnh hưởng.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Gửi thông báo khi các lượt tải hoàn tất trong lúc bạn rời Instagram. Chạm vào đó để mở Lịch sử tải xuống.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Thêm phương tiện đã tải xuống vào album có tên trong Ảnh cũng như thư viện ảnh chính của bạn.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Kiểm tra nơi lưu đã chọn để tìm bản sao trước khi lưu. Tự động lưu sẽ tự bỏ qua bản trùng; tải xuống thủ công cho phép bạn chọn cách xử lý.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Đặt số mục đã hoàn tất còn lại trong Lịch sử tải xuống. Xóa mục lịch sử cũ không xóa phương tiện đã lưu.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Tải xuống âm thanh";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Nút trang âm thanh";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Hành động mặc định trang âm thanh";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Tiếp tục trong nền";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Báo khi xong";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Chất lượng ảnh mặc định";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Chất lượng video mặc định";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Phát hiện tải xuống trùng lặp";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Kiểm tra dữ liệu hình ảnh web của Instagram để tìm các ứng viên 4K. Mỗi lần tra cứu sẽ thêm một yêu cầu web.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Fetch 4K Images kiểm tra dữ liệu hình ảnh web của Instagram để tìm ứng viên 4K và thêm một yêu cầu.\n2. Enhanced Media Resolution chọn biến thể ảnh hoặc video có độ phân giải cao nhất mà Instagram cung cấp.\nFFmpegKit là bắt buộc cho các tùy chọn chất lượng và mã hóa video.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Chỉ video";
+"DOWNLOADS_SAVING_HEADER" = "Lưu";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Đã hủy";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Đã hủy tải xuống.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Không thể hợp nhất video và âm thanh";

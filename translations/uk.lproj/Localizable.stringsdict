@@ -138,5 +138,45 @@
 			<string>%ld користувачі</string>
 		</dict>
 	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_FAILED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld не вдалося</string>
+			<key>few</key>
+			<string>%ld не вдалися</string>
+			<key>many</key>
+			<string>%ld не вдалися</string>
+			<key>other</key>
+			<string>%ld не вдалися</string>
+		</dict>
+	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Збережено %ld об'єкт</string>
+			<key>few</key>
+			<string>Збережено %ld об'єкти</string>
+			<key>many</key>
+			<string>Збережено %ld об'єктів</string>
+			<key>other</key>
+			<string>Збережено %ld об'єкта</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

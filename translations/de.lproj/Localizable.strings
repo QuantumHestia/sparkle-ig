@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu Nachrichten zurückgezogen";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ hat %lu Nachrichten zurückgezogen";
 "COMMON_ACTION_CLOSE" = "Schließen";
+"COMMON_ACTION_OPEN_SETTINGS" = "Einstellungen öffnen";
 "COMMON_DELETE_FAILED_TOAST" = "Löschen fehlgeschlagen";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Zurückfolgen";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Angefragt";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Aktiviert Audioaktionen auf Audioseiten und in Medien-Aktionsbuttons. Aktiviere dies, bevor du die anderen Audiooptionen konfigurierst.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Was ein Tippen auf diesen Button auslöst. Langes Drücken öffnet das vollständige Menü.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Lädt Medien automatisch herunter, während du sie ansiehst, Bereich für Bereich.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram darf keine Mitteilungen senden und kann dir deshalb nicht melden, wenn Downloads fertig sind. Aktiviere Mitteilungen in den iOS-Einstellungen.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Mitteilungen sind deaktiviert";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ in %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Downloads abgeschlossen";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Das Album, in das gespeichert wird. Es wird angelegt, falls es nicht existiert.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Hält Downloads am Laufen, nachdem du Instagram verlassen hast, samt Umwandlung und Speichern. Längere Downloads spielen eine stumme Tonspur ab, damit iOS die App nicht anhält. Alles andere, was gerade läuft, bleibt unberührt.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Sendet eine Mitteilung, wenn Downloads fertig werden, während du nicht in Instagram bist. Tippe sie an, um den Downloadverlauf zu öffnen.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Fügt heruntergeladene Medien neben deiner Hauptfotomediathek auch einem benannten Album in Fotos hinzu.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Prüft am ausgewählten Ziel, ob bereits eine Kopie vorhanden ist. Automatische Speicherungen überspringen Treffer automatisch; bei manuellen Downloads kannst du entscheiden, wie damit umgegangen wird.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Legt fest, wie viele abgeschlossene Einträge im Downloadverlauf verbleiben. Das Entfernen eines alten Verlaufseintrags löscht die gespeicherten Medien nicht.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Audio-Downloads";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Audio-Seiten-Schaltfläche";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Audio-Seiten-Standardaktion";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Im Hintergrund fortsetzen";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Bei Abschluss benachrichtigen";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Standard-Fotoqualität";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Standard-Videoqualität";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Doppelte Downloads erkennen";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Prüft die Web-Bilddaten von Instagram auf 4K-Kandidaten. Dadurch wird bei jeder Abfrage eine zusätzliche Webanfrage gestellt.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. 4K-Bilder prüfen durchsucht die Web-Bilddaten von Instagram nach 4K-Kandidaten und stellt eine zusätzliche Anfrage.\n2. Erweiterte Medienauflösung wählt die höchstauflösende Foto- oder Videovariante, die Instagram bereitstellt.\nFFmpegKit ist für Videoqualitäts- und Kodierungsoptionen erforderlich.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Nur Video";
+"DOWNLOADS_SAVING_HEADER" = "Speichern";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Abgebrochen";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Download abgebrochen.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Video und Audio konnten nicht kombiniert werden";

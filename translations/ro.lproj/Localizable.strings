@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu mesaje nesent";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ nesent %lu mesaje";
 "COMMON_ACTION_CLOSE" = "Închide";
+"COMMON_ACTION_OPEN_SETTINGS" = "Deschide Setări";
 "COMMON_DELETE_FAILED_TOAST" = "Nu s-a putut șterge";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Urmărește și tu";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Solicitat";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Activează acțiunile audio pe paginile audio și butoanele de acțiune media. Activează această opțiune înainte de a configura celelalte opțiuni audio.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Ce face o atingere pe acel buton. Apăsarea lungă deschide meniul complet.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Descarcă automat fișierele pe măsură ce le vezi, secțiune cu secțiune.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram nu are permisiunea de a trimite notificări, așa că nu te poate anunța când se termină descărcările. Activează notificările în Setări iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Notificările sunt dezactivate";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ în %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Descărcări finalizate";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Albumul în care se salvează. Este creat dacă nu există.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Menține descărcările în curs după ce ieși din Instagram, inclusiv conversia și salvarea. Descărcările mai lungi redau o pistă audio silențioasă pentru ca iOS să nu suspende aplicația. Nimic altceva din ce se redă nu este afectat.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Trimite o notificare când descărcările se termină cât timp ești plecat din Instagram. Atinge-o pentru a deschide Istoricul descărcărilor.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Adaugă fișierele descărcate într-un album cu nume din Poze, precum și în biblioteca foto principală.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Verifică existența unei copii în destinația aleasă înainte de salvare. Salvările automate omit automat duplicatele; pentru descărcările manuale poți alege cum să le gestionezi.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Stabilește câte intrări finalizate rămân în Istoricul descărcărilor. Eliminarea unei intrări vechi din istoric nu șterge media salvată.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Descărcări audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Buton pagină audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Acțiune implicită pagină audio";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Continuă în fundal";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Anunță la finalizare";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Calitate implicită fotografie";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Calitate implicită videoclip";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Detectează descărcări duplicate";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Verifică datele web ale imaginilor Instagram pentru variante 4K. Pentru fiecare căutare face o solicitare web suplimentară.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Obținere imagini 4K verifică datele web ale imaginilor Instagram pentru variante 4K și face o solicitare suplimentară.\n2. Rezoluție media îmbunătățită selectează varianta cu cea mai înaltă rezoluție pe care Instagram o oferă pentru fotografii sau videoclipuri.\nFFmpegKit este necesar pentru opțiunile de calitate video și codificare.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "numai videoclip";
+"DOWNLOADS_SAVING_HEADER" = "Salvare";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Anulat";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Descărcare anulată.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Nu se poate fuziona video și audio";

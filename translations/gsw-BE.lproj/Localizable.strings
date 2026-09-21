@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu Nachrichte zruggzoge";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ het %lu Nachrichte zrüggzoge";
 "COMMON_ACTION_CLOSE" = "Zuemache";
+"COMMON_ACTION_OPEN_SETTINGS" = "Yystellige öffne";
 "COMMON_DELETE_FAILED_TOAST" = "Lösche fählgschlage";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Zrugg folge";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Aagfragt";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Aktiviert Audio-Aktione uf Audio-Syte u Medie-Aktionsbuttons. Mach das a, bevor d'anderä Audio-Optione konfigurierscht.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Was e Tipp uf dëse Button macht. Länger drucke macht ds ganze Menü uf.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Ladet Medie automatisch abe wenn du's aluegsch, Bereich für Bereich.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram darf kei Mitteilige schicke u cha dir drum nid säge, wenn d Downloads fertig sy. Schalt d Mitteilige i de iOS-Yystellige y.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Mitteilige sy usgschalte";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ i %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Downloads fertig";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "S'Album zum Yyspeichere. Es wird erstellt, falls es nid scho existiert.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Haltet d Downloads am Laufe, nachdäm du Instagram verlaa hesch, mitsamt Umwandlig u Speichere. Längeri Downloads spile ne stummi Tonspur ab, damit iOS d App nid aahaltet. Alles andere, wo grad louft, blybt unberüehrt.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Schickt e Mitteilig, wenn d Downloads fertig wärde, während du nid i Instagram bisch. Tipp si a, für de Downloadverlouf z öffne.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Fügt abegladeni Medie me benannte Album i Photos dezue, sowie dyre Haupt-Foti-Bibliothek.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Prüeft ds uswählte Ziel vor em Speichere uf e bestehendi Kopie. Auto-Speicherige überspringe Übereinstimmige automatisch; manuelli Download loh di wähle wie du dermit umgahsch.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Leit fescht wie vieu fertigi Yträg im Download-Verlauf blybe. Ds Entferne vomene aute Verlaufs-Yytrag löscht nid dessi gspeicherets Medie.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Audio-Downloads";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Audio-Syte-Chnopf";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Audio-Syte-Standardaktion";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Im Hintergrund wytermache";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Bschiid gä, wenn fertig";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Standard-Foti-Qualität";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Standard-Video-Qualität";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Duplikat-Downloads erkenne";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Prüeft Instagram sini Web-Biud-Date uf 4K-Kandidate. Das macht ei zuesätzlechi Web-Aafrag pro Abfrag.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. 4K-Biuder hole prüeft Instagram sini Web-Biud-Date uf 4K-Kandidate und macht ei zuesätzlechi Aafrag.\n2. Erwyterete Medie-Uflösig wählt d'Foti- oder Video-Variante mit dr höchschte Uflösig, wo Instagram aabütet.\nFFmpegKit wird für Video-Qualität und Encoding-Optione bruucht.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Nume Video";
+"DOWNLOADS_SAVING_HEADER" = "Spychere";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Abbroche";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Download abbroche.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Video und Audio hei nid chönne zämegfüegt wärde";

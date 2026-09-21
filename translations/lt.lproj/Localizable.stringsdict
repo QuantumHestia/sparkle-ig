@@ -142,5 +142,45 @@
 			<string>%ld vartotojų</string>
 		</dict>
 	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_FAILED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld nepavyko</string>
+			<key>few</key>
+			<string>%ld nepavyko</string>
+			<key>many</key>
+			<string>%ld nepavyko</string>
+			<key>other</key>
+			<string>%ld nepavyko</string>
+		</dict>
+	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>Įrašytas %ld elementas</string>
+			<key>few</key>
+			<string>Įrašyti %ld elementai</string>
+			<key>many</key>
+			<string>Įrašyta %ld elemento</string>
+			<key>other</key>
+			<string>Įrašyta %ld elementų</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

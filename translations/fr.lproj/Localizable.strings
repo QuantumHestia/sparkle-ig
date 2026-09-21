@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu messages non envoyés";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ a non envoyé %lu messages";
 "COMMON_ACTION_CLOSE" = "Fermer";
+"COMMON_ACTION_OPEN_SETTINGS" = "Ouvrir Réglages";
 "COMMON_DELETE_FAILED_TOAST" = "Échec de la suppression";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Suivre en retour";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Demandé";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Active les actions audio sur les pages audio et les boutons d'action des médias. Activez cette option avant de configurer les autres options audio.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Ce que fait un appui sur ce bouton. Un appui long ouvre le menu complet.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Télécharge automatiquement les médias à mesure que vous les voyez, surface par surface.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram n'est pas autorisé à envoyer des notifications, il ne peut donc pas vous prévenir quand les téléchargements se terminent. Activez-les dans les Réglages iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Les notifications sont désactivées";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ dans %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Téléchargements terminés";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "L'album dans lequel enregistrer. Il est créé s'il n'existe pas.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Poursuit les téléchargements après que vous avez quitté Instagram, conversion et enregistrement compris. Les téléchargements plus longs lisent une piste audio silencieuse pour qu'iOS ne suspende pas l'app. Rien d'autre en cours de lecture n'est affecté.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Envoie une notification lorsque les téléchargements se terminent pendant votre absence d'Instagram. Touchez-la pour ouvrir l'historique des téléchargements.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Ajoute les médias téléchargés à un album nommé dans Photos ainsi qu'à votre photothèque principale.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Vérifie la destination choisie avant l'enregistrement. Les enregistrements automatiques ignorent les correspondances automatiquement ; pour les téléchargements manuels, vous choisissez la marche à suivre.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Définit le nombre d'entrées terminées conservées dans l'historique des téléchargements. Supprimer une ancienne entrée d'historique ne supprime pas les médias enregistrés.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Téléchargements audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Bouton de page audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Action par défaut de page audio";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Continuer en arrière-plan";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Notifier à la fin";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Qualité de photo par défaut";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Qualité vidéo par défaut";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Détecter les téléchargements en doublon";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Consulte les données d'images web d'Instagram pour trouver des candidats 4K. Cela effectue une requête web supplémentaire par recherche.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Fetch 4K Images consulte les données d'images web d'Instagram pour trouver des candidats 4K et effectue une requête supplémentaire.\n2. Enhanced Media Resolution sélectionne la variante photo ou vidéo de la plus haute résolution proposée par Instagram.\nFFmpegKit est requis pour les options de qualité vidéo et d'encodage.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Vidéo uniquement";
+"DOWNLOADS_SAVING_HEADER" = "Enregistrement";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Annulé";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Téléchargement annulé.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Impossible de fusionner la vidéo et l'audio";

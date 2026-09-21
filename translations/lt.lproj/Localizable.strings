@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu pranešimų atšaukta";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ atšaukė %lu pranešimų";
 "COMMON_ACTION_CLOSE" = "Uždaryti";
+"COMMON_ACTION_OPEN_SETTINGS" = "Atidaryti nustatymus";
 "COMMON_DELETE_FAILED_TOAST" = "Nepavyko ištrinti";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Sekti atgal";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Užklausta";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Įjungia garso veiksmus garso puslapiuose ir medijos veiksmų mygtukuose. Įjunkite tai prieš konfigūruodami kitas garso parinktis.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Ką atlieka to mygtuko palietimas. Ilgai paspaudus atidaromas visas meniu.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Automatiškai atsisiunčia mediją ją peržiūrint, pagal atskiras sritis.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram neleidžiama siųsti pranešimų, todėl ji negali pranešti, kada atsisiuntimai baigiasi. Įjunkite pranešimus iOS nustatymuose.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Pranešimai išjungti";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ į %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Atsisiuntimai baigti";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Albumas, į kurį išsaugoma. Jei jo nėra, jis sukuriamas.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Leidžia atsisiuntimams tęstis po to, kai išeinate iš Instagram, įskaitant konvertavimą ir įrašymą. Ilgesni atsisiuntimai groja tylų garso takelį, kad iOS nesustabdytų programėlės. Niekas kita, kas tuo metu grojama, nepaveikiama.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Išsiunčia pranešimą, kai atsisiuntimai baigiasi jums nesant Instagram. Bakstelėkite, kad atidarytumėte atsisiuntimų istoriją.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Prideda atsisiųstą mediją į pavadintą albumą programoje Nuotraukos, taip pat į pagrindinę nuotraukų biblioteką.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Prieš išsaugodama patikrina pasirinktoje paskirties vietoje esamą kopiją. Automatiniai išsaugojimai sutapimus praleidžia automatiškai; rankiniu būdu atsisiunčiant galite pasirinkti, kaip juos tvarkyti.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Nustato, kiek užbaigtų įrašų lieka atsisiuntimų istorijoje. Seno istorijos įrašo pašalinimas neištrina jo išsaugotos medijos.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Garso atsisiuntimai";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Garso puslapio mygtukas";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Numatytasis garso puslapio veiksmas";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Tęsti fone";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Pranešti, kai baigsis";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Numatytoji nuotraukų kokybė";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Numatytoji vaizdo kokybė";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Aptikti pasikartojančius atsisiuntimus";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Tikrina Instagram žiniatinklio vaizdų duomenis dėl 4K kandidatų. Kiekvienai paieškai atliekama viena papildoma žiniatinklio užklausa.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. 4K vaizdų gavimas tikrina Instagram žiniatinklio vaizdų duomenis dėl 4K kandidatų ir atlieka vieną papildomą užklausą.\n2. Pagerinta medijos raiška parenka didžiausios raiškos nuotraukos ar vaizdo įrašo variantą, kurį pateikia Instagram.\nVaizdo kokybės ir kodavimo parinktims reikalingas FFmpegKit.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Tik vaizdo įrašas";
+"DOWNLOADS_SAVING_HEADER" = "Įrašymas";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Atšaukta";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Atsisiuntimas atšauktas.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Nepavyko sujungti vaizdo ir garso";

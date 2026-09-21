@@ -11,6 +11,7 @@
 #import "SPKDownloadHelpers.h"
 #import "SPKDownloadPresenter.h"
 #import "SPKDownloadStore.h"
+#import "SPKDownloadBackgroundKeeper.h"
 #import "SPKDownloadTransfer.h"
 
 @interface SPKDownloadActiveTransfer : NSObject
@@ -227,7 +228,30 @@ static NSString *SPKRenameStagedPath(NSString *stagedPath, SPKDownloadItem *item
                                                           }];
         [[NSNotificationCenter defaultCenter] postNotificationName:SPKDownloadServiceDidChangeNotification object:self];
         [self.presenter handleJobSnapshot:snapshot];
+        [self updateBackgroundKeepAliveForJob:snapshot];
     });
+}
+
+// Every item mutation funnels through notifyJob:, so this is the one place that
+// has to tell the keeper whether anything is still running. The notified job
+// answers the question on its own whenever it still has work, which is the case
+// for every progress tick; only a job that just went quiet costs a full scan.
+- (void)updateBackgroundKeepAliveForJob:(SPKDownloadJob *)snapshot {
+    if (snapshot && SPKDownloadJobHasInFlightItems(snapshot)) {
+        [SPKDownloadBackgroundKeeper.shared setHasActiveWork:YES];
+        return;
+    }
+    [SPKDownloadBackgroundKeeper.shared setHasActiveWork:[self hasInFlightWork]];
+}
+
+- (BOOL)hasInFlightWork {
+    @synchronized(self) {
+        for (SPKDownloadJob *job in self.jobs) {
+            if (SPKDownloadJobHasInFlightItems(job))
+                return YES;
+        }
+    }
+    return NO;
 }
 
 - (void)reportItemProgressForJobID:(NSString *)jobID
@@ -388,6 +412,13 @@ static NSString *SPKRenameStagedPath(NSString *stagedPath, SPKDownloadItem *item
         [job recomputeDerivedState];
         [self notifyJob:job itemID:itemID];
         if (SPKDownloadStateIsTerminal(newState)) {
+            // Cancelled and interrupted items are deliberately not tallied: the
+            // finish notification reports work that ran to a conclusion, and a
+            // cancellation is already the user's own doing.
+            if (newState == SPKDownloadStateSucceeded || newState == SPKDownloadStateFailed) {
+                [SPKDownloadBackgroundKeeper.shared noteItemFinishedWithSuccess:(newState == SPKDownloadStateSucceeded)
+                                                                    destination:job.request.destination];
+            }
             [self.store persistJobs:[self allJobs] immediately:YES];
         } else {
             [self persist];

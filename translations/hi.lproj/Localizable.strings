@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu संदेशों को भेजना रद्द किया गया";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ ने %lu संदेशों को भेजना रद्द किया";
 "COMMON_ACTION_CLOSE" = "बंद करें";
+"COMMON_ACTION_OPEN_SETTINGS" = "सेटिंग्स खोलें";
 "COMMON_DELETE_FAILED_TOAST" = "हटाने में विफल";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "वापस फ़ॉलो करें";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "अनुरोध भेजा";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "ऑडियो पेजों और मीडिया एक्शन बटनों पर ऑडियो कार्रवाइयां सक्षम करता है। अन्य ऑडियो विकल्प कॉन्फ़िगर करने से पहले इसे चालू करें।";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "उस बटन पर टैप करने से क्या होता है। लंबा दबाने पर पूरा मेन्यू खुलता है।";
 "DOWNLOADS_AUTO_SAVE_HELP" = "देखते समय मीडिया को हर सतह पर अपने आप डाउनलोड करता है।";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "इंस्टाग्राम को सूचनाएं भेजने की अनुमति नहीं है, इसलिए वह आपको डाउनलोड पूरे होने पर नहीं बता सकता। iOS सेटिंग्स में सूचनाएं चालू करें।";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "सूचनाएं बंद हैं";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%2$@ में %1$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "डाउनलोड पूरे हुए";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "वह एल्बम जिसमें सहेजना है। यदि यह मौजूद नहीं है तो बना दिया जाता है।";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "इंस्टाग्राम छोड़ने के बाद भी डाउनलोड चलते रहते हैं, रूपांतरण और सेव करना भी शामिल है। लंबे डाउनलोड एक मौन ऑडियो ट्रैक चलाते हैं ताकि iOS ऐप को निलंबित न करे। जो कुछ और चल रहा हो, वह प्रभावित नहीं होता।";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "जब आप इंस्टाग्राम से दूर हों और डाउनलोड पूरे हो जाएं, तब एक सूचना भेजता है। डाउनलोड इतिहास खोलने के लिए उस पर टैप करें।";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "डाउनलोड किए गए मीडिया को आपकी मुख्य फ़ोटो लाइब्रेरी के साथ Photos में एक नामित एल्बम में भी जोड़ता है।";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "सेव करने से पहले चुने गए गंतव्य में मौजूदा कॉपी की जांच करता है। ऑटो-सेव मिलान को अपने-आप छोड़ता है; मैन्युअल डाउनलोड में आप तय कर सकते हैं कि उन्हें कैसे संभालना है।";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Download History में कितनी पूर्ण प्रविष्टियां रखी जाएं सेट करता है। पुरानी इतिहास प्रविष्टि हटाने से सेव किया गया मीडिया नहीं हटता।";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "ऑडियो डाउनलोड";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "ऑडियो पृष्ठ बटन";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "ऑडियो पृष्ठ डिफ़ॉल्ट क्रिया";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "पृष्ठभूमि में जारी रखें";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "पूरा होने पर सूचित करें";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "डिफ़ॉल्ट फ़ोटो गुणवत्ता";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "डिफ़ॉल्ट वीडियो गुणवत्ता";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "डुप्लिकेट डाउनलोड का पता लगाएं";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "4K विकल्पों के लिए Instagram के वेब इमेज डेटा की जांच करता है। हर लुकअप के लिए एक अतिरिक्त वेब अनुरोध करता है।";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Fetch 4K Images Instagram के वेब इमेज डेटा में 4K विकल्पों की जांच करता है और एक अतिरिक्त अनुरोध करता है।\n2. Enhanced Media Resolution फ़ोटो या वीडियो के लिए Instagram द्वारा उपलब्ध कराया गया सर्वोच्च-रिज़ॉल्यूशन वेरिएंट चुनता है।\nवीडियो गुणवत्ता और एन्कोडिंग विकल्पों के लिए FFmpegKit आवश्यक है।";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "केवल वीडियो";
+"DOWNLOADS_SAVING_HEADER" = "सहेजना";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "रद्द किया गया";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "डाउनलोड रद्द किया गया।";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "वीडियो और ऑडियो को मर्ज करने में विफल";

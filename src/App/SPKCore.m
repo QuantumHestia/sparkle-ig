@@ -201,6 +201,8 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"downloads_enhanced_media_resolution" : @(YES),
         @"downloads_fetch_4k_images" : @(NO),
         @"downloads_detect_duplicates" : @(YES),
+        @"downloads_background" : @(YES),
+        @"downloads_background_notification" : @(NO),
         @"downloads_max_concurrent" : @(2),
         @"downloads_history_limit" : @(100),
         @"downloads_photos_album_enabled" : @(NO),

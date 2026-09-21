@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "เลิกส่งข้อความแล้ว %lu รายการ";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ เรียกคืนข้อความแล้ว %lu รายการ";
 "COMMON_ACTION_CLOSE" = "ปิด";
+"COMMON_ACTION_OPEN_SETTINGS" = "เปิดการตั้งค่า";
 "COMMON_DELETE_FAILED_TOAST" = "ลบไม่สำเร็จ";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "ติดตามกลับ";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "ส่งคำขอแล้ว";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "เปิดใช้งานการกระทำเกี่ยวกับเสียงบนหน้าเสียงและปุ่มการกระทำของมีเดีย เปิดตัวเลือกนี้ก่อนตั้งค่าตัวเลือกเสียงอื่น ๆ";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "สิ่งที่เกิดขึ้นเมื่อแตะปุ่มนั้น การกดค้างจะเปิดเมนูแบบเต็ม";
 "DOWNLOADS_AUTO_SAVE_HELP" = "ดาวน์โหลดมีเดียโดยอัตโนมัติขณะที่คุณดู ทีละพื้นที่ใช้งาน";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram ไม่ได้รับอนุญาตให้ส่งการแจ้งเตือน จึงไม่สามารถบอกคุณได้เมื่อการดาวน์โหลดเสร็จสิ้น เปิดการแจ้งเตือนในการตั้งค่า iOS";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "การแจ้งเตือนถูกปิดอยู่";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ ไปยัง %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "ดาวน์โหลดเสร็จแล้ว";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "อัลบั้มที่จะบันทึกเข้าไป จะถูกสร้างขึ้นหากยังไม่มี";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "ทำให้การดาวน์โหลดทำงานต่อหลังจากคุณออกจาก Instagram รวมถึงการแปลงไฟล์และการบันทึก การดาวน์โหลดที่ใช้เวลานานจะเล่นแทร็กเสียงเงียบเพื่อไม่ให้ iOS พักแอป เสียงอื่นที่กำลังเล่นอยู่จะไม่ได้รับผลกระทบ";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "ส่งการแจ้งเตือนเมื่อการดาวน์โหลดเสร็จสิ้นขณะที่คุณไม่ได้อยู่ใน Instagram แตะเพื่อเปิดประวัติการดาวน์โหลด";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "เพิ่มมีเดียที่ดาวน์โหลดไปยังอัลบั้มที่ตั้งชื่อไว้ในแอปรูปภาพ รวมถึงคลังรูปภาพหลักของคุณ";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "ตรวจสอบปลายทางที่เลือกไว้ว่ามีสำเนาอยู่แล้วหรือไม่ก่อนบันทึก การบันทึกอัตโนมัติจะข้ามรายการที่ตรงกันโดยอัตโนมัติ ส่วนการดาวน์โหลดด้วยตนเองจะให้คุณเลือกวิธีจัดการ";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "กำหนดจำนวนรายการที่เสร็จสิ้นที่จะคงอยู่ในประวัติการดาวน์โหลด การลบรายการประวัติเก่าจะไม่ลบมีเดียที่บันทึกไว้";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "การดาวน์โหลดเสียง";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "ปุ่มหน้าเสียง";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "การทำงานเริ่มต้นของหน้าเสียง";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "ดำเนินการต่อในเบื้องหลัง";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "แจ้งเตือนเมื่อเสร็จ";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "คุณภาพรูปภาพเริ่มต้น";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "คุณภาพวิดีโอเริ่มต้น";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "ตรวจจับการดาวน์โหลดซ้ำ";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "ตรวจสอบข้อมูลรูปภาพเว็บของ Instagram เพื่อหารูปที่มีความละเอียด 4K ซึ่งจะทำการร้องขอเว็บเพิ่มเติมอีก 1 ครั้งต่อการตรวจสอบแต่ละครั้ง";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. ดึงรูปภาพ 4K จะตรวจสอบข้อมูลรูปภาพเว็บของ Instagram เพื่อหารูปที่มีความละเอียด 4K และทำการร้องขอเพิ่มเติมอีก 1 ครั้ง\n2. ความละเอียดสื่อขั้นสูงจะเลือกรูปภาพหรือวิดีโอเวอร์ชันที่มีความละเอียดสูงสุดที่ Instagram เปิดให้ใช้งาน\nจำเป็นต้องมี FFmpegKit สำหรับตัวเลือกคุณภาพวิดีโอและการเข้ารหัส";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "วิดีโอเท่านั้น";
+"DOWNLOADS_SAVING_HEADER" = "การบันทึก";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "ยกเลิกแล้ว";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "ยกเลิกการดาวน์โหลดแล้ว";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "ไม่สามารถรวมวิดีโอและเสียงเข้าด้วยกันได้";

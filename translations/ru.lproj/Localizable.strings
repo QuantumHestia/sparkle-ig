@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "Удалено %lu сообщений";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ удалил(а) %lu сообщений";
 "COMMON_ACTION_CLOSE" = "Закрыть";
+"COMMON_ACTION_OPEN_SETTINGS" = "Открыть настройки";
 "COMMON_DELETE_FAILED_TOAST" = "Ошибка удаления";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Подписаться в ответ";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Запрошено";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Включает действия с аудио на аудиостраницах и кнопках действий медиа. Включите это, прежде чем настраивать остальные параметры аудио.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Что делает нажатие на эту кнопку. Долгое нажатие открывает полное меню.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Автоматически скачивает медиа по мере просмотра, раздел за разделом.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram не разрешено отправлять уведомления, поэтому он не может сообщить о завершении загрузок. Включите уведомления в настройках iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Уведомления отключены";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ в %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Загрузки завершены";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Альбом для сохранения. Он создаётся, если его нет.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Загрузки продолжаются после выхода из Instagram, включая конвертацию и сохранение. Более длительные загрузки воспроизводят беззвучную звуковую дорожку, чтобы iOS не приостановила приложение. Ничто другое из воспроизводимого не затрагивается.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Отправляет уведомление, когда загрузки завершаются, пока вас нет в Instagram. Нажмите на него, чтобы открыть историю загрузок.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Добавляет загруженные медиа в именованный альбом в Фото, а также в основную медиатеку.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Проверяет выбранное место на наличие копии перед сохранением. Автосохранение автоматически пропускает совпадения, а для ручных загрузок можно выбрать способ обработки.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Определяет, сколько завершённых записей остаётся в истории загрузок. Удаление старой записи истории не удаляет сохранённые медиа.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Загрузки аудио";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Кнопка страницы аудио";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Действие по умолчанию для страницы аудио";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Продолжать в фоне";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Уведомлять по завершении";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Качество фото по умолчанию";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Качество видео по умолчанию";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Обнаруживать дублирующиеся загрузки";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Проверяет веб-данные Instagram об изображении на наличие вариантов 4K. Для каждого поиска выполняется один дополнительный веб-запрос.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Получение изображений 4K проверяет веб-данные Instagram об изображении на наличие вариантов 4K и выполняет один дополнительный запрос.\n2. Улучшенное разрешение медиа выбирает вариант фото или видео с наивысшим разрешением, доступный в Instagram.\nДля параметров качества видео и кодирования требуется FFmpegKit.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Только видео";
+"DOWNLOADS_SAVING_HEADER" = "Сохранение";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Отменено";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Загрузка отменена.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Не удалось объединить видео и аудио";

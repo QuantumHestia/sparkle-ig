@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu pesan dibatalkan kirim";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ membatalkan pengiriman %lu pesan";
 "COMMON_ACTION_CLOSE" = "Tutup";
+"COMMON_ACTION_OPEN_SETTINGS" = "Buka Pengaturan";
 "COMMON_DELETE_FAILED_TOAST" = "Gagal menghapus";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Ikuti balik";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Diminta";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Mengaktifkan tindakan audio di halaman audio dan tombol tindakan media. Aktifkan ini sebelum mengonfigurasi opsi audio lainnya.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Apa yang terjadi saat tombol itu diketuk. Tekan lama membuka menu lengkap.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Secara otomatis mengunduh media saat Anda melihatnya, permukaan demi permukaan.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Instagram tidak diizinkan mengirim notifikasi, jadi tidak bisa memberi tahu kamu saat unduhan selesai. Aktifkan notifikasi di Pengaturan iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Notifikasi dimatikan";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ ke %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Unduhan selesai";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Album tempat menyimpan. Album akan dibuat jika belum ada.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Menjaga unduhan tetap berjalan setelah kamu meninggalkan Instagram, termasuk konversi dan penyimpanan. Unduhan yang lebih lama memutar trek audio senyap agar iOS tidak menangguhkan aplikasi. Apa pun yang sedang diputar tidak terpengaruh.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Mengirim notifikasi saat unduhan selesai ketika kamu tidak sedang membuka Instagram. Ketuk untuk membuka Riwayat Unduhan.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Menambahkan media yang diunduh ke album bernama di Photos serta pustaka foto utama Anda.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Memeriksa tujuan yang dipilih untuk salinan yang sudah ada sebelum menyimpan. Simpan otomatis akan melewati kecocokan secara otomatis; unduhan manual memungkinkan Anda memilih cara menanganinya.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Mengatur berapa banyak entri selesai yang tetap ada di Riwayat Unduhan. Menghapus entri riwayat lama tidak menghapus media yang tersimpan.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Unduhan Audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Tombol Halaman Audio";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Aksi Default Halaman Audio";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Lanjutkan di Latar Belakang";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Beri tahu saat selesai";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Kualitas Foto Default";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Kualitas Video Default";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Deteksi Unduhan Duplikat";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Memeriksa data gambar web Instagram untuk kandidat 4K. Ini membuat satu permintaan web tambahan untuk setiap pencarian.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Ambil Gambar 4K memeriksa data gambar web Instagram untuk kandidat 4K dan membuat satu permintaan tambahan.\n2. Resolusi Media yang Ditingkatkan memilih varian foto atau video dengan resolusi tertinggi yang disediakan Instagram.\nFFmpegKit diperlukan untuk opsi kualitas video dan encoding.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Hanya video";
+"DOWNLOADS_SAVING_HEADER" = "Penyimpanan";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Dibatalkan";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Unduhan dibatalkan.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Tidak dapat menggabungkan video dan audio";

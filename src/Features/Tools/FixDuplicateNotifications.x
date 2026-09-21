@@ -23,8 +23,9 @@
 // IG's server-generated push id ("gid"), which IG's genuinely local
 // notifications do not.
 //
-// Sparkle itself never posts a UNNotificationRequest (SPKNotify draws an in-app
-// view), so nothing of ours can be caught by this.
+// Sparkle's own requests (the presence mirror and the background-download finish
+// notification; SPKNotify draws an in-app view instead) carry no "gid", so none
+// of them can be caught by this.
 
 static BOOL SPKNotificationRequestIsPushDerived(UNNotificationRequest *request) {
     NSDictionary *userInfo = request.content.userInfo;

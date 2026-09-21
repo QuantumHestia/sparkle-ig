@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu μηνύματα ανεστάλησαν";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ ανέστειλε %lu μηνύματα";
 "COMMON_ACTION_CLOSE" = "Κλείσιμο";
+"COMMON_ACTION_OPEN_SETTINGS" = "Άνοιγμα ρυθμίσεων";
 "COMMON_DELETE_FAILED_TOAST" = "Αποτυχία διαγραφής";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Ακολούθησε κι εσύ";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Στάλθηκε αίτημα";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "Ενεργοποιεί τις ενέργειες ήχου στις σελίδες ήχου και στα κουμπιά ενεργειών μέσων. Ενεργοποιήστε το πριν ρυθμίσετε τις άλλες επιλογές ήχου.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "Τι κάνει ένα πάτημα σε αυτό το κουμπί. Το παρατεταμένο πάτημα ανοίγει το πλήρες μενού.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "Κατεβάζει αυτόματα τα μέσα καθώς τα βλέπεις, ενότητα προς ενότητα.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@, %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "Το Instagram δεν επιτρέπεται να στέλνει ειδοποιήσεις, οπότε δεν μπορεί να σας πει πότε ολοκληρώνονται οι λήψεις. Ενεργοποιήστε τις ειδοποιήσεις στις Ρυθμίσεις iOS.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "Οι ειδοποιήσεις είναι απενεργοποιημένες";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ σε %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "Οι λήψεις ολοκληρώθηκαν";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "Το άλμπουμ αποθήκευσης. Δημιουργείται αν δεν υπάρχει.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "Διατηρεί τις λήψεις σε εξέλιξη αφού φύγετε από το Instagram, μαζί με τη μετατροπή και την αποθήκευση. Οι μεγαλύτερες λήψεις αναπαράγουν ένα αθόρυβο κομμάτι ήχου ώστε το iOS να μην αναστείλει την εφαρμογή. Ό,τι άλλο παίζει δεν επηρεάζεται.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "Στέλνει μια ειδοποίηση όταν οι λήψεις ολοκληρώνονται ενώ λείπετε από το Instagram. Πατήστε την για να ανοίξετε το Ιστορικό λήψεων.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "Προσθέτει τα ληφθέντα μέσα σε ονομασμένο άλμπουμ στις Φωτογραφίες, παράλληλα με την κύρια βιβλιοθήκη φωτογραφιών σου.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "Ελέγχει τον επιλεγμένο προορισμό για υπάρχον αντίγραφο πριν από την αποθήκευση. Οι αυτόματες αποθηκεύσεις παραλείπουν αυτόματα τα αντίγραφα, ενώ για τις μη αυτόματες λήψεις επιλέγεις πώς θα τα χειριστείς.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "Ορίζει πόσες ολοκληρωμένες εγγραφές παραμένουν στο Ιστορικό λήψεων. Η αφαίρεση μιας παλιάς εγγραφής ιστορικού δεν διαγράφει τα αποθηκευμένα μέσα της.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "Λήψεις Ήχου";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "Κουμπί Σελίδας Ήχου";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "Προεπιλεγμένη Ενέργεια Σελίδας Ήχου";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "Συνέχεια στο παρασκήνιο";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "Ειδοποίηση όταν τελειώσει";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "Προεπιλεγμένη Ποιότητα Φωτογραφίας";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "Προεπιλεγμένη Ποιότητα Βίντεο";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "Ανίχνευση Διπλών Λήψεων";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "Ελέγχει τα δεδομένα εικόνων του Instagram από τον ιστό για υποψήφιες εικόνες 4K. Αυτό κάνει ένα επιπλέον web αίτημα για κάθε αναζήτηση.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. Η επιλογή Fetch 4K Images ελέγχει τα δεδομένα εικόνων του Instagram από τον ιστό για υποψήφιες εικόνες 4K και κάνει ένα επιπλέον αίτημα.\n2. Η επιλογή Enhanced Media Resolution επιλέγει την παραλλαγή φωτογραφίας ή βίντεο με την υψηλότερη ανάλυση που διαθέτει το Instagram.\nΤο FFmpegKit απαιτείται για τις επιλογές ποιότητας βίντεο και κωδικοποίησης.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "Μόνο βίντεο";
+"DOWNLOADS_SAVING_HEADER" = "Αποθήκευση";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "Ακυρώθηκε";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "Η λήψη ακυρώθηκε.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "Δεν ήταν δυνατή η συγχώνευση του βίντεο και του ήχου";

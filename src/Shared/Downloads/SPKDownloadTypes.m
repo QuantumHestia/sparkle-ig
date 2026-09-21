@@ -8,6 +8,8 @@ NSInteger const SPKDownloadStoreSchemaVersion = 2;
 NSString *const kSPKDownloadMaxConcurrentKey = @"downloads_max_concurrent";
 NSString *const kSPKDownloadHistoryLimitKey = @"downloads_history_limit";
 NSString *const kSPKDownloadDetectDuplicatesKey = @"downloads_detect_duplicates";
+NSString *const kSPKDownloadBackgroundKey = @"downloads_background";
+NSString *const kSPKDownloadBackgroundNotificationKey = @"downloads_background_notification";
 
 NSNotificationName const SPKDownloadServiceDidChangeNotification = @"SPKDownloadServiceDidChangeNotification";
 NSNotificationName const SPKDownloadJobDidChangeNotification = @"SPKDownloadJobDidChangeNotification";

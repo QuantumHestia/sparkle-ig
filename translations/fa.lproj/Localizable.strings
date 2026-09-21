@@ -298,6 +298,7 @@
 "BATCH_UNSENT_COUNT_FORMAT" = "%lu پیام لغو ارسال شد";
 "BATCH_UNSENT_MESSAGES_FORMAT" = "%@ ارسال %lu پیام را لغو کرد";
 "COMMON_ACTION_CLOSE" = "بستن";
+"COMMON_ACTION_OPEN_SETTINGS" = "باز کردن تنظیمات";
 "COMMON_DELETE_FAILED_TOAST" = "حذف ناموفق بود";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "دنبال کردن متقابل";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "درخواست ارسال شد";
@@ -349,7 +350,14 @@
 "DOWNLOADS_AUDIO_MASTER_HELP" = "اقدامات صوتی را در صفحات صدا و دکمه‌های عملکرد رسانه فعال می‌کند. پیش از پیکربندی سایر گزینه‌های صدا، این را روشن کنید.";
 "DOWNLOADS_AUDIO_PAGE_DEFAULT_ACTION_HELP" = "کاری که با ضربه روی آن دکمه انجام می‌شود. فشار طولانی منوی کامل را باز می‌کند.";
 "DOWNLOADS_AUTO_SAVE_HELP" = "رسانه را هنگام مشاهده، بخش به بخش، به‌صورت خودکار دانلود می‌کند.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_BODY_JOINER" = "%1$@، %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_MESSAGE" = "اینستاگرام اجازه ارسال اعلان ندارد، بنابراین نمی‌تواند پایان دانلودها را به شما اطلاع دهد. اعلان‌ها را در تنظیمات iOS روشن کنید.";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_DENIED_TITLE" = "اعلان‌ها خاموش هستند";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_TO_JOINER" = "%1$@ در %2$@";
+"DOWNLOADS_BACKGROUND_NOTIFICATION_TITLE" = "دانلودها تمام شد";
 "DOWNLOADS_BEHAVIOR_ALBUM_NAME_HELP" = "آلبومی که در آن ذخیره می‌شود. اگر وجود نداشته باشد، ایجاد خواهد شد.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_DOWNLOADS_HELP" = "دانلودها را پس از خروج از اینستاگرام در حال اجرا نگه می‌دارد، از جمله تبدیل و ذخیره. دانلودهای طولانی‌تر یک قطعه صوتی بی‌صدا پخش می‌کنند تا iOS برنامه را معلق نکند. هر صدای دیگری که در حال پخش باشد تحت تأثیر قرار نمی‌گیرد.";
+"DOWNLOADS_BEHAVIOR_BACKGROUND_NOTIFICATION_HELP" = "وقتی دانلودها در زمان دوری شما از اینستاگرام تمام می‌شوند، یک اعلان می‌فرستد. برای باز کردن تاریخچه دانلود روی آن ضربه بزنید.";
 "DOWNLOADS_BEHAVIOR_CUSTOM_ALBUM_HELP" = "رسانه‌های دانلودشده را علاوه بر کتابخانه اصلی عکس، به یک آلبوم نام‌گذاری‌شده در Photos نیز اضافه می‌کند.";
 "DOWNLOADS_BEHAVIOR_DETECT_DUPLICATES_HELP" = "پیش از ذخیره، مقصد انتخاب‌شده را برای نسخه موجود بررسی می‌کند. ذخیره‌های خودکار موارد تکراری را به‌طور خودکار نادیده می‌گیرند؛ دانلودهای دستی به شما امکان می‌دهند نحوه برخورد با آن‌ها را انتخاب کنید.";
 "DOWNLOADS_BEHAVIOR_HISTORY_LIMIT_HELP" = "تعیین می‌کند چند مورد تکمیل‌شده در تاریخچه دانلود باقی بماند. حذف یک مورد قدیمی از تاریخچه، رسانه ذخیره‌شده آن را حذف نمی‌کند.";
@@ -377,6 +385,8 @@
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_DOWNLOADS_TITLE" = "دانلود صدا";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_BUTTON_TITLE" = "دکمهٔ صفحهٔ صدا";
 "DOWNLOADS_DOWNLOADS_SETTINGS_AUDIO_PAGE_DEFAULT_ACTION_TITLE" = "عملکرد پیش‌فرض صفحهٔ صدا";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_DOWNLOADS_TITLE" = "ادامه در پس‌زمینه";
+"DOWNLOADS_DOWNLOADS_SETTINGS_BACKGROUND_NOTIFICATION_TITLE" = "اعلان هنگام پایان";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_PHOTO_QUALITY_TITLE" = "کیفیت پیش‌فرض عکس";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DEFAULT_VIDEO_QUALITY_TITLE" = "کیفیت پیش‌فرض ویدیو";
 "DOWNLOADS_DOWNLOADS_SETTINGS_DETECT_DUPLICATE_DOWNLOADS_TITLE" = "تشخیص دانلودهای تکراری";
@@ -458,6 +468,7 @@
 "DOWNLOADS_QUALITY_FETCH_4K_HELP" = "داده‌های تصویر نسخهٔ وب اینستاگرام را برای یافتن نسخه‌های 4K بررسی می‌کند. این کار برای هر جست‌وجو یک درخواست وب اضافی ایجاد می‌کند.";
 "DOWNLOADS_QUALITY_OPTIONS_FOOTER" = "1. دریافت عکس‌های 4K داده‌های تصویر نسخهٔ وب اینستاگرام را برای یافتن نسخه‌های 4K بررسی می‌کند و یک درخواست اضافی ایجاد می‌کند.\n2. افزایش کیفیت مدیا بالاترین کیفیت عکس یا ویدیویی را که اینستاگرام ارائه می‌دهد انتخاب می‌کند.\nبرای گزینه‌های کیفیت ویدیو و انکود، FFmpegKit لازم است.";
 "DOWNLOADS_QUALITY_VIDEO_ONLY_TITLE" = "فقط ویدیو";
+"DOWNLOADS_SAVING_HEADER" = "ذخیره‌سازی";
 "DOWNLOADS_SCHEDULER_CANCELLED_LABEL" = "لغوشده";
 "DOWNLOADS_SCHEDULER_DOWNLOAD_CANCELLED_ERROR" = "دانلود لغو شد.";
 "DOWNLOAD_ERROR_MERGE_FAILED" = "ادغام ویدیو و صدا ممکن نشد";
