@@ -926,9 +926,15 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     _editItem = SPKMediaChromeBottomBarButtonItem(@"crop", SPKL(@"ALERT_ACTION_EDIT"), self,
                                                   @selector(editCurrentItem));
 
+    // The bulk actions menu sits in the top trailing corner: the bottom row is
+    // at its width limit where UIKit widens item slots.
     if (!_isFromGallery && [self itemCount] > 1) {
-        _bulkActionsItem =
-            SPKMediaChromeBottomBarButtonItem(@"more", SPKActionButtonTitleForIdentifier(kSPKActionDownloadAll), nil, nil);
+        _bulkActionsItem = [[UIBarButtonItem alloc] initWithImage:SPKMediaChromeTopBarIcon(@"more")
+                                                            style:UIBarButtonItemStylePlain
+                                                           target:nil
+                                                           action:nil];
+        _bulkActionsItem.tintColor = [UIColor labelColor];
+        _bulkActionsItem.accessibilityLabel = SPKActionButtonTitleForIdentifier(kSPKActionDownloadAll);
     }
 
     if (_isFromGallery) {
@@ -956,6 +962,7 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 
 - (void)rebuildBottomToolbarItems {
     NSMutableArray<UIBarButtonItem *> *primary = [NSMutableArray array];
+    NSMutableArray<UIBarButtonItem *> *editing = [NSMutableArray array];
     NSMutableArray<UIBarButtonItem *> *trailing = [NSMutableArray array];
     [primary addObject:_savePhotosItem];
     [primary addObject:_shareItem];
@@ -966,18 +973,18 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     SPKMediaItemType currentType = [self currentItem].mediaType;
     if (_trimItem && (currentType == SPKMediaItemTypeVideo ||
                       currentType == SPKMediaItemTypeAudio)) {
-        [trailing addObject:_trimItem];
+        [editing addObject:_trimItem];
     }
     // Photos get an Edit (crop / rotate / flip) action in the same trailing
     // capsule the video/audio Trim uses — both Gallery items (Replace / Copy) and
     // expanded Instagram photos (destination menu), mirroring Trim's availability.
     if (_editItem && currentType == SPKMediaItemTypeImage) {
-        [trailing addObject:_editItem];
+        [editing addObject:_editItem];
     }
 
     if (_isFromGallery) {
         // Delete stays in the primary group; "more" breaks out into its own
-        // trailing capsule, sitting after the trash icon.
+        // capsule after Trim / Edit, so the two never share a bubble.
         if (_deleteGalleryItem) {
             [primary addObject:_deleteGalleryItem];
         }
@@ -992,14 +999,20 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
         if (_downloadURLItem) {
             [primary addObject:_downloadURLItem];
         }
-        // "Download all" / bulk actions overflow gets its own trailing capsule.
-        if (_bulkActionsItem && _bulkActionsItemVisible) {
-            [trailing addObject:_bulkActionsItem];
-        }
     }
 
-    self.toolbarItems =
-        SPKMediaChromeBottomToolbarItemsWithTrailingGroup(primary, trailing);
+    self.toolbarItems = SPKMediaChromeBottomToolbarItemsWithGroups(@[ primary, editing, trailing ]);
+    [self updateTrailingTopBarItems];
+}
+
+// Gallery items show Favorite, expanded Instagram media the bulk actions menu.
+- (void)updateTrailingTopBarItems {
+    NSMutableArray<UIBarButtonItem *> *items = [NSMutableArray array];
+    if (_topFavoriteItem && [self currentItem].galleryFile)
+        [items addObject:_topFavoriteItem];
+    if (_bulkActionsItem && _bulkActionsItemVisible)
+        [items addObject:_bulkActionsItem];
+    SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, items);
 }
 
 /// Anchor view for popovers/action sheets presented from the bottom toolbar.
@@ -1488,34 +1501,25 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
 
 - (void)updateCounter {
     if (_isSingleItemMode) {
-        self.title = nil;
+        SPKMediaChromeSetGlassTitle(self, nil);
         return;
     }
-    self.title =
-        [NSString stringWithFormat:SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT"), (long)_currentIndex + 1,
-                                   (unsigned long)[self itemCount]];
+    SPKMediaChromeSetGlassTitle(
+        self, [NSString stringWithFormat:SPKL(@"MEDIA_PREVIEW_FULL_SCREEN_MEDIA_PLAYER_VALUE_VALUE_FORMAT"),
+                                         (long)_currentIndex + 1, (unsigned long)[self itemCount]]);
 }
 
 - (void)updateFavoriteButton {
-    if (!_topFavoriteItem)
-        return;
-
     SPKMediaItem *item = [self currentItem];
-    BOOL isFav = item.galleryFile.isFavorite;
-    UIImage *img = isFav ? SPKMediaChromeTopBarIcon(@"heart_filled")
-                         : SPKMediaChromeTopBarIcon(@"heart");
-
-    if (!item.galleryFile) {
-        SPKMediaChromeSetTrailingTopBarItems(self.navigationItem, @[]);
-        return;
+    if (_topFavoriteItem && item.galleryFile) {
+        BOOL isFav = item.galleryFile.isFavorite;
+        _topFavoriteItem.image = isFav ? SPKMediaChromeTopBarIcon(@"heart_filled")
+                                       : SPKMediaChromeTopBarIcon(@"heart");
+        _topFavoriteItem.tintColor =
+            isFav ? [UIColor systemPinkColor] : [UIColor labelColor];
+        _topFavoriteItem.accessibilityLabel = isFav ? SPKL(@"GALLERY_GALLERY_UNFAVORITE_TEXT") : SPKL(@"GALLERY_GALLERY_FAVORITE_TEXT");
     }
-
-    _topFavoriteItem.image = img;
-    _topFavoriteItem.tintColor =
-        isFav ? [UIColor systemPinkColor] : [UIColor labelColor];
-    _topFavoriteItem.accessibilityLabel = isFav ? SPKL(@"GALLERY_GALLERY_UNFAVORITE_TEXT") : SPKL(@"GALLERY_GALLERY_FAVORITE_TEXT");
-    SPKMediaChromeSetTrailingTopBarItems(self.navigationItem,
-                                         @[ _topFavoriteItem ]);
+    [self updateTrailingTopBarItems];
 }
 
 - (void)showGalleryOpenFailureMessage:(NSString *)title
@@ -1927,10 +1931,9 @@ static CGPoint SPKCenterForBounds(CGRect bounds) {
     _galleryOriginItem.target = nil;
     _galleryOriginItem.action = nil;
 
+    // With neither a profile nor a post to open there is nothing to offer.
     if (actionCount <= 0) {
-        _galleryOriginItem.image = SPKMediaChromeBottomBarIcon(@"more");
-        _galleryOriginItem.accessibilityLabel = SPKL(@"MESSAGES_DELETED_MESSAGES_MORE_TEXT");
-        _galleryOriginItem.enabled = NO;
+        _galleryOriginItemVisible = NO;
         _galleryOriginItem.menu = nil;
         [self rebuildBottomToolbarItems];
         return;

@@ -1,6 +1,7 @@
 #import "SPKMediaChrome.h"
 #import "../../AssetUtils.h"
 #import "../../Utils.h"
+#import "../../Settings/SPKPreferences.h"
 #import <objc/message.h>
 
 CGFloat const SPKMediaChromeTopBarContentHeight = 44.0;
@@ -337,30 +338,148 @@ NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItems(NSArray<UIBarButton
 }
 
 NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItemsWithTrailingGroup(NSArray<UIBarButtonItem *> *primaryItems, NSArray<UIBarButtonItem *> *trailingItems) {
-    if (trailingItems.count == 0) {
-        return SPKMediaChromeBottomToolbarItems(primaryItems);
+    return SPKMediaChromeBottomToolbarItemsWithGroups(@[ primaryItems ?: @[], trailingItems ?: @[] ]);
+}
+
+NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItemsWithGroups(NSArray<NSArray<UIBarButtonItem *> *> *groups) {
+    NSMutableArray<NSArray<UIBarButtonItem *> *> *nonEmpty = [NSMutableArray array];
+    for (NSArray<UIBarButtonItem *> *group in groups) {
+        if (group.count > 0)
+            [nonEmpty addObject:group];
     }
-    if (primaryItems.count == 0) {
-        return SPKMediaChromeBottomToolbarItems(trailingItems);
+    if (nonEmpty.count <= 1) {
+        return SPKMediaChromeBottomToolbarItems(nonEmpty.firstObject ?: @[]);
     }
 
     NSMutableArray<UIBarButtonItem *> *items = [NSMutableArray array];
 
     if (@available(iOS 26.0, *)) {
-        // Both groups stay centered (flexible spacers on the outer ends) while a
-        // fixed gap between them splits the glass background into two capsules.
+        // Every group stays centered (flexible spacers on the outer ends) while a
+        // fixed gap between neighbors splits the glass into separate capsules.
         [items addObject:SPKMediaChromeFlexibleSpace()];
-        [items addObjectsFromArray:primaryItems];
-        [items addObject:SPKMediaChromeFixedSpace(8.0)];
-        [items addObjectsFromArray:trailingItems];
+        [nonEmpty enumerateObjectsUsingBlock:^(NSArray<UIBarButtonItem *> *group, NSUInteger idx, BOOL *stop) {
+            if (idx > 0)
+                [items addObject:SPKMediaChromeFixedSpace(8.0)];
+            [items addObjectsFromArray:group];
+        }];
         [items addObject:SPKMediaChromeFlexibleSpace()];
         return items;
     }
 
     // Legacy: a single evenly-distributed bar containing every item.
-    NSMutableArray<UIBarButtonItem *> *combined = [NSMutableArray arrayWithArray:primaryItems];
-    [combined addObjectsFromArray:trailingItems];
+    NSMutableArray<UIBarButtonItem *> *combined = [NSMutableArray array];
+    for (NSArray<UIBarButtonItem *> *group in nonEmpty)
+        [combined addObjectsFromArray:group];
     return SPKMediaChromeBottomToolbarItems(combined);
+}
+
+#pragma mark - Glass Title
+
+// A soft top edge fades out over the media instead of backing the bar, and Off
+// has no edge at all, so a plain title can land on a bright frame. The capsule
+// gives it its own glass.
+static BOOL SPKMediaChromeWantsGlassTitle(void) {
+    if (@available(iOS 26.0, *)) {
+        if (!NSClassFromString(@"UIGlassEffect"))
+            return NO;
+        NSString *style = [SPKUtils getStringPref:kSPKPrefInterfaceScrollEdgeStyle];
+        if ([style isEqualToString:@"soft"] || [style isEqualToString:@"off"])
+            return YES;
+        // Default follows iOS, which is soft on iOS 26 and hard from iOS 27.
+        if ([style isEqualToString:@"default"])
+            return ![NSProcessInfo.processInfo isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){27, 0, 0}];
+    }
+    return NO;
+}
+
+@interface SPKMediaChromeGlassTitleView : UIView
+@property (nonatomic, strong, readonly) UILabel *label;
+@end
+
+@implementation SPKMediaChromeGlassTitleView {
+    UIVisualEffectView *_glassView;
+}
+
+static CGFloat const kSPKGlassTitleHorizontalPadding = 14.0;
+static CGFloat const kSPKGlassTitleHeight = 36.0;
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if ((self = [super initWithFrame:frame])) {
+        UIVisualEffect *effect = nil;
+        Class glassClass = NSClassFromString(@"UIGlassEffect");
+        if (glassClass)
+            effect = [[glassClass alloc] init];
+        // Interactive glass gives the system press response under a finger, the
+        // same as Liquid Glass buttons.
+        if ([effect respondsToSelector:@selector(setInteractive:)])
+            ((void (*)(id, SEL, BOOL))objc_msgSend)(effect, @selector(setInteractive:), YES);
+        if (![effect isKindOfClass:[UIVisualEffect class]])
+            effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleSystemThinMaterial];
+        _glassView = [[UIVisualEffectView alloc] initWithEffect:effect];
+        _glassView.layer.cornerRadius = kSPKGlassTitleHeight / 2.0;
+        _glassView.layer.cornerCurve = kCACornerCurveContinuous;
+        _glassView.clipsToBounds = YES;
+        [self addSubview:_glassView];
+
+        _label = [[UILabel alloc] init];
+        _label.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        _label.adjustsFontForContentSizeCategory = YES;
+        _label.textColor = [UIColor labelColor];
+        _label.textAlignment = NSTextAlignmentCenter;
+        [_glassView.contentView addSubview:_label];
+    }
+    return self;
+}
+
+- (CGSize)intrinsicContentSize {
+    CGSize text = [_label intrinsicContentSize];
+    return CGSizeMake(ceil(text.width) + 2.0 * kSPKGlassTitleHorizontalPadding,
+                      MAX(kSPKGlassTitleHeight, ceil(text.height) + 12.0));
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+    return [self intrinsicContentSize];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _glassView.frame = self.bounds;
+    _glassView.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2.0;
+    _label.frame = CGRectInset(_glassView.contentView.bounds, kSPKGlassTitleHorizontalPadding, 0.0);
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection {
+    [super traitCollectionDidChange:previousTraitCollection];
+    if (previousTraitCollection.preferredContentSizeCategory != self.traitCollection.preferredContentSizeCategory)
+        [self invalidateIntrinsicContentSize];
+}
+
+@end
+
+void SPKMediaChromeSetGlassTitle(UIViewController *viewController, NSString *_Nullable title) {
+    if (!viewController)
+        return;
+    UINavigationItem *navigationItem = viewController.navigationItem;
+    if (title.length == 0 || !SPKMediaChromeWantsGlassTitle()) {
+        if ([navigationItem.titleView isKindOfClass:[SPKMediaChromeGlassTitleView class]])
+            navigationItem.titleView = nil;
+        viewController.title = title;
+        return;
+    }
+
+    SPKMediaChromeGlassTitleView *titleView = (SPKMediaChromeGlassTitleView *)navigationItem.titleView;
+    if (![titleView isKindOfClass:[SPKMediaChromeGlassTitleView class]]) {
+        titleView = [[SPKMediaChromeGlassTitleView alloc] initWithFrame:CGRectZero];
+        navigationItem.titleView = titleView;
+    }
+    // Keep the plain title too: it names the screen for VoiceOver and the back menu.
+    viewController.title = title;
+    if ([titleView.label.text isEqualToString:title])
+        return;
+    titleView.label.text = title;
+    [titleView invalidateIntrinsicContentSize];
+    titleView.bounds = (CGRect){CGPointZero, [titleView intrinsicContentSize]};
+    [titleView setNeedsLayout];
 }
 
 void SPKMediaChromeConfigureBottomToolbar(UIToolbar *toolbar) {

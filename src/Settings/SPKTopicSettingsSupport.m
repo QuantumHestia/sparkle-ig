@@ -305,12 +305,12 @@ UIMenu *SPKScrollEdgeStyleMenu(void) {
     // Only Off needs a restart: Instagram's own edge effect hides happen once
     // while screens are set up. Every other style applies to open screens live.
     NSMutableArray<UIMenuElement *> *styles = [NSMutableArray arrayWithArray:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"default", NO),
         SPKMenuCommand(SPKL(@"MENU_SOFT"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"soft", NO),
         SPKMenuCommand(SPKL(@"MENU_HARD"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"hard", NO)
     ]];
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"off", YES),
-        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"default", NO),
         [UIMenu menuWithTitle:@""
                         image:nil
                    identifier:nil
