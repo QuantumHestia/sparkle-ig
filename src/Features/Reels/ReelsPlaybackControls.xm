@@ -428,14 +428,19 @@ static void SPKReelsMirrorShadow(CALayer *source, CALayer *target) {
 /// The topmost element of the action column the indicator sits above: Sparkle's
 /// action button when it is shown, otherwise Instagram's like button.
 static UIView *SPKReelsIndicatorAnchor(UIView *verticalUFI) {
-    // The action button is hosted beside the UFI (a sibling in its superview),
-    // not inside it.
+    // The action button is hosted outside the UFI, in an ancestor a few levels
+    // up (beside the overlay's Metal layer view), so search the ancestors'
+    // direct children rather than only the UFI's siblings.
     UIView *actionButton = nil;
-    for (UIView *subview in verticalUFI.superview.subviews) {
-        if (subview.tag == kSPKReelsActionButtonTag) {
-            actionButton = subview;
-            break;
+    UIView *ancestor = verticalUFI.superview;
+    for (NSInteger depth = 0; ancestor && !actionButton && depth < 5; depth++) {
+        for (UIView *subview in ancestor.subviews) {
+            if (subview.tag == kSPKReelsActionButtonTag) {
+                actionButton = subview;
+                break;
+            }
         }
+        ancestor = ancestor.superview;
     }
     // Alpha is deliberately ignored: the button follows the UFI's fades, and a
     // layout pass at the start of a fade-in would otherwise anchor to the like
