@@ -335,6 +335,7 @@ static UIImage *SPKViewerStarImage(BOOL filled, CGFloat pointSize) {
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [self layoutTableHeader];
+    [SPKUtils updateScrollingForFittedContent:self.tableView];
 }
 
 #pragma mark - Fetch

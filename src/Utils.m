@@ -2650,6 +2650,62 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
     return [SPKUtils getVideoUrl:video];
 }
 
+// MARK: Scroll Views
++ (void)updateScrollingForFittedContent:(UIScrollView *)scrollView {
+    if (![scrollView isKindOfClass:[UIScrollView class]])
+        return;
+
+    CGFloat viewportHeight = CGRectGetHeight(scrollView.bounds);
+    if (viewportHeight <= 0.0)
+        return;
+
+    UIEdgeInsets insets = scrollView.adjustedContentInset;
+    // A scroll view laid out by its content layout guide reports the old content
+    // size until its own layout pass runs, which can be after the caller's. A
+    // stale zero must not be read as "everything fits".
+    if (scrollView.contentSize.height <= 0.0)
+        return;
+
+    // The insets are part of the scrollable extent: a list that fits the sheet
+    // but not the bar above it still has somewhere to go.
+    CGFloat contentHeight = scrollView.contentSize.height + insets.top + insets.bottom;
+    // A point of slack keeps a content size that lands on the viewport height
+    // by a rounding error from arming the bounce.
+    BOOL overflows = contentHeight > viewportHeight + 1.0;
+
+    if (scrollView.isDragging || scrollView.isDecelerating)
+        return;
+
+    if (!overflows && scrollView.contentOffset.y != -insets.top) {
+        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -insets.top) animated:NO];
+    }
+
+    // Only the bounce is switched, never `scrollEnabled`. A scroll view whose
+    // content fits and cannot bounce is already immovable, and one that stays
+    // enabled keeps its pan recognizer in the gesture arbitration: a disabled
+    // one hands the first drag to the sheet, which answers by stretching, and
+    // the scroll the drag asked for only lands on the second try.
+    scrollView.bounces = overflows;
+    scrollView.alwaysBounceVertical = overflows;
+}
+
++ (CGFloat)sheetHeightFittingContentOfScrollView:(UIScrollView *)scrollView {
+    if (![scrollView isKindOfClass:[UIScrollView class]])
+        return 0.0;
+
+    CGFloat contentHeight = scrollView.contentSize.height;
+    if (contentHeight <= 0.0)
+        return 0.0;
+
+    // A custom detent resolves to a height *within* the sheet's safe area: the
+    // presentation adds the bottom inset back on its own. The adjusted inset
+    // carries that same bottom inset, so taking it out again leaves the bar
+    // above the content and any inset of the caller's own, and nothing else.
+    UIEdgeInsets insets = scrollView.adjustedContentInset;
+    CGFloat height = contentHeight + insets.top + insets.bottom - scrollView.safeAreaInsets.bottom;
+    return ceil(MAX(height, 0.0));
+}
+
 // MARK: View Controller Helpers
 + (UIViewController *)viewControllerForView:(UIView *)view {
     NSString *viewDelegate = @"viewDelegate";

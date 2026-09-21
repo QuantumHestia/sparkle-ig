@@ -170,6 +170,11 @@ typedef NS_ENUM(NSInteger, SPKUserListSortMode) {
     [self reloadItems];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [SPKUtils updateScrollingForFittedContent:self.tableView];
+}
+
 #pragma mark - Bar buttons
 
 - (void)installBarButtons {

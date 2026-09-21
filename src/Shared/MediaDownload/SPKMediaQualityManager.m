@@ -2167,6 +2167,11 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
         [SPKUtils SPKColor_InstagramPrimaryText];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [SPKUtils updateScrollingForFittedContent:self.tableView];
+}
+
 - (NSArray<SPKMediaOptionSection *> *)sections {
     if (self.analysis.isVideo) {
         return self.analysis.videoSections;

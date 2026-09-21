@@ -200,6 +200,20 @@ FOUNDATION_EXPORT Class _Nullable SPKResolveIGClass(NSString *qualified, NSStrin
 + (NSURL *)getVideoUrl:(IGVideo *)video;
 + (NSURL *)getVideoUrlForMedia:(IGMedia *)media;
 
+// Scroll Views
+/// Lets `scrollView` scroll only while its content is taller than its viewport,
+/// so a sheet whose contents already fit stays put instead of rubber banding.
+/// Call from `viewDidLayoutSubviews` (and after a reload that changes height).
++ (void)updateScrollingForFittedContent:(nullable UIScrollView *)scrollView;
+
+/// The sheet height that would show all of `scrollView`'s content at once, its
+/// chrome included, or 0 while the scroll view has not been laid out yet.
+///
+/// Measured rather than estimated: the adjusted inset already carries the
+/// navigation bar and the bottom safe area, so a detent resolver fed this value
+/// lands on the exact height instead of a few points short.
++ (CGFloat)sheetHeightFittingContentOfScrollView:(nullable UIScrollView *)scrollView;
+
 // View Controller Helpers
 + (UIViewController *)viewControllerForView:(UIView *)view;
 + (UIViewController *)viewControllerForAncestralView:(UIView *)view;
