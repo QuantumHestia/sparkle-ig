@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Quel mago ubriaco vinse gare di judo grazie a un colpo fortunato.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "La cache era già vuota";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache eliminata";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Svuotamento cache...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Liberati %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Ogni account Instagram può avere le proprie impostazioni di Sparkle. Finché non modifichi un'impostazione per un account, viene usato il valore condiviso attuale.\n\nQuesti elementi restano condivisi tra tutti gli account:\n•  Icona app\n•  Aspetto e Liquid Glass\n•  Ordine e visibilità della barra delle schede\n•  Scorciatoie di accesso rapido (Impostazioni e Gallery)\n•  Modalità feed principale (Per te / Seguiti)\n•  Disabilita riproduzione automatica video\n•  Scorrimento infinito e limiti dei Reels\n•  Nascondi UI durante la cattura\n•  Impostazioni di codifica dei download\n•  Vista, ordinamento e blocco della Gallery\n•  Correggi notifiche duplicate\n•  Disabilita tutto (interruttore principale)\n\nLa proprietà dei media della Gallery è configurata separatamente nelle Impostazioni Gallery.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Scegli cosa fa un singolo tap. La pressione lunga apre sempre il menu di destinazioni abilitate.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Sempre installato";

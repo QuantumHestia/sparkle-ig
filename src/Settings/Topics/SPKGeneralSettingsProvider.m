@@ -123,16 +123,24 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                            subtitle:@""
                                                                icon:SPKSettingsIcon(@"trash")
                                                              action:^(void) {
-                                                                 unsigned long long freedBytes = [SPKUtils cleanCacheReturningFreedBytes];
-                                                                 NSString *subtitle = freedBytes > 0
-                                                                                          ? [NSString stringWithFormat:@"Freed %@", [NSByteCountFormatter stringFromByteCount:(long long)freedBytes countStyle:NSByteCountFormatterCountStyleFile]]
-                                                                                          : SPKL(@"SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT");
-                                                                 SPKNotify(kSPKNotificationSettingsClearCache, SPKL(@"SETTINGS_GENERAL_CACHE_CLEARED_TEXT"), subtitle, @"circle_check_filled", SPKNotificationToneForIconResource(@"circle_check_filled"));
+                                                                 __block SPKNotificationPillView *pill = nil;
+                                                                 BOOL started = [SPKUtils cleanCacheInBackgroundWithCompletion:^(unsigned long long freedBytes) {
+                                                                     NSString *subtitle = freedBytes > 0
+                                                                                              ? [NSString stringWithFormat:SPKL(@"SETTINGS_GENERAL_CACHE_FREED_TEXT"), [NSByteCountFormatter stringFromByteCount:(long long)freedBytes countStyle:NSByteCountFormatterCountStyleFile]]
+                                                                                              : SPKL(@"SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT");
+                                                                     [pill showSuccessWithTitle:SPKL(@"SETTINGS_GENERAL_CACHE_CLEARED_TEXT") subtitle:subtitle icon:nil];
+                                                                 }];
+                                                                 if (!started)
+                                                                     return;
+                                                                 // The clear walks every cached file, so it can take a few seconds:
+                                                                 // show it as unmeasurable work until the completion lands.
+                                                                 pill = SPKNotifyProgress(kSPKNotificationSettingsClearCache, SPKL(@"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS"), nil);
+                                                                 [pill setProgressIndeterminate:YES];
                                                              }];
     clearCacheSetting.tintColor = [SPKUtils SPKColor_InstagramDestructive];
     clearCacheSetting.iconTintColor = [SPKUtils SPKColor_InstagramDestructive];
     clearCacheSetting.accessoryTextProvider = ^NSString * {
-        return [SPKUtils formattedCacheSize];
+        return [SPKUtils cachedFormattedCacheSize];
     };
     clearCacheSetting.helpText = SPKL(@"GENERAL_STORAGE_CLEAR_CACHE_HELP");
 

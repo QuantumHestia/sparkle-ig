@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "West het em Bert schnäu schöni Priis für sächs saftigi Pfluume gäh.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Cache isch scho läär gsi";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache glöscht";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Cache wird glärt...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ freigmacht";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Jedes yglogte Konto cha sini eigete Sparkle-Yschtellige ha. Bis du e Yschtellig für es Konto änderisch, wird dr aktuelle gmeinsame Wärt bruucht.\n\nDie da blybe gmeinsam für aui Konte:\n•  App-Icon\n•  Ussgseh & Liquid Glass\n•  Tab-Balke-Reihefolg & Sichtbarkeit\n•  Schnäuzuegriff-Kürzu (Yschtellige & Galerie)\n•  Haupt-Feed-Modus (Für Dich / Following)\n•  Video-Autoplay usschaute\n•  Reels Doomscrolling & Limits\n•  UI bi dr Ufnahm verstecke\n•  Download-Kodierigs-Yschtellige\n•  Galerie-Aasicht, Sortierig & Sperri\n•  Doppleti Benachrichtigige fixe\n•  Aues usschaute (Haupt-Schalter)\n\nS Bsitzverhautnis vo Galerie-Medie wird separat i de Galerie-Yschtellige konfiguriert.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Wähl, was en einzelne Tipp macht. Lang drücke macht geng s Menü vo de ygschautete Ziel uf.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Geng installiert";

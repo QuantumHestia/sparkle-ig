@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Θέλει αρετή και τόλμη η ελευθερία.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Η προσωρινή μνήμη ήταν ήδη άδεια";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Η προσωρινή μνήμη διαγράφηκε";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Εκκαθάριση προσωρινής μνήμης...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Ελευθερώθηκαν %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Κάθε συνδεδεμένος λογαριασμός μπορεί να διατηρεί τις δικές του ρυθμίσεις Sparkle. Μέχρι να αλλάξετε μια ρύθμιση για έναν λογαριασμό, χρησιμοποιεί την τρέχουσα κοινόχρηστη τιμή.\n\nΑυτά παραμένουν κοινόχρηστα σε όλους τους λογαριασμούς:\n•  Εικονίδιο εφαρμογής\n•  Εμφάνιση & Liquid Glass\n•  Σειρά και ορατότητα γραμμής καρτελών\n•  Συντομεύσεις γρήγορης πρόσβασης (Ρυθμίσεις & Gallery)\n•  Κύρια λειτουργία ροής (Για εσένα / Ακολουθείς)\n•  Απενεργοποίηση αυτόματης αναπαραγωγής βίντεο\n•  Doom scroll και όρια Reels\n•  Απόκρυψη UI κατά τη λήψη\n•  Ρυθμίσεις κωδικοποίησης λήψεων\n•  Προβολή, ταξινόμηση και κλείδωμα Gallery\n•  Διόρθωση διπλών ειδοποιήσεων\n•  Απενεργοποίηση όλων (κύριος διακόπτης)\n\nΗ ιδιοκτησία των πολυμέσων του Gallery ρυθμίζεται ξεχωριστά στις Ρυθμίσεις Gallery.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Επιλέξτε τι κάνει ένα μόνο χτύπημα. Το μεγάλο πάτημα ανοίγει πάντα το μενού των ενεργοποιημένων προορισμών.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Πάντα εγκατεστημένο";

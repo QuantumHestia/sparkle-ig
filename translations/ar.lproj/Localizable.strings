@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "خلال زيارتي القصيرة للمدينة، استمتعت بمشاهدة الأسواق القديمة وسماع أصوات الباعة.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "كانت الذاكرة المؤقتة فارغة بالفعل";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "تم مسح الذاكرة المؤقتة";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "جارٍ مسح ذاكرة التخزين المؤقت...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "تم تحرير %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "يمكن لكل حساب مسجّل الدخول الاحتفاظ بإعدادات Sparkle الخاصة به. وإلى أن تغيّر إعدادًا لأحد الحسابات، فإنه يستخدم القيمة المشتركة الحالية.\n\nتبقى هذه العناصر مشتركة بين جميع الحسابات:\n•  أيقونة التطبيق\n•  المظهر و Liquid Glass\n•  ترتيب شريط علامات التبويب والرؤية\n•  اختصارات الوصول السريع (الإعدادات والمعرض)\n•  وضع الخلاصة الرئيسية (بالنسبة لك / المتابع لهم)\n•  تعطيل التشغيل التلقائي للفيديو\n•  Reels حد التمرير المجنون والحدود\n•  إخفاء الواجهة عند الالتقاط\n•  إعدادات ترميز التحميل\n•  عرض المعرض والفرز والقفل\n•  إصلاح الإخطارات المكررة\n•  تعطيل الكل (المفتاح الرئيسي)\n\nيتم ضبط ملكية وسائط المعرض بشكل منفصل في إعدادات المعرض.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "اختر ما يفعله النقر الواحد. يفتح الضغط الطويل دائماً قائمة الوجهات المفعلة.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "مثبت دائماً";

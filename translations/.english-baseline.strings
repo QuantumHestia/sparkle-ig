@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "West quickly gave Bert handsome prizes for six juicy plums.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Cache was already empty";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache cleared";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Clearing cache...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Freed %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Each logged-in account can keep its own Sparkle settings. Until you change a setting for an account, it uses the current shared value.\n\nThese stay shared across all accounts:\n•  App icon\n•  Appearance & Liquid Glass\n•  Tab bar order & visibility\n•  Quick access shortcuts (Settings & Gallery)\n•  Main feed mode (For You / Following)\n•  Disable video autoplay\n•  Reels doom scroll & limits\n•  Hide UI on capture\n•  Download encoding settings\n•  Gallery view, sort & lock\n•  Fix duplicate notifications\n•  Disable All (master switch)\n\nGallery media ownership is configured separately in Gallery Settings.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Choose what a single tap does. Long press always opens the menu of enabled destinations.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Always installed";

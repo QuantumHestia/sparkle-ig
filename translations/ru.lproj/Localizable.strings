@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Широкая электрификация южных губерний даст мощный толчок подъёму сельского хозяйства.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Кэш уже был пустой";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Кэш очищен";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Очистка кэша...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Освобождено %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Каждый аккаунт Instagram может хранить собственные настройки Sparkle. Пока вы не измените настройку для аккаунта, используется текущее общее значение.\n\nЭти параметры остаются общими для всех аккаунтов:\n•  Иконка приложения\n•  Внешний вид и Liquid Glass\n•  Порядок и видимость панели вкладок\n•  Быстрые ссылки (Настройки и Галерея)\n•  Основной режим ленты (Для вас / Подписки)\n•  Отключение автовоспроизведения видео\n•  Бесконечная прокрутка Reels и ограничения\n•  Скрытие интерфейса при захвате\n•  Настройки кодирования загрузок\n•  Вид, сортировка и блокировка Галереи\n•  Исправление дублирующихся уведомлений\n•  Отключение всех функций (главный переключатель)\n\nВладелец медиа Галереи настраивается отдельно в настройках Галереи.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Выберите, что делает одиночное касание. Длительное нажатие всегда открывает меню включенных направлений.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Всегда установлено";

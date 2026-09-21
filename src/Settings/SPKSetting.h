@@ -15,6 +15,10 @@ typedef NS_ENUM(NSInteger, SPKTableCell) {
     SPKTableCellValue,
 };
 
+/// Posted on the main thread when a value behind some row's `accessoryTextProvider`
+/// has changed, so open settings pages reload the rows that show one.
+FOUNDATION_EXPORT NSNotificationName const SPKSettingAccessoryTextDidChangeNotification;
+
 ///
 
 @interface SPKSetting : NSObject

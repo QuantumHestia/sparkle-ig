@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "A cigarra e a formiga trabalhavam sob o sol de verão.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "O cache já estava vazio";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache limpo";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Limpando cache...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ liberados";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Cada conta conectada pode manter suas próprias configurações do Sparkle. Até você alterar uma configuração para uma conta, ela usa o valor compartilhado atual.\n\nEstas opções continuam compartilhadas entre todas as contas:\n•  Ícone do app\n•  Aparência e Liquid Glass\n•  Ordem e visibilidade da barra de abas\n•  Atalhos de acesso rápido (Configurações e Gallery)\n•  Modo do feed principal (Para você / Seguindo)\n•  Desativar reprodução automática de vídeos\n•  Doom scroll e limites dos Reels\n•  Ocultar interface ao capturar\n•  Configurações de codificação de downloads\n•  Visualização, ordenação e bloqueio da Gallery\n•  Corrigir notificações duplicadas\n•  Desativar tudo (interruptor principal)\n\nA propriedade das mídias da Gallery é configurada separadamente nas Configurações da Gallery.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Escolha o que um toque único faz. O toque longo sempre abre o menu dos destinos ativados.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Sempre instalado";

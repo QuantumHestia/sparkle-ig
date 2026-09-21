@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Öğretmen çabuk sınıfa girip gürültücü öğrencileri şaşırttı.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Önbellek zaten boştu";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Önbellek temizlendi";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Önbellek temizleniyor...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ boşaltıldı";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Her giriş yapılmış hesap kendi Sparkle ayarlarını tutabilir. Bir hesap için bir ayarı değiştirene kadar mevcut paylaşılan değeri kullanır.\n\nBunlar tüm hesaplar arasında paylaşılmaya devam eder:\n•  Uygulama simgesi\n•  Görünüm ve Liquid Glass\n•  Sekme çubuğu sırası ve görünürlüğü\n•  Hızlı erişim kısayolları (Ayarlar ve Galeri)\n•  Ana akış modu (Senin İçin / Takip Ettiklerin)\n•  Video otomatik oynatmayı devre dışı bırak\n•  Reels kaydırması ve limitleri\n•  Yakalama sırasında arayüzü gizle\n•  İndirme kodlama ayarları\n•  Galeri görünümü, sıralaması ve kilidi\n•  Yinelenen bildirimleri düzelt\n•  Tümünü Devre Dışı Bırak (ana anahtar)\n\nGaleri medyasının sahipliği Galeri Ayarları'ndan ayrı olarak yapılandırılır.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Tek bir dokunuşun ne yapacağını seç. Uzun basış her zaman etkin hedeflerin menüsünü açar.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Her zaman yüklü";

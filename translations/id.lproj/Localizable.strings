@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "West cepat-cepat memberi Bert hadiah-hadiah bagus untuk enam buah plum yang berair.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Cache sudah kosong";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache dibersihkan";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Membersihkan cache...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ dikosongkan";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Setiap akun yang login dapat memiliki pengaturan Sparkle-nya sendiri. Sampai Anda mengubah pengaturan untuk sebuah akun, akun tersebut menggunakan nilai bersama saat ini.\n\nBerikut yang tetap dibagikan di semua akun:\n•  Ikon aplikasi\n•  Tampilan & Liquid Glass\n•  Urutan & visibilitas bilah tab\n•  Pintasan akses cepat (Pengaturan & Galeri)\n•  Mode feed utama (Untuk Anda / Mengikuti)\n•  Nonaktifkan putar otomatis video\n•  Doom scroll & batas Reels\n•  Sembunyikan UI saat mengambil gambar\n•  Pengaturan encoding unduhan\n•  Tampilan, urutan & kunci Galeri\n•  Perbaiki notifikasi duplikat\n•  Nonaktifkan Semua (saklar utama)\n\nKepemilikan media Galeri dikonfigurasi secara terpisah di Pengaturan Galeri.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Pilih apa yang dilakukan ketukan tunggal. Tekan lama selalu membuka menu tujuan yang diaktifkan.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Selalu terpasang";

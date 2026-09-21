@@ -959,6 +959,13 @@ static NSArray<NSURLQueryItem *> *SPKSanitizedInstagramQueryItems(NSArray<NSURLQ
 
 @implementation SPKSettingsNavigationController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Measure the cache in the background as soon as Settings opens, so the size
+    // is ready by the time the General page's Clear Cache row is on screen.
+    [SPKUtils cachedFormattedCacheSize];
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     if (self.isBeingDismissed || self.presentingViewController == nil) {
@@ -1406,11 +1413,73 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
     [SPKUtils markCacheClearedNow];
 }
 
-+ (unsigned long long)cleanCacheReturningFreedBytes {
-    unsigned long long bytesBefore = [self cacheSizeBytes];
-    [self cleanCache];
-    unsigned long long bytesAfter = [self cacheSizeBytes];
-    return bytesBefore > bytesAfter ? bytesBefore - bytesAfter : 0;
+// Cache clears and size walks enumerate every file under tmp, Caches and the
+// analytics folder, which takes seconds on a large cache. They all run on this
+// one serial queue so they never touch the main thread and never overlap.
+static dispatch_queue_t SPKCacheWorkQueue(void) {
+    static dispatch_queue_t queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("com.sparkle.cache-work", dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_UTILITY, 0));
+    });
+    return queue;
+}
+
+static const NSTimeInterval kSPKCacheSizeRefreshInterval = 5.0;
+
+// Main-thread state for the last measured cache size.
+static NSString *sSPKCachedCacheSizeText;
+static CFAbsoluteTime sSPKCacheSizeMeasuredAt;
+static BOOL sSPKCacheSizeRefreshing;
+static BOOL sSPKCacheClearing;
+
+static void SPKPublishCacheSize(unsigned long long bytes) {
+    NSString *text = [NSByteCountFormatter stringFromByteCount:(long long)bytes countStyle:NSByteCountFormatterCountStyleFile];
+    BOOL changed = ![text isEqualToString:sSPKCachedCacheSizeText];
+    sSPKCachedCacheSizeText = text;
+    sSPKCacheSizeMeasuredAt = CFAbsoluteTimeGetCurrent();
+    if (changed)
+        [[NSNotificationCenter defaultCenter] postNotificationName:SPKSettingAccessoryTextDidChangeNotification object:nil];
+}
+
++ (void)refreshCacheSize {
+    if (sSPKCacheSizeRefreshing)
+        return;
+    sSPKCacheSizeRefreshing = YES;
+    dispatch_async(SPKCacheWorkQueue(), ^{
+        unsigned long long bytes = [SPKUtils cacheSizeBytes];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            sSPKCacheSizeRefreshing = NO;
+            SPKPublishCacheSize(bytes);
+        });
+    });
+}
+
++ (nullable NSString *)cachedFormattedCacheSize {
+    NSAssert(NSThread.isMainThread, @"cachedFormattedCacheSize is main-thread only");
+    if (!sSPKCacheClearing && (!sSPKCachedCacheSizeText || CFAbsoluteTimeGetCurrent() - sSPKCacheSizeMeasuredAt > kSPKCacheSizeRefreshInterval))
+        [self refreshCacheSize];
+    return sSPKCachedCacheSizeText;
+}
+
++ (BOOL)cleanCacheInBackgroundWithCompletion:(void (^)(unsigned long long freedBytes))completion {
+    NSAssert(NSThread.isMainThread, @"cleanCacheInBackgroundWithCompletion: is main-thread only");
+    if (sSPKCacheClearing)
+        return NO;
+    sSPKCacheClearing = YES;
+    dispatch_async(SPKCacheWorkQueue(), ^{
+        unsigned long long bytesBefore = [SPKUtils cacheSizeBytes];
+        [SPKUtils cleanCache];
+        unsigned long long bytesAfter = [SPKUtils cacheSizeBytes];
+        unsigned long long freedBytes = bytesBefore > bytesAfter ? bytesBefore - bytesAfter : 0;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            sSPKCacheClearing = NO;
+            SPKPublishCacheSize(bytesAfter);
+            if (completion)
+                completion(freedBytes);
+        });
+    });
+    return YES;
 }
 
 + (unsigned long long)cacheSizeBytes {
@@ -1452,11 +1521,6 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
     }
 
     return totalBytes;
-}
-
-+ (NSString *)formattedCacheSize {
-    return [NSByteCountFormatter stringFromByteCount:(long long)[self cacheSizeBytes]
-                                          countStyle:NSByteCountFormatterCountStyleFile];
 }
 
 + (NSLocale *)spk_activeFormattingLocale {
@@ -1734,8 +1798,10 @@ static NSDate *SPKScanObjectForPostedDate(id target, NSInteger depth) {
 + (void)evaluateAutomaticCacheClearIfNeeded {
     if (![self shouldAutomaticallyClearCacheNow])
         return;
-    SPKLog(@"General", @"[Sparkle] Automatically clearing cache...");
-    [self cleanCache];
+    dispatch_async(SPKCacheWorkQueue(), ^{
+        SPKLog(@"General", @"[Sparkle] Automatically clearing cache...");
+        [SPKUtils cleanCache];
+    });
 }
 
 // MARK: Display View Controllers

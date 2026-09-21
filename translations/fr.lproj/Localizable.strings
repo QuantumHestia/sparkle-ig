@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Voix ambiguë d'un cœur qui, au zéphyr, préfère les jattes de kiwis.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Le cache était déjà vide";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache vidé";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Vidage du cache...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ libérés";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Chaque compte connecté peut conserver ses propres paramètres Sparkle. Tant que vous ne modifiez pas un paramètre pour un compte, celui-ci utilise la valeur actuellement partagée.\n\nCes éléments restent partagés entre tous les comptes :\n•  Icône d'application\n•  Apparence et Liquid Glass\n•  Ordre et visibilité de la barre d'onglets\n•  Raccourcis d'accès rapide (Paramètres et Galerie)\n•  Mode flux principal (Pour vous / Suivis)\n•  Désactiver la lecture automatique des vidéos\n•  Reels doom scroll et limites\n•  Masquer l'interface lors de la capture\n•  Paramètres d'encodage du téléchargement\n•  Affichage, tri et verrouillage de la galerie\n•  Corriger les notifications en double\n•  Désactiver tout (commutateur maître)\n\nLa propriété des médias de la galerie est configurée séparément dans les paramètres de la Galerie.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Choisissez ce qu'un simple appui fait. Un appui long ouvre toujours le menu des destinations activées.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Toujours installé";

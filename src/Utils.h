@@ -100,9 +100,15 @@ FOUNDATION_EXPORT Class _Nullable SPKResolveIGClass(NSString *qualified, NSStrin
 + (BOOL)spk_isLiquidGlassEffectivelyEnabled;
 
 + (void)cleanCache;
-+ (unsigned long long)cleanCacheReturningFreedBytes;
 + (unsigned long long)cacheSizeBytes;
-+ (NSString *)formattedCacheSize;
+/// Last measured cache size, for display on the main thread. Starts a background
+/// measurement when none exists or the last one is stale, and posts
+/// SPKSettingAccessoryTextDidChangeNotification when the text changes. Nil until
+/// the first measurement lands.
++ (nullable NSString *)cachedFormattedCacheSize;
+/// Clears the cache on a background queue and calls `completion` on the main
+/// thread. Returns NO without doing anything while a clear is already running.
++ (BOOL)cleanCacheInBackgroundWithCompletion:(nullable void (^)(unsigned long long freedBytes))completion;
 
 /// Locale used for Sparkle-owned display formatting. Explicit overrides use the
 /// selected Sparkle language; System Default preserves Instagram/system region.

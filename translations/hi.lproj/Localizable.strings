@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "आसमान में उड़ते पक्षी हमें आज़ादी का एहसास कराते हैं।";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "कैश पहले से खाली था";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "कैश साफ़ किया गया";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "कैश साफ़ किया जा रहा है...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ खाली किया गया";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "हर लॉग-इन किया गया खाता अपनी Sparkle सेटिंग्स रख सकता है। जब तक आप किसी खाते की कोई सेटिंग नहीं बदलते, वह वर्तमान साझा मान का उपयोग करता है।\n\nये सभी खातों में साझा रहती हैं:\n•  ऐप आइकन\n•  दिखावट और Liquid Glass\n•  टैब बार क्रम और दृश्यता\n•  त्वरित पहुंच शॉर्टकट (सेटिंग्स और गैलरी)\n•  मुख्य फीड मोड (आपके लिए / अनुसरण करें)\n•  वीडियो ऑटोप्ले अक्षम करें\n•  Reels अनंत स्क्रॉलिंग और सीमाएं\n•  कैप्चर पर UI छिपाएं\n•  डाउनलोड एन्कोडिंग सेटिंग्स\n•  गैलरी दृश्य, क्रम और लॉक\n•  डुप्लिकेट सूचनाएं ठीक करें\n•  सभी अक्षम करें (मास्टर स्विच)\n\nGallery मीडिया का स्वामित्व Gallery Settings में अलग से सेट किया जाता है।";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "तय करें कि एकल टैप क्या करता है। लंबे समय तक दबाने से सक्षम गंतव्यों का मेनू हमेशा खुल जाता है।";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "हमेशा स्थापित";

@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "本日は晴天なり。";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "キャッシュはすでに空です";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "キャッシュがクリアされました";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "キャッシュを消去中...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@を解放しました";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "ログインしている各アカウントで、それぞれ独自のSparkle設定を保持できます。アカウントごとに設定を変更するまでは、現在の共有値が使用されます。\n\nこれらはすべてのアカウント間で共有されたままです：\n•  アプリアイコン\n•  外観とLiquid Glass\n•  タブバーの順序と可視性\n•  クイックアクセスショートカット（設定とギャラリー）\n•  メインフィードモード（For You / Following）\n•  動画自動再生を無効化\n•  Reelsドゥームスクロール＆制限\n•  キャプチャ時にUIを非表示\n•  ダウンロードエンコード設定\n•  ギャラリービュー、ソート＆ロック\n•  重複通知を修正\n•  すべて無効化（マスタースイッチ）\n\nギャラリーメディアの所有権はギャラリー設定で個別に設定されます。";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "シングルタップで何を実行するかを選択します。長押しで常に有効な宛先のメニューが開きます。";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "常にインストール済み";

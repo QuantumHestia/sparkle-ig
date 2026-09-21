@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Mabilis na ibinigay ni West kay Bert ang magagandang premyo para sa anim na masarap na plum.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Wala nang laman ang cache";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Nalinis ang cache";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Nililinis ang cache...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Nabakante ang %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Ang bawat naka-login na account ay maaaring magkaroon ng sariling Sparkle settings. Hangga't hindi mo pa binabago ang isang setting para sa isang account, gagamitin nito ang kasalukuyang shared value.\n\nMananatiling shared ang mga ito sa lahat ng account:\n•  App icon\n•  Appearance at Liquid Glass\n•  Order at visibility ng tab bar\n•  Quick access shortcuts (Settings at Gallery)\n•  Mode ng main feed (For You / Following)\n•  I-disable ang video autoplay\n•  Doom scroll at limitasyon ng Reels\n•  Itago ang UI sa capture\n•  Mga setting ng download encoding\n•  View, sort, at lock ng Gallery\n•  Ayusin ang duplicate notifications\n•  I-disable Lahat (master switch)\n\nHiwalay na kino-configure ang ownership ng media ng Gallery sa Gallery Settings.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Piliin kung ano ang ginagawa ng isang tap. Palaging binubuksan ng long press ang menu ng mga naka-enable na destinasyon.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Palaging naka-install";

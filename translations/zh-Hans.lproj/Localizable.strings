@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "他背起行囊，独自走向未知的远方。";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "缓存已为空";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "缓存已清除";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "正在清除缓存...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "已释放 %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "每个 Instagram 账户都可以保留自己的 Sparkle 设置。在你为某个账户更改设置前，它会使用当前的共享值。\n\n以下设置在所有账户之间保持共享：\n•  应用图标\n•  外观和 Liquid Glass\n•  标签栏顺序和可见性\n•  快速访问快捷方式（设置和 Gallery）\n•  主动态模式（为你推荐/关注）\n•  禁用视频自动播放\n•  Reels 无尽滚动和限制\n•  捕获时隐藏 UI\n•  下载编码设置\n•  Gallery 视图、排序和锁定\n•  修复重复通知\n•  全部禁用（主开关）\n\nGallery 媒体所有权在 Gallery 设置中单独配置。";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "选择单次点击执行的操作。长按总是打开已启用的目标菜单。";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "始终安装";

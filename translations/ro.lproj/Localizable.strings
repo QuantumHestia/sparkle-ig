@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Înjurând pițigăiat, zoofobul comandă vexat whisky și tequila.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Cache era deja gol";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Cache șters";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Se golește memoria cache...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "S-au eliberat %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Fiecare cont conectat își poate păstra propriile setări Sparkle. Până când schimbi o setare pentru un cont, acesta folosește valoarea partajată curentă.\n\nAcestea rămân partajate între toate conturile:\n•  Pictograma aplicației\n•  Aspect și Liquid Glass\n•  Ordinea și vizibilitatea barei de file\n•  Comenzi rapide de acces (Setări și Galerie)\n•  Modul feedului principal (Pentru tine / Urmărești)\n•  Dezactivează redarea automată a videoclipurilor\n•  Derulare nesfârșită și limite pentru Reels\n•  Ascunde interfața la captură\n•  Setări de codificare a descărcărilor\n•  Vizualizarea, sortarea și blocarea Galeriei\n•  Remediază notificările duplicate\n•  Dezactivează tot (comutator principal)\n\nProprietatea fișierelor media din Galerie este configurată separat în Setările Galeriei.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Alegeți ce face o singură atingere. Apăsarea lungă deschide întotdeauna meniul destinațiilor activate.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Întotdeauna instalat";

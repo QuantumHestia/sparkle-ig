@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "وست به‌سرعت جوایز باشکوهی برای شش آلوی آبدار به برت داد.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "کش از قبل خالی بود";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "کش پاک شد";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "در حال پاک کردن حافظه پنهان...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "%@ آزاد شد";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "هر اکانت واردشده می‌تواند تنظیمات Sparkle مخصوص به خود را داشته باشد. تا زمانی که تنظیمی را برای یک اکانت تغییر ندهید، از مقدار مشترک فعلی استفاده می‌شود.\n\nموارد زیر در تمام اکانت‌ها مشترک باقی می‌مانند:\n•  آیکون اپ\n•  ظاهر و شیشهٔ مایع\n•  ترتیب و نمایش نوار تب\n•  میان‌برهای دسترسی سریع (تنظیمات و گالری)\n•  حالت فید اصلی (برای شما / دنبال‌شده‌ها)\n•  غیرفعال کردن پخش خودکار ویدیو\n•  اسکرول بی‌پایان و محدودیت‌های ریلز\n•  پنهان کردن رابط کاربری هنگام ضبط\n•  تنظیمات کدگذاری دانلود\n•  نمایش، مرتب‌سازی و قفل گالری\n•  رفع اعلان‌های تکراری\n•  غیرفعال کردن همه (کلید اصلی)\n\nمالکیت رسانهٔ گالری به‌طور جداگانه در تنظیمات گالری پیکربندی می‌شود.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "انتخاب کنید یک ضربهٔ تکی چه کاری انجام دهد. فشار طولانی همیشه منوی مقصدهای فعال را باز می‌کند.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "همیشه نصب‌شده";

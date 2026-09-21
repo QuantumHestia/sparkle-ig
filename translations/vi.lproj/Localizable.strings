@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Chú mèo nhỏ nằm cuộn tròn ngủ say dưới ánh nắng ấm áp buổi trưa.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "Bộ đệm đã trống";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Đã xóa bộ đệm";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Đang xóa bộ nhớ đệm...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Đã giải phóng %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Mỗi tài khoản đã đăng nhập có thể giữ cài đặt Sparkle riêng. Cho đến khi bạn thay đổi cài đặt cho một tài khoản, tài khoản đó dùng giá trị dùng chung hiện tại.\n\nNhững mục này vẫn dùng chung cho mọi tài khoản:\n•  Biểu tượng ứng dụng\n•  Giao diện & Liquid Glass\n•  Thứ tự và khả năng hiển thị của thanh tab\n•  Phím tắt truy cập nhanh (Cài đặt & Gallery)\n•  Chế độ bảng tin chính (For You / Following)\n•  Tắt phát video tự động\n•  Doom scroll và giới hạn Reels\n•  Ẩn giao diện khi chụp\n•  Cài đặt mã hóa tải xuống\n•  Chế độ xem, sắp xếp và khóa Gallery\n•  Sửa thông báo trùng lặp\n•  Tắt tất cả (công tắc chính)\n\nQuyền sở hữu phương tiện Gallery được cấu hình riêng trong Cài đặt Gallery.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Chọn một lần chạm làm gì. Nhấn giữ luôn mở menu điểm đến được bật.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Luôn được cài đặt";

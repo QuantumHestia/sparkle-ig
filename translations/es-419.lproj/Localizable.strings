@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "Whisky bueno: excitad mi frágil pequeña vejez.";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "La caché ya estaba vacía";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "Caché borrada";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "Borrando caché...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "Se liberaron %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "Cada cuenta con sesión iniciada puede mantener sus propios ajustes de Sparkle. Hasta que cambies un ajuste para una cuenta, esta usa el valor compartido actual.\n\nEstas opciones se mantienen compartidas entre todas las cuentas:\n•  Icono de la app\n•  Apariencia y Liquid Glass\n•  Orden y visibilidad de la barra de pestañas\n•  Atajos de acceso rápido (Ajustes y Galería)\n•  Modo de feed principal (Para ti / Seguidos)\n•  Desactivar reproducción automática de videos\n•  Límites de desplazamiento infinito de Reels\n•  Ocultar interfaz al capturar\n•  Ajustes de codificación de descargas\n•  Vista, ordenación y bloqueo de galería\n•  Corregir notificaciones duplicadas\n•  Desactivar todo (interruptor maestro)\n\nLa propiedad de los medios de la Galería se configura por separado en los ajustes de Galería.";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "Elige qué hace un solo toque. La presión larga siempre abre el menú de destinos habilitados.";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "Siempre instalado";

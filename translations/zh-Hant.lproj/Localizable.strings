@@ -1947,6 +1947,8 @@
 "SETTINGS_FONT_PICKER_WEST_QUICKLY_GAVE_BERT_HANDSOME_PRIZES_SIX_JUICY_PLUMS_TEXT" = "小明迅速地把六顆多汁的李子當作豐厚的獎品送給了阿強。";
 "SETTINGS_GENERAL_CACHE_ALREADY_EMPTY_TEXT" = "快取已經是空的";
 "SETTINGS_GENERAL_CACHE_CLEARED_TEXT" = "已清除快取";
+"SETTINGS_GENERAL_CACHE_CLEARING_PROGRESS" = "正在清除快取...";
+"SETTINGS_GENERAL_CACHE_FREED_TEXT" = "已釋放 %@";
 "SETTINGS_GENERAL_EACH_LOGGED_ACCOUNT_GETS_OWN_SPARKLE_SETTINGS_NEWLY_SEEN_TEXT" = "每個已登入的帳號都可以保留自己的 Sparkle 設定。在你為某個帳號變更設定之前，會使用目前的共用值。\n\n以下項目會在所有帳號之間共用：\n•  App 圖示\n•  外觀與 Liquid Glass\n•  分頁列順序與顯示\n•  快速存取捷徑（設定與圖庫）\n•  主要動態模式（為你推薦 / 追蹤中）\n•  停用影片自動播放\n•  Reels 無限捲動與限制\n•  擷取時隱藏介面\n•  下載編碼設定\n•  圖庫檢視、排序與鎖定\n•  修正重複通知\n•  停用全部（總開關）\n\n圖庫媒體的擁有權是在「圖庫設定」中另外設定的。";
 "SETTINGS_HEADER_BUTTON_DEFAULT_ACTION_PICKER_CHOOSE_WHAT_SINGLE_TAP_LONG_PRESS_ALWAYS_OPENS_MENU_TEXT" = "選擇單擊時要執行的動作。長按一律會開啟已啟用目的地的選單。";
 "SETTINGS_HOOK_BISECT_ALWAYS_INSTALLED_TEXT" = "一律安裝";

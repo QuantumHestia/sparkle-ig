@@ -370,6 +370,31 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     [self.view addSubview:self.tableView];
     [self setupNavigationItems];
     [self setupSearchController];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(spk_accessoryTextDidChange:)
+                                                 name:SPKSettingAccessoryTextDidChangeNotification
+                                               object:nil];
+}
+
+- (void)spk_accessoryTextDidChange:(NSNotification *)notification {
+    // No window check: the first measurement usually lands while the page is still
+    // being pushed, before it has a window, and skipping it then left the row blank
+    // until the next reload.
+    if (!self.isViewLoaded)
+        return;
+
+    NSMutableArray<NSIndexPath *> *paths = [NSMutableArray array];
+    for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
+        if (indexPath.section >= (NSInteger)self.sections.count)
+            continue;
+        NSArray *rows = self.sections[indexPath.section][@"rows"];
+        SPKSetting *row = indexPath.row < (NSInteger)rows.count ? rows[indexPath.row] : nil;
+        if ([row isKindOfClass:[SPKSetting class]] && row.accessoryTextProvider)
+            [paths addObject:indexPath];
+    }
+    if (paths.count > 0)
+        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
