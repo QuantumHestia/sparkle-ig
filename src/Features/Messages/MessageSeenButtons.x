@@ -742,13 +742,39 @@ static UIView *SPKThreadSeenBubbleContainer(UIViewController *controller) {
     return container;
 }
 
+// The keyboard's owner, via the nil-targeted action trick (no view-tree walk).
+static __weak UIResponder *SPKThreadSeenCapturedFirstResponder;
+
+@interface UIResponder (SPKThreadSeenFirstResponder)
+- (void)spk_threadSeenCaptureFirstResponder:(id)sender;
+@end
+
+@implementation UIResponder (SPKThreadSeenFirstResponder)
+- (void)spk_threadSeenCaptureFirstResponder:(id)sender {
+    SPKThreadSeenCapturedFirstResponder = self;
+}
+@end
+
+static UIResponder *SPKThreadSeenCurrentFirstResponder(void) {
+    SPKThreadSeenCapturedFirstResponder = nil;
+    [[UIApplication sharedApplication] sendAction:@selector(spk_threadSeenCaptureFirstResponder:) to:nil from:nil forEvent:nil];
+    return SPKThreadSeenCapturedFirstResponder;
+}
+
+// True while the keyboard is up for a text field outside the composer (the
+// GIF/sticker sheet's search field): the bubble would ride that keyboard onto
+// the sheet. Set from the keyboard observer.
+static const void *kSPKThreadSeenForeignKeyboardKey = &kSPKThreadSeenForeignKeyboardKey;
+
 static void SPKUpdateThreadSeenBubbleVisibility(UIViewController *controller, BOOL animated) {
     UIView *container = SPKThreadSeenBubbleContainer(controller);
     if (!container)
         return;
 
-    // Always available while in the thread; only hides while you're typing.
-    BOOL visible = SPKThreadComposerTextLength(controller) == 0;
+    // Always available while in the thread; only hides while you're typing or
+    // while the GIF/sticker sheet covers it.
+    BOOL foreignKeyboard = [objc_getAssociatedObject(container, kSPKThreadSeenForeignKeyboardKey) boolValue];
+    BOOL visible = SPKThreadComposerTextLength(controller) == 0 && !foreignKeyboard;
 
     CGFloat target = visible ? 1.0 : 0.0;
     container.userInteractionEnabled = visible;
@@ -917,6 +943,17 @@ static void SPKEnsureThreadSeenKeyboardObserver(UIViewController *controller) {
                     }
                     objc_setAssociatedObject(container, kSPKThreadSeenBubbleComposerBottomKey, @(composerBottom), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
+                    // Keyboard on screen but owned by something outside the composer
+                    // (the GIF/sticker partial sheet's search field): hide rather
+                    // than float over that sheet.
+                    BOOL keyboardUp = composerBottom < CGRectGetHeight(root.bounds) - root.safeAreaInsets.bottom - 1.0;
+                    UIResponder *firstResponder = SPKThreadSeenCurrentFirstResponder();
+                    UIView *composer = SPKThreadComposerView(strong);
+                    BOOL insideComposer = [firstResponder isKindOfClass:[UIView class]] && composer &&
+                                          [(UIView *)firstResponder isDescendantOfView:composer];
+                    BOOL foreign = keyboardUp && firstResponder && !insideComposer;
+                    objc_setAssociatedObject(container, kSPKThreadSeenForeignKeyboardKey, @(foreign), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
                     double duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
                     NSInteger curve = [note.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
                     // Re-run once the change has settled: when the composer is
@@ -937,6 +974,7 @@ static void SPKEnsureThreadSeenKeyboardObserver(UIViewController *controller) {
                                              SPKLayoutThreadSeenBubble(settled);
                                          }
                                          completion:nil];
+                        SPKUpdateThreadSeenBubbleVisibility(settled, YES);
                     };
 
                     if (duration > 0.0) {
@@ -951,6 +989,9 @@ static void SPKEnsureThreadSeenKeyboardObserver(UIViewController *controller) {
                         SPKLayoutThreadSeenBubble(strong);
                         settle(YES);
                     }
+                    // Fade out up front when the keyboard came for the GIF/sticker
+                    // sheet, instead of sliding across it.
+                    SPKUpdateThreadSeenBubbleVisibility(strong, YES);
                 }];
     objc_setAssociatedObject(controller, kSPKThreadSeenKeyboardObserverKey, token, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
