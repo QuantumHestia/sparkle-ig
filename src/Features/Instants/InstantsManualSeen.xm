@@ -160,8 +160,51 @@ static BOOL SPKInstantsManualSeenWriteStateList(id defaults, NSArray<NSString *>
     }
 }
 
+/// Instagram 448 no longer exports `refreshSeenStateFromSharedStorage`, and nothing else
+/// rebuilds `seenSnapPks` from the stored key: a forced refetch leaves it untouched, and
+/// `clearCache` empties both it and the stored key (device-confirmed). So the set is
+/// rewritten directly, through Swift, to exactly what the old reload produced: the stored
+/// list.
+///
+/// The ivar is only written when it holds native `Set<String>` storage. Anything else means the
+/// property changed type or representation, and writing a `Set<String>` over it would corrupt
+/// Instagram's memory.
+static BOOL SPKInstantsManualSeenRewriteMemorySet(id service, NSArray<NSString *> *list) {
+    Class bridge = NSClassFromString(@"SPKInstantsSeenStateBridge");
+    id store = [SPKUtils getIvarForObj:service name:"quickSnapStore"];
+    if (!bridge || !store)
+        return NO;
+    Ivar ivar = class_getInstanceVariable(object_getClass(store), "seenSnapPks");
+    if (!ivar)
+        return NO;
+    void *address = (uint8_t *)(__bridge void *)store + ivar_getOffset(ivar);
+
+    // Bit 62 marks a non-native (Objective-C) backing, bit 63 a tagged pointer.
+    uintptr_t word = *(uintptr_t *)address;
+    if (word == 0 || (word >> 62) != 0)
+        return NO;
+    // `_TtGCs11_SetStorageSS_` is `_SetStorage<String>` (IG 448 reports it with a trailing `$`),
+    // so a set of any other element type is refused. The empty singleton is shared by every
+    // element type and holds nothing, so replacing it cannot misread existing contents.
+    NSString *storageClass = NSStringFromClass(object_getClass((__bridge id)(void *)word));
+    if (![storageClass hasPrefix:@"_TtGCs11_SetStorageSS_"] &&
+        [storageClass rangeOfString:@"EmptySetSingleton"].location == NSNotFound) {
+        SPKLog(@"Instants", @"manual seen: seen set not rewritten, unexpected storage %@", storageClass);
+        return NO;
+    }
+
+    NSMutableArray<NSString *> *values = [NSMutableArray arrayWithCapacity:list.count];
+    for (id pk in list) {
+        if ([pk isKindOfClass:NSString.class])
+            [values addObject:pk];
+    }
+    ((void (*)(id, SEL, void *, NSArray *))objc_msgSend)(bridge, @selector(replaceStringSetAtAddress:with:),
+                                                           address, values);
+    return YES;
+}
+
 /// Asks Instagram to rebuild `seenSnapPks` from the value we just wrote, then to tell its
-/// UI. Both selectors exist on IG 447 but not on every build, so both are guarded.
+/// UI. The reload selector exists up to IG 447; later builds rewrite the set directly.
 /// `didReceiveNewSnaps` is what Instagram's own tray treats as "this list is worth
 /// re-rendering". `NO` reloads the state but leaves the tray showing what it already drew,
 /// so the restored Instants only appeared after the user refreshed the inbox by hand.
@@ -172,8 +215,16 @@ static void SPKInstantsManualSeenReloadState(id service, BOOL announceAsNew) {
     SEL refresh = @selector(refreshSeenStateFromSharedStorage);
     SEL announce = @selector(announceSnapStateUpdateWithDidReceiveNewSnaps:);
     @try {
-        if ([service respondsToSelector:refresh])
+        if ([service respondsToSelector:refresh]) {
             ((void (*)(id, SEL))objc_msgSend)(service, refresh);
+        } else {
+            // Without the defaults there is no stored list to mirror, and rewriting the set
+            // to empty would release every Instant the user has seen.
+            id defaults = SPKInstantsManualSeenSessionDefaults(service);
+            NSArray<NSString *> *stored = defaults ? (SPKInstantsManualSeenStateList(defaults) ?: @[]) : nil;
+            if (!stored || !SPKInstantsManualSeenRewriteMemorySet(service, stored))
+                SPKLog(@"Instants", @"manual seen: in-memory seen set unreachable, held instants return after a relaunch");
+        }
         if ([service respondsToSelector:announce])
             ((void (*)(id, SEL, BOOL))objc_msgSend)(service, announce, announceAsNew);
     } @catch (__unused NSException *e) {
@@ -288,18 +339,19 @@ void SPKInstantsManualSeenHoldUnseen(id service) {
 }
 
 /// Purely diagnostic: what Instagram now believes is available, so a log can show whether
-/// the model was restored and only the tray lagged behind.
-static NSUInteger SPKInstantsManualSeenAvailableSnapCount(id service) {
+/// the model was restored and only the tray lagged behind. IG 448 no longer exports the
+/// accessor, which reads as `n/a`.
+static NSString *SPKInstantsManualSeenAvailableSnapCount(id service) {
     SEL available = @selector(availableTimeOrderedSnaps);
     if (![service respondsToSelector:available])
-        return 0;
+        return @"n/a";
     @try {
         id list = ((id (*)(id, SEL))objc_msgSend)(service, available);
         if ([list respondsToSelector:@selector(count)])
-            return [list count];
+            return [NSString stringWithFormat:@"%lu", (unsigned long)[list count]];
     } @catch (__unused NSException *e) {
     }
-    return 0;
+    return @"0";
 }
 
 /// Reloads the seen state, but never while the viewer is on screen.
@@ -356,9 +408,9 @@ void SPKInstantsManualSeenEndViewerSession(id service) {
         SPKInstantsManualSeenReloadState(liveService, YES);
         SPKInstantsManualSeenRefetchSnaps(liveService);
         SPKLog(@"Instants", @"manual seen: session ended, %lu instant(s) held unseen, refetching "
-                            @"(available=%lu before the response)",
+                            @"(available=%@ before the response)",
                (unsigned long)restored,
-               (unsigned long)SPKInstantsManualSeenAvailableSnapCount(liveService));
+               SPKInstantsManualSeenAvailableSnapCount(liveService));
 
         // The fetch is asynchronous, so the count above is always the pre-response one. This
         // second reading says whether the refetch actually restored the tray.
@@ -368,8 +420,8 @@ void SPKInstantsManualSeenEndViewerSession(id service) {
             id afterService = weakLive;
             if (!afterService)
                 return;
-            SPKLog(@"Instants", @"manual seen: refetch settled (available=%lu)",
-                   (unsigned long)SPKInstantsManualSeenAvailableSnapCount(afterService));
+            SPKLog(@"Instants", @"manual seen: refetch settled (available=%@)",
+                   SPKInstantsManualSeenAvailableSnapCount(afterService));
         });
     });
 }
