@@ -1505,8 +1505,8 @@ static void spkUpdateCellIndicator(id cell) {
 }
 
 static void (*orig_configureCell)(id, SEL, id, id, id);
-static void new_configureCell(id self, SEL _cmd, id vm, id ringSpec, id launcherSet) {
-    orig_configureCell(self, _cmd, vm, ringSpec, launcherSet);
+static void new_configureCell(id self, SEL _cmd, id vm, id ringSpec, id config) {
+    orig_configureCell(self, _cmd, vm, ringSpec, config);
 
     if (!spkIndicatorEnabled())
         return;
@@ -1605,7 +1605,10 @@ static BOOL spkHook(Class cls, SEL sel, IMP imp, IMP *orig) {
     spkHook(removeCls, NSSelectorFromString(@"executeWithResultHandler:accessoryPackage:"), (IMP)new_removeMutationExecute, (IMP *)&orig_removeMutationExecute);
 
     Class cellCls = spkDirectMessageCellClass();
-    spkHook(cellCls, NSSelectorFromString(@"configureWithViewModel:ringViewSpecFactory:launcherSet:"), (IMP)new_configureCell, (IMP *)&orig_configureCell);
+    // IG 448 renamed the trailing launcherSet: argument to mobileConfig: with the same shape.
+    if (!spkHook(cellCls, NSSelectorFromString(@"configureWithViewModel:ringViewSpecFactory:mobileConfig:"), (IMP)new_configureCell, (IMP *)&orig_configureCell)) {
+        spkHook(cellCls, NSSelectorFromString(@"configureWithViewModel:ringViewSpecFactory:launcherSet:"), (IMP)new_configureCell, (IMP *)&orig_configureCell);
+    }
     spkHook(cellCls, @selector(layoutSubviews), (IMP)new_cellLayoutSubviews, (IMP *)&orig_cellLayoutSubviews);
     spkHook(cellCls, NSSelectorFromString(@"_addTappableAccessoryView:"), (IMP)new_addAccessory, (IMP *)&orig_addAccessory);
 

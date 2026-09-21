@@ -50,12 +50,12 @@ static id spk_feedAutoplayInit3(id self, SEL _cmd, BOOL shouldDisable, BOOL shou
 }
 
 static id (*orig_feedAutoplayInit5)(id, SEL, BOOL, BOOL, BOOL, BOOL, id);
-static id spk_feedAutoplayInit5(id self, SEL _cmd, BOOL shouldDisable, BOOL shouldClearStale, BOOL bypassForVoiceover, BOOL overrideThresholds, id launcherSet) {
+static id spk_feedAutoplayInit5(id self, SEL _cmd, BOOL shouldDisable, BOOL shouldClearStale, BOOL bypassForVoiceover, BOOL overrideThresholds, id config) {
     if ([SPKUtils getBoolPref:@"feed_disable_autoplay"]) {
         shouldDisable = YES;
         shouldClearStale = NO;
     }
-    return orig_feedAutoplayInit5(self, _cmd, shouldDisable, shouldClearStale, bypassForVoiceover, overrideThresholds, launcherSet);
+    return orig_feedAutoplayInit5(self, _cmd, shouldDisable, shouldClearStale, bypassForVoiceover, overrideThresholds, config);
 }
 
 // Carousel tap-to-play: the modern feed video cell receives single-taps via
@@ -103,9 +103,14 @@ static void SPKHookFeedPlaybackStrategy(void) {
     if (class_getInstanceMethod(cls, s3)) {
         MSHookMessageEx(cls, s3, (IMP)spk_feedAutoplayInit3, (IMP *)&orig_feedAutoplayInit3);
     }
-    SEL s5 = @selector(initWithShouldDisableAutoplay:shouldClearStaleReservation:shouldBypassDisabledAutoplayForVoiceover:shouldOverrideDefaultThresholds:launcherSet:);
-    if (class_getInstanceMethod(cls, s5)) {
-        MSHookMessageEx(cls, s5, (IMP)spk_feedAutoplayInit5, (IMP *)&orig_feedAutoplayInit5);
+    // IG 448 renamed the trailing launcherSet: argument to mobileConfig: with the same shape.
+    for (NSString *name in @[ @"initWithShouldDisableAutoplay:shouldClearStaleReservation:shouldBypassDisabledAutoplayForVoiceover:shouldOverrideDefaultThresholds:mobileConfig:",
+                              @"initWithShouldDisableAutoplay:shouldClearStaleReservation:shouldBypassDisabledAutoplayForVoiceover:shouldOverrideDefaultThresholds:launcherSet:" ]) {
+        SEL s5 = NSSelectorFromString(name);
+        if (class_getInstanceMethod(cls, s5)) {
+            MSHookMessageEx(cls, s5, (IMP)spk_feedAutoplayInit5, (IMP *)&orig_feedAutoplayInit5);
+            break;
+        }
     }
 }
 

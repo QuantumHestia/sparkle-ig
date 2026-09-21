@@ -368,6 +368,8 @@
 - (void)fetchMidcards;
 - (BOOL)_isEligibleForAYPromo;
 - (BOOL)_isEligibleForSUMidcard;
+- (void)fetchMidcardsWithLness28Score:(id)score;
+- (BOOL)_isEligibleForSUMidcardWithLness28Score:(id)score;
 @end
 
 @interface IGStoryVideoView : UIView
@@ -848,6 +850,19 @@
 + (instancetype)peek;
 + (instancetype)nux;
 + (instancetype)upsell;
+@end
+
+// IGConsumerSubsStoryPeekManaging.IGConsumerSubsStoryPeekEligibilityDecision — IG 448
+// eligibility result the post-header presenter hands its long-press arbiter.
+@interface _TtC31IGConsumerSubsStoryPeekManaging42IGConsumerSubsStoryPeekEligibilityDecision : NSObject
+@property (nonatomic, readonly) BOOL isPeekEligible;
+@property (nonatomic, readonly) BOOL isUpsellEligible;
+- (instancetype)initWithIsPeekEligible:(BOOL)peekEligible isUpsellEligible:(BOOL)upsellEligible;
+@end
+
+// IGFeedItemHeaderControllerStoryPeek.IGConsumerSubsStoryPeekFeedPostHeaderPresenter — IG 448.
+@interface _TtC35IGFeedItemHeaderControllerStoryPeek46IGConsumerSubsStoryPeekFeedPostHeaderPresenter : NSObject
+- (id)evaluateEligibilityWithReelViewModel:(id)model userSession:(id)session;
 @end
 
 @interface IGUFIInteractionCountsView : UIView

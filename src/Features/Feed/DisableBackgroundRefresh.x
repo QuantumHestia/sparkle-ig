@@ -29,27 +29,39 @@ static double spkOverrideInterval(void) {
 // Newer IG versions recompute these values dynamically.
 
 static double (*orig_wsRefresh)(id, SEL, id, id);
-static double new_wsRefresh(id self, SEL _cmd, id launcherSet, id store) {
+static double new_wsRefresh(id self, SEL _cmd, id config, id store) {
     double override = spkOverrideInterval();
-    return override > 0.0 ? override : orig_wsRefresh(self, _cmd, launcherSet, store);
+    return override > 0.0 ? override : orig_wsRefresh(self, _cmd, config, store);
 }
 
 static double (*orig_wsBgRefresh)(id, SEL, id, id);
-static double new_wsBgRefresh(id self, SEL _cmd, id launcherSet, id store) {
+static double new_wsBgRefresh(id self, SEL _cmd, id config, id store) {
     double override = spkOverrideInterval();
-    return override > 0.0 ? override : orig_wsBgRefresh(self, _cmd, launcherSet, store);
+    return override > 0.0 ? override : orig_wsBgRefresh(self, _cmd, config, store);
 }
 
 static double (*orig_peakWsRefresh)(id, SEL, double, id, id);
-static double new_peakWsRefresh(id self, SEL _cmd, double interval, id launcherSet, id store) {
+static double new_peakWsRefresh(id self, SEL _cmd, double interval, id config, id store) {
     double override = spkOverrideInterval();
-    return override > 0.0 ? override : orig_peakWsRefresh(self, _cmd, interval, launcherSet, store);
+    return override > 0.0 ? override : orig_peakWsRefresh(self, _cmd, interval, config, store);
 }
 
 static double (*orig_peakWsBgRefresh)(id, SEL, id, id);
-static double new_peakWsBgRefresh(id self, SEL _cmd, id launcherSet, id store) {
+static double new_peakWsBgRefresh(id self, SEL _cmd, id config, id store) {
     double override = spkOverrideInterval();
-    return override > 0.0 ? override : orig_peakWsBgRefresh(self, _cmd, launcherSet, store);
+    return override > 0.0 ? override : orig_peakWsBgRefresh(self, _cmd, config, store);
+}
+
+// IG 448 renamed the launcherSet: argument to mobileConfig: with the same
+// shape, so each hook takes whichever of the two names the build ships.
+static void SPKHookRefreshUtilityMethod(Class metaClass, NSString *legacyName, NSString *currentName, IMP replacement, IMP *original) {
+    for (NSString *name in @[ currentName, legacyName ]) {
+        SEL sel = NSSelectorFromString(name);
+        if (class_getInstanceMethod(metaClass, sel)) {
+            MSHookMessageEx(metaClass, sel, replacement, original);
+            return;
+        }
+    }
 }
 
 static void SPKInstallRefreshUtilityHooks(void) {
@@ -57,25 +69,22 @@ static void SPKInstallRefreshUtilityHooks(void) {
     if (refreshUtilityClass) {
         Class metaClass = object_getClass(refreshUtilityClass);
 
-        SEL sel1 = NSSelectorFromString(@"warmStartRefreshIntervalWithLauncherSet:feedRefreshInstructionsStore:");
-        if (class_getInstanceMethod(metaClass, sel1)) {
-            MSHookMessageEx(metaClass, sel1, (IMP)new_wsRefresh, (IMP *)&orig_wsRefresh);
-        }
-
-        SEL sel2 = NSSelectorFromString(@"warmStartBackgroundRefreshIntervalWithLauncherSet:feedRefreshInstructionsStore:");
-        if (class_getInstanceMethod(metaClass, sel2)) {
-            MSHookMessageEx(metaClass, sel2, (IMP)new_wsBgRefresh, (IMP *)&orig_wsBgRefresh);
-        }
-
-        SEL sel3 = NSSelectorFromString(@"onPeakWarmStartRefreshIntervalWithWarmStartFetchInterval:launcherSet:feedRefreshInstructionsStore:");
-        if (class_getInstanceMethod(metaClass, sel3)) {
-            MSHookMessageEx(metaClass, sel3, (IMP)new_peakWsRefresh, (IMP *)&orig_peakWsRefresh);
-        }
-
-        SEL sel4 = NSSelectorFromString(@"onPeakWarmStartBackgroundRefreshIntervalWithLauncherSet:feedRefreshInstructionsStore:");
-        if (class_getInstanceMethod(metaClass, sel4)) {
-            MSHookMessageEx(metaClass, sel4, (IMP)new_peakWsBgRefresh, (IMP *)&orig_peakWsBgRefresh);
-        }
+        SPKHookRefreshUtilityMethod(metaClass,
+                                    @"warmStartRefreshIntervalWithLauncherSet:feedRefreshInstructionsStore:",
+                                    @"warmStartRefreshIntervalWithMobileConfig:feedRefreshInstructionsStore:",
+                                    (IMP)new_wsRefresh, (IMP *)&orig_wsRefresh);
+        SPKHookRefreshUtilityMethod(metaClass,
+                                    @"warmStartBackgroundRefreshIntervalWithLauncherSet:feedRefreshInstructionsStore:",
+                                    @"warmStartBackgroundRefreshIntervalWithMobileConfig:feedRefreshInstructionsStore:",
+                                    (IMP)new_wsBgRefresh, (IMP *)&orig_wsBgRefresh);
+        SPKHookRefreshUtilityMethod(metaClass,
+                                    @"onPeakWarmStartRefreshIntervalWithWarmStartFetchInterval:launcherSet:feedRefreshInstructionsStore:",
+                                    @"onPeakWarmStartRefreshIntervalWithWarmStartFetchInterval:mobileConfig:feedRefreshInstructionsStore:",
+                                    (IMP)new_peakWsRefresh, (IMP *)&orig_peakWsRefresh);
+        SPKHookRefreshUtilityMethod(metaClass,
+                                    @"onPeakWarmStartBackgroundRefreshIntervalWithLauncherSet:feedRefreshInstructionsStore:",
+                                    @"onPeakWarmStartBackgroundRefreshIntervalWithMobileConfig:feedRefreshInstructionsStore:",
+                                    (IMP)new_peakWsBgRefresh, (IMP *)&orig_peakWsBgRefresh);
     }
 }
 

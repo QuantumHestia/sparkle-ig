@@ -231,6 +231,21 @@ static void SPKHookedCoinFlipLongPress(id self, SEL _cmd, UILongPressGestureReco
 }
 %end
 
+// When story peek owns the long press (see SPKProfileStoryPeekOwnsLongPress) but
+// Instagram then declines to peek for this account, it falls back to its own
+// expanded picture through this delegate callback. Showing the zoom here keeps a
+// long press on a story ring from ever landing on Instagram's viewer.
+%hook IGProfileViewController
+- (void)profileAvatarActionsController:(id)controller showExpandedProfilePicFrom:(id)from isLongPress:(BOOL)isLongPress {
+    if (isLongPress && [SPKUtils getBoolPref:@"profile_photo_zoom"]) {
+        UIView *sourceView = [from isKindOfClass:[UIView class]] ? from : self.view;
+        if (SPKShowProfilePhotoZoomFromView(sourceView))
+            return;
+    }
+    %orig;
+}
+%end
+
 // The profile story peek's "View profile picture" row, and the expanded photo IG
 // falls back to when a peek cannot load, both open the zoom instead.
 %hook _TtC29IGProfileStoryViewerPresenter23IGProfileStoryPresenter

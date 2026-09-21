@@ -117,6 +117,12 @@ static Class SPKStoryPeekModeClass(void) {
     return objc_getClass("_TtC31IGConsumerSubsStoryPeekManaging31IGConsumerSubsStoryPeekModeObjc");
 }
 
+// Demangled: IGConsumerSubsStoryPeekManaging.IGConsumerSubsStoryPeekEligibilityDecision
+static Class SPKStoryPeekDecisionClass(void) {
+    Class cls = objc_getClass("_TtC31IGConsumerSubsStoryPeekManaging42IGConsumerSubsStoryPeekEligibilityDecision");
+    return [cls instancesRespondToSelector:@selector(initWithIsPeekEligible:isUpsellEligible:)] ? cls : Nil;
+}
+
 static id SPKRealStoryPeekMode(id mode, NSString *site) {
     if (!mode || !SPKUnlockStoryPreviewEnabled())
         return mode;
@@ -157,6 +163,32 @@ static id SPKRealStoryPeekMode(id mode, NSString *site) {
 
 + (id)tapModeForEntryPoint:(long long)point viewModel:(id)model userSession:(id)session {
     return SPKRealStoryPeekMode(%orig, @"resolver tap");
+}
+
+// IG 448 added the tray position to the tap resolver.
++ (id)tapModeForEntryPoint:(long long)point viewModel:(id)model pogPosition:(long long)position userSession:(id)session {
+    return SPKRealStoryPeekMode(%orig, @"resolver tap");
+}
+
+%end
+
+// Demangled: IGFeedItemHeaderControllerStoryPeek.IGConsumerSubsStoryPeekFeedPostHeaderPresenter
+// Feed, explore and reels post headers (IG 448). The long-press arbiter only claims
+// the gesture when this returns a decision; for accounts IG no longer offers the
+// peek to it returns nil and the avatar long press does nothing. The eligibility
+// class methods above are called from Swift on this path, so they never see it.
+%hook _TtC35IGFeedItemHeaderControllerStoryPeek46IGConsumerSubsStoryPeekFeedPostHeaderPresenter
+
+- (id)evaluateEligibilityWithReelViewModel:(id)model userSession:(id)session {
+    id decision = %orig;
+    if (!model || !SPKUnlockStoryPreviewEnabled())
+        return decision;
+    Class decisionClass = SPKStoryPeekDecisionClass();
+    if (!decisionClass)
+        return decision;
+    if ([decision isKindOfClass:decisionClass] && [decision isPeekEligible])
+        return decision;
+    return [(_TtC31IGConsumerSubsStoryPeekManaging42IGConsumerSubsStoryPeekEligibilityDecision *)[decisionClass alloc] initWithIsPeekEligible:YES isUpsellEligible:NO];
 }
 
 %end

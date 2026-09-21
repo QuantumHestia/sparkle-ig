@@ -23,6 +23,14 @@
     %orig;
 }
 
+// IG 448 passes a score into the fetch and SU eligibility paths. The bare
+// variants above and below still cover older builds.
+- (void)fetchMidcardsWithLness28Score:(id)score {
+    if ([SPKUtils getBoolPref:@"stories_hide_join_trending"])
+        return;
+    %orig;
+}
+
 - (BOOL)_isEligibleForAYPromo {
     if ([SPKUtils getBoolPref:@"stories_hide_join_trending"])
         return NO;
@@ -30,6 +38,12 @@
 }
 
 - (BOOL)_isEligibleForSUMidcard {
+    if ([SPKUtils getBoolPref:@"stories_hide_join_trending"])
+        return NO;
+    return %orig;
+}
+
+- (BOOL)_isEligibleForSUMidcardWithLness28Score:(id)score {
     if ([SPKUtils getBoolPref:@"stories_hide_join_trending"])
         return NO;
     return %orig;
