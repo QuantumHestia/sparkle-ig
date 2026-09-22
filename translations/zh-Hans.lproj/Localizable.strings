@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 开始播放时保持静音，直到你取消静音。需要重启。";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "静音启动 Reels";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels 会停在最后一帧，而不是循环播放。轻点播放即可重新观看。";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "停止循环播放 Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "点按 Reel 时的行为：Instagram 默认、暂停与播放，或静音与取消静音。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "点击控制";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "双击点赞 Reel 前先询问确认。";

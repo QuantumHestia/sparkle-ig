@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "کنترل‌های پخش";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "ریلزها تا زمانی که صدا را فعال نکنید بی‌صدا شروع می‌شوند. نیاز به راه‌اندازی مجدد دارد.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "شروع ریلز بدون صدا";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "ریلزها به جای تکرار، روی آخرین فریم متوقف می‌شوند. برای تماشای دوباره، روی پخش بزنید.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "توقف تکرار ریلز";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ضربه روی ریل چه کاری انجام می‌دهد: پیش‌فرض اینستاگرام، توقف و پخش، یا بی‌صدا و باصدا کردن.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "کنترل‌های ضربه";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "پیش از لایک کردن ریل با دو ضربه، تأیید می‌خواهد.";

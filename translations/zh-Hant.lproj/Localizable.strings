@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "播放控制項";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels 開始播放時會保持靜音，直到你取消靜音。需要重新啟動。";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "靜音啟動 Reels";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels 會停在最後一格，而不是重複播放。點一下播放即可再看一次。";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "停止重複播放 Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "點按 Reel 時會執行的動作:Instagram 預設、暫停與播放,或靜音與取消靜音。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "點按控制";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "在雙擊按讚 Reel 之前要求確認。";

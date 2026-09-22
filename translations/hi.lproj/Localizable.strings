@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "प्लेबैक नियंत्रण";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels तब तक बिना आवाज़ के शुरू होते हैं जब तक आप उन्हें अनम्यूट नहीं करते। रीस्टार्ट आवश्यक है।";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels को म्यूट करके शुरू करें";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "रील्स लूप होने के बजाय अपने आखिरी फ़्रेम पर रुक जाती हैं। फिर से देखने के लिए प्ले पर टैप करें।";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "रील्स का लूप बंद करें";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "यह सेटिंग तय करती है कि Reel पर टैप करने से क्या होगा: Instagram की डिफ़ॉल्ट कार्रवाई, रोकना और चलाना, या म्यूट और अनम्यूट करना।";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "टैप नियंत्रण";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "यह सेटिंग डबल-टैप करके Reel को पसंद करने से पहले पुष्टि माँगती है।";

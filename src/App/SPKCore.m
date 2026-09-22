@@ -195,6 +195,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
         @"msgs_disable_vanish_swipe_up" : @(NO),
         @"msgs_hide_vanish_screenshot" : @(NO),
         @"reels_disable_auto_unmute" : @(NO),
+        @"reels_stop_looping" : @(NO),
         @"reels_doom_scroll_limit" : @(1),
         @"feed_disable_bg_refresh" : @(NO),
         @"general_cache_auto_clear" : @"never",

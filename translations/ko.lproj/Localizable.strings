@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "재생 컨트롤";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "음소거를 해제할 때까지 릴스가 소리 없이 시작됩니다. 다시 시작해야 적용됩니다.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "릴스 음소거로 시작";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "릴스가 반복 재생되지 않고 마지막 프레임에서 멈춥니다. 다시 보려면 재생을 탭하세요.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "릴스 반복 재생 중지";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "릴을 탭했을 때의 동작을 Instagram 기본값, 일시 정지/재생, 음소거/음소거 해제 중에서 선택합니다.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "탭 컨트롤";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "더블 탭으로 릴에 좋아요를 표시하기 전에 확인을 요청합니다.";

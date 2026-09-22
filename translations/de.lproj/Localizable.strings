@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Wiedergabesteuerung";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels starten ohne Ton, bis du den Ton einschaltest. Erfordert einen Neustart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels stumm starten";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels halten beim letzten Bild an, statt sich zu wiederholen. Tippe auf Abspielen, um sie erneut anzusehen.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Reels nicht wiederholen";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Was ein Tippen auf ein Reel bewirkt: Standard von Instagram, Pause und Wiedergabe oder stumm und laut.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tap-Steuerelemente";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Fragt nach einer Bestätigung, bevor ein Doppeltippen ein Reel liket.";

@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Mga Kontrol sa Playback";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Nagsisimula ang mga Reel nang walang tunog hanggang i-unmute mo ito. Kailangan ng restart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Simulan ang Reels nang Naka-mute";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Humihinto ang reels sa huling frame sa halip na umulit. I-tap ang play para panoorin ulit.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Ihinto ang Pag-ulit ng Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Kung ano ang ginagawa ng tap sa reel: default ng Instagram, i-pause at i-play, o i-mute at i-unmute.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Mga Kontrol sa Tap";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Humihingi ng kumpirmasyon bago mag-like sa isang reel gamit ang double tap.";

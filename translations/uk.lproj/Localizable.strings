@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Керування відтворенням";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels починаються без звуку, доки ви не ввімкнете його. Потрібен перезапуск.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Запускати Reels без звуку";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels зупиняються на останньому кадрі замість повторення. Натисніть «Відтворити», щоб переглянути знову.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Не повторювати Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Що робить дотик до ролика: як типово в Instagram, пауза й відтворення, або вимкнення та ввімкнення звуку.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Керування натисканням";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Запитує підтвердження, перш ніж подвійний дотик уподобає ролик.";

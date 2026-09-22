@@ -46,6 +46,10 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                 };
                 speedScope;
             }),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_STOP_LOOPING_TITLE")
+                                           icon:SPKSettingsIcon(@"loop")
+                                    defaultsKey:@"reels_stop_looping"],
+                               SPKL(@"REELS_BEHAVIOR_STOP_LOOPING_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_START_MUTED_TITLE")
                                            icon:SPKSettingsIcon(@"volume_off")
                                     defaultsKey:@"reels_disable_auto_unmute"

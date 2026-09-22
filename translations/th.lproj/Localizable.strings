@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "ตัวควบคุมการเล่น";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels จะเริ่มโดยไม่มีเสียงจนกว่าคุณจะเปิดเสียง ต้องรีสตาร์ทแอป";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "เริ่ม Reels แบบปิดเสียง";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "รีลจะหยุดที่เฟรมสุดท้ายแทนการเล่นวนซ้ำ แตะเล่นเพื่อดูอีกครั้ง";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "หยุดเล่นรีลวนซ้ำ";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "การแตะที่รีลจะทำอะไร: ค่าเริ่มต้นของ Instagram, หยุด/เล่น หรือปิด/เปิดเสียง";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "การควบคุมด้วยการแตะ";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "ขอการยืนยันก่อนที่การแตะสองครั้งจะกดถูกใจรีล";

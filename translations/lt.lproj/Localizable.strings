@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Atkūrimo valdikliai";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels prasideda be garso, kol jo neįjungiate. Reikia paleisti iš naujo.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Paleisti Reels nutildytus";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "„Reels“ sustoja ties paskutiniu kadru, užuot kartojęsi. Bakstelėkite leisti, kad pažiūrėtumėte dar kartą.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Nekartoti „Reels“";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ką daro palietimas ant įrašo: numatytasis Instagram veiksmas, pristabdymas ir leidimas arba nutildymas ir įgarsinimas.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Palietimo valdikliai";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Prašo patvirtinimo prieš dvigubu palietimu pažymint įrašą patiktuku.";

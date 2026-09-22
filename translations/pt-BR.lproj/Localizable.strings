@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Controles de reprodução";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Os reels começam sem som até você ativá-lo. Requer reiniciar.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Iniciar Reels sem som";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Os reels param no último quadro em vez de repetir. Toque em reproduzir para assistir de novo.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Parar de repetir reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "O que um toque em um reel faz: o padrão do Instagram, pausar e reproduzir, ou silenciar e ativar o som.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Controles de Toque";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Pede confirmação antes que um toque duplo curta um reel.";

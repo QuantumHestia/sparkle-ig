@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Playback-Steurig";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels starte ohni Ton, bis du de Ton iischaltisch. Bruucht en Neustart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels stumm starte";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels bliibe bim letschte Bild stah, statt sich z widerhole. Tipp uf Abspiele, zum si nomal aaluege.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Reels nümme widerhole";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Was e Tipp uf en Reel macht: Instagram Standard, Pause und Play, oder Stumm und Entstumme.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Tipp-Stüürig";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Frögt nach ere Bestätigung, bevor en Doppu-Tipp en Reel liket.";

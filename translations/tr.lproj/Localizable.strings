@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Oynatma Kontrolleri";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels, sesi açana kadar sessiz başlar. Yeniden başlatma gerektirir.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Reels'i Sessiz Başlat";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels döngüye girmek yerine son karede durur. Tekrar izlemek için oynat'a dokun.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Reels döngüsünü durdur";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Bir reel'e dokunmanın ne yapacağı: Instagram'ın varsayılanı, duraklat ve oynat, ya da sesi kapat ve aç.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Dokunuş Kontrolleri";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Çift dokunuş bir reel'i beğenmeden önce onay ister.";

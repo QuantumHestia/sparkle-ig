@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Управление воспроизведением";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels начинаются без звука, пока вы не включите его. Требуется перезапуск.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Запускать Reels без звука";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels останавливаются на последнем кадре, а не повторяются. Нажмите «Воспроизвести», чтобы посмотреть снова.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Не повторять Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Что делает нажатие на ролик: как в Instagram по умолчанию, пауза и воспроизведение, или выключение и включение звука.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Управление нажатием";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Запрашивает подтверждение, прежде чем двойное нажатие поставит отметку ролику.";

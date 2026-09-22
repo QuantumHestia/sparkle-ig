@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Kontrol Pemutaran";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels dimulai tanpa suara sampai Anda membunyikannya. Memerlukan restart.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Mulai Reels Tanpa Suara";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels berhenti di bingkai terakhir alih-alih berulang. Ketuk putar untuk menonton lagi.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Hentikan Pengulangan Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Apa yang dilakukan ketukan pada reel: default Instagram, jeda dan putar, atau bisukan dan bunyikan.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Kontrol Ketukan";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Meminta konfirmasi sebelum ketukan ganda menyukai reel.";

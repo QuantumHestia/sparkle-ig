@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "再生コントロール";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "ミュートを解除するまでリールは音声なしで始まります。再起動が必要です。";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "リールをミュートで開始";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "リールはループせず最後のフレームで停止します。もう一度見るには再生をタップします。";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "リールのループを停止";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "リールをタップしたときの動作(Instagramの既定、一時停止と再生、またはミュートとミュート解除)を設定します。";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "タップコントロール";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "ダブルタップでリールに「いいね！」する前に確認します。";

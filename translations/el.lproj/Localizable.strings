@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Στοιχεία ελέγχου αναπαραγωγής";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Τα reels ξεκινούν χωρίς ήχο μέχρι να τον ενεργοποιήσετε. Απαιτεί επανεκκίνηση.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Έναρξη Reels σε σίγαση";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Τα Reels σταματούν στο τελευταίο καρέ αντί να επαναλαμβάνονται. Πάτησε αναπαραγωγή για να τα δεις ξανά.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Διακοπή επανάληψης Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Τι κάνει ένα πάτημα σε ένα reel: η προεπιλογή του Instagram, παύση και αναπαραγωγή, ή σίγαση και άρση σίγασης.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Έλεγχοι Πατήματος";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Ζητά επιβεβαίωση πριν ένα διπλό πάτημα κάνει like σε ένα reel.";

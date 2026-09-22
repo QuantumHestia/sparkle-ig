@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "عناصر التحكم في التشغيل";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "تبدأ Reels بدون صوت حتى تشغّل الصوت. يتطلب إعادة تشغيل.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "بدء Reels بدون صوت";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "تتوقف المقاطع عند آخر إطار بدلًا من التكرار. اضغط على تشغيل للمشاهدة مجددًا.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "إيقاف تكرار المقاطع";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "ما يفعله الضغط على Reel: الإجراء الافتراضي في Instagram، أو الإيقاف والتشغيل، أو الكتم وإلغاء الكتم.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "عناصر التحكم في الضغط";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "يطلب تأكيداً قبل أن يؤدي الضغط المزدوج إلى الإعجاب بـ Reel.";

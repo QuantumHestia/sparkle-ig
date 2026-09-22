@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Commandes de lecture";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Les reels démarrent sans son jusqu'à ce que vous l'activiez. Nécessite un redémarrage.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Démarrer les Reels sans son";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Les reels s'arrêtent sur leur dernière image au lieu de tourner en boucle. Touchez lecture pour les revoir.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Ne plus lire les reels en boucle";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ce que fait un appui sur un reel : le comportement par défaut d'Instagram, pause et lecture, ou couper et rétablir le son.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Contrôles d'appui";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Demande confirmation avant qu'un double appui n'aime un reel.";

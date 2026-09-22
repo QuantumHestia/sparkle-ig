@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Điều khiển phát";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels bắt đầu không có tiếng cho đến khi bạn bật tiếng. Cần khởi động lại.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Bắt đầu Reels ở chế độ tắt tiếng";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels dừng ở khung hình cuối thay vì phát lặp lại. Nhấn phát để xem lại.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Dừng phát lặp lại Reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Hành động khi chạm vào một reel: mặc định của Instagram, tạm dừng và phát, hoặc tắt và bật tiếng.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Điều khiển Nhấn";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Yêu cầu xác nhận trước khi chạm hai lần để thích một reel.";

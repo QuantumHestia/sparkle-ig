@@ -202,6 +202,7 @@ static NSDictionary<NSString *, SPKAssetDescriptor *> *SPKAssetOverrides(void) {
             @"lock" : @{@"candidates" : @[ @"ig_icon_lock_prism_outline_24", @"ig_icon_lock_outline_24" ]},
             @"lock_filled" : @{@"candidates" : @[ @"ig_icon_lock_prism_filled_24", @"ig_icon_lock_filled_24" ]},
             @"logs" : @{@"candidates" : @[ @"ig_icon_document_lined_prism_outline_24", @"ig_icon_document_lined_outline_24" ]},
+            @"loop" : @{@"candidates" : @[ @"ig_icon_boomerang_outline_24" ]},
             @"map" : @{@"candidates" : @[ @"ig_icon_map_outline_24", @"ig_icon_location_map_outline_24" ]},
             @"map_pin" : @{@"candidates" : @[ @"ig_icon_location_map_pano_outline_24", @"ig_icon_location_map_outline_24" ]},
             @"media" : @{@"candidates" : @[ @"ig_icon_collage_prism_outline_24", @"ig_icon_collage_outline_24", @"ig_icon_media_prism_outline_24", @"ig_icon_media_outline_24" ]},

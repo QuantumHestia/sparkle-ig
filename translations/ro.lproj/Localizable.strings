@@ -1880,6 +1880,8 @@
 "REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE" = "Comenzi de redare";
 "REELS_BEHAVIOR_START_MUTED_HELP" = "Reels-urile pornesc fără sunet până activezi sunetul. Necesită repornire.";
 "REELS_BEHAVIOR_START_MUTED_TITLE" = "Pornește Reels fără sunet";
+"REELS_BEHAVIOR_STOP_LOOPING_HELP" = "Reels se opresc la ultimul cadru în loc să se repete. Atinge redare pentru a le urmări din nou.";
+"REELS_BEHAVIOR_STOP_LOOPING_TITLE" = "Oprește repetarea reels";
 "REELS_BEHAVIOR_TAP_CONTROLS_HELP" = "Ce face o atingere pe un reel: comportamentul implicit al Instagram, pauză și redare, sau sunet oprit și pornit.";
 "REELS_BEHAVIOR_TAP_CONTROLS_TITLE" = "Comenzi de atingere";
 "REELS_CONFIRMATION_CONFIRM_DOUBLE_TAP_HELP" = "Cere confirmare înainte ca o atingere dublă să aprecieze un reel.";

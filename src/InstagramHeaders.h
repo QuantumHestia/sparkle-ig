@@ -333,6 +333,10 @@
 
 @interface IGSundialViewerVideoCell : UIView
 @property (readonly, nonatomic) IGMedia *video;
+- (void)playWithReason:(long long)reason;
+- (void)pauseWithReason:(long long)reason;
+- (void)gestureController:(id)controller didObserveSingleTap:(id)tap;
+- (void)videoViewDidPlayThroughToCompletion:(id)videoView;
 @end
 
 @interface IGSundialViewerPhotoCell : UIView
@@ -348,7 +352,11 @@
 @property (retain, nonatomic) IGImageSpecifier *imageSpecifier;
 @end
 
+// Reels player on 410; 448 uses the Swift _TtC21IGVideoPlayerKitSwift13IGVideoPlayer
+// with the same play and seek selectors plus isLoopingOverride.
 @interface IGStatefulVideoPlayer : NSObject
+- (void)playWithReason:(long long)reason callsiteContext:(id)context;
+- (void)seekToTime:(double)time preciseTime:(BOOL)preciseTime;
 @end
 
 @interface IGStoryPhotoView : UIView
