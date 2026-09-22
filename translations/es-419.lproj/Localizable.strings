@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Explorar";
 "TAB_LAYOUT_CUSTOM" = "Personalizado";
 "TAB_SAVED" = "Guardados";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Botón de depuración de Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Muestra un botón flotante que inspecciona lo que hay en pantalla y genera informes para adjuntar a un reporte de errores. Arrástralo a cualquier lado de la pantalla. Los informes omiten el texto en pantalla a menos que actives Incluir texto en su menú.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Toca cualquier elemento para inspeccionarlo";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Ocultar botón";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Incluir texto";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Inspeccionar elemento";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Abrir FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Informe de pantalla";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Jerarquía de vistas";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Botón de depuración";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Ocultar Ventana Emergente de TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Desactivar modo seguro";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Reparar notificaciones duplicadas";

@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "สำรวจ";
 "TAB_LAYOUT_CUSTOM" = "กำหนดเอง";
 "TAB_SAVED" = "บันทึกแล้ว";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "ปุ่มดีบัก Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "แสดงปุ่มลอยที่ตรวจสอบสิ่งที่อยู่บนหน้าจอและสร้างรายงานเพื่อแนบไปกับการรายงานบั๊ก ลากไปไว้ด้านใดก็ได้ของหน้าจอ รายงานจะไม่รวมข้อความบนหน้าจอ เว้นแต่คุณจะเปิด รวมข้อความ ในเมนูของปุ่ม";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "แตะองค์ประกอบใดก็ได้เพื่อตรวจสอบ";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "ซ่อนปุ่ม";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "รวมข้อความ";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "ตรวจสอบองค์ประกอบ";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "เปิด FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "รายงานหน้าจอ";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "ลำดับชั้นของมุมมอง";
+"TOOLS_DEBUG_BUTTON_TITLE" = "ปุ่มดีบัก";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] ซ่อนป๊อปอัป TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "ปิดใช้งานโหมดปลอดภัย";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "แก้ไขการแจ้งเตือนซ้ำ";

@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Explorează";
 "TAB_LAYOUT_CUSTOM" = "Personalizat";
 "TAB_SAVED" = "Salvat";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Butonul de depanare Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Afișează un buton plutitor care inspectează ce se află pe ecran și creează rapoarte de atașat la o raportare de eroare. Trage-l pe oricare parte a ecranului. Rapoartele omit textul de pe ecran, cu excepția cazului în care activezi Include textul din meniul său.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Atinge orice element pentru a-l inspecta";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Ascunde butonul";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Include textul";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Inspectează elementul";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Deschide FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Raport ecran";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Ierarhia vizualizărilor";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Buton de depanare";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Ascunde pop-up TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Dezactivează modul sigur";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Repară notificări duplicate";

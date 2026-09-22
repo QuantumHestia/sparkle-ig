@@ -191,7 +191,7 @@ The `ipa` command takes composable flags:
 | `--flex` | Bundle `libFLEX.dylib` (in-app debugging) |
 | `--patch` | Run `ipapatch` |
 | `--no-ext` | Strip all `.appex` bundles before injection |
-| `--dev` | `DEV=1` build (also enables the developer diagnostics: performance meter and hook bisect, under Settings → Tools → Diagnostics) |
+| `--dev` | `DEV=1` build (also adds the developer diagnostics, performance meter and hook bisect, under Settings → Tools → Diagnostics) |
 | `--buildonly` | Build the deb and dylibs only, skip IPA packaging |
 | `--bundle-id <id>` | Override the bundle ID |
 

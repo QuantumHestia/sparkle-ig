@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Explore";
 "TAB_LAYOUT_CUSTOM" = "Pasadya";
 "TAB_SAVED" = "Naka-save";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Debug Button ng Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Nagpapakita ng lumulutang na button na sinusuri ang nasa screen at gumagawa ng mga ulat na maikakabit sa isang bug report. I-drag ito sa alinmang gilid ng screen. Hindi isinasama ng mga ulat ang text sa screen maliban kung i-on mo ang Isama ang Text sa menu nito.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "I-tap ang anumang elemento para suriin ito";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Itago ang Button";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Isama ang Text";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Suriin ang Elemento";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Buksan ang FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Ulat ng Screen";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Hierarchy ng View";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Debug Button";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Itago ang TestFlight Popup";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "I-disable ang Safe Mode";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Ayusin ang Duplicate Notifications";

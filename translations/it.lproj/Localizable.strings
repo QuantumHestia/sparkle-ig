@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Esplora";
 "TAB_LAYOUT_CUSTOM" = "Personalizzato";
 "TAB_SAVED" = "Salvati";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Pulsante di debug di Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Mostra un pulsante fluttuante che ispeziona ciò che è sullo schermo e crea rapporti da allegare a una segnalazione di bug. Trascinalo su uno dei due lati dello schermo. I rapporti escludono il testo sullo schermo, a meno che tu non attivi Includi testo nel suo menu.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Tocca un elemento per ispezionarlo";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Nascondi pulsante";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Includi testo";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Ispeziona elemento";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Apri FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Rapporto schermata";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Gerarchia delle viste";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Pulsante di debug";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Nascondi popup TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Disabilita Modalità Sicura";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Correggi Notifiche Duplicate";

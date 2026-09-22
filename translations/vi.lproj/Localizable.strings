@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Khám Phá";
 "TAB_LAYOUT_CUSTOM" = "Tùy chỉnh";
 "TAB_SAVED" = "Đã Lưu";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Nút gỡ lỗi Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Hiển thị một nút nổi giúp kiểm tra nội dung trên màn hình và tạo báo cáo để đính kèm vào báo cáo lỗi. Kéo nút sang bất kỳ cạnh nào của màn hình. Báo cáo sẽ bỏ qua văn bản trên màn hình trừ khi bạn bật Bao gồm văn bản trong menu của nút.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Chạm vào bất kỳ phần tử nào để kiểm tra";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Ẩn nút";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Bao gồm văn bản";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Kiểm tra phần tử";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Mở FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Báo cáo màn hình";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Cấu trúc chế độ xem";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Nút gỡ lỗi";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Ẩn TestFlight Popup";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Vô hiệu Chế độ An toàn";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Khắc phục Thông báo Trùng lặp";

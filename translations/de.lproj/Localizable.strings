@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Erkunden";
 "TAB_LAYOUT_CUSTOM" = "Benutzerdefiniert";
 "TAB_SAVED" = "Gespeichert";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle-Debug-Taste";
+"TOOLS_DEBUG_BUTTON_HELP" = "Zeigt eine schwebende Taste, die untersucht, was auf dem Bildschirm zu sehen ist, und Berichte für einen Fehlerbericht erstellt. Zieh sie an eine der beiden Bildschirmseiten. Berichte lassen Text auf dem Bildschirm weg, außer du aktivierst „Text einschließen“ in ihrem Menü.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Tippe auf ein Element, um es zu untersuchen";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Taste ausblenden";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Text einschließen";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Element untersuchen";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "FLEX öffnen";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Bildschirmbericht";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "View-Hierarchie";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Debug-Taste";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] TestFlight Popup verbergen";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Safe Mode deaktivieren";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Doppelte Benachrichtigungen beheben";

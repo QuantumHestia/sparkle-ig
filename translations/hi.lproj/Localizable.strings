@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "खोज";
 "TAB_LAYOUT_CUSTOM" = "कस्टम";
 "TAB_SAVED" = "सहेजें";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle डीबग बटन";
+"TOOLS_DEBUG_BUTTON_HELP" = "एक फ़्लोटिंग बटन दिखाता है जो स्क्रीन पर मौजूद चीज़ों की जाँच करता है और बग रिपोर्ट के साथ जोड़ने के लिए रिपोर्ट बनाता है। इसे स्क्रीन के किसी भी किनारे पर खींचें। रिपोर्ट में स्क्रीन का टेक्स्ट शामिल नहीं होता, जब तक आप इसके मेन्यू में टेक्स्ट शामिल करें चालू नहीं करते।";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "जाँचने के लिए किसी भी एलिमेंट पर टैप करें";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "बटन छिपाएँ";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "टेक्स्ट शामिल करें";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "एलिमेंट की जाँच करें";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "FLEX खोलें";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "स्क्रीन रिपोर्ट";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "व्यू हायरार्की";
+"TOOLS_DEBUG_BUTTON_TITLE" = "डीबग बटन";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] TestFlight पॉपअप छिपाएं";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "सुरक्षित मोड अक्षम करें";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "डुप्लिकेट सूचनाएं ठीक करें";

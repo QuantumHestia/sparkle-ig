@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Исследование";
 "TAB_LAYOUT_CUSTOM" = "Пользовательское";
 "TAB_SAVED" = "Сохранённое";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Кнопка отладки Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Показывает плавающую кнопку, которая исследует содержимое экрана и создаёт отчёты для прикрепления к сообщению об ошибке. Перетащите её к любому краю экрана. Отчёты не включают текст с экрана, если вы не включите «Включать текст» в её меню.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Коснитесь любого элемента, чтобы исследовать его";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Скрыть кнопку";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Включать текст";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Исследовать элемент";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Открыть FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Отчёт об экране";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Иерархия представлений";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Кнопка отладки";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Скрыть всплывающее окно TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Отключить безопасный режим";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Исправить дублирующиеся уведомления";

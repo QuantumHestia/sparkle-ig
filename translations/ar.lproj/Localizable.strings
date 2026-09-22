@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "استكشاف";
 "TAB_LAYOUT_CUSTOM" = "مخصص";
 "TAB_SAVED" = "محفوظات";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "زر تصحيح أخطاء Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "يعرض زرًا عائمًا يفحص ما يظهر على الشاشة ويُنشئ تقارير لإرفاقها ببلاغ عن خطأ. اسحبه إلى أي جانب من الشاشة. تستبعد التقارير النصوص الظاهرة على الشاشة ما لم تفعّل «تضمين النص» من قائمته.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "اضغط على أي عنصر لفحصه";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "إخفاء الزر";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "تضمين النص";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "فحص العنصر";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "فتح FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "تقرير الشاشة";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "تسلسل العروض";
+"TOOLS_DEBUG_BUTTON_TITLE" = "زر التصحيح";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] إخفاء منبثقة TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "تعطيل الوضع الآمن";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "إصلاح الإخطارات المكررة";

@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "検索";
 "TAB_LAYOUT_CUSTOM" = "カスタム";
 "TAB_SAVED" = "保存済み";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle デバッグボタン";
+"TOOLS_DEBUG_BUTTON_HELP" = "画面上の内容を調べ、バグ報告に添付するレポートを作成するフローティングボタンを表示します。画面の左右どちらかにドラッグできます。メニューで「テキストを含める」をオンにしない限り、レポートには画面上のテキストは含まれません。";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "調べたい要素をタップ";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "ボタンを隠す";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "テキストを含める";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "要素を調べる";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "FLEX を開く";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "画面レポート";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "ビュー階層";
+"TOOLS_DEBUG_BUTTON_TITLE" = "デバッグボタン";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[開発]TestFlightポップアップを非表示にします";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "セーフモードを無効化";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "重複通知を修正";

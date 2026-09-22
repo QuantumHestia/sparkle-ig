@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Explore";
 "TAB_LAYOUT_CUSTOM" = "Aagepasst";
 "TAB_SAVED" = "Gspeicheret";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle-Debug-Chnopf";
+"TOOLS_DEBUG_BUTTON_HELP" = "Zeigt e schwäbende Chnopf, wo undersuecht, was uf em Bildschirm isch, und Bricht für e Fählermäldig erstellt. Zie ne uf e Syte vom Bildschirm. D Bricht lö Tekscht vom Bildschirm wäg, usser du schaltisch «Tekscht mitnäh» i sym Menü y.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Tipp uf es Elemänt, zum’s undersueche";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Chnopf verstecke";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Tekscht mitnäh";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Elemänt undersueche";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "FLEX öffne";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Bildschirmbricht";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "View-Hierarchie";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Debug-Chnopf";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] TestFlight-Popup verstecke";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Safe Mode deaktiviere";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Doppleti Benachrichtigige fixe";

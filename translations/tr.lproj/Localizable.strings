@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Keşfet";
 "TAB_LAYOUT_CUSTOM" = "Özel";
 "TAB_SAVED" = "Kaydedildi";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle Hata Ayıklama Düğmesi";
+"TOOLS_DEBUG_BUTTON_HELP" = "Ekrandakileri inceleyen ve hata bildirimine eklenecek raporlar oluşturan kayan bir düğme gösterir. Ekranın herhangi bir kenarına sürükleyin. Menüsünde Metni Dahil Et'i açmadığınız sürece raporlar ekrandaki metni içermez.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "İncelemek için herhangi bir öğeye dokunun";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Düğmeyi Gizle";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Metni Dahil Et";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Öğeyi İncele";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "FLEX'i Aç";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Ekran Raporu";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Görünüm Hiyerarşisi";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Hata Ayıklama Düğmesi";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] TestFlight Açılır Penceresini Gizle";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Güvenli Modu Devre Dışı Bırak";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Yinelenen Bildirimleri Düzelt";

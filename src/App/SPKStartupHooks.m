@@ -7,6 +7,7 @@
 
 FOUNDATION_EXPORT void SPKInstallLiquidGlassHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProgressiveBlurHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallDebugButtonIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFeedActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHeaderActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFollowingFeedHooksIfEnabled(void);
@@ -339,6 +340,8 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     [SPKLanguagePackUpdater checkForUpdatesIfDue];
     SPK_INSTALL(SPKInstallAccountSwitchHooksIfNeeded);
     SPK_INSTALL(SPKInstallTweakGeneralUIHooksIfNeeded);
+    // Not a hook: shows the floating debug button from Tools > Diagnostics.
+    SPK_INSTALL(SPKInstallDebugButtonIfEnabled);
     // Installed regardless of the toggle: a notification posted before the user
     // turned it off can still be tapped afterwards.
     SPK_INSTALL(SPKInstallDownloadNotificationRoutingHooks);

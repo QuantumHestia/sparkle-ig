@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Εξερεύνηση";
 "TAB_LAYOUT_CUSTOM" = "Προσαρμοσμένη";
 "TAB_SAVED" = "Αποθηκευμένα";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Κουμπί εντοπισμού σφαλμάτων Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Εμφανίζει ένα αιωρούμενο κουμπί που εξετάζει ό,τι υπάρχει στην οθόνη και δημιουργεί αναφορές για να επισυνάψεις σε μια αναφορά σφάλματος. Σύρε το σε οποιαδήποτε πλευρά της οθόνης. Οι αναφορές παραλείπουν το κείμενο της οθόνης, εκτός αν ενεργοποιήσεις τη «Συμπερίληψη κειμένου» στο μενού του.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Πάτησε οποιοδήποτε στοιχείο για να το εξετάσεις";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Απόκρυψη κουμπιού";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Συμπερίληψη κειμένου";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Εξέταση στοιχείου";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Άνοιγμα FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Αναφορά οθόνης";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Ιεραρχία προβολών";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Κουμπί εντοπισμού σφαλμάτων";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Απόκρυψη Αναδυόμενου TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Απενεργοποίηση Ασφαλούς Λειτουργίας";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Επιδιόρθωση Διπλών Ειδοποιήσεων";

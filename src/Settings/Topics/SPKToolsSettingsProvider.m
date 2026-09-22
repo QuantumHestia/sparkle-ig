@@ -5,6 +5,7 @@
 #import "../../App/SPKFlexLoader.h"
 #import "../../App/SPKStabilityGuard.h"
 #import "../../AssetUtils.h"
+#import "../../Shared/Diagnostics/SPKDiagnostics.h"
 #import "../../Shared/Gallery/SPKGalleryLockViewController.h"
 #import "../../Shared/Settings/SPKSettingsLockManager.h"
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
@@ -74,6 +75,20 @@ static NSDictionary *SPKSettingsLockSection(void) {
     };
 
     return SPKTopicSection(SPKL(@"TOOLS_SETTINGS_LOCK_HEADER"), @[ lockSwitch, changePasscode ], nil);
+}
+
+static NSDictionary *SPKDiagnosticsSection(void) {
+    SPKSetting *debugButton = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_TITLE") defaultsKey:kSPKPrefToolsDebugButton],
+                                                 SPKL(@"TOOLS_DEBUG_BUTTON_HELP"));
+    debugButton.switchChangeHandler = ^(BOOL isOn) {
+        SPKPreferenceSetObject(@(isOn), kSPKPrefToolsDebugButton);
+        SPKDebugButtonRefresh();
+    };
+    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObject:debugButton];
+#if SPK_DEV
+    [rows addObject:SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP"))];
+#endif
+    return SPKTopicSection(SPKL(@"TOOLS_DIAGNOSTICS_HEADER"), rows, nil);
 }
 
 @implementation SPKToolsSettingsProvider
@@ -159,11 +174,7 @@ static NSDictionary *SPKSettingsLockSection(void) {
                                      }],
 #endif
         ], nil),
-#if SPK_DEV
-        SPKTopicSection(SPKL(@"TOOLS_DIAGNOSTICS_HEADER"),
-                        @[ SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP")) ],
-                        nil),
-#endif
+        SPKDiagnosticsSection(),
         SPKSettingsLockSection(),
     ]];
 

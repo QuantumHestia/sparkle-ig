@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "탐색";
 "TAB_LAYOUT_CUSTOM" = "사용자 정의";
 "TAB_SAVED" = "저장됨";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Sparkle 디버그 버튼";
+"TOOLS_DEBUG_BUTTON_HELP" = "화면에 표시된 내용을 검사하고 버그 신고에 첨부할 보고서를 만드는 플로팅 버튼을 표시합니다. 화면의 양쪽 가장자리로 끌어서 옮길 수 있습니다. 메뉴에서 텍스트 포함을 켜지 않으면 보고서에 화면의 텍스트가 포함되지 않습니다.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "검사할 요소를 탭하세요";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "버튼 숨기기";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "텍스트 포함";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "요소 검사";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "FLEX 열기";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "화면 보고서";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "뷰 계층 구조";
+"TOOLS_DEBUG_BUTTON_TITLE" = "디버그 버튼";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] TestFlight 팝업 숨기기";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "안전 모드 비활성화";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "중복 알림 수정";

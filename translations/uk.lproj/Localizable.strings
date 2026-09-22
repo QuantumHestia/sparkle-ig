@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "Дослідити";
 "TAB_LAYOUT_CUSTOM" = "Користувацький";
 "TAB_SAVED" = "Збережено";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "Кнопка налагодження Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "Показує плаваючу кнопку, яка досліджує вміст екрана й створює звіти, які можна додати до повідомлення про помилку. Перетягніть її до будь-якого краю екрана. Звіти не містять тексту з екрана, якщо ви не ввімкнете «Включати текст» у її меню.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "Торкніться будь-якого елемента, щоб дослідити його";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "Сховати кнопку";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "Включати текст";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "Дослідити елемент";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Відкрити FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Звіт про екран";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Ієрархія представлень";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Кнопка налагодження";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Приховати спливаюче TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "Відключити безопасний режим";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Виправити дублікати сповіщень";

@@ -2228,6 +2228,16 @@
 "TAB_EXPLORE" = "کاوش";
 "TAB_LAYOUT_CUSTOM" = "سفارشی";
 "TAB_SAVED" = "ذخیره‌شده‌ها";
+"TOOLS_DEBUG_BUTTON_ACCESSIBILITY_LABEL" = "دکمه اشکال‌زدایی Sparkle";
+"TOOLS_DEBUG_BUTTON_HELP" = "یک دکمه شناور نشان می‌دهد که محتوای صفحه را بررسی می‌کند و گزارش‌هایی برای پیوست به گزارش خطا می‌سازد. آن را به هر طرف صفحه بکشید. گزارش‌ها متن روی صفحه را حذف می‌کنند، مگر اینکه «شامل کردن متن» را از منوی آن روشن کنید.";
+"TOOLS_DEBUG_BUTTON_INSPECT_HINT" = "روی هر عنصری ضربه بزنید تا بررسی شود";
+"TOOLS_DEBUG_BUTTON_MENU_HIDE" = "پنهان کردن دکمه";
+"TOOLS_DEBUG_BUTTON_MENU_INCLUDE_TEXT" = "شامل کردن متن";
+"TOOLS_DEBUG_BUTTON_MENU_INSPECT" = "بررسی عنصر";
+"TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "باز کردن FLEX";
+"TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "گزارش صفحه";
+"TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "سلسله‌مراتب نماها";
+"TOOLS_DEBUG_BUTTON_TITLE" = "دکمه اشکال‌زدایی";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[توسعه] پنهان کردن پاپ‌آپ TestFlight";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "غیرفعال کردن حالت ایمن";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "رفع اعلان‌های تکراری";

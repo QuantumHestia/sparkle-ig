@@ -563,6 +563,14 @@ clearing, and more.
 - **Show What's New**: Replays this release's What's New sheet at any time.
 - **Reset Safe Startup Mode**: Clears Sparkle's failed-launch counters and re-enables feature hooks after the launch failsafe kicked in.
 
+### Diagnostics
+- **Debug Button**: A floating button that stays above every Instagram screen, including stories and sheets. Drag it to either side of the screen. Its menu builds reports to attach to a bug report, shared as a `.txt` file or copied as text:
+  - **Inspect Element**: Tap anything on screen to report the element under your finger (skipping the empty layout containers stacked above it), what receives the touch there, and every view drawn over it.
+  - **Screen Report**: Sparkle, Instagram, SDK and iOS versions, the install path, the view controller tree, and the settings changed from their defaults.
+  - **View Hierarchy**: Every visible view on screen.
+  - **Include Text**: Reports leave out on-screen text (usernames, captions, messages) unless this is on. It turns itself off again at the next launch.
+  - **Open FLEX** (when bundled) and **Hide Button**.
+
 ### Settings Lock
 - **Enable Settings Passcode Lock** + **Change Settings Passcode**: Uses an independent keychain-backed passcode and Face ID / Touch ID unlock. Protects full Settings and topic sheets opened from action buttons; Settings remains unlocked until its modal is dismissed.
 
