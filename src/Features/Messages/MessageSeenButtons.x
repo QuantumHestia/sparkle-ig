@@ -742,29 +742,33 @@ static UIView *SPKThreadSeenBubbleContainer(UIViewController *controller) {
     return container;
 }
 
-// The keyboard's owner, via the nil-targeted action trick (no view-tree walk).
-static __weak UIResponder *SPKThreadSeenCapturedFirstResponder;
-
-@interface UIResponder (SPKThreadSeenFirstResponder)
-- (void)spk_threadSeenCaptureFirstResponder:(id)sender;
-@end
-
-@implementation UIResponder (SPKThreadSeenFirstResponder)
-- (void)spk_threadSeenCaptureFirstResponder:(id)sender {
-    SPKThreadSeenCapturedFirstResponder = self;
-}
-@end
-
-static UIResponder *SPKThreadSeenCurrentFirstResponder(void) {
-    SPKThreadSeenCapturedFirstResponder = nil;
-    [[UIApplication sharedApplication] sendAction:@selector(spk_threadSeenCaptureFirstResponder:) to:nil from:nil forEvent:nil];
-    return SPKThreadSeenCapturedFirstResponder;
+// In-thread half sheets (the GIF/sticker picker, the media gallery, ...) are
+// not modal presentations: IGDirectThreadViewHalfSheetPresenter hosts them in
+// a full-screen passthrough view added straight onto the thread's root view,
+// above the bubble's slot. While that host is up, the sheet can sit at any
+// detent or be dragged to full screen with the keyboard down, so hide for the
+// host's whole lifetime rather than chasing the sheet's height. Its arrival
+// and removal re-lay out the root view, which re-runs this check.
+static Class SPKThreadHalfSheetHostClass(void) {
+    static Class cls;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        cls = NSClassFromString(@"_TtC36IGDirectThreadViewHalfSheetPresenter42IGDirectThreadViewHalfSheetPassthroughView")
+                  ?: NSClassFromString(@"IGDirectThreadViewHalfSheetPresenter.IGDirectThreadViewHalfSheetPassthroughView");
+    });
+    return cls;
 }
 
-// True while the keyboard is up for a text field outside the composer (the
-// GIF/sticker sheet's search field): the bubble would ride that keyboard onto
-// the sheet. Set from the keyboard observer.
-static const void *kSPKThreadSeenForeignKeyboardKey = &kSPKThreadSeenForeignKeyboardKey;
+static BOOL SPKThreadSeenBubbleCoveredBySheet(UIViewController *controller) {
+    Class hostClass = SPKThreadHalfSheetHostClass();
+    if (!hostClass)
+        return NO;
+    for (UIView *view in controller.view.subviews) {
+        if ([view isKindOfClass:hostClass] && !view.hidden && view.alpha > 0.01)
+            return YES;
+    }
+    return NO;
+}
 
 static void SPKUpdateThreadSeenBubbleVisibility(UIViewController *controller, BOOL animated) {
     UIView *container = SPKThreadSeenBubbleContainer(controller);
@@ -772,9 +776,8 @@ static void SPKUpdateThreadSeenBubbleVisibility(UIViewController *controller, BO
         return;
 
     // Always available while in the thread; only hides while you're typing or
-    // while the GIF/sticker sheet covers it.
-    BOOL foreignKeyboard = [objc_getAssociatedObject(container, kSPKThreadSeenForeignKeyboardKey) boolValue];
-    BOOL visible = SPKThreadComposerTextLength(controller) == 0 && !foreignKeyboard;
+    // while an in-thread half sheet (GIF/sticker picker) is up.
+    BOOL visible = SPKThreadComposerTextLength(controller) == 0 && !SPKThreadSeenBubbleCoveredBySheet(controller);
 
     CGFloat target = visible ? 1.0 : 0.0;
     container.userInteractionEnabled = visible;
@@ -943,17 +946,6 @@ static void SPKEnsureThreadSeenKeyboardObserver(UIViewController *controller) {
                     }
                     objc_setAssociatedObject(container, kSPKThreadSeenBubbleComposerBottomKey, @(composerBottom), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
-                    // Keyboard on screen but owned by something outside the composer
-                    // (the GIF/sticker partial sheet's search field): hide rather
-                    // than float over that sheet.
-                    BOOL keyboardUp = composerBottom < CGRectGetHeight(root.bounds) - root.safeAreaInsets.bottom - 1.0;
-                    UIResponder *firstResponder = SPKThreadSeenCurrentFirstResponder();
-                    UIView *composer = SPKThreadComposerView(strong);
-                    BOOL insideComposer = [firstResponder isKindOfClass:[UIView class]] && composer &&
-                                          [(UIView *)firstResponder isDescendantOfView:composer];
-                    BOOL foreign = keyboardUp && firstResponder && !insideComposer;
-                    objc_setAssociatedObject(container, kSPKThreadSeenForeignKeyboardKey, @(foreign), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-
                     double duration = [note.userInfo[UIKeyboardAnimationDurationUserInfoKey] doubleValue];
                     NSInteger curve = [note.userInfo[UIKeyboardAnimationCurveUserInfoKey] integerValue];
                     // Re-run once the change has settled: when the composer is
@@ -990,7 +982,7 @@ static void SPKEnsureThreadSeenKeyboardObserver(UIViewController *controller) {
                         settle(YES);
                     }
                     // Fade out up front when the keyboard came for the GIF/sticker
-                    // sheet, instead of sliding across it.
+                    // sheet's search field, instead of sliding across the sheet.
                     SPKUpdateThreadSeenBubbleVisibility(strong, YES);
                 }];
     objc_setAssociatedObject(controller, kSPKThreadSeenKeyboardObserverKey, token, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -1238,8 +1230,12 @@ if ([nearestVC isKindOfClass:%c(IGDirectThreadViewController)]) {
     SPK_PERF_SCOPE(@"MessageSeenButtons.viewDidLayoutSubviews");
     // Cheap reposition only — the bubble is installed in viewDidAppear. Avoids
     // rebuilding thread context on every layout pass.
-    if (SPKThreadSeenBubbleEnabled())
+    if (SPKThreadSeenBubbleEnabled()) {
         SPKLayoutThreadSeenBubble(self);
+        // Half sheets open and close without any keyboard event; their host
+        // view coming and going re-lays out the root, so re-check here.
+        SPKUpdateThreadSeenBubbleVisibility(self, YES);
+    }
 }
 
 // Composer text listener callback — hide the bubble the moment you start typing,
