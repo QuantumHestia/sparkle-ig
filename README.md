@@ -81,7 +81,8 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Sparkle ships in English. Other languages are community translations you install from the Translate button in Sparkle Settings, as a language pack, and remove again with a swipe. Anything a pack does not translate falls back to English. Dates use the selected language's ordering, punctuation, and month names while respecting the device's 12/24-hour clock. Built-in Action Button section names follow the selected language; names you customize remain exactly as entered. A language ships with Sparkle, no pack needed, once a native speaker has reviewed it. See [Help translate](#help-translate).
 - **Confirmations**:
   - Optional "are you sure?" guards for accidental likes, follows, reposts, calls, comments, and more.
-- **Link detection**:
+- **Link detection and routing**:
+  - Open links from bios, captions, stories, messages, and ads in an in-app Safari view or the Safari app instead of Instagram's browser, with Instagram's redirect and tracking parameters stripped first.
   - Instagram leaves web addresses in captions and comments as plain text. Sparkle can find them, color them, and make them tappable, opening them in an in-app Safari view, in the Safari app, or after asking each time. Off by default, and nothing is requested from a link until you tap it.
 - **Liquid Glass (iOS 26+)**:
   - Native Liquid Glass integration across Sparkle's own UI, plus an option to force-enable Instagram's.

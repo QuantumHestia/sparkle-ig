@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "삭제 실패";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "맞팔로우";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "요청됨";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "항상 묻기";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Instagram 브라우저";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "앱 내 Safari";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "링크 열기";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "오디오";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "최근 검색 숨기기";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "스토리, 하이라이트, 게시물 또는 릴의 전송 버튼을 길게 눌러 링크를 복사합니다.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "전송 버튼을 눌러 링크 복사";
+"GENERAL_BROWSER_LINKS_HELP" = "프로필 소개, 캡션, 스토리, 메시지, 광고의 링크를 Instagram 브라우저 밖에서 열어 추적 스크립트가 로드되지 않게 합니다. Instagram의 리디렉션과 추적 매개변수는 먼저 제거됩니다. Meta 페이지와 로그인 과정은 계속 Instagram 브라우저에서 열립니다.";
+"GENERAL_BROWSER_LINKS_TITLE" = "웹 링크 열기 위치";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "GIF 및 사진 댓글에 사진, 공유, 갤러리, 링크 액션을 추가합니다.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "댓글 미디어 액션";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "댓글에 좋아요를 누르기 전에 확인을 요청합니다.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "캐시 지우기";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "메뉴 아이콘 열기";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "계정별 설정";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "뷰어나 앱을 벗어나도 확장된 동영상을 플로팅 창에서 계속 재생합니다.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "동영상에 PIP 허용";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "미디어 미리보기 및 메뉴";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "확대된 사진 미리보기에서 텍스트를 인식하고 선택 및 복사 버튼을 추가합니다.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "사진에서 텍스트 선택";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "릴스 추천 숨기기";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "검색 추천 숨기기";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "구독 추천 숨기기";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "매번 묻기";
 "GENERAL_TEXT_LINKS_HELP" = "댓글과 게시물 또는 릴스 캡션에서 http:// 및 https:// 링크를 감지하며, 탭하기 전까지는 링크에 연결하지 않습니다.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "인앱 브라우저";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "탭한 웹 링크가 열릴 위치를 선택하세요.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "다음으로 열기";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "링크 열기";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "텍스트에서 링크 감지";
 "GENERAL_TITLE" = "일반";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Reel 재공유 확인";

@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Не вдалося видалити";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Стежити взаємно";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Запит надіслано";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Питати завжди";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Браузер Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari у застосунку";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Відкрити посилання";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Аудіо";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Приховати недавні пошуки";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Утримуйте кнопку надсилання в історії, актуальному, дописі або Reel, щоб скопіювати його посилання.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Утримання надіслати для копіювання посилання";
+"GENERAL_BROWSER_LINKS_HELP" = "Відкриває посилання з біографій, підписів, історій, повідомлень і реклами поза браузером Instagram, тож його скрипти відстеження ніколи не завантажуються. Спершу вилучаються переадресація та параметри відстеження Instagram. Сторінки Meta і вхід в обліковий запис і далі відкриваються в браузері Instagram.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Відкривати вебпосилання в";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Додає дії Фото, Поділитися, Галерея та посилання до коментарів із GIF і фото.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Дії медіа коментаря";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Запитує підтвердження перед уподобанням коментаря.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Очистити кеш";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Іконка Відкрити меню";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Налаштування за аккаунтом";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Дозволяє розгорнутим відео продовжувати відтворення у плаваючому вікні, коли ви залишаєте переглядач або застосунок.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Дозволити PiP для відео";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Попередній перегляд медіа та меню";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Розпізнає текст у збільшеному перегляді фото та додає кнопку для виділення й копіювання.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Виділення тексту на фото";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Приховати пропозиції Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Приховати пропозиції пошуку";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Приховати пропозиції підписки";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Запитувати щоразу";
 "GENERAL_TEXT_LINKS_HELP" = "Виявляє посилання http:// та https:// в коментарях і підписах до дописів чи Reels, не звертаючись до посилання, доки ви не торкнетеся його.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Вбудований браузер";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Виберіть, де відкриватимуться натиснуті веб-посилання.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Відкривати в";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Відкрити посилання";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Розпізнавати посилання в тексті";
 "GENERAL_TITLE" = "Основне";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Підтвердити поділення на Рилси";

@@ -1,10 +1,8 @@
 #import <objc/message.h>
 #import <objc/runtime.h>
-#import <SafariServices/SafariServices.h>
 
 #import "../../InstagramHeaders.h"
-#import "../../Shared/UI/SPKIGAlertPresenter.h"
-#import "../../Shared/i18n/SPKStrings.h"
+#import "../../Shared/Links/SPKWebLinkOpener.h"
 #import "../../Utils.h"
 
 static const void *kSPKTappableTextLinksProcessedKey = &kSPKTappableTextLinksProcessedKey;
@@ -13,11 +11,6 @@ static const void *kSPKTappableTextLinksURLsKey = &kSPKTappableTextLinksURLsKey;
 static const void *kSPKTappableTextLinksProxyKey = &kSPKTappableTextLinksProxyKey;
 static const void *kSPKTappableTextLinksManagedCaptionViewKey = &kSPKTappableTextLinksManagedCaptionViewKey;
 static const void *kSPKUnifiedCaptionDiagnosticKey = &kSPKUnifiedCaptionDiagnosticKey;
-
-static BOOL SPKTextLinkIsWebURL(NSURL *url) {
-    NSString *scheme = url.scheme.lowercaseString;
-    return [scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"];
-}
 
 static NSString *SPKTextLinkTrimmedURLString(NSString *candidate) {
     if (candidate.length == 0)
@@ -52,7 +45,7 @@ static NSArray<NSDictionary *> *SPKTextLinkRanges(NSString *text) {
         if (trimmed.length == 0)
             return;
         NSURL *url = [NSURL URLWithString:trimmed];
-        if (!SPKTextLinkIsWebURL(url))
+        if (!SPKWebLinkIsWebURL(url))
             return;
         NSUInteger length = trimmed.length;
         [results addObject:@{ @"range" : [NSValue valueWithRange:NSMakeRange(match.range.location, length)],
@@ -84,53 +77,12 @@ static UIViewController *SPKTappableTextLinkPresenter(UIView *sourceView) {
 }
 
 static void SPKOpenTappableTextURL(NSURL *url, UIView *sourceView) {
-    if (!SPKTextLinkIsWebURL(url))
+    if (!SPKWebLinkIsWebURL(url))
         return;
 
-    NSString *mode = [SPKUtils getStringPref:@"general_tappable_text_links_opening_mode"];
+    NSString *mode = SPKTappableLinkOpeningMode();
     SPKLog(@"TappableLinks", @"Opening tapped web link host=%@ mode=%@", url.host ?: @"(none)", mode ?: @"(unset)");
-    if ([mode isEqualToString:@"safari"]) {
-        [SPKUtils openURL:url];
-        return;
-    }
-
-    void (^openInApp)(void) = ^{
-        UIViewController *presenter = SPKTappableTextLinkPresenter(sourceView);
-        if (!presenter) {
-            SPKLog(@"TappableLinks", @"Native in-app browser unavailable: no presenter host=%@", url.host ?: @"(none)");
-            [SPKUtils openURL:url];
-            return;
-        }
-        SFSafariViewController *browser = [[SFSafariViewController alloc] initWithURL:url];
-        SPKLog(@"TappableLinks", @"Opening native in-app browser host=%@ presenter=%@", url.host ?: @"(none)", NSStringFromClass(presenter.class));
-        [presenter presentViewController:browser animated:YES completion:nil];
-    };
-    if (![mode isEqualToString:@"ask"]) {
-        openInApp();
-        return;
-    }
-
-    UIViewController *presenter = SPKTappableTextLinkPresenter(sourceView);
-    if (!presenter)
-        return;
-    [SPKIGAlertPresenter presentActionSheetFromViewController:presenter
-                                                        title:SPKL(@"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE")
-                                                      message:nil
-                                                      actions:@[
-                                                          [SPKIGAlertAction actionWithTitle:SPKL(@"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT")
-                                                                                      style:SPKIGAlertActionStyleDefault
-                                                                                    handler:^{
-                                                                                        openInApp();
-                                                                                    }],
-                                                          [SPKIGAlertAction actionWithTitle:SPKL(@"GENERAL_TEXT_LINKS_SAFARI_TEXT")
-                                                                                      style:SPKIGAlertActionStyleDefault
-                                                                                    handler:^{
-                                                                                        [SPKUtils openURL:url];
-                                                                                    }],
-                                                          [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_CANCEL")
-                                                                                      style:SPKIGAlertActionStyleCancel
-                                                                                    handler:nil]
-                                                      ]];
+    SPKOpenWebLink(url, mode, SPKTappableTextLinkPresenter(sourceView), nil);
 }
 
 @interface SPKTappableTextLinkHandlerProxy : NSObject

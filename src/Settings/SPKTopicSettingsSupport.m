@@ -253,14 +253,18 @@ UIMenu *SPKMainFeedModeMenu(void) {
     ]];
 }
 
-UIMenu *SPKTextLinkOpeningModeMenu(void) {
+UIMenu *SPKLinkOpeningModeMenu(void) {
     return [UIMenu menuWithChildren:@[
-        SPKMenuCommand(SPKL(@"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT"), nil, nil,
-                       @"general_tappable_text_links_opening_mode", @"in_app", NO),
-        SPKMenuCommand(SPKL(@"GENERAL_TEXT_LINKS_SAFARI_TEXT"), nil, nil,
-                       @"general_tappable_text_links_opening_mode", @"safari", NO),
-        SPKMenuCommand(SPKL(@"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT"), nil, nil,
-                       @"general_tappable_text_links_opening_mode", @"ask", NO)
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"general_link_opening_mode", @"default", NO),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT"), nil, nil, @"general_link_opening_mode", @"in_app", NO),
+                         SPKMenuCommand(SPKL(@"COMMON_LINK_OPEN_SAFARI_TEXT"), nil, nil, @"general_link_opening_mode", @"safari", NO),
+                         SPKMenuCommand(SPKL(@"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT"), nil, nil, @"general_link_opening_mode", @"ask", NO)
+                     ]]
     ]];
 }
 

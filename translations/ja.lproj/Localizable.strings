@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "削除に失敗";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "フォローバック";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "リクエスト済み";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "毎回確認する";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Instagramブラウザ";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "アプリ内Safari";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "リンクを開く";
 "COMMON_LIST_SEPARATOR" = "、";
 "COMMON_MEDIA_TYPE_AUDIO" = "オーディオ";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "最近の検索を非表示";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "ストーリーズ、ハイライト、投稿、リールの送信ボタンを長押しすると、リンクをコピーできます。";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "送信を長押ししてリンクをコピー";
+"GENERAL_BROWSER_LINKS_HELP" = "プロフィール、キャプション、ストーリーズ、メッセージ、広告のリンクをInstagramのブラウザ以外で開くため、トラッキングスクリプトが読み込まれることはありません。Instagramのリダイレクトとトラッキングパラメータは事前に削除されます。Metaのページとログイン処理は引き続きInstagramのブラウザで開きます。";
+"GENERAL_BROWSER_LINKS_TITLE" = "Webリンクを開く場所";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "GIFや写真のコメントに「写真に保存」「共有」「ギャラリー」およびリンク操作を追加します。";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "コメントメディアアクション";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "コメントに「いいね！」する前に確認します。";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "キャッシュをクリア";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "メニューを開くアイコン";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "アカウント別設定";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "ビューアやアプリを離れても、拡大したビデオをフローティングウィンドウで再生し続けます。";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "ビデオでピクチャ・イン・ピクチャを許可";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "メディアプレビュー＆メニュー";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "拡大した写真プレビュー内のテキストを認識し、選択してコピーするボタンを追加します。";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "写真内のテキストを選択";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "リールのおすすめを非表示";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "検索推奨を非表示";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "サブスクリプション推奨を非表示";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "毎回確認する";
 "GENERAL_TEXT_LINKS_HELP" = "コメントや投稿・リールのキャプション内の http:// と https:// のリンクを検出し、タップするまでリンク先に接続しません。";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "アプリ内ブラウザ";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "タップしたウェブリンクを開く場所を選択します。";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "次で開く";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "リンクを開く";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "テキスト内のリンクを検出";
 "GENERAL_TITLE" = "一般";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "リールのリポストを確認";

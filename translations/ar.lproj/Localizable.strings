@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "فشل الحذف";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "متابعة بالمثل";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "تم الطلب";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "اسأل دائمًا";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "متصفح Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari داخل التطبيق";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "فتح الرابط";
 "COMMON_LIST_SEPARATOR" = "، ";
 "COMMON_MEDIA_TYPE_AUDIO" = "صوت";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "إخفاء عمليات البحث الأخيرة";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "اضغط مطولاً على زر الإرسال في قصة أو قصة مميزة أو منشور أو Reel لنسخ رابطه.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "اضغط على الإرسال لنسخ الرابط";
+"GENERAL_BROWSER_LINKS_HELP" = "يفتح الروابط من السير الذاتية والتعليقات التوضيحية والقصص والرسائل والإعلانات خارج متصفح Instagram، فلا يتم تحميل نصوص التتبع الخاصة به أبدًا. تتم إزالة إعادة التوجيه ومعلمات التتبع الخاصة بـ Instagram أولًا. لا تزال صفحات Meta وعمليات تسجيل الدخول تُفتح في متصفح Instagram.";
+"GENERAL_BROWSER_LINKS_TITLE" = "فتح روابط الويب في";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "يضيف إجراءات الصور والمشاركة والمعرض والروابط إلى تعليقات الصور وصور GIF.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "إجراءات وسائط التعليقات";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "يطلب تأكيداً قبل الإعجاب بأي تعليق.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "مسح الذاكرة المؤقتة";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "أيقونة فتح القائمة";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "إعدادات لكل حساب";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "يتيح للفيديوهات الموسعة مواصلة التشغيل في نافذة عائمة عند مغادرة العارض أو التطبيق.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "السماح بنافذة PiP للفيديوهات";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "معاينة الوسائط والقائمة";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "يتعرف على النص في معاينة الصورة الموسعة ويضيف زرًا لتحديده ونسخه.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "تحديد النص في الصور";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "إخفاء اقتراحات Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "إخفاء اقتراحات البحث";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "إخفاء اقتراحات الاشتراك";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "السؤال في كل مرة";
 "GENERAL_TEXT_LINKS_HELP" = "يكتشف روابط http:// و https:// في التعليقات وتسميات المنشورات أو الريلز التوضيحية دون الاتصال بالرابط حتى تنقر عليه.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "المتصفح داخل التطبيق";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "اختر مكان فتح روابط الويب التي يتم النقر عليها.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "فتح في";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "فتح الرابط";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "اكتشاف الروابط في النص";
 "GENERAL_TITLE" = "عام";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "تأكيد إعادة نشر Reel";

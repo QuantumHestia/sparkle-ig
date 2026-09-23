@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "حذف ناموفق بود";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "دنبال کردن متقابل";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "درخواست ارسال شد";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "همیشه بپرس";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "مرورگر Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari درون برنامه";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "باز کردن پیوند";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "صدا";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "پنهان‌سازی جستجوهای اخیر";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "برای کپی کردن لینک یک استوری، هایلایت، پست یا ریل، دکمه ارسال آن را لمس طولانی کنید.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "لمس طولانی دکمه ارسال برای کپی لینک";
+"GENERAL_BROWSER_LINKS_HELP" = "پیوندهای بیوگرافی‌ها، کپشن‌ها، استوری‌ها، پیام‌ها و تبلیغات را خارج از مرورگر Instagram باز می‌کند تا اسکریپت‌های ردیابی آن هرگز بارگیری نشوند. ابتدا تغییر مسیر و پارامترهای ردیابی Instagram حذف می‌شوند. صفحات Meta و مراحل ورود همچنان در مرورگر Instagram باز می‌شوند.";
+"GENERAL_BROWSER_LINKS_TITLE" = "باز کردن پیوندهای وب در";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "کنش‌های Photos، اشتراک‌گذاری، گالری و لینک را به کامنت‌های GIF و عکس اضافه می‌کند.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "کنش‌های رسانه در کامنت";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "پیش از لایک شدن یک کامنت، تأیید می‌خواهد.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "پاک کردن کش";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "آیکون باز کردن منو";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "تنظیمات مخصوص هر اکانت";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "می‌گذارد ویدیوهای بازشده هنگام خروج از نمایشگر یا برنامه در یک پنجره شناور به پخش ادامه دهند.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "اجازه PiP برای ویدیوها";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "پیش‌نمایش و منوی رسانه";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "متن موجود در پیش‌نمایش بزرگ‌شده عکس را تشخیص می‌دهد و دکمه‌ای برای انتخاب و کپی کردن آن اضافه می‌کند.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "انتخاب متن در عکس‌ها";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای ریلز";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای جستجو";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "پنهان‌سازی پیشنهادهای اشتراک";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "هر بار بپرس";
 "GENERAL_TEXT_LINKS_HELP" = "پیوندهای http:// و https:// را در نظرات و کپشن پست‌ها یا ریلز شناسایی می‌کند، بدون تماس با پیوند تا وقتی که روی آن ضربه بزنید.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "مرورگر درون‌برنامه‌ای";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "انتخاب کنید پیوندهای وب ضربه‌زده‌شده کجا باز شوند.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "باز کردن در";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "باز کردن پیوند";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "شناسایی پیوند در متن";
 "GENERAL_TITLE" = "عمومی";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "تأیید ریپست ریل";

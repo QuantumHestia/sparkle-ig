@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Échec de la suppression";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Suivre en retour";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Demandé";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Toujours demander";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Navigateur Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari intégré";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Ouvrir le lien";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Audio";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Masquer les recherches récentes";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Appuyez longuement sur le bouton d'envoi d'une story, d'un highlight, d'une publication ou d'un reel pour copier son lien.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Appui long sur envoyer pour copier le lien";
+"GENERAL_BROWSER_LINKS_HELP" = "Ouvre les liens des bios, légendes, stories, messages et publicités en dehors du navigateur d'Instagram, afin que ses scripts de suivi ne se chargent jamais. La redirection et les paramètres de suivi d'Instagram sont d'abord supprimés. Les pages Meta et les connexions s'ouvrent toujours dans le navigateur d'Instagram.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Ouvrir les liens web dans";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Ajoute les actions Photos, Partager, Galerie et lien aux commentaires GIF et photo.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Actions de médias de commentaires";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Demande confirmation avant d'aimer un commentaire.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Vider le cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Icône Ouvrir le menu";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Paramètres par compte";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Permet aux vidéos agrandies de continuer la lecture dans une fenêtre flottante lorsque vous quittez la visionneuse ou l'app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Autoriser PiP pour les vidéos";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Aperçu et menu des médias";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Reconnaît le texte dans l’aperçu photo agrandi et ajoute un bouton pour le sélectionner et le copier.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Sélectionner le texte des photos";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Masquer les suggestions Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Masquer les suggestions de recherche";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Masquer les suggestions d'abonnement";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Demander à chaque fois";
 "GENERAL_TEXT_LINKS_HELP" = "Détecte les liens http:// et https:// dans les commentaires ainsi que dans les légendes des publications ou des reels, sans contacter le lien tant que vous n'appuyez pas dessus.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Navigateur intégré";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Choisissez où les liens web appuyés s'ouvrent.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Ouvrir dans";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Ouvrir le lien";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Détecter les liens dans le texte";
 "GENERAL_TITLE" = "Général";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Confirmer le partage du Reel";

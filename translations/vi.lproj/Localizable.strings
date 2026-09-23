@@ -219,7 +219,7 @@
 "APP_FLEX_LOADER_FLEX_UNAVAILABLE_TEXT" = "FLEX không khả dụng";
 "APP_FLEX_LOADER_REBUILD_FLEX_TEXT" = "Xây dựng lại với --with-flex";
 "APP_STABILITY_GUARD_INSTAGRAM_CLOSED_BEFORE_FINISHING_LAUNCH_SEVERAL_TIMES_ROW_SO_TEXT" = "Instagram không hoàn tất khởi động nhiều lần, vì vậy Sparkle đã vào Chế độ an toàn.\n\nCác tính năng Sparkle hiện bị tắt, nhưng Cài đặt vẫn khả dụng. Tắt Chế độ an toàn và khởi động lại Instagram để bật lại chúng.";
-"APP_STABILITY_GUARD_SPARKLE_SAFE_MODE_TEXT" = "Sparkle Safe Mode";
+"APP_STABILITY_GUARD_SPARKLE_SAFE_MODE_TEXT" = "Chế độ an toàn Sparkle";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_CONVERSION_FAILED_TEXT" = "Chuyển đổi âm thanh thất bại";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_SENT_TEXT" = "Âm thanh đã gửi";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_TRIM_FAILED_TEXT" = "Cắt âm thanh thất bại";
@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Không xóa được";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Theo dõi lại";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Đã yêu cầu";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Luôn hỏi";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Trình duyệt Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari trong ứng dụng";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Mở liên kết";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Âm thanh";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Ẩn Tìm kiếm Gần đây";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Nhấn giữ nút gửi trên tin, tin nổi bật, bài viết hoặc reel để sao chép liên kết.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Giữ Gửi để Sao chép Liên kết";
+"GENERAL_BROWSER_LINKS_HELP" = "Mở liên kết từ tiểu sử, chú thích, tin, tin nhắn và quảng cáo bên ngoài trình duyệt của Instagram, để các tập lệnh theo dõi của nó không bao giờ được tải. Chuyển hướng và tham số theo dõi của Instagram được xóa trước. Các trang của Meta và quá trình đăng nhập vẫn mở trong trình duyệt của Instagram.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Mở liên kết web bằng";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Thêm hành động Ảnh, Chia sẻ, Thư viện và liên kết vào bình luận dạng GIF và ảnh.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Hành động Phương tiện Bình luận";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Hỏi xác nhận trước khi thích một bình luận.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Xóa Bộ nhớ đệm";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Biểu tượng Menu Mở";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Cài đặt Theo tài khoản";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Cho phép video đã mở rộng tiếp tục phát trong cửa sổ nổi khi bạn rời khỏi trình xem hoặc ứng dụng.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Cho phép PiP cho video";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Bản Xem Trước & Menu Phương Tiện";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Nhận dạng văn bản trong bản xem trước ảnh phóng to và thêm nút để chọn và sao chép.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Chọn văn bản trong ảnh";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Ẩn Gợi ý Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Ẩn Gợi ý Tìm kiếm";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Ẩn Gợi ý Đăng ký";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Hỏi mỗi lần";
 "GENERAL_TEXT_LINKS_HELP" = "Phát hiện liên kết http:// và https:// trong bình luận và chú thích bài viết hoặc reel mà không kết nối đến liên kết cho đến khi bạn nhấn vào.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Trình duyệt trong ứng dụng";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Chọn nơi mở liên kết web khi được nhấn.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Mở bằng";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Mở liên kết";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Phát hiện liên kết trong văn bản";
 "GENERAL_TITLE" = "Chung";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Xác nhận chia sẻ lại Reel";
@@ -1054,7 +1055,7 @@
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Sắp xếp thanh tab với bản xem trước trực tiếp. Thay đổi được gom lại và áp dụng cùng lúc, sau đó Instagram khởi động lại.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "Trình Chỉnh Sửa Tab";
 "INTERFACE_TAB_BAR_BEHAVIOR_HELP" = "Thanh tab luôn cố định hay tự ẩn khi bạn cuộn.";
-"INTERFACE_TAB_BAR_HEADER" = "Tab Bar";
+"INTERFACE_TAB_BAR_HEADER" = "Thanh tab";
 "INTERFACE_TITLE" = "Giao diện";
 "LANGUAGE_CONTRIBUTE_SUBTITLE" = "Sửa một ngôn ngữ hoặc bắt đầu ngôn ngữ mới";
 "LANGUAGE_CONTRIBUTE_TITLE" = "Đóng góp bản dịch";
@@ -1321,7 +1322,7 @@
 "MENU_DEFAULT" = "Mặc định";
 "MENU_FIXED" = "Cố Định";
 "MENU_FOLLOWING" = "Following";
-"MENU_FOR_YOU" = "For You";
+"MENU_FOR_YOU" = "Dành cho bạn";
 "MENU_GIF_ACTIONS" = "Hành Động GIF";
 "MENU_HARD" = "Cứng";
 "MENU_HIDE_SCROLL" = "Ẩn Khi Cuộn";

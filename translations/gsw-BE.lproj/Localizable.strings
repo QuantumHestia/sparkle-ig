@@ -219,7 +219,7 @@
 "APP_FLEX_LOADER_FLEX_UNAVAILABLE_TEXT" = "FLEX nid verfüegbar";
 "APP_FLEX_LOADER_REBUILD_FLEX_TEXT" = "Neu boue mit --with-flex";
 "APP_STABILITY_GUARD_INSTAGRAM_CLOSED_BEFORE_FINISHING_LAUNCH_SEVERAL_TIMES_ROW_SO_TEXT" = "Instagram isch mehrmau nid fertig gstartet, drum isch Sparkle i Safe Mode gange.\n\nD'Sparkle-Funktione si moumentan deaktiviert, aber d'Ystellige blybe verfüegbar. Mach dr Safe Mode us u start Instagram neu, zum si wider aktiviere.";
-"APP_STABILITY_GUARD_SPARKLE_SAFE_MODE_TEXT" = "Sparkle Safe Mode";
+"APP_STABILITY_GUARD_SPARKLE_SAFE_MODE_TEXT" = "Sparkle Sicherheitsmodus";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_CONVERSION_FAILED_TEXT" = "Audio-Umwandlig fählgschlage";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_SENT_TEXT" = "Audio gschickt";
 "AUDIO_AUDIO_DMUPLOAD_COORDINATOR_AUDIO_TRIM_FAILED_TEXT" = "Audio-Chürzig fählgschlage";
@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Lösche fählgschlage";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Zrugg folge";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Aagfragt";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Immer froge";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Instagram-Browser";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari i dr App";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Link Ufmache";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Audio";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -335,7 +340,7 @@
 "CROP_CROP_CANVAS_VIEW_VALUE_TEXT" = "16:9";
 "DATA_BACKUP_TRANSFER_EXPORT_HELP" = "Wähl, weli Sparkle-Ystellige u -Date yygschlosse werde sölle, u exportier sie i ne Datei.";
 "DATA_BACKUP_TRANSFER_EXPORT_TITLE" = "Export";
-"DATA_BACKUP_TRANSFER_HEADER" = "Backup & Transfer";
+"DATA_BACKUP_TRANSFER_HEADER" = "Sicherung & Übertragig";
 "DATA_BACKUP_TRANSFER_IMPORT_HELP" = "Stell vonere Sparkle-Export wider här. D'Ystellige ersetze dyni aktuelle Wärt für dr importierti Bereich; Galerie-, Glöschti-Nachrichte- u Profil-Analyzer-Date werde drzuegfüegt u nüt Bestehendsch wird glöscht.";
 "DATA_BACKUP_TRANSFER_IMPORT_TITLE" = "Import";
 "DATA_GENERAL_DELETED_MESSAGES_TITLE" = "Glöschti Nachrichte";
@@ -596,13 +601,13 @@
 "FONT_STYLE_BOLD" = "Bold";
 "FONT_STYLE_HEAVY" = "Heavy";
 "FONT_STYLE_ITALIC" = "Italic";
-"FONT_STYLE_ITALIC_VARIANT_FORMAT" = "%@ Italic";
+"FONT_STYLE_ITALIC_VARIANT_FORMAT" = "%@ Kursiv";
 "FONT_STYLE_LIGHT" = "Light";
 "FONT_STYLE_MEDIUM" = "Medium";
 "FONT_STYLE_REGULAR" = "Regular";
 "FONT_STYLE_SEMIBOLD" = "Semibold";
 "FONT_STYLE_THIN" = "Thin";
-"FONT_STYLE_ULTRA_LIGHT" = "Ultra Light";
+"FONT_STYLE_ULTRA_LIGHT" = "Extraliecht";
 "FONT_UNUSABLE_FILE_SUBTITLE_FORMAT" = "Kei bruuchbari Schriftart · %@";
 "GALLERY_ACCESS_HEADER" = "Zuegriff";
 "GALLERY_ACCESS_QUICK_ACCESS_HELP" = "Dr Tab, wo bi emene lange Drück d'Galerie ufmacht. Kene deaktiviert d'Geste.";
@@ -776,7 +781,7 @@
 "GALLERY_GALLERY_SORT_GROUPING_TEXT" = "Gruppierig";
 "GALLERY_GALLERY_SORT_LARGEST_FIRST_TEXT" = "Grössti zersch";
 "GALLERY_GALLERY_SORT_MEDIA_TYPE_TEXT" = "Medie-Typ";
-"GALLERY_GALLERY_SORT_NAME_Z_TEXT" = "Name A-Z";
+"GALLERY_GALLERY_SORT_NAME_Z_TEXT" = "Name A–Z";
 "GALLERY_GALLERY_SORT_NEWEST_FIRST_TEXT" = "Nöischti zersch";
 "GALLERY_GALLERY_SORT_OLDEST_FIRST_TEXT" = "Autisti zersch";
 "GALLERY_GALLERY_SORT_ORDER_TEXT" = "Reihefolg";
@@ -819,7 +824,7 @@
 "GALLERY_OPENED_ORIGINAL_STORY_TOAST" = "Original-Story ufgmacht";
 "GALLERY_PREVIEW_SHOW_MEDIA_INFO_HELP" = "Legt dr Benutzername, d'Quäue u s'Speicher- oder Poscht-Datum über d'erwyterti Vorschau. Tippe uf d'Medie, für's mit dr Steurig z'verstecke.";
 "GALLERY_SETTINGS_ASSIGN_UNASSIGNED_FILES_FORMAT" = "Sparkle het %@ ohni Account-Zuewysig gfunge. Wottsch die %@ zuewyse, damit si erschyne, wenn Nume Dää Account aktiviert isch?";
-"GALLERY_SORT_NAME_DESCENDING_TITLE" = "Name Z-A";
+"GALLERY_SORT_NAME_DESCENDING_TITLE" = "Name Z–A";
 "GALLERY_SOURCES_HIDE_SOURCE_HELP" = "Verschteckti Quäue blybe i dr Galerie gspeicheret und blybe für Wartig, Export u Duplikat-Checks verfüegbar.";
 "GALLERY_TITLE" = "Galerie";
 "GALLERY_UNABLE_OPEN_ORIGINAL_POST_TOAST" = "Original-Post cha nid ufgmacht wärde";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Chürzlechi Suechi Verstecke";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Lang drücke dr Sände-Chnopf uf ere Story, emene Highlight, ere Post oder emene Reel, für dr Link z'kopiere.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Sände Häute, für Link Z'kopiere";
+"GENERAL_BROWSER_LINKS_HELP" = "Macht Links us Bios, Bildunterschrifte, Stories, Nachrichte und Werbig usserhalb vom Instagram-Browser uf, so dass sini Tracking-Skript nie glade wärde. Dr Instagram-Umleitig und d Tracking-Parameter wärde vorher entfernt. Meta-Sitte und Aamäldige gönd witerhin im Instagram-Browser uf.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Weblinks öffne i";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Fügt Fotis-, Teile-, Galerie- u Link-Aktione zu GIF- u Foti-Kommentar dezue.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Kommentar-Medie-Aktione";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Frögt nach ere Bestätigung, bevor e Kommentar gliket wird.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Cache Läere";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Menü-Ufmache-Icon";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Ystellige Pro Account";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Erwyterti Video loufe i me schwebende Fänschter wyter, wänn dr Viewer oder d App verlah wird.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "PiP für Video erlaube";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Medie-Vorschau & Menü";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Erkennt Text i dr erwyterte Foti-Vorschau u fügt en Chnopf dezue, für ne uszwähle u z'kopiere.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Text i Fotis Uswähle";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels-Vorschläg Verstecke";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Suech-Vorschläg Verstecke";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Abo-Vorschläg Verstecke";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Jedes Mau Frage";
 "GENERAL_TEXT_LINKS_HELP" = "Erkennt http:// - u https://-Links i Kommentar u Poscht- oder Reel-Bschriftige, ohni dr Link z'kontaktiere, bis du druuf tippisch.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "In-App-Browser";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Wähl, wo aatippti Web-Links ufgah.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Ufmache I";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Link Ufmache";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Links im Text Erkenne";
 "GENERAL_TITLE" = "Augmein";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Reel-Repost Bestätige";
@@ -1961,7 +1962,7 @@
 "SETTINGS_MESSAGES_DOWNLOAD_NOTES_AUDIO_TEXT" = "Notiz-Audio abelade";
 "SETTINGS_MESSAGES_DOWNLOAD_VOICE_MESSAGES_MESSAGE" = "Sprachnachrichte abelade";
 "SETTINGS_NOTIFICATION_FEATURE_TEXT" = "Feature";
-"SETTINGS_NOTIFICATION_HEADS_UP_TEXT" = "Heads Up";
+"SETTINGS_NOTIFICATION_HEADS_UP_TEXT" = "Hinweis";
 "SETTINGS_NOTIFICATION_NOTIFICATION_PREVIEW_ERROR_TONE_TEXT" = "Vorschau-Benachrichtigig: Fähler-Ton.";
 "SETTINGS_NOTIFICATION_NOTIFICATION_PREVIEW_INFO_TONE_TEXT" = "Vorschau-Benachrichtigig: Info-Ton.";
 "SETTINGS_NOTIFICATION_NOTIFICATION_PREVIEW_SUCCESS_TONE_TEXT" = "Vorschau-Benachrichtigig: Erfolgs-Ton.";

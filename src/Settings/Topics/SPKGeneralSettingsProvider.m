@@ -169,11 +169,11 @@ static SPKSetting *SPKTappableTextLinksSetting(void) {
                                                    defaultsKey:@"general_hold_send_copy_link"],
                                SPKL(@"GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP")),
             SPKSettingWithHelp(SPKTappableTextLinksSetting(), SPKL(@"GENERAL_TEXT_LINKS_HELP")),
-            SPKSettingWithHelp(SPKSettingApplySelectedMenuIcon([SPKSetting menuCellWithTitle:SPKL(@"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE")
-                                                                                        icon:SPKSettingsIcon(@"link")
-                                                                                        menu:SPKTextLinkOpeningModeMenu()],
-                                                               SPKSettingsIcon(@"external_link")),
-                               SPKL(@"GENERAL_TEXT_LINKS_OPENING_MODE_HELP")),
+            SPKSettingWithHelp(SPKSettingApplySelectedMenuIcon([SPKSetting menuCellWithTitle:SPKL(@"GENERAL_BROWSER_LINKS_TITLE")
+                                                                                         icon:SPKSettingsIcon(@"web")
+                                                                                         menu:SPKLinkOpeningModeMenu()],
+                                                                SPKSettingsIcon(@"external_link")),
+                                SPKL(@"GENERAL_BROWSER_LINKS_HELP")),
         ],
                         nil),
         SPKTopicSection(SPKL(@"GENERAL_SHARING_HEADER"), @[

@@ -35,7 +35,7 @@ UIMenu *SPKLiquidGlassTabBarStateMenu(void);
 UIMenu *SPKScrollEdgeStyleMenu(void);
 UIMenu *SPKStoryManualSeenModeMenu(void);
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
-UIMenu *SPKTextLinkOpeningModeMenu(void);
+UIMenu *SPKLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);
 UIMenu *SPKNotificationProgressSubtitleStyleMenu(void);
 UIMenu *SPKNotificationPillPositionMenu(void);

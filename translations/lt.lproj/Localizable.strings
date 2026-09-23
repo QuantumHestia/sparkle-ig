@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Nepavyko ištrinti";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Sekti atgal";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Užklausta";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Klausti visada";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Instagram naršyklė";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari programėlėje";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Atidaryti nuorodą";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Garsas";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Slėpti naujausias paieškas";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Ilgai paspauskite siuntimo mygtuką prie istorijos, akcento, įrašo ar Reels vaizdo įrašo, kad nukopijuotumėte jo nuorodą.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Laikyti siuntimą nuorodai kopijuoti";
+"GENERAL_BROWSER_LINKS_HELP" = "Atidaro nuorodas iš biografijų, aprašų, istorijų, žinučių ir reklamų už Instagram naršyklės ribų, todėl jos sekimo scenarijai niekada neįkeliami. Pirmiausia pašalinamas Instagram peradresavimas ir sekimo parametrai. Meta puslapiai ir prisijungimai vis tiek atidaromi Instagram naršyklėje.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Atidaryti žiniatinklio nuorodas";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Prideda nuotraukų, bendrinimo, Galerijos ir nuorodos veiksmus prie GIF ir nuotraukų komentarų.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Komentarų medijos veiksmai";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Prašo patvirtinimo prieš pažymint komentarą patinkančiu.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Išvalyti talpyklą";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Meniu atidarymo piktograma";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Atskiri paskyrų nustatymai";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Leidžia išplėstiems vaizdo įrašams toliau groti plaukiojančiame lange, kai išeinate iš peržiūros priemonės ar programėlės.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Leisti PiP vaizdo įrašams";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Medijos peržiūra ir meniu";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Atpažįsta tekstą išplėstoje nuotraukos peržiūroje ir prideda mygtuką jam pažymėti bei nukopijuoti.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Pažymėti tekstą nuotraukose";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Slėpti Reels siūlymus";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Slėpti paieškos siūlymus";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Slėpti prenumeratų siūlymus";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Klausti kiekvieną kartą";
 "GENERAL_TEXT_LINKS_HELP" = "Aptinka http:// ir https:// nuorodas komentaruose ir įrašų ar Reels aprašuose nesikreipdama į nuorodą, kol jos nepaliečiate.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Programos naršyklė";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Pasirinkite, kur atidaromos paliestos žiniatinklio nuorodos.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Atidaryti su";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Atidaryti nuorodą";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Aptikti nuorodas tekste";
 "GENERAL_TITLE" = "Bendrieji";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Patvirtinti Reels pakartotinį paskelbimą";

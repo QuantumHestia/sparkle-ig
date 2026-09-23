@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Eliminazione non riuscita";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Segui anche tu";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Richiesto";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Chiedi sempre";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Browser di Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari nell'app";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Apri link";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Audio";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Nascondi Ricerche Recenti";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Tieni premuto il pulsante di invio in una storia, un highlight, un post o un reel per copiarne il link.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Tieni Invia per Copiare Link";
+"GENERAL_BROWSER_LINKS_HELP" = "Apre i link di bio, didascalie, storie, messaggi e inserzioni fuori dal browser di Instagram, così i suoi script di tracciamento non vengono mai caricati. Il reindirizzamento e i parametri di tracciamento di Instagram vengono rimossi prima. Le pagine di Meta e gli accessi si aprono comunque nel browser di Instagram.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Apri i link web in";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Aggiunge le azioni Foto, Condividi, Galleria e link ai commenti con GIF e foto.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Azioni Media Commento";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Chiede conferma prima di mettere mi piace a un commento.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Cancella Cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Icona Menu Aperto";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Impostazioni Per Utente";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Consente ai video espansi di continuare la riproduzione in una finestra mobile quando esci dal visualizzatore o dall'app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Consenti PiP per i video";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Anteprima Media e Menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Riconosce il testo nell’anteprima ingrandita della foto e aggiunge un pulsante per selezionarlo e copiarlo.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Seleziona testo nelle foto";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Ricerca";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Nascondi Suggerimenti Abbonamento";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Chiedi ogni volta";
 "GENERAL_TEXT_LINKS_HELP" = "Rileva i link http:// e https:// nei commenti e nelle didascalie di post o reel senza contattare il link finché non lo tocchi.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Browser integrato";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Scegli dove aprire i link web toccati.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Apri in";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Apri link";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Rileva i link nel testo";
 "GENERAL_TITLE" = "Generale";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Conferma Repost Reel";
@@ -1154,7 +1155,7 @@
 "MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FAILED_MOVE_DOWNLOADED_MEDIA_TEXT" = "Impossibile spostare il media scaricato";
 "MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FALLBACK_PROGRESSIVE_TEXT" = "Fallback progressivo";
 "MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FALLBACK_SOURCE_TEXT" = "Fonte di fallback";
-"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FAST_START_TEXT" = "Fast Start";
+"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FAST_START_TEXT" = "Avvio rapido";
 "MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FAST_TEXT" = "Veloce";
 "MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FFMPEGKIT_NOT_AVAILABLE_ACTIVE_BUILD_SO_MERGED_DASH_ROWS_TEXT" = "FFmpegKit non è disponibile nella build attiva, quindi le righe DASH unite sono disabilitate.";
 "MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_H_LEVEL_TEXT" = "Livello H.264";
@@ -1208,7 +1209,7 @@
 "MEDIA_DOWNLOAD_QUALITY_REENCODING_PROGRESS" = "Ri-codifica";
 "MEDIA_DOWNLOAD_QUALITY_UNABLE_PROCESS_VIDEO_ERROR" = "Impossibile elaborare il video";
 "MEDIA_DOWNLOAD_QUALITY_URL_FORMAT" = "URL: %@";
-"MEDIA_DOWNLOAD_QUALITY_VIDEO_AUDIO_SECTION" = "Video + Audio";
+"MEDIA_DOWNLOAD_QUALITY_VIDEO_AUDIO_SECTION" = "Video + audio";
 "MEDIA_ENCODING_ADVANCED_HELP" = "Mostra codec, preset, bitrate, qualità, risoluzione e impostazioni audio. Quando Instagram fornisce flussi video e audio separati, usa il codec video scelto e copia l'audio originale.";
 "MEDIA_ENCODING_AUDIO_BITRATE_HELP" = "Bitrate di destinazione per l'audio ricodificato.";
 "MEDIA_ENCODING_AUDIO_CHANNELS_HELP" = "Disposizione dei canali per l'audio ricodificato.";

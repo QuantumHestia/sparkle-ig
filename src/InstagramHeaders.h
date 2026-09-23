@@ -1285,3 +1285,19 @@ typedef struct {
 @interface IGFriendsMapSecondaryButtonsStackView : UIView
 - (void)didTapLocateButton;
 @end
+
+// Instagram's in-app browser. IGBrowserSession carries the request (usually an
+// l.instagram.com redirect) and the ads/sign-in context; IGBrowserController
+// presents it, and IGBrowserNavigationController is the presented container.
+@interface IGBrowserSession : NSObject
+@property (readonly) id webAuthenticationRequest;
+@property (retain, nonatomic) NSNumber *leadGenFormId;
+@end
+
+@interface IGBrowserController : NSObject
+- (void)presentBrowserWithBrowserSession:(IGBrowserSession *)session viewController:(UIViewController *)controller presentingPanGesture:(id)gesture forceFreshLoad:(BOOL)forceFreshLoad;
+@end
+
+@interface IGBrowserNavigationController : UINavigationController
+@property (readonly, nonatomic) IGBrowserSession *browserSession;
+@end

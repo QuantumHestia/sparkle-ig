@@ -61,7 +61,7 @@ static NSDictionary *SPKFeatureDefaults(void) {
     NSMutableDictionary *defaults = [@{
         @"general_copy_text" : @(NO),
         @"general_tappable_text_links" : @(NO),
-        @"general_tappable_text_links_opening_mode" : @"in_app",
+        @"general_link_opening_mode" : @"default",
         @"stories_detailed_color_picker" : @(NO),
         @"msgs_disable_screenshot_detection" : @(YES),
 #if SPK_DEV

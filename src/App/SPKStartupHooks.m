@@ -29,6 +29,7 @@ FOUNDATION_EXPORT void SPKInstallFollowConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallCreateGroupButtonControlHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallConfirmSendHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSharedLinkCleanupHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallBrowserLinkRoutingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallShareLongPressCopyHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideMetaAIHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAccountSwitchHooksIfNeeded(void);
@@ -346,6 +347,8 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
     // turned it off can still be tapped afterwards.
     SPK_INSTALL(SPKInstallDownloadNotificationRoutingHooks);
     SPK_INSTALL(SPKInstallSharedLinkCleanupHooksIfEnabled);
+    // Installed regardless of the setting: the mode is read on every browser launch.
+    SPK_INSTALL(SPKInstallBrowserLinkRoutingHooksIfNeeded);
     SPK_INSTALL(SPKInstallShareLongPressCopyHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);

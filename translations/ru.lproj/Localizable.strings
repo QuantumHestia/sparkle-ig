@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Ошибка удаления";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Подписаться в ответ";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Запрошено";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Спрашивать всегда";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Браузер Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari в приложении";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Открыть ссылку";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Аудио";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Скрыть недавние поиски";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Удерживайте кнопку отправки в истории, подборке, публикации или Reels, чтобы скопировать ссылку.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Удерживать отправку для копирования ссылки";
+"GENERAL_BROWSER_LINKS_HELP" = "Открывает ссылки из описаний профилей, подписей, историй, сообщений и рекламы вне браузера Instagram, поэтому его скрипты отслеживания никогда не загружаются. Сначала удаляются переадресация и параметры отслеживания Instagram. Страницы Meta и вход в аккаунт по-прежнему открываются в браузере Instagram.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Открывать веб-ссылки в";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Добавляет действия Фото, Поделиться, Галерея и ссылка к комментариям с GIF и фото.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Действия с медиа комментария";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Запрашивает подтверждение перед отметкой комментария.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "Очистить кэш";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Иконка открытия меню";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Настройки по аккаунтам";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Позволяет развёрнутым видео продолжать воспроизведение в плавающем окне, когда вы покидаете просмотрщик или приложение.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Разрешить PiP для видео";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Предпросмотр медиа и меню";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Распознает текст в увеличенном просмотре фото и добавляет кнопку для его выделения и копирования.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Выделение текста на фото";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Скрыть рекомендации Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Скрыть рекомендации поиска";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Скрыть рекомендации подписок";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Спрашивать каждый раз";
 "GENERAL_TEXT_LINKS_HELP" = "Обнаруживает ссылки http:// и https:// в комментариях и подписях к постам или Reels, не обращаясь к ссылке, пока вы её не нажмёте.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "Встроенный браузер";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Выберите, где будут открываться нажатые веб-ссылки.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Открывать в";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Открыть ссылку";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Распознавать ссылки в тексте";
 "GENERAL_TITLE" = "Основное";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Подтвердить репост Reels";

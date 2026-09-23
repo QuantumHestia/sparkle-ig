@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Failed to delete";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "Follow back";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Requested";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Always Ask";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Instagram Browser";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "In-App Safari";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Open Link";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Audio";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Hide Recent Searches";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "Long press the send button on a story, highlight, post, or reel to copy its link.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "Hold Send to Copy Link";
+"GENERAL_BROWSER_LINKS_HELP" = "Opens links outside Instagram's browser with tracking removed. Meta pages and sign-in flows stay in Instagram's browser, and tapped post links use In-App Safari under Default.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Open Links In";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Adds Photos, Share, Gallery, and link actions to GIF and photo comments.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Comment Media Actions";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Asks for confirmation before a comment is liked.";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Hide Reels Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Hide Search Suggestions";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Hide Subscription Suggestions";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Ask Every Time";
 "GENERAL_TEXT_LINKS_HELP" = "Detects http:// and https:// links in comments and post or reel captions without contacting the link until you tap it.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "In-App Browser";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Choose where tapped web links open.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Open In";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Open Link";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "Detect Links in Text";
 "GENERAL_TITLE" = "General";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Confirm Reel Repost";

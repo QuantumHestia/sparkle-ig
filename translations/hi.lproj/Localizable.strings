@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "हटाने में विफल";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "वापस फ़ॉलो करें";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "अनुरोध भेजा";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "हमेशा पूछें";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Instagram ब्राउज़र";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "ऐप में Safari";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "लिंक खोलें";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "ऑडियो";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "हाल की खोजें छिपाएं";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "किसी स्टोरी, हाइलाइट, पोस्ट या रील पर लिंक कॉपी करने के लिए भेजें बटन को लंबा दबाएं।";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "लिंक कॉपी करने के लिए भेजें दबाए रखें";
+"GENERAL_BROWSER_LINKS_HELP" = "बायो, कैप्शन, स्टोरी, मैसेज और विज्ञापनों के लिंक Instagram के ब्राउज़र के बाहर खोलता है, ताकि उसकी ट्रैकिंग स्क्रिप्ट कभी लोड न हों। Instagram का रीडायरेक्ट और ट्रैकिंग पैरामीटर पहले हटा दिए जाते हैं। Meta पेज और साइन-इन अब भी Instagram के ब्राउज़र में खुलते हैं।";
+"GENERAL_BROWSER_LINKS_TITLE" = "वेब लिंक यहाँ खोलें";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "GIF और फ़ोटो कमेंट में फ़ोटो, शेयर, Gallery और लिंक क्रियाएं जोड़ता है।";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "टिप्पणी मीडिया एक्शन";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "कमेंट को लाइक करने से पहले पुष्टि मांगता है।";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "कैश साफ़ करें";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "मेनू खोलें आइकन";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "प्रति-खाता सेटिंग्स";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "व्यूअर या ऐप छोड़ने पर भी विस्तारित वीडियो को फ्लोटिंग विंडो में चलते रहने देता है।";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "वीडियो के लिए PiP की अनुमति दें";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "मीडिया पूर्वावलोकन और मेनू";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "बड़े किए गए फ़ोटो प्रीव्यू में टेक्स्ट पहचानता है और उसे चुनने व कॉपी करने के लिए बटन जोड़ता है।";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "फ़ोटो में टेक्स्ट चुनें";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Reels सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "सर्च सुझाव छिपाएं";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "सदस्यता सुझाव छिपाएं";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "हर बार पूछें";
 "GENERAL_TEXT_LINKS_HELP" = "टिप्पणियों और पोस्ट या रील कैप्शन में http:// और https:// लिंक का पता लगाता है, और जब तक आप टैप न करें तब तक लिंक से संपर्क नहीं करता।";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "इन-ऐप ब्राउज़र";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "चुनें कि टैप किए गए वेब लिंक कहां खुलें।";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "इसमें खोलें";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "लिंक खोलें";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "टेक्स्ट में लिंक पहचानें";
 "GENERAL_TITLE" = "सामान्य";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Reel को रीपोस्ट करने की पुष्टि करें";

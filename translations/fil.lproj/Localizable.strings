@@ -302,6 +302,11 @@
 "COMMON_DELETE_FAILED_TOAST" = "Nabigong burahin";
 "COMMON_FOLLOW_BUTTON_FOLLOW_BACK" = "I-follow back";
 "COMMON_FOLLOW_BUTTON_REQUESTED" = "Hiniling na";
+"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT" = "Laging magtanong";
+"COMMON_LINK_OPEN_INSTAGRAM_BROWSER_TEXT" = "Browser ng Instagram";
+"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT" = "Safari sa Loob ng App";
+"COMMON_LINK_OPEN_SAFARI_TEXT" = "Safari";
+"COMMON_LINK_OPEN_SHEET_TITLE" = "Buksan ang Link";
 "COMMON_LIST_SEPARATOR" = ", ";
 "COMMON_MEDIA_TYPE_AUDIO" = "Audio";
 "COMMON_MEDIA_TYPE_GIF" = "GIF";
@@ -370,7 +375,7 @@
 "DOWNLOADS_DOWNLOADS_HISTORY_DOWNLOAD_FAILED_TEXT" = "Nabigo ang Pag-download";
 "DOWNLOADS_DOWNLOADS_HISTORY_DOWNLOAD_INTERRUPTED_TEXT" = "Naantala ang Pag-download";
 "DOWNLOADS_DOWNLOADS_HISTORY_FAILED_TEXT" = "Nabigo";
-"DOWNLOADS_DOWNLOADS_HISTORY_ITEM_VALUE_FORMAT" = "Item %ld";
+"DOWNLOADS_DOWNLOADS_HISTORY_ITEM_VALUE_FORMAT" = "Aytem %ld";
 "DOWNLOADS_DOWNLOADS_HISTORY_NOTHING_QUEUED_TEXT" = "Walang naka-queue";
 "DOWNLOADS_DOWNLOADS_HISTORY_NO_ACTIVE_DOWNLOADS_TEXT" = "Walang aktibong pag-download";
 "DOWNLOADS_DOWNLOADS_HISTORY_NO_DOWNLOADS_YET_TEXT" = "Wala pang pag-download";
@@ -860,6 +865,8 @@
 "GENERAL_BEHAVIOR_HIDE_RECENT_SEARCHES_TITLE" = "Itago ang Kamakailang Paghahanap";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_HELP" = "I-long press ang send button sa isang story, highlight, post, o reel para kopyahin ang link nito.";
 "GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE" = "I-hold ang Send para Kopyahin ang Link";
+"GENERAL_BROWSER_LINKS_HELP" = "Binubuksan ang mga link mula sa bio, caption, story, mensahe, at ad sa labas ng browser ng Instagram, kaya hindi kailanman naglo-load ang mga tracking script nito. Inaalis muna ang redirect at mga tracking parameter ng Instagram. Bumubukas pa rin sa browser ng Instagram ang mga pahina ng Meta at pag-sign in.";
+"GENERAL_BROWSER_LINKS_TITLE" = "Buksan ang Mga Web Link Sa";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_HELP" = "Nagdaragdag ng Photos, Share, Gallery, at link actions sa GIF at photo comments.";
 "GENERAL_COMMENTS_COMMENT_MEDIA_ACTIONS_TITLE" = "Mga Aksyon sa Media ng Comment";
 "GENERAL_COMMENTS_CONFIRM_COMMENT_LIKE_HELP" = "Humihingi ng kumpirmasyon bago ma-like ang isang comment.";
@@ -889,8 +896,8 @@
 "GENERAL_GENERAL_CLEAR_CACHE_TITLE" = "I-clear ang Cache";
 "GENERAL_GENERAL_OPEN_MENU_ICON_TITLE" = "Icon ng Open Menu";
 "GENERAL_GENERAL_PER_ACCOUNT_SETTINGS_TITLE" = "Mga Setting Kada Account";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Lets expanded videos keep playing in a floating window when you leave the viewer or the app.";
-"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Allow PiP for Videos";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_HELP" = "Hinahayaang magpatuloy sa pagtugtog ang pinalawak na mga video sa isang lumulutang na window kapag umalis ka sa viewer o sa app.";
+"GENERAL_MEDIA_PREVIEW_MENU_ALLOW_PIP_TITLE" = "Payagan ang PiP para sa mga Video";
 "GENERAL_MEDIA_PREVIEW_MENU_HEADER" = "Media Preview at Menu";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_HELP" = "Nakikilala ang text sa expanded photo preview at nagdaragdag ng button para piliin at kopyahin ito.";
 "GENERAL_MEDIA_PREVIEW_MENU_SELECT_TEXT_TITLE" = "Piliin ang Text sa mga Larawan";
@@ -926,13 +933,7 @@
 "GENERAL_SUGGESTED_USERS_HIDE_REELS_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Reels";
 "GENERAL_SUGGESTED_USERS_HIDE_SEARCH_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Search";
 "GENERAL_SUGGESTED_USERS_HIDE_SUBSCRIPTION_SUGGESTIONS_TITLE" = "Itago ang mga Suhestiyon sa Subscription";
-"GENERAL_TEXT_LINKS_ASK_EVERY_TIME_TEXT" = "Tanungin Palagi";
 "GENERAL_TEXT_LINKS_HELP" = "Nade-detect ang mga http:// at https:// na link sa mga komento at caption ng post o reel nang hindi kinokontak ang link hangga't hindi mo ito tinatapik.";
-"GENERAL_TEXT_LINKS_IN_APP_BROWSER_TEXT" = "In-App na Browser";
-"GENERAL_TEXT_LINKS_OPENING_MODE_HELP" = "Piliin kung saan magbubukas ang mga na-tap na web link.";
-"GENERAL_TEXT_LINKS_OPENING_MODE_TITLE" = "Buksan Sa";
-"GENERAL_TEXT_LINKS_OPEN_LINK_TITLE" = "Buksan ang Link";
-"GENERAL_TEXT_LINKS_SAFARI_TEXT" = "Safari";
 "GENERAL_TEXT_LINKS_TITLE" = "I-detect ang mga Link sa Text";
 "GENERAL_TITLE" = "Pangkalahatan";
 "GENERAL_TWEAK_CONFIRM_REEL_REPOST_TEXT" = "Kumpirmahin ang Reel Repost";
@@ -1049,12 +1050,12 @@
 "INTERFACE_NOTIFICATIONS_HELP" = "Kung ano ang hitsura ng sariling notification pills ng Sparkle at saan ito lumalabas.";
 "INTERFACE_PILL_TAB_BAR_HELP" = "Binabago ang hugis ng tab bar patungong iOS 26 floating pill. Kailangan ng iOS 26 ang glass material mismo. Kailangan ng restart.";
 "INTERFACE_SCROLL_EDGE_EFFECT_HELP" = "Kung paano nakakasalubong ng content ang top bar habang nagsa-scroll ka. Sinusunod ng Default ang iOS, unti-unting nagpapakupas ang content ang Soft gamit ang progressive blur, at tinatapos ito ng Hard sa isang matigas na gilid na may divider line. Pinapahintulutan ng Off na i-disable ito ng Instagram, tulad ng default nito, at kailangan ng restart.";
-"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Scroll Edge Effect";
+"INTERFACE_SCROLL_EDGE_EFFECT_TITLE" = "Epekto ng Scroll sa Gilid";
 "INTERFACE_TABS_HEADER" = "Mga Tab";
 "INTERFACE_TABS_TAB_EDITOR_HELP" = "Ayusin ang tab bar gamit ang live preview. Ang mga pagbabago ay ista-stage at ilalapat nang sabay-sabay, pagkatapos ay mag-restart ang Instagram.";
 "INTERFACE_TABS_TAB_EDITOR_TITLE" = "Editor ng Tab";
 "INTERFACE_TAB_BAR_BEHAVIOR_HELP" = "Kung nananatiling nakapirmi ang tab bar o nagtatago habang nag-sscroll ka.";
-"INTERFACE_TAB_BAR_HEADER" = "Tab Bar";
+"INTERFACE_TAB_BAR_HEADER" = "Bar ng Tab";
 "INTERFACE_TITLE" = "Interface";
 "LANGUAGE_CONTRIBUTE_SUBTITLE" = "Itama ang isang wika o magsimula ng bago";
 "LANGUAGE_CONTRIBUTE_TITLE" = "Mag-ambag ng Salin";
@@ -1339,7 +1340,7 @@
 "MENU_ON" = "Naka-on";
 "MENU_PAUSE_PLAY" = "I-pause/I-play";
 "MENU_PERCENT" = "Porsyento";
-"MENU_PHOTOS_APP" = "Photos App";
+"MENU_PHOTOS_APP" = "App ng Photos";
 "MENU_PHOTO_ACTIONS" = "Mga Aksyon sa Larawan";
 "MENU_RIGHT" = "Kanan";
 "MENU_SMART" = "Matalino";
@@ -1449,7 +1450,7 @@
 "MESSAGES_CONFIRM_SEND_COLLECTION_TEXT" = "koleksyon";
 "MESSAGES_CONFIRM_SEND_CONFIRM_SENDING_VALUE_FORMAT" = "Kumpirmahin ang Pagpapadala ng %@";
 "MESSAGES_CONFIRM_SEND_CONFIRM_SEND_TEXT" = "Kumpirmahin ang Pagpapadala";
-"MESSAGES_CONFIRM_SEND_IGTV_VIDEO_TEXT" = "IGTV video";
+"MESSAGES_CONFIRM_SEND_IGTV_VIDEO_TEXT" = "Video ng IGTV";
 "MESSAGES_CONFIRM_SEND_SEND_CONFIRMATION_MESSAGE" = "Sigurado ka bang gusto mong ipadala ito?";
 "MESSAGES_CONFIRM_SEND_SEND_VALUE_FORMAT" = "Sigurado ka bang gusto mong ipadala itong %@?";
 "MESSAGES_CREATE_GROUP_BUTTON_CONTROLS_CONFIRM_GROUP_CREATION_TEXT" = "Kumpirmahin ang Paggawa ng Grupo";
@@ -1524,7 +1525,7 @@
 "MESSAGES_DELETED_MESSAGES_USER_DETAIL_DELETE_GROUP_LOG_CONFIRMATION_MESSAGE" = "I-delete ang group log?";
 "MESSAGES_DELETED_MESSAGES_USER_DETAIL_DELETE_SENDER_LOG_CONFIRMATION_MESSAGE" = "I-delete ang sender log?";
 "MESSAGES_DELETED_MESSAGES_USER_DETAIL_DELETE_VALUE_LOG_FORMAT" = "I-delete ang Log ng %@";
-"MESSAGES_DELETED_MESSAGES_USER_DETAIL_GROUP_CHAT_TEXT" = "Group Chat";
+"MESSAGES_DELETED_MESSAGES_USER_DETAIL_GROUP_CHAT_TEXT" = "Usapang Grupo";
 "MESSAGES_DELETED_MESSAGES_USER_DETAIL_NOTHING_HERE_YET_TEXT" = "Wala pa rito";
 "MESSAGES_DELETED_MESSAGES_USER_DETAIL_NO_MATCHES_TEXT" = "Walang tumugma";
 "MESSAGES_DELETED_MESSAGES_USER_DETAIL_NO_MESSAGES_MATCH_CURRENT_FILTERS_MESSAGE" = "Walang mensaheng tumugma sa kasalukuyang mga filter.";
@@ -1598,7 +1599,7 @@
 "MESSAGES_FAKE_LOCATION_COORDINATE_FORMAT" = "%@, %@";
 "MESSAGES_FAKE_LOCATION_ENABLED_HELP" = "Nakikita ng Instagram ang napiling lokasyon sa halip na kung nasaan ka. Kailangan pa rin ng Instagram ng access sa lokasyon para makita ito ng mga kaibigan.";
 "MESSAGES_FAKE_LOCATION_ENABLED_TITLE" = "Gumamit ng Pekeng Lokasyon";
-"MESSAGES_FAKE_LOCATION_FRIENDS_MAP_HEADER" = "Friends Map";
+"MESSAGES_FAKE_LOCATION_FRIENDS_MAP_HEADER" = "Mapa ng mga Kaibigan";
 "MESSAGES_FAKE_LOCATION_HELP" = "Ipinapakita sa mga kaibigan sa Friends Map ang lokasyong pinili mo, na ginagamit din ng iba pang feature ng lokasyon ng Instagram.";
 "MESSAGES_FAKE_LOCATION_LOCATION_HELP" = "Piliin ang lokasyon sa mapa o maghanap ng lugar.";
 "MESSAGES_FAKE_LOCATION_LOCATION_TITLE" = "Pumili ng Lokasyon";
@@ -1734,7 +1735,7 @@
 "MESSAGES_VANISH_MODE_DISABLE_SCREENSHOT_DETECTION_TITLE" = "I-disable ang Screenshot Detection";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_HELP" = "Idi-disable ang swipe gesture na nag-e-enable ng vanish mode.";
 "MESSAGES_VANISH_MODE_DISABLE_SWIPE_UP_GESTURE_TITLE" = "I-disable ang Swipe-Up Gesture";
-"MESSAGES_VANISH_MODE_HEADER" = "Vanish Mode";
+"MESSAGES_VANISH_MODE_HEADER" = "Mode ng Paglaho";
 "MESSAGES_VANISH_MODE_SCREEN_CAPTURE_HELP" = "Pinapayagan ang mga screenshot at screen recording sa mga vanish-mode chat nang hindi nino-notify ang mga kalahok.";
 "MESSAGES_VISUAL_MESSAGES_ADVANCE_AFTER_SEEN_HELP" = "Lumilipat sa susunod na visual item kung mayroon, at nagsasara kung wala.";
 "MESSAGES_VISUAL_MESSAGES_DISABLE_VIEW_ONCE_LIMITATIONS_HELP" = "Itinuturing ang view-once na mga larawan at video bilang replayable, na nagpapahintulot sa normal na pangalawang panonood ng Instagram. Hindi nito ginagawang permanenteng available ang mga ito.";
@@ -1867,7 +1868,7 @@
 "PROFILE_SAVED_TAB_SEGMENT_TITLE" = "Saved";
 "PROFILE_TABS_HEADER" = "Mga Tab";
 "PROFILE_TABS_SAVED_TAB_HELP" = "Idinaragdag ang mga naka-save mong collection bilang tab sa sarili mong profile. I-refresh ang profile mo para mag-apply.";
-"PROFILE_TABS_SAVED_TAB_TITLE" = "Saved Tab";
+"PROFILE_TABS_SAVED_TAB_TITLE" = "Tab na Naka-save";
 "PROFILE_TABS_SQUARE_GRID_HELP" = "Ipinapakita ang mga thumbnail sa mga grid ng post at naka-tag bilang square sa halip ng mas mataas na 3:4 na layout, at gumagamit ng square na icon para sa grid tab. Buksan muli ang isang profile para ilapat.";
 "PROFILE_TABS_SQUARE_GRID_TITLE" = "Square na Grid";
 "PROFILE_TITLE" = "Profile";
@@ -1961,7 +1962,7 @@
 "SETTINGS_MESSAGES_DOWNLOAD_NOTES_AUDIO_TEXT" = "I-download ang Audio ng Notes";
 "SETTINGS_MESSAGES_DOWNLOAD_VOICE_MESSAGES_MESSAGE" = "I-download ang Mga Voice Message";
 "SETTINGS_NOTIFICATION_FEATURE_TEXT" = "Tampok";
-"SETTINGS_NOTIFICATION_HEADS_UP_TEXT" = "Heads Up";
+"SETTINGS_NOTIFICATION_HEADS_UP_TEXT" = "Abiso";
 "SETTINGS_NOTIFICATION_NOTIFICATION_PREVIEW_ERROR_TONE_TEXT" = "Preview ng notification: error tone.";
 "SETTINGS_NOTIFICATION_NOTIFICATION_PREVIEW_INFO_TONE_TEXT" = "Preview ng notification: info tone.";
 "SETTINGS_NOTIFICATION_NOTIFICATION_PREVIEW_SUCCESS_TONE_TEXT" = "Preview ng notification: success tone.";
@@ -2238,7 +2239,7 @@
 "TOOLS_DEBUG_BUTTON_MENU_OPEN_FLEX" = "Buksan ang FLEX";
 "TOOLS_DEBUG_BUTTON_MENU_SCREEN_REPORT" = "Ulat ng Screen";
 "TOOLS_DEBUG_BUTTON_MENU_VIEW_HIERARCHY" = "Hierarchy ng View";
-"TOOLS_DEBUG_BUTTON_TITLE" = "Debug Button";
+"TOOLS_DEBUG_BUTTON_TITLE" = "Button ng Debug";
 "TOOLS_DIAGNOSTICS_DEV_HIDE_TESTFLIGHT_POPUP_TITLE" = "[DEV] Itago ang TestFlight Popup";
 "TOOLS_DIAGNOSTICS_DISABLE_SAFE_MODE_TITLE" = "I-disable ang Safe Mode";
 "TOOLS_DIAGNOSTICS_FIX_DUPLICATE_NOTIFICATIONS_TITLE" = "Ayusin ang Duplicate Notifications";
