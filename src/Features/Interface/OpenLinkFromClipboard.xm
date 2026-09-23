@@ -3,7 +3,6 @@
 
 #import "../../InstagramHeaders.h"
 #import "../../Networking/SPKInstagramAPI.h"
-#import "../../Shared/Navigation/SPKTabConfiguration.h"
 #import "../../Utils.h"
 
 extern "C" void SPKBeginSavedTabRoutingBypass(void);
@@ -93,10 +92,10 @@ static BOOL SPKOpenClipboardURLWithSavedRoutingBypass(NSURL *url) {
     return NO;
 }
 
+// Every post link takes this route, not only when Saved borrows a tab slot: the
+// web permalink resolves through continueUserActivity:, which newer Instagram
+// builds land in the main feed instead of the post's own page.
 static BOOL SPKOpenClipboardMediaLikeGallery(NSURL *webURL) {
-    if ([SPKNormalizedSavedCarrier(SPKPreferenceObjectForKey(SPKPrefSavedTabCarrier)) isEqualToString:SPKTabSavedCarrierNone])
-        return NO;
-
     NSString *shortcode = SPKClipboardMediaShortcode(webURL);
     NSString *mediaPK = SPKClipboardMediaPKFromShortcode(shortcode);
     if (mediaPK.length == 0)

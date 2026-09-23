@@ -108,7 +108,7 @@ Per-feature control of the Sparkle notification pill and its haptics. See **Noti
 - **Hide Explore Posts Grid**: Hides the suggested-post grid on Explore. This follows the active account when **Per-Account Settings** is enabled.
 - **Square Grid**: Shows Explore grid tiles as squares instead of the taller 3:4 layout. Reopen Explore to apply.
 - **Hide Trending Searches** *(restart)*: Hides trending searches under the Explore search bar.
-- **Open Clipboard Link**: Long-press the Explore tab to open an Instagram URL from the clipboard. When the Reels slot shows Saved, post and reel links use the same native single-post push as the Gallery so deep links do not disturb the tab destination.
+- **Open Clipboard Link**: Long-press the Explore tab to open an Instagram URL from the clipboard. Post and reel links open on their own page with the same native single-post push as the Gallery, instead of landing in the main feed, and never disturb the tab destination when Saved borrows a tab slot.
 
 ### Capture
 - **Hide UI on Capture**: Redacts Sparkle overlay buttons and labels (action button, seen/mentions buttons, poll vote-count badges, etc.) from screenshots, screen recordings, and mirroring.
