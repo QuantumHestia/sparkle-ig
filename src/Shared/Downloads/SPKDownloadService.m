@@ -104,6 +104,20 @@
     [self.scheduler submitRequest:request completion:completion];
 }
 
+- (nullable NSString *)recordCompletedFileAtURL:(nullable NSURL *)fileURL
+                                      mediaKind:(SPKDownloadMediaKind)kind
+                                    destination:(SPKDownloadDestination)destination
+                                       metadata:(nullable SPKGallerySaveMetadata *)metadata
+                                  sourceSurface:(SPKDownloadSourceSurface)surface
+                                      finalPath:(nullable NSString *)finalPath {
+    return [self.scheduler recordCompletedFileAtURL:fileURL
+                                          mediaKind:kind
+                                        destination:destination
+                                           metadata:metadata
+                                      sourceSurface:surface
+                                          finalPath:finalPath];
+}
+
 - (NSArray<SPKDownloadJob *> *)jobsMatchingFilter:(SPKDownloadHistoryFilter)filter {
     NSArray<SPKDownloadJob *> *jobs = [self.scheduler allJobs];
     NSArray *filtered = [jobs filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(SPKDownloadJob *job, NSDictionary *bindings) {

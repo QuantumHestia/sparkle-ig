@@ -818,7 +818,7 @@ typedef NS_ENUM(NSUInteger, SPKPillVisualTone) {
 
     BOOL hasByteTotals = (bytesWritten > 0 && totalBytesExpected > 0);
     NSString *bytesString = hasByteTotals
-                                ? [NSString stringWithFormat:@"%@ of %@",
+                                ? [NSString stringWithFormat:SPKL(@"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT"),
                                                              [self spk_byteCountString:bytesWritten],
                                                              [self spk_byteCountString:totalBytesExpected]]
                                 : nil;

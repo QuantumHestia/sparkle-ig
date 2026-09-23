@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Atsisiuntimai";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Išvalo šios paskyros baigtus įrašus ir senus nepriskirtus įrašus, įskaitant jų laikinus peržiūros failus.\n\nAktyvūs ir eilėje esantys atsisiuntimai paliekami. Nuotraukose ar Galerijoje išsaugota medija neištrinama.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Išvalo baigtus įrašus ir jų laikinus peržiūros failus.\n\nAktyvūs ir eilėje esantys atsisiuntimai paliekami. Nuotraukose ar Galerijoje išsaugota medija neištrinama.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ iš %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "Kokybė, kuria atsisiunčiamos nuotraukos, arba pasirinkite „Visada klausti“, kad rinktumėtės kiekvieną kartą.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "Kokybė, kuria atsisiunčiami vaizdo įrašai. Numatytoji parinktis ima iškart leidžiamą failą, o ne sujungia atskirus srautus.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "Visa FFmpeg išvestis iš naujausių konvertavimų, skirta nepavykusiam kodavimui diagnozuoti.";

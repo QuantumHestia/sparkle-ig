@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Downloads";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Löscht die abgeschlossenen Einträge dieses Kontos und alte nicht zugewiesene Einträge einschließlich ihrer temporären Vorschaudateien.\n\nAktive und ausstehende Downloads bleiben erhalten. In Fotos oder Gallery gespeicherte Medien werden nicht gelöscht.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Löscht abgeschlossene Einträge und ihre temporären Vorschaudateien.\n\nAktive und ausstehende Downloads bleiben erhalten. In Fotos oder Gallery gespeicherte Medien werden nicht gelöscht.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ von %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "Die Qualität, in der Fotos heruntergeladen werden, oder Immer fragen, um jedes Mal zu wählen.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "Die Qualität, in der Videos heruntergeladen werden. Standard nimmt die abspielfertige Datei, statt getrennte Streams zusammenzuführen.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "Die vollständige FFmpeg-Ausgabe der letzten Konvertierungen, zur Diagnose einer fehlgeschlagenen Kodierung.";

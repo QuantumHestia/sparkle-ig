@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "التنزيلات";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "يمسح الإدخالات المكتملة والقديمة غير المعيّنة لهذا الحساب، بما في ذلك ملفات المعاينة المؤقتة.\n\nيتم الاحتفاظ بالتنزيلات النشطة والموضوعة في قائمة الانتظار. لا يتم حذف الوسائط المحفوظة في Photos أو Gallery.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "يمسح الإدخالات المكتملة وملفات المعاينة المؤقتة الخاصة بها.\n\nيتم الاحتفاظ بالتنزيلات النشطة والموضوعة في قائمة الانتظار. لا يتم حذف الوسائط المحفوظة في Photos أو Gallery.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ من %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "الجودة التي تُنزَّل بها الصور، أو السؤال دائماً للاختيار في كل مرة.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "الجودة التي تُنزَّل بها الفيديوهات. الافتراضي يأخذ الملف الجاهز للتشغيل بدل دمج مسارات منفصلة.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "مخرجات FFmpeg الكاملة من عمليات التحويل الأخيرة، لتشخيص أي ترميز فاشل.";

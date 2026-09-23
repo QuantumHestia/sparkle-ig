@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Tải xuống";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Xóa các mục đã hoàn tất của tài khoản này và các mục cũ chưa gán tài khoản, bao gồm tệp xem trước tạm thời.\n\nGiữ lại lượt tải đang chạy và xếp hàng. Phương tiện đã lưu vào Ảnh hoặc Gallery không bị xóa.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Xóa các mục đã hoàn tất và tệp xem trước tạm thời của chúng.\n\nGiữ lại lượt tải đang chạy và xếp hàng. Phương tiện đã lưu vào Ảnh hoặc Gallery không bị xóa.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ / %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "Chất lượng tải ảnh, hoặc Luôn hỏi để chọn mỗi lần.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "Chất lượng tải video. Mặc định lấy tệp sẵn sàng phát thay vì ghép các luồng riêng biệt.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "Toàn bộ đầu ra FFmpeg từ các lần chuyển đổi gần đây, để chẩn đoán một lần mã hóa thất bại.";

@@ -18,6 +18,18 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable SPKDownloadJob *)jobWithID:(NSString *)jobID;
 
 - (void)submitRequest:(SPKDownloadRequest *)request completion:(void (^_Nullable)(NSString *_Nullable jobID, NSError *_Nullable error))completion;
+
+/// Records an already-saved local file (trim / crop / photo edit) as a
+/// succeeded history entry without running a transfer, pill, or duplicate
+/// preflight. Stages a preview copy when fileURL exists; finalPath (e.g. the
+/// Gallery file) backs preview otherwise. Returns the jobID, or nil when
+/// neither file exists.
+- (nullable NSString *)recordCompletedFileAtURL:(nullable NSURL *)fileURL
+                                      mediaKind:(SPKDownloadMediaKind)kind
+                                    destination:(SPKDownloadDestination)destination
+                                       metadata:(nullable SPKGallerySaveMetadata *)metadata
+                                  sourceSurface:(SPKDownloadSourceSurface)surface
+                                      finalPath:(nullable NSString *)finalPath;
 - (void)cancelJobID:(NSString *)jobID;
 - (void)cancelItemID:(NSString *)itemID inJobID:(NSString *)jobID;
 - (void)retryJobID:(NSString *)jobID;

@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Downloads";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Leert die fertige Yträg vo däm Konto und aui aut nid-zuedeiute Yträg, inklusive dere temporäre Vorschau-Dateie.\n\nAktivi und wartendi Downloads blybe erhaute. Medie, wo i Photos oder Galerie gspeicheret isch, wird nid glöscht.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Leert fertigi Yträg und dere temporäre Vorschau-Dateie.\n\nAktivi und wartendi Downloads blybe erhaute. Medie, wo i Photos oder Galerie gspeicheret isch, wird nid glöscht.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ vo %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "D'Qualität, womit Fotis abegladen wärde, oder Gäng frage, für jedes Mau uswähle.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "D'Qualität, womit Video abegladen wärde. Standard nimmt d'Datei wo scho parat isch zum Abspiele, statt separati Streams zämezfüege.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "Dr ganz FFmpeg-Output vo dr letschte Umwandlige, für e fählgschlagni Codierig z'diagnostiziere.";

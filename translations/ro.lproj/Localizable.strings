@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Descărcări";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Șterge intrările finalizate ale acestui cont și intrările vechi fără cont asociat, inclusiv fișierele lor temporare de previzualizare.\n\nDescărcările active și din coadă sunt păstrate. Media salvată în Poze sau Gallery nu este ștearsă.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Șterge intrările finalizate și fișierele lor temporare de previzualizare.\n\nDescărcările active și din coadă sunt păstrate. Media salvată în Poze sau Gallery nu este ștearsă.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ din %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "Calitatea la care se descarcă pozele, sau Întreabă mereu pentru a alege de fiecare dată.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "Calitatea la care se descarcă clipurile. Implicit ia fișierul gata de redare în loc să îmbine fluxuri separate.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "Ieșirea completă FFmpeg a conversiilor recente, pentru diagnosticarea unei codări eșuate.";

@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "डाउनलोड";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "इस खाते की पूर्ण प्रविष्टियां और पुरानी बिना असाइन की गई प्रविष्टियां, उनकी अस्थायी प्रीव्यू फ़ाइलों सहित, साफ़ करता है।\n\nसक्रिय और कतार में मौजूद डाउनलोड रखे जाते हैं। Photos या Gallery में सेव मीडिया हटाया नहीं जाता।";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "पूर्ण प्रविष्टियां और उनकी अस्थायी प्रीव्यू फ़ाइलें साफ़ करता है।\n\nसक्रिय और कतार में मौजूद डाउनलोड रखे जाते हैं। Photos या Gallery में सेव मीडिया हटाया नहीं जाता।";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%2$@ में से %1$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "फ़ोटो जिस गुणवत्ता में डाउनलोड होती हैं, या हर बार चुनने के लिए हमेशा पूछें।";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "वीडियो जिस गुणवत्ता में डाउनलोड होते हैं। डिफ़ॉल्ट अलग-अलग स्ट्रीम मर्ज करने के बजाय चलने के लिए तैयार फाइल लेता है।";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "हाल के रूपांतरणों का पूरा FFmpeg आउटपुट, विफल एन्कोड की जांच के लिए।";

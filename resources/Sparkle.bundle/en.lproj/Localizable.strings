@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Downloads";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Clears this account's finished entries and legacy unassigned entries, including their temporary preview files.\n\nActive and queued downloads are kept. Media saved to Photos or Gallery is not deleted.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Clears finished entries and their temporary preview files.\n\nActive and queued downloads are kept. Media saved to Photos or Gallery is not deleted.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ of %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "The quality photos download at, or Always Ask to choose each time.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "The quality videos download at. Default takes the ready-to-play file instead of merging separate streams.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "The full FFmpeg output from recent conversions, for diagnosing a failed encode.";

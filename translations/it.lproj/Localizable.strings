@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Download";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Cancella le voci completate di questo account e le vecchie voci senza account assegnato, inclusi i relativi file temporanei di anteprima.\n\nI download attivi e in coda vengono conservati. I media salvati in Foto o Gallery non vengono eliminati.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Cancella le voci completate e i relativi file temporanei di anteprima.\n\nI download attivi e in coda vengono conservati. I media salvati in Foto o Gallery non vengono eliminati.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ di %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "La qualità con cui vengono scaricate le foto, oppure Chiedi sempre per scegliere ogni volta.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "La qualità con cui vengono scaricati i video. Predefinita prende il file già pronto invece di unire flussi separati.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "L'output completo di FFmpeg delle conversioni recenti, per diagnosticare una codifica fallita.";

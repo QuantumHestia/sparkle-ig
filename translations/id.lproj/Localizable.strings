@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "Unduhan";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Menghapus entri yang selesai milik akun ini dan entri lama yang belum ditetapkan, termasuk file pratinjau sementaranya.\n\nUnduhan yang aktif dan dalam antrean tetap disimpan. Media yang tersimpan ke Foto atau Galeri tidak dihapus.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Menghapus entri yang selesai dan file pratinjau sementaranya.\n\nUnduhan yang aktif dan dalam antrean tetap disimpan. Media yang tersimpan ke Foto atau Galeri tidak dihapus.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ dari %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "Kualitas unduhan foto, atau Selalu Tanya untuk memilih setiap kali.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "Kualitas unduhan video. Default mengambil file yang siap diputar, bukan menggabungkan stream terpisah.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "Output FFmpeg lengkap dari konversi terbaru, untuk mendiagnosis encoding yang gagal.";

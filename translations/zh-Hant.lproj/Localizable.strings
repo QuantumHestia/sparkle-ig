@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "下載項目";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "清除此帳號已完成的紀錄及舊有未指定帳號的紀錄，包括其暫存預覽檔案。\n\n進行中與排隊中的下載會予以保留。已儲存到照片或圖庫的媒體不會被刪除。";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "清除已完成的紀錄及其暫存預覽檔案。\n\n進行中與排隊中的下載會予以保留。已儲存到照片或圖庫的媒體不會被刪除。";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ / %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "相片下載時使用的畫質，或選擇「每次詢問」以逐次選擇。";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "影片下載時使用的畫質。「預設」會採用可直接播放的檔案，而非合併個別串流。";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "近期轉換作業的完整 FFmpeg 輸出紀錄，用於診斷編碼失敗的原因。";

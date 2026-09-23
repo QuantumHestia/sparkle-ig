@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "下载";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "清除该账户已完成的条目和旧的未分配条目，包括临时预览文件。\n\n保留活跃和排队中的下载。不会删除保存到照片或 Gallery 的媒体。";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "清除已完成的条目及其临时预览文件。\n\n保留活跃和排队中的下载。不会删除保存到照片或 Gallery 的媒体。";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ / %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "下载照片使用的画质，或选择每次询问。";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "下载视频使用的画质。默认直接使用可播放的成品文件，而不合并独立的音视频流。";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "最近转换的完整 FFmpeg 输出，用于排查编码失败。";

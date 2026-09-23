@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "İndirilenleri";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "Bu hesabın tamamlanmış öğelerini ve eski atanmamış öğeleri, geçici önizleme dosyaları dahil, temizler.\n\nEtkin ve sıradaki indirmeler korunur. Fotoğraflar'a veya Galeri'ye kaydedilen medya silinmez.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "Tamamlanmış öğeleri ve geçici önizleme dosyalarını temizler.\n\nEtkin ve sıradaki indirmeler korunur. Fotoğraflar'a veya Galeri'ye kaydedilen medya silinmez.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ / %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "Fotoğrafların indirileceği kalite ya da her seferinde seçmek için Her Zaman Sor.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "Videoların indirileceği kalite. Varsayılan, ayrı akışları birleştirmek yerine oynatmaya hazır dosyayı alır.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "Son dönüştürmelerin tam FFmpeg çıktısı, başarısız bir kodlamayı incelemek için.";

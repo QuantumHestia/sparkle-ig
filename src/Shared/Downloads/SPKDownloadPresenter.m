@@ -146,7 +146,7 @@ static NSArray<NSURL *> *SPKDownloadSucceededFileURLsForJob(SPKDownloadJob *job)
         formatter.includesUnit = YES;
         formatter.includesCount = YES;
         formatter.zeroPadsFractionDigits = NO;
-        bytesString = [NSString stringWithFormat:@"%@ of %@",
+        bytesString = [NSString stringWithFormat:SPKL(@"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT"),
                                                  [formatter stringFromByteCount:bytesWritten],
                                                  [formatter stringFromByteCount:totalBytesExpected]];
     }

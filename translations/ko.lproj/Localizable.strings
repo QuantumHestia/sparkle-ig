@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "다운로드";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "이 계정의 완료된 항목과 기존 미지정 항목 및 임시 미리보기 파일을 삭제합니다.\n\n실행 중 및 대기 중인 다운로드는 유지됩니다. Photos 또는 Gallery에 저장된 미디어는 삭제되지 않습니다.";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "완료된 항목과 임시 미리보기 파일을 삭제합니다.\n\n실행 중 및 대기 중인 다운로드는 유지됩니다. Photos 또는 Gallery에 저장된 미디어는 삭제되지 않습니다.";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ / %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "사진을 다운로드할 화질입니다. 항상 묻기를 고르면 매번 선택합니다.";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "동영상을 다운로드할 화질입니다. 기본값은 스트림을 병합하지 않고 바로 재생 가능한 파일을 사용합니다.";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "최근 변환의 전체 FFmpeg 출력입니다. 인코딩 실패를 진단할 때 사용하세요.";

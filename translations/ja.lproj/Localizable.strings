@@ -460,6 +460,7 @@
 "DOWNLOADS_GENERAL_DOWNLOADS_TITLE" = "ダウンロード";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ACCOUNT_MESSAGE" = "このアカウントの完了済みエントリと、アカウント未割り当ての古いエントリを、一時プレビューファイルも含めて削除します。\n\n実行中およびキュー済みのダウンロードは保持されます。PhotosまたはGalleryに保存されたメディアは削除されません。";
 "DOWNLOADS_HISTORY_CLEAR_FINISHED_ALL_MESSAGE" = "完了済みエントリと一時プレビューファイルを削除します。\n\n実行中およびキュー済みのダウンロードは保持されます。PhotosまたはGalleryに保存されたメディアは削除されません。";
+"DOWNLOADS_PROGRESS_BYTES_OF_TOTAL_FORMAT" = "%1$@ / %2$@";
 "DOWNLOADS_QUALITY_DEFAULT_PHOTO_HELP" = "写真をダウンロードする画質です。毎回確認を選ぶこともできます。";
 "DOWNLOADS_QUALITY_DEFAULT_VIDEO_HELP" = "動画をダウンロードする画質です。デフォルトでは、別々のストリームを結合せずそのまま再生できるファイルを使います。";
 "DOWNLOADS_QUALITY_ENCODING_LOGS_HELP" = "最近の変換のFFmpeg出力の全文です。エンコードの失敗を調べるときに使います。";

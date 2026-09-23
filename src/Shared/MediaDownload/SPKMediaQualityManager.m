@@ -1387,10 +1387,13 @@ static SPKTrimSourcePlan *SPKMediaTrimPlanFromOption(SPKMediaOption *chosen, SPK
     (void)session;
     (void)downloadTask;
 
-    if (totalBytesExpectedToWrite <= 0)
-        return;
-
-    double progress = (double)totalBytesWritten / (double)totalBytesExpectedToWrite;
+    // Still report when the server omits Content-Length: the byte counts feed
+    // download history (which falls back to bytesWritten), and the scheduler
+    // ignores non-positive totals.
+    double progress = 0.0;
+    if (totalBytesExpectedToWrite > 0) {
+        progress = (double)totalBytesWritten / (double)totalBytesExpectedToWrite;
+    }
     if (self.progressBlock) {
         self.progressBlock(MAX(0.0, MIN(1.0, progress)), totalBytesWritten, totalBytesExpectedToWrite);
     }
