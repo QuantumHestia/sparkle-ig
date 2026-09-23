@@ -483,7 +483,13 @@ Every surface has the same **Filter Mode**: `All` saves everything except what y
 - **Copied Download Links**: Copy Download URL follows the same photo and video quality settings as a download, including the picker sheet (single item) and the Batch Quality sheet (bulk) when set to `Always Ask`. Video links only offer ready-to-play files, since a DASH stream alone is silent or needs a merge.
 - **Enhanced Media Resolution**: Requests higher-resolution media for downloads.
 - **Default Video Quality**: Save/share quality. `High` merges DASH video + audio; `Default` uses ready-to-play files; `Always Ask` prompts each time. **Requires FFmpegKit** for the merge/quality options.
-- **Encoding Settings**: Advanced codec / preset / bitrate / CRF / resolution / audio overrides for the merge step (requires FFmpegKit). A **Reset Encoding Settings** button restores every advanced encoding option to its default (the toggle stays on).
+- **Encoding Settings**: How videos are re-encoded, which only happens when merging a DASH download and when trimming or cropping (requires FFmpegKit). Each group's info sheet gives a one-line rule per setting plus a short note on every option. With **Advanced Encoding** off, a single **Encoding Speed** picks libx264's effort while the file stays near Instagram's size. With it on:
+  - **Video Codec**: **Software (libx264)** (default, best quality per MB, honors every option) or **Hardware (VideoToolbox)** (much faster, needs about twice the bitrate for the same quality; its automatic bitrate is doubled to match). The libx264-only rows (**Preset**, **H.264 Profile**, **H.264 Level**, **CRF**) hide while VideoToolbox is selected.
+  - **CRF** (1 to 51) takes priority over **Video Bitrate**; an empty bitrate follows the source, kept between 2.5 and 50 Mbps.
+  - **Max Resolution** names the shorter side (`720p` turns a 1080 x 1920 reel into 720 x 1280) and never enlarges a smaller video.
+  - **Audio Bitrate** / **Audio Channels** apply when audio is re-encoded (trims); merged downloads keep Instagram's audio untouched.
+  - Output is always 8-bit 4:2:0 with the index moved to the front of the file, so 10-bit HDR sources encode instead of failing.
+  - A **Reset Encoding Settings** button restores every advanced encoding option to its default (the toggle stays on).
 - **View Encoding Logs**: Inspect and share the FFmpeg loader/merge logs.
 
 ### Audio

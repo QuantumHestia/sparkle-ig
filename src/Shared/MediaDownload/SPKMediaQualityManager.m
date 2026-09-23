@@ -1750,7 +1750,6 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
 - (UIMenu *)levelMenu;
 - (UIMenu *)maxResMenu;
 - (UIMenu *)audioChannelsMenu;
-- (UIMenu *)pixelFormatMenu;
 @end
 
 @implementation SPKMediaEncodingSettingsViewController
@@ -1776,232 +1775,154 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
     }
 }
 
-- (NSArray *)buildSections {
-    NSMutableArray *sections = [NSMutableArray array];
+- (SPKSetting *)advancedEncodingRow {
+    return SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ADVANCED_ENCODING_TEXT")
+                                                  defaultsKey:@"downloads_adv_encoding"],
+                              SPKL(@"MEDIA_ENCODING_ADVANCED_HELP"));
+}
 
-    [sections
-        addObject:SPKTopicSection(
-                      @"", @[ SPKSettingWithHelp([SPKSetting
-                                                     switchCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ADVANCED_ENCODING_TEXT")
-                                                             defaultsKey:@"downloads_adv_encoding"],
-                                                 SPKL(@"MEDIA_ENCODING_ADVANCED_HELP")) ],
-                      nil)];
+- (SPKSetting *)speedRow {
+    return SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ENCODING_SPEED_TEXT")
+                                                   subtitle:nil
+                                                       menu:[self speedMenu]],
+                              SPKL(@"MEDIA_ENCODING_SPEED_HELP"));
+}
 
-    if ([SPKUtils getBoolPref:@"downloads_adv_encoding"]) {
-        [sections addObject:SPKTopicSection(
-                                SPKL(@"COMMON_MEDIA_TYPE_VIDEO"),
-                                @[
-                                    SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_VIDEO_CODEC_TEXT")
-                                                             subtitle:nil
-                                                                 menu:[self codecMenu]],
-                                                       SPKL(@"MEDIA_ENCODING_VIDEO_CODEC_HELP")),
-                                    SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_PRESET_TEXT")
-                                                             subtitle:nil
-                                                                 menu:[self presetMenu]],
-                                                       SPKL(@"MEDIA_ENCODING_PRESET_HELP")),
-                                    [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_H_PROFILE_TEXT")
-                                                         subtitle:nil
-                                                             menu:[self profileMenu]],
-                                    [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_H_LEVEL_TEXT")
-                                                         subtitle:nil
-                                                             menu:[self levelMenu]]
-                                ],
-                                nil)];
+// Advanced rows grouped as on the page. `hideUnused` hides the libx264-only rows
+// while VideoToolbox is selected, since that encoder ignores them; search keeps
+// every row findable.
+- (NSArray *)advancedSectionsHidingUnusedRows:(BOOL)hideUnused {
+    BOOL (^notLibx264)(void) = hideUnused ? ^BOOL {
+        return ![[SPKUtils getStringPref:@"downloads_encoding_vid_codec"] isEqualToString:@"libx264"];
+    } : nil;
 
-        [sections
-            addObject:SPKTopicSection(
-                          SPKL(@"AUTO_SAVE_AUTO_SAVE_SETTINGS_QUALITY_HEADER"),
-                          @[
-                              SPKSettingWithHelp([SPKSetting
-                                                     textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_CRF_TEXT")
+    SPKSetting *preset = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_PRESET_TEXT")
+                                                                 subtitle:nil
+                                                                     menu:[self presetMenu]],
+                                            SPKL(@"MEDIA_ENCODING_PRESET_HELP"));
+    SPKSetting *profile = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_H_PROFILE_TEXT")
+                                                                  subtitle:nil
+                                                                      menu:[self profileMenu]],
+                                             SPKL(@"MEDIA_ENCODING_H264_PROFILE_HELP"));
+    SPKSetting *level = SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_H_LEVEL_TEXT")
+                                                                subtitle:nil
+                                                                    menu:[self levelMenu]],
+                                           SPKL(@"MEDIA_ENCODING_H264_LEVEL_HELP"));
+    SPKSetting *crf = SPKSettingWithHelp([SPKSetting textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_CRF_TEXT")
                                                                 placeholder:SPKL(@"VC_PLACEHOLDER_AUTO")
                                                                keyboardType:UIKeyboardTypeNumberPad
                                                                 defaultsKey:@"downloads_encoding_crf"],
-                                                 SPKL(@"MEDIA_ENCODING_CRF_HELP")),
-                              SPKSettingWithHelp([SPKSetting
-                                                     textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_VIDEO_BITRATE_TEXT")
-                                                                placeholder:SPKL(@"VC_PLACEHOLDER_AUTO")
-                                                               keyboardType:UIKeyboardTypeNumberPad
-                                                                defaultsKey:@"downloads_encoding_"
-                                                                            @"vid_bitrate_kbps"],
-                                                 SPKL(@"MEDIA_ENCODING_VIDEO_BITRATE_HELP")),
-                              SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_MAX_RESOLUTION_TEXT")
-                                                       subtitle:nil
-                                                           menu:[self maxResMenu]],
-                                                 SPKL(@"MEDIA_ENCODING_MAX_RESOLUTION_HELP"))
-                          ],
-                          nil)];
+                                         SPKL(@"MEDIA_ENCODING_CRF_HELP"));
+    preset.hiddenProvider = notLibx264;
+    profile.hiddenProvider = notLibx264;
+    level.hiddenProvider = notLibx264;
+    crf.hiddenProvider = notLibx264;
 
-        [sections
-            addObject:SPKTopicSection(
-                          SPKL(@"COMMON_MEDIA_TYPE_AUDIO"),
-                          @[
-                              SPKSettingWithHelp([SPKSetting
-                                                     textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_AUDIO_BITRATE_TEXT")
-                                                                placeholder:@"128"
-                                                               keyboardType:UIKeyboardTypeNumberPad
-                                                                defaultsKey:@"downloads_encoding_"
-                                                                            @"audio_bitrate_kbps"],
-                                                 SPKL(@"MEDIA_ENCODING_AUDIO_BITRATE_HELP")),
-                              SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_AUDIO_CHANNELS_TEXT")
-                                                       subtitle:nil
-                                                           menu:[self audioChannelsMenu]],
-                                                 SPKL(@"MEDIA_ENCODING_AUDIO_CHANNELS_HELP"))
-                          ],
-                          nil)];
-
-        [sections
-            addObject:
-                SPKTopicSection(
-                    SPKL(@"GALLERY_GALLERY_IMPORT_METADATA_FORM_ADVANCED_TEXT"),
-                    @[
-                        [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_PIXEL_FORMAT")
-                                             subtitle:nil
-                                                 menu:[self pixelFormatMenu]],
-                        SPKSettingWithHelp([SPKSetting
-                                               switchCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FAST_START_TEXT")
-                                                       defaultsKey:@"downloads_encoding_faststart"],
-                                           SPKL(@"MEDIA_ENCODING_FAST_START_HELP"))
-                    ],
-                    nil)];
-
-        __weak typeof(self) weakSelf = self;
-        SPKSetting *resetEncoding = 
-            [SPKSetting buttonCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_RESET_ENCODING_SETTINGS_TEXT")
-                                   subtitle:nil
-                                       icon:SPKSettingsIcon(@"arrow_ccw")
-                                     action:^{
-                                        [[SPKSettingsTransferManager sharedManager]
-                                            resetConfigurationGroupFromController:weakSelf
-                                                                            title:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_RESET_ENCODING_SETTINGS_TEXT")
-                                                                          message:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_RESTORES_EVERY_ADVANCED_ENCODING_OPTION_DEFAULT_VALUE_ADVANCED_ENCODING_TEXT")
-                                                                     confirmTitle:SPKL(@"DATA_RESET_HEADER")
-                                                                            keys:@[
-                                                                                @"downloads_encoding_speed",
-                                                                                @"downloads_encoding_vid_codec",
-                                                                                @"downloads_encoding_preset",
-                                                                                @"downloads_encoding_h264_profile",
-                                                                                @"downloads_encoding_h264_level",
-                                                                                @"downloads_encoding_crf",
-                                                                                @"downloads_encoding_vid_bitrate_kbps",
-                                                                                @"downloads_encoding_max_resolution",
-                                                                                @"downloads_encoding_audio_bitrate_kbps",
-                                                                                @"downloads_encoding_audio_channels",
-                                                                                @"downloads_encoding_pixel_format",
-                                                                                @"downloads_encoding_faststart"
-                                                                            ]
-                                                                          onReset:^{
-                                                                              [weakSelf replaceSections:[weakSelf buildSections]];
-                                                                          }];
-                                        }];
-        resetEncoding.tintColor = [SPKUtils SPKColor_InstagramDestructive];
-        resetEncoding.iconTintColor = [SPKUtils SPKColor_InstagramDestructive];
-        [sections addObject:SPKTopicSection(@"", @[ resetEncoding ], nil)];
-
-        SPKSetting *ffmpegInfo = [SPKSetting
-            linkCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ABOUT_FFMPEG_ENCODING_TEXT")
-                     subtitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_TAP_LEARN_MORE_TEXT")
-                     imageUrl:@"https://ffmpeg.org/favicon.ico"
-                          url:@"https://trac.ffmpeg.org/wiki/Encode/H.264"];
-        ffmpegInfo.userInfo = @{@"remoteImageCircular" : @NO};
-        [sections addObject:SPKTopicSection(@"", @[ ffmpegInfo ], nil)];
-    } else {
-        [sections
-            addObject:
-                SPKTopicSection(
-                    SPKL(@"COMMON_MEDIA_TYPE_VIDEO"), @[ [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ENCODING_SPEED_TEXT")
-                                                      subtitle:nil
-                                                          menu:[self speedMenu]] ],
-                    nil)];
-    }
-
-    return sections;
+    // Every group explains its options in an info sheet, even when hiding the
+    // libx264-only rows leaves a single row that would otherwise get a footer.
+    return @[
+        SPKTopicSectionWithInfoSheet(SPKTopicSection(SPKL(@"COMMON_MEDIA_TYPE_VIDEO"),
+                        @[
+                            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_VIDEO_CODEC_TEXT")
+                                                                    subtitle:nil
+                                                                        menu:[self codecMenu]],
+                                               SPKL(@"MEDIA_ENCODING_VIDEO_CODEC_HELP")),
+                            preset, profile, level
+                        ],
+                        nil), YES),
+        SPKTopicSectionWithInfoSheet(SPKTopicSection(SPKL(@"AUTO_SAVE_AUTO_SAVE_SETTINGS_QUALITY_HEADER"),
+                        @[
+                            crf,
+                            SPKSettingWithHelp([SPKSetting textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_VIDEO_BITRATE_TEXT")
+                                                                      placeholder:SPKL(@"VC_PLACEHOLDER_AUTO")
+                                                                     keyboardType:UIKeyboardTypeNumberPad
+                                                                      defaultsKey:@"downloads_encoding_vid_bitrate_kbps"],
+                                               SPKL(@"MEDIA_ENCODING_VIDEO_BITRATE_HELP")),
+                            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_MAX_RESOLUTION_TEXT")
+                                                                    subtitle:nil
+                                                                        menu:[self maxResMenu]],
+                                               SPKL(@"MEDIA_ENCODING_MAX_RESOLUTION_HELP"))
+                        ],
+                        nil), YES),
+        SPKTopicSectionWithInfoSheet(SPKTopicSection(SPKL(@"COMMON_MEDIA_TYPE_AUDIO"),
+                        @[
+                            SPKSettingWithHelp([SPKSetting textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_AUDIO_BITRATE_TEXT")
+                                                                      placeholder:@"128"
+                                                                     keyboardType:UIKeyboardTypeNumberPad
+                                                                      defaultsKey:@"downloads_encoding_audio_bitrate_kbps"],
+                                               SPKL(@"MEDIA_ENCODING_AUDIO_BITRATE_HELP")),
+                            SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_AUDIO_CHANNELS_TEXT")
+                                                                    subtitle:nil
+                                                                        menu:[self audioChannelsMenu]],
+                                               SPKL(@"MEDIA_ENCODING_AUDIO_CHANNELS_HELP"))
+                        ],
+                        nil), YES)
+    ];
 }
 
-- (NSArray *)searchSections {
+- (SPKSetting *)ffmpegInfoRow {
     SPKSetting *ffmpegInfo = [SPKSetting
         linkCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ABOUT_FFMPEG_ENCODING_TEXT")
                  subtitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_TAP_LEARN_MORE_TEXT")
                  imageUrl:@"https://ffmpeg.org/favicon.ico"
                       url:@"https://trac.ffmpeg.org/wiki/Encode/H.264"];
     ffmpegInfo.userInfo = @{@"remoteImageCircular" : @NO};
+    return ffmpegInfo;
+}
 
-    return @[
-        SPKTopicSection(
-            @"", @[ SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ADVANCED_ENCODING_TEXT")
-                                                           defaultsKey:@"downloads_adv_encoding"],
-                                       SPKL(@"MEDIA_ENCODING_ADVANCED_HELP")) ],
-            nil),
-        SPKTopicSection(
-            SPKL(@"COMMON_MEDIA_TYPE_VIDEO"),
-            @[
-                [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_ENCODING_SPEED_TEXT")
-                                     subtitle:nil
-                                         menu:[self speedMenu]],
-                SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_VIDEO_CODEC_TEXT")
-                                         subtitle:nil
-                                             menu:[self codecMenu]],
-                                   SPKL(@"MEDIA_ENCODING_VIDEO_CODEC_HELP")),
-                SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_PRESET_TEXT")
-                                         subtitle:nil
-                                             menu:[self presetMenu]],
-                                   SPKL(@"MEDIA_ENCODING_PRESET_HELP")),
-                [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_H_PROFILE_TEXT")
-                                     subtitle:nil
-                                         menu:[self profileMenu]],
-                [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_H_LEVEL_TEXT")
-                                     subtitle:nil
-                                         menu:[self levelMenu]]
-            ],
-            nil),
-        SPKTopicSection(
-            SPKL(@"AUTO_SAVE_AUTO_SAVE_SETTINGS_QUALITY_HEADER"),
-            @[
-                SPKSettingWithHelp([SPKSetting textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_CRF_TEXT")
-                                                          placeholder:SPKL(@"VC_PLACEHOLDER_AUTO")
-                                                         keyboardType:UIKeyboardTypeNumberPad
-                                                          defaultsKey:@"downloads_encoding_crf"],
-                                   SPKL(@"MEDIA_ENCODING_CRF_HELP")),
-                SPKSettingWithHelp([SPKSetting
-                                       textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_VIDEO_BITRATE_TEXT")
-                                                  placeholder:SPKL(@"VC_PLACEHOLDER_AUTO")
-                                                 keyboardType:UIKeyboardTypeNumberPad
-                                                  defaultsKey:@"downloads_encoding_vid_bitrate_kbps"],
-                                   SPKL(@"MEDIA_ENCODING_VIDEO_BITRATE_HELP")),
-                SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_MAX_RESOLUTION_TEXT")
-                                         subtitle:nil
-                                             menu:[self maxResMenu]],
-                                   SPKL(@"MEDIA_ENCODING_MAX_RESOLUTION_HELP"))
-            ],
-            nil),
-        SPKTopicSection(
-            SPKL(@"COMMON_MEDIA_TYPE_AUDIO"),
-            @[
-                SPKSettingWithHelp([SPKSetting
-                                       textFieldCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_AUDIO_BITRATE_TEXT")
-                                                  placeholder:@"128"
-                                                 keyboardType:UIKeyboardTypeNumberPad
-                                                  defaultsKey:@"downloads_encoding_audio_bitrate_kbps"],
-                                   SPKL(@"MEDIA_ENCODING_AUDIO_BITRATE_HELP")),
-                SPKSettingWithHelp([SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_AUDIO_CHANNELS_TEXT")
-                                         subtitle:nil
-                                             menu:[self audioChannelsMenu]],
-                                   SPKL(@"MEDIA_ENCODING_AUDIO_CHANNELS_HELP"))
-            ],
-            nil),
-        SPKTopicSection(
-            SPKL(@"GALLERY_GALLERY_IMPORT_METADATA_FORM_ADVANCED_TEXT"),
-            @[
-                [SPKSetting menuCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_PIXEL_FORMAT")
-                                     subtitle:nil
-                                         menu:[self pixelFormatMenu]],
-                SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_FAST_START_TEXT")
-                                                       defaultsKey:@"downloads_encoding_faststart"],
-                                   SPKL(@"MEDIA_ENCODING_FAST_START_HELP"))
-            ],
-            nil),
-        SPKTopicSection(@"", @[ ffmpegInfo ], nil)
-    ];
+- (NSArray *)buildSections {
+    NSMutableArray *sections = [NSMutableArray array];
+    [sections addObject:SPKTopicSection(@"", @[ [self advancedEncodingRow] ], nil)];
+
+    if (![SPKUtils getBoolPref:@"downloads_adv_encoding"]) {
+        [sections addObject:SPKTopicSectionWithInfoSheet(SPKTopicSection(SPKL(@"COMMON_MEDIA_TYPE_VIDEO"), @[ [self speedRow] ], nil), YES)];
+        return sections;
+    }
+
+    [sections addObjectsFromArray:[self advancedSectionsHidingUnusedRows:YES]];
+
+    __weak typeof(self) weakSelf = self;
+    SPKSetting *resetEncoding =
+        [SPKSetting buttonCellWithTitle:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_RESET_ENCODING_SETTINGS_TEXT")
+                               subtitle:nil
+                                   icon:SPKSettingsIcon(@"arrow_ccw")
+                                 action:^{
+                                     [[SPKSettingsTransferManager sharedManager]
+                                         resetConfigurationGroupFromController:weakSelf
+                                                                         title:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_RESET_ENCODING_SETTINGS_TEXT")
+                                                                       message:SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_RESTORES_EVERY_ADVANCED_ENCODING_OPTION_DEFAULT_VALUE_ADVANCED_ENCODING_TEXT")
+                                                                  confirmTitle:SPKL(@"DATA_RESET_HEADER")
+                                                                          keys:@[
+                                                                              @"downloads_encoding_speed",
+                                                                              @"downloads_encoding_vid_codec",
+                                                                              @"downloads_encoding_preset",
+                                                                              @"downloads_encoding_h264_profile",
+                                                                              @"downloads_encoding_h264_level",
+                                                                              @"downloads_encoding_crf",
+                                                                              @"downloads_encoding_vid_bitrate_kbps",
+                                                                              @"downloads_encoding_max_resolution",
+                                                                              @"downloads_encoding_audio_bitrate_kbps",
+                                                                              @"downloads_encoding_audio_channels"
+                                                                          ]
+                                                                       onReset:^{
+                                                                           [weakSelf replaceSections:[weakSelf buildSections]];
+                                                                       }];
+                                 }];
+    resetEncoding.tintColor = [SPKUtils SPKColor_InstagramDestructive];
+    resetEncoding.iconTintColor = [SPKUtils SPKColor_InstagramDestructive];
+    [sections addObject:SPKTopicSection(@"", @[ resetEncoding ], nil)];
+    [sections addObject:SPKTopicSection(@"", @[ [self ffmpegInfoRow] ], nil)];
+
+    return sections;
+}
+
+- (NSArray *)searchSections {
+    NSMutableArray *sections = [NSMutableArray array];
+    [sections addObject:SPKTopicSection(@"", @[ [self advancedEncodingRow] ], nil)];
+    [sections addObject:SPKTopicSectionWithInfoSheet(SPKTopicSection(SPKL(@"COMMON_MEDIA_TYPE_VIDEO"), @[ [self speedRow] ], nil), YES)];
+    [sections addObjectsFromArray:[self advancedSectionsHidingUnusedRows:NO]];
+    [sections addObject:SPKTopicSection(@"", @[ [self ffmpegInfoRow] ], nil)];
+    return sections;
 }
 
 - (UIMenu *)speedMenu {
@@ -2018,8 +1939,8 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
     return [self
         buildMenuForPref:@"downloads_encoding_vid_codec"
                    items:@[
-                       @{@"value" : @"videotoolbox", @"label" : SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_VIDEOTOOLBOX_TEXT")},
-                       @{@"value" : @"libx264", @"label" : @"libx264"} // SPK_I18N_IGNORE: codec identifier
+                       @{@"value" : @"libx264", @"label" : SPKL(@"MEDIA_ENCODING_CODEC_SOFTWARE_LABEL")},
+                       @{@"value" : @"videotoolbox", @"label" : SPKL(@"MEDIA_ENCODING_CODEC_HARDWARE_LABEL")}
                    ]];
 }
 
@@ -2074,15 +1995,6 @@ static NSString *SPKMediaCodecBadge(NSString *codec) {
                                 @{@"value" : @"original", @"label" : SPKL(@"MEDIA_DOWNLOAD_QUALITY_AUDIO_CHANNELS_ORIGINAL_LABEL")},
                                 @{@"value" : @"stereo", @"label" : SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_STEREO_TEXT")},
                                 @{@"value" : @"mono", @"label" : SPKL(@"MEDIA_DOWNLOAD_MEDIA_QUALITY_MANAGER_MONO_TEXT")}
-                            ]];
-}
-
-- (UIMenu *)pixelFormatMenu {
-    return [self buildMenuForPref:@"downloads_encoding_pixel_format"
-                            items:@[
-                                @{@"value" : @"default", @"label" : SPKL(@"MEDIA_DOWNLOAD_QUALITY_PIXEL_FORMAT_DEFAULT_LABEL")},
-                                @{@"value" : @"yuv420p", @"label" : @"yuv420p"}, // SPK_I18N_IGNORE: pixel-format identifier
-                                @{@"value" : @"nv12", @"label" : @"nv12"} // SPK_I18N_IGNORE: pixel-format identifier
                             ]];
 }
 
