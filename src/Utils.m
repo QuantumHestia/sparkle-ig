@@ -550,8 +550,12 @@ static id SPKObjectForSelector(id target, NSString *selectorName) {
     return ((id (*)(id, SEL))objc_msgSend)(target, selector);
 }
 
+// Declared here rather than by importing ActionButtonLookupUtils.h, whose other helpers
+// share names with this file's private statics.
+BOOL SPKKVCKeyIsResolvable(id target, NSString *key);
+
 static id SPKKVCObject(id target, NSString *key) {
-    if (!target || !key.length)
+    if (!SPKKVCKeyIsResolvable(target, key))
         return nil;
 
     @try {
@@ -937,7 +941,7 @@ static NSArray<NSURLQueryItem *> *SPKSanitizedInstagramQueryItems(NSArray<NSURLQ
         blockedKeys = [NSSet setWithArray:@[
             @"igsh", @"igshid", @"igsi", @"ig_rid", @"ig_mid",
             @"utm_source", @"utm_medium", @"utm_campaign", @"utm_term", @"utm_content",
-            @"fbclid"
+            @"fbclid", @"stkn"
         ]];
     });
 
@@ -954,6 +958,13 @@ static NSArray<NSURLQueryItem *> *SPKSanitizedInstagramQueryItems(NSArray<NSURLQ
 @end
 
 @implementation SPKSettingsNavigationController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Measure the cache in the background as soon as Settings opens, so the size
+    // is ready by the time the General page's Clear Cache row is on screen.
+    [SPKUtils cachedFormattedCacheSize];
+}
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
@@ -1037,9 +1048,18 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             // per-account key would read the global default on every cold launch.
             @"interface_custom_font",
             @"interface_language",
+            // Language packs live in one shared directory, so a pack installed or
+            // refreshed under one account is the file every other account reads.
+            // Scoping the settings that govern them per account would let one
+            // account's preference decide what another account sees on disk.
+            @"language_pack_auto_update",
+            @"language_pack_provenance",
+            @"language_pack_last_update_check",
+            @"language_pack_last_update_attempt",
+            @"langpack_catalog_url",
             @"interface_liquid_glass",
             @"interface_liquid_glass_tabbar_mode",
-            @"interface_progressive_blur",
+            @"interface_scroll_edge_style",
             @"interface_hide_ui_on_capture",
             @"downloads_adv_encoding",
             // Tab/launch layout is configured once at launch and can't re-apply
@@ -1084,6 +1104,13 @@ static BOOL SPKPrefIsGlobalKey(NSString *key) {
             @"reels_prevent_doom_scroll",
             @"reels_doom_scroll_limit",
             @"reels_disable_scrolling",
+            // Instagram keeps one sound state for the whole app, and the hooks that
+            // mute it install once per launch, before an account switch can matter.
+            @"reels_disable_auto_unmute",
+            // Saved fake locations are a library of places, not a setting: every
+            // account picks from the same list, while the active place and the on
+            // switch stay per account.
+            @"msgs_fake_location_saved_places",
         ]];
     });
     if ([globalExact containsObject:key])
@@ -1386,11 +1413,73 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
     [SPKUtils markCacheClearedNow];
 }
 
-+ (unsigned long long)cleanCacheReturningFreedBytes {
-    unsigned long long bytesBefore = [self cacheSizeBytes];
-    [self cleanCache];
-    unsigned long long bytesAfter = [self cacheSizeBytes];
-    return bytesBefore > bytesAfter ? bytesBefore - bytesAfter : 0;
+// Cache clears and size walks enumerate every file under tmp, Caches and the
+// analytics folder, which takes seconds on a large cache. They all run on this
+// one serial queue so they never touch the main thread and never overlap.
+static dispatch_queue_t SPKCacheWorkQueue(void) {
+    static dispatch_queue_t queue;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        queue = dispatch_queue_create("com.sparkle.cache-work", dispatch_queue_attr_make_with_qos_class(DISPATCH_QUEUE_SERIAL, QOS_CLASS_UTILITY, 0));
+    });
+    return queue;
+}
+
+static const NSTimeInterval kSPKCacheSizeRefreshInterval = 5.0;
+
+// Main-thread state for the last measured cache size.
+static NSString *sSPKCachedCacheSizeText;
+static CFAbsoluteTime sSPKCacheSizeMeasuredAt;
+static BOOL sSPKCacheSizeRefreshing;
+static BOOL sSPKCacheClearing;
+
+static void SPKPublishCacheSize(unsigned long long bytes) {
+    NSString *text = [NSByteCountFormatter stringFromByteCount:(long long)bytes countStyle:NSByteCountFormatterCountStyleFile];
+    BOOL changed = ![text isEqualToString:sSPKCachedCacheSizeText];
+    sSPKCachedCacheSizeText = text;
+    sSPKCacheSizeMeasuredAt = CFAbsoluteTimeGetCurrent();
+    if (changed)
+        [[NSNotificationCenter defaultCenter] postNotificationName:SPKSettingAccessoryTextDidChangeNotification object:nil];
+}
+
++ (void)refreshCacheSize {
+    if (sSPKCacheSizeRefreshing)
+        return;
+    sSPKCacheSizeRefreshing = YES;
+    dispatch_async(SPKCacheWorkQueue(), ^{
+        unsigned long long bytes = [SPKUtils cacheSizeBytes];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            sSPKCacheSizeRefreshing = NO;
+            SPKPublishCacheSize(bytes);
+        });
+    });
+}
+
++ (nullable NSString *)cachedFormattedCacheSize {
+    NSAssert(NSThread.isMainThread, @"cachedFormattedCacheSize is main-thread only");
+    if (!sSPKCacheClearing && (!sSPKCachedCacheSizeText || CFAbsoluteTimeGetCurrent() - sSPKCacheSizeMeasuredAt > kSPKCacheSizeRefreshInterval))
+        [self refreshCacheSize];
+    return sSPKCachedCacheSizeText;
+}
+
++ (BOOL)cleanCacheInBackgroundWithCompletion:(void (^)(unsigned long long freedBytes))completion {
+    NSAssert(NSThread.isMainThread, @"cleanCacheInBackgroundWithCompletion: is main-thread only");
+    if (sSPKCacheClearing)
+        return NO;
+    sSPKCacheClearing = YES;
+    dispatch_async(SPKCacheWorkQueue(), ^{
+        unsigned long long bytesBefore = [SPKUtils cacheSizeBytes];
+        [SPKUtils cleanCache];
+        unsigned long long bytesAfter = [SPKUtils cacheSizeBytes];
+        unsigned long long freedBytes = bytesBefore > bytesAfter ? bytesBefore - bytesAfter : 0;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            sSPKCacheClearing = NO;
+            SPKPublishCacheSize(bytesAfter);
+            if (completion)
+                completion(freedBytes);
+        });
+    });
+    return YES;
 }
 
 + (unsigned long long)cacheSizeBytes {
@@ -1432,11 +1521,6 @@ static id SPKPrefValueWithMasterOverlay(NSString *key) {
     }
 
     return totalBytes;
-}
-
-+ (NSString *)formattedCacheSize {
-    return [NSByteCountFormatter stringFromByteCount:(long long)[self cacheSizeBytes]
-                                          countStyle:NSByteCountFormatterCountStyleFile];
 }
 
 + (NSLocale *)spk_activeFormattingLocale {
@@ -1714,8 +1798,10 @@ static NSDate *SPKScanObjectForPostedDate(id target, NSInteger depth) {
 + (void)evaluateAutomaticCacheClearIfNeeded {
     if (![self shouldAutomaticallyClearCacheNow])
         return;
-    SPKLog(@"General", @"[Sparkle] Automatically clearing cache...");
-    [self cleanCache];
+    dispatch_async(SPKCacheWorkQueue(), ^{
+        SPKLog(@"General", @"[Sparkle] Automatically clearing cache...");
+        [SPKUtils cleanCache];
+    });
 }
 
 // MARK: Display View Controllers
@@ -1895,7 +1981,20 @@ static NSDate *SPKScanObjectForPostedDate(id target, NSInteger depth) {
 + (BOOL)openURL:(NSURL *)url {
     if (!url)
         return NO;
-    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    UIApplication *application = [UIApplication sharedApplication];
+    // canOpenURL: answers NO for any scheme the host app has not declared in
+    // LSApplicationQueriesSchemes even when openURL: would still succeed, so it
+    // is only a safe pre-check for web URLs. Custom schemes go straight through
+    // and report their real outcome via the completion handler.
+    NSString *scheme = url.scheme.lowercaseString;
+    BOOL isWebURL = [scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"];
+    if (isWebURL && ![application canOpenURL:url]) {
+        SPKLog(@"General", @"External URL rejected by UIApplication host=%@", url.host ?: @"(none)");
+        return NO;
+    }
+    [application openURL:url options:@{} completionHandler:^(BOOL success) {
+        SPKLog(@"General", @"External URL handoff %@ host=%@", success ? @"accepted" : @"failed", url.host ?: @"(none)");
+    }];
     return YES;
 }
 
@@ -2615,6 +2714,62 @@ static void SPKSetResolvedPKForUsername(NSString *username, NSString *pk) {
         return nil;
 
     return [SPKUtils getVideoUrl:video];
+}
+
+// MARK: Scroll Views
++ (void)updateScrollingForFittedContent:(UIScrollView *)scrollView {
+    if (![scrollView isKindOfClass:[UIScrollView class]])
+        return;
+
+    CGFloat viewportHeight = CGRectGetHeight(scrollView.bounds);
+    if (viewportHeight <= 0.0)
+        return;
+
+    UIEdgeInsets insets = scrollView.adjustedContentInset;
+    // A scroll view laid out by its content layout guide reports the old content
+    // size until its own layout pass runs, which can be after the caller's. A
+    // stale zero must not be read as "everything fits".
+    if (scrollView.contentSize.height <= 0.0)
+        return;
+
+    // The insets are part of the scrollable extent: a list that fits the sheet
+    // but not the bar above it still has somewhere to go.
+    CGFloat contentHeight = scrollView.contentSize.height + insets.top + insets.bottom;
+    // A point of slack keeps a content size that lands on the viewport height
+    // by a rounding error from arming the bounce.
+    BOOL overflows = contentHeight > viewportHeight + 1.0;
+
+    if (scrollView.isDragging || scrollView.isDecelerating)
+        return;
+
+    if (!overflows && scrollView.contentOffset.y != -insets.top) {
+        [scrollView setContentOffset:CGPointMake(scrollView.contentOffset.x, -insets.top) animated:NO];
+    }
+
+    // Only the bounce is switched, never `scrollEnabled`. A scroll view whose
+    // content fits and cannot bounce is already immovable, and one that stays
+    // enabled keeps its pan recognizer in the gesture arbitration: a disabled
+    // one hands the first drag to the sheet, which answers by stretching, and
+    // the scroll the drag asked for only lands on the second try.
+    scrollView.bounces = overflows;
+    scrollView.alwaysBounceVertical = overflows;
+}
+
++ (CGFloat)sheetHeightFittingContentOfScrollView:(UIScrollView *)scrollView {
+    if (![scrollView isKindOfClass:[UIScrollView class]])
+        return 0.0;
+
+    CGFloat contentHeight = scrollView.contentSize.height;
+    if (contentHeight <= 0.0)
+        return 0.0;
+
+    // A custom detent resolves to a height *within* the sheet's safe area: the
+    // presentation adds the bottom inset back on its own. The adjusted inset
+    // carries that same bottom inset, so taking it out again leaves the bar
+    // above the content and any inset of the caller's own, and nothing else.
+    UIEdgeInsets insets = scrollView.adjustedContentInset;
+    CGFloat height = contentHeight + insets.top + insets.bottom - scrollView.safeAreaInsets.bottom;
+    return ceil(MAX(height, 0.0));
 }
 
 // MARK: View Controller Helpers

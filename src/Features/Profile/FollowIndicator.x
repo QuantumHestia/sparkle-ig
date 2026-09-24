@@ -137,6 +137,44 @@ static NSString *SPKFollowBadgeSpec(BOOL followsYou) {
                                       SPKFollowIndicatorColorful() ? 1 : 0];
 }
 
+static void SPKCollectStatLabels(UIView *view, UIView *badge, NSMutableArray<UILabel *> *labels) {
+    for (UIView *subview in view.subviews) {
+        if (subview == badge || subview.hidden)
+            continue;
+        if ([subview isKindOfClass:[UILabel class]])
+            [labels addObject:(UILabel *)subview];
+        else
+            SPKCollectStatLabels(subview, badge, labels);
+    }
+}
+
+// Keeps the badge clear of the stat labels. The container's bottom edge alone is
+// not a reliable reference: when the profile name wraps, IG tightens the space
+// under the counts and a fixed bottom inset lands the badge on top of them. Each
+// visible label gets a required "badge below label" constraint; constraints on
+// labels that leave the hierarchy are dropped by UIKit automatically.
+static void SPKAnchorFollowBadgeBelowStats(UIView *badge, UIView *container) {
+    static const void *kAnchoredLabelsKey = &kAnchoredLabelsKey;
+    NSHashTable *anchored = objc_getAssociatedObject(badge, kAnchoredLabelsKey);
+    if (!anchored) {
+        anchored = [NSHashTable weakObjectsHashTable];
+        objc_setAssociatedObject(badge, kAnchoredLabelsKey, anchored, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+
+    NSMutableArray<UILabel *> *labels = [NSMutableArray array];
+    SPKCollectStatLabels(container, badge, labels);
+
+    NSMutableArray<NSLayoutConstraint *> *constraints = [NSMutableArray array];
+    for (UILabel *label in labels) {
+        if ([anchored containsObject:label])
+            continue;
+        [anchored addObject:label];
+        [constraints addObject:[badge.topAnchor constraintGreaterThanOrEqualToAnchor:label.bottomAnchor constant:4.0]];
+    }
+    if (constraints.count > 0)
+        [NSLayoutConstraint activateConstraints:constraints];
+}
+
 static void SPKRenderFollowBadge(UIViewController *controller, UIView *container) {
     if (!container)
         return;
@@ -155,8 +193,11 @@ static void SPKRenderFollowBadge(UIViewController *controller, UIView *container
     NSString *spec = SPKFollowBadgeSpec(followsYou);
     if (existing) {
         NSString *existingSpec = objc_getAssociatedObject(existing, kSPKFollowBadgeSpecAssocKey);
-        if ([existingSpec isEqualToString:spec])
-            return; // Identical badge already installed; its constraints keep it placed.
+        if ([existingSpec isEqualToString:spec]) {
+            // Identical badge already installed; only pick up stat labels IG rebuilt.
+            SPKAnchorFollowBadgeBelowStats(existing, container);
+            return;
+        }
         [existing removeFromSuperview];
     }
 
@@ -189,11 +230,15 @@ static void SPKRenderFollowBadge(UIViewController *controller, UIView *container
     objc_setAssociatedObject(badge, kSPKFollowBadgeSpecAssocKey, spec, OBJC_ASSOCIATION_COPY_NONATOMIC);
 
     [container addSubview:badge];
-    // Small bottom margin so the badge doesn't sit flush against the edge.
+    // Small bottom margin so the badge doesn't sit flush against the edge. It is
+    // only a preference: the stat-label constraints win when space is tight.
+    NSLayoutConstraint *bottom = [badge.bottomAnchor constraintEqualToAnchor:container.bottomAnchor constant:-8.0];
+    bottom.priority = UILayoutPriorityDefaultHigh;
     [NSLayoutConstraint activateConstraints:@[
         [badge.leadingAnchor constraintEqualToAnchor:container.leadingAnchor],
-        [badge.bottomAnchor constraintEqualToAnchor:container.bottomAnchor constant:-8.0]
+        bottom
     ]];
+    SPKAnchorFollowBadgeBelowStats(badge, container);
 }
 
 // Ask the controller's last-known stat container to re-render, e.g. after an

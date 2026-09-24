@@ -31,6 +31,8 @@
 #import "../UI/SPKChrome.h"
 #import "../UI/SPKIGAlertPresenter.h"
 #import "../UI/SPKNotificationCenter.h"
+#import "../../Features/Instants/InstantsAdvance.h"
+#import "../../Features/Instants/InstantsManualSeen.h"
 #import "ActionButtonCore.h"
 #import "SPKActionButtonConfiguration.h"
 #import "SPKActionDescriptor.h"
@@ -65,6 +67,11 @@ NSString *const kSPKActionToggleStorySeenUserRule = @"toggle_story_seen_user_rul
 NSString *const kSPKActionToggleStoryAutoSaveUserRule = @"toggle_story_auto_save_user_rule";
 NSString *const kSPKActionToggleDirectAutoSaveThreadRule = @"toggle_direct_auto_save_thread_rule";
 NSString *const kSPKActionToggleInstantsAutoSaveUserRule = @"toggle_instants_auto_save_user_rule";
+NSString *const kSPKActionInstantsMarkSeen = @"instants_mark_seen";
+
+/// Defined further down, next to the other Instants executors, but needed by the
+/// action-availability switch above it.
+static NSString *SPKInstantsMarkSeenMediaPKForContext(SPKActionButtonContext *context);
 NSString *const kSPKActionToggleProfileStorySeenUserRule = @"toggle_profile_story_seen_user_rule";
 NSString *const kSPKActionToggleProfileMessagesSeenUserRule = @"toggle_profile_messages_seen_user_rule";
 NSString *const kSPKActionStoryMentionsSheet = @"story_mentions_sheet";
@@ -85,7 +92,6 @@ static const void *kSPKActionButtonIconHeightConstraintAssocKey = &kSPKActionBut
 static const void *kSPKActionButtonMenuSignatureAssocKey = &kSPKActionButtonMenuSignatureAssocKey;
 static const void *kSPKActionButtonLastMenuActionAssocKey = &kSPKActionButtonLastMenuActionAssocKey;
 static const void *kSPKActionButtonConfigurationObserverAssocKey = &kSPKActionButtonConfigurationObserverAssocKey;
-static const void *kSPKActionButtonMenuHiddenAlphaAssocKey = &kSPKActionButtonMenuHiddenAlphaAssocKey;
 static NSDictionary<NSString *, NSString *> *SPKPendingRepostFeedback = nil;
 
 @interface SPKResolvedMediaEntry : NSObject
@@ -123,45 +129,6 @@ static BOOL SPKActionMenuButtonIsReels(UIButton *button) {
     return context.source == SPKActionButtonSourceReels;
 }
 
-static void SPKStabilizeReelsActionButtonIcon(UIButton *button) {
-    if (!SPKActionMenuButtonIsReels(button) || ![button isKindOfClass:[SPKChromeButton class]])
-        return;
-
-    SPKChromeButton *chromeButton = (SPKChromeButton *)button;
-    // Do not reset the tint here. ReelsActionButton.xm mirrors Instagram's
-    // native UFI tint (including HDR/EDR) and this helper runs during every
-    // iOS 26 context-menu preview/open/close transition.
-    chromeButton.iconView.hidden = NO;
-    chromeButton.iconView.alpha = 1.0;
-    chromeButton.iconView.layer.opacity = 1.0;
-    chromeButton.iconView.layer.hidden = NO;
-    [chromeButton.iconView.superview bringSubviewToFront:chromeButton.iconView];
-    [chromeButton setNeedsLayout];
-    [chromeButton layoutIfNeeded];
-}
-
-static void SPKSetReelsActionButtonMenuHidden(UIButton *button, BOOL hidden) {
-    if (!SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0"))
-        return;
-    if (!SPKActionMenuButtonIsReels(button))
-        return;
-
-    if (hidden) {
-        if (!objc_getAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey)) {
-            objc_setAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey, @(button.alpha), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        }
-        button.alpha = 0.0;
-        button.layer.opacity = 0.0;
-        return;
-    }
-
-    NSNumber *storedAlpha = objc_getAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey);
-    CGFloat alpha = storedAlpha ? storedAlpha.doubleValue : 1.0;
-    button.alpha = alpha;
-    button.layer.opacity = alpha;
-    objc_setAssociatedObject(button, kSPKActionButtonMenuHiddenAlphaAssocKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
 static BOOL SPKActionMenuButtonIsStories(UIButton *button) {
     SPKActionButtonContext *context = SPKActionButtonContextFromButton(button);
     return context.source == SPKActionButtonSourceStories;
@@ -177,46 +144,30 @@ static void SPKReapplyStoriesActionButtonDynamicRange(UIButton *button) {
     SPKStoryApplyDynamicRangeToButton(button);
 }
 
-static UITargetedPreview *SPKReelsActionButtonMenuPreview(UIButton *button) {
-    if (!SPKActionMenuButtonIsReels(button) || ![button isKindOfClass:[SPKChromeButton class]])
-        return nil;
+static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
+    if (!SPKActionMenuButtonIsReels(button) || CGRectIsEmpty(button.bounds))
+        return [[UITargetedPreview alloc] initWithView:button];
 
-    SPKStabilizeReelsActionButtonIcon(button);
-
-    CGRect bounds = button.bounds;
-    if (CGRectIsEmpty(bounds)) {
-        CGFloat side = 44.0;
-        bounds = CGRectMake(0.0, 0.0, side, side);
-    }
-
-    UIView *previewView = [[UIView alloc] initWithFrame:bounds];
-    previewView.userInteractionEnabled = NO;
-    previewView.backgroundColor = UIColor.clearColor;
-    previewView.clipsToBounds = NO;
-
+    // Reels floats the bare glyph over the video. The default preview parameters
+    // paint an SDR platter behind the preview, which read as a dim square around
+    // the EDR glyph on HDR reels during the highlight and the menu morph.
     UIPreviewParameters *parameters = [[UIPreviewParameters alloc] init];
     parameters.backgroundColor = UIColor.clearColor;
-    parameters.visiblePath = [UIBezierPath bezierPathWithOvalInRect:bounds];
-
-    if (button.superview) {
-        CGPoint center = [button.superview convertPoint:CGPointMake(CGRectGetMidX(button.bounds), CGRectGetMidY(button.bounds)) fromView:button];
-        UIPreviewTarget *target = [[UIPreviewTarget alloc] initWithContainer:button.superview center:center];
-        return [[UITargetedPreview alloc] initWithView:previewView parameters:parameters target:target];
-    }
-    return [[UITargetedPreview alloc] initWithView:previewView parameters:parameters];
-}
-
-static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
-    UITargetedPreview *reelsPreview = SPKReelsActionButtonMenuPreview(button);
-    if (reelsPreview)
-        return reelsPreview;
-    return [[UITargetedPreview alloc] initWithView:button];
+    parameters.visiblePath = [UIBezierPath bezierPathWithOvalInRect:button.bounds];
+    return [[UITargetedPreview alloc] initWithView:button parameters:parameters];
 }
 
 @implementation SPKResolvedMediaEntry
 @end
 
 @implementation SPKActionMenuButton
+
+- (void)setAlpha:(CGFloat)alpha {
+    UIView *source = self.spk_alphaSource;
+    if (source)
+        alpha = source.hidden ? 0.0 : source.alpha;
+    [super setAlpha:alpha];
+}
 
 - (UITargetedPreview *)contextMenuInteraction:(UIContextMenuInteraction *)interaction
     previewForHighlightingMenuWithConfiguration:(UIContextMenuConfiguration *)configuration {
@@ -253,13 +204,10 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     if (!context)
         return;
 
-    SPKStabilizeReelsActionButtonIcon(self);
     SPKReapplyStoriesActionButtonDynamicRange(self);
     [animator addAnimations:^{
-        SPKStabilizeReelsActionButtonIcon(self);
         SPKReapplyStoriesActionButtonDynamicRange(self);
     }];
-    SPKSetReelsActionButtonMenuHidden(self, YES);
 
     objc_setAssociatedObject(self, kSPKActionButtonLastMenuActionAssocKey, nil, OBJC_ASSOCIATION_COPY_NONATOMIC);
     if (context.source == SPKActionButtonSourceStories) {
@@ -276,19 +224,15 @@ static UITargetedPreview *SPKActionMenuButtonMenuPreview(UIButton *button) {
     (void)interaction;
     (void)configuration;
 
-    SPKStabilizeReelsActionButtonIcon(self);
     SPKReapplyStoriesActionButtonDynamicRange(self);
     [animator addAnimations:^{
-        SPKStabilizeReelsActionButtonIcon(self);
         SPKReapplyStoriesActionButtonDynamicRange(self);
     }];
-    SPKSetReelsActionButtonMenuHidden(self, NO);
 
     [animator addCompletion:^{
         SPKActionMenuButton *strongSelf = self;
         if (!strongSelf)
             return;
-        SPKStabilizeReelsActionButtonIcon(strongSelf);
         SPKReapplyStoriesActionButtonDynamicRange(strongSelf);
 
         SPKActionButtonContext *context = SPKActionButtonContextFromButton(strongSelf);
@@ -413,7 +357,6 @@ static NSString *SPKDownloadURLNounForActionSource(SPKActionButtonSource source)
     case SPKActionButtonSourceReels:
         return SPKL(@"COMMON_MEDIA_TYPE_REEL");
     case SPKActionButtonSourceFeed:
-    case SPKActionButtonSourceProfile:
         return SPKL(@"MESSAGES_DELETED_MESSAGES_MODELS_POST_TEXT");
     case SPKActionButtonSourceInstants:
         return SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_INSTANT_TEXT");
@@ -432,7 +375,6 @@ static NSString *SPKCopiedDownloadURLTitleForSource(SPKActionButtonSource source
     case SPKActionButtonSourceStories:
     case SPKActionButtonSourceReels:
     case SPKActionButtonSourceFeed:
-    case SPKActionButtonSourceProfile:
     case SPKActionButtonSourceInstants:
         return [NSString stringWithFormat:SPKL(@"ACTION_BUTTON_SOURCE_DOWNLOAD_URL_COPIED_FORMAT"), SPKDownloadURLNounForActionSource(source), urlWord];
     default:
@@ -1063,7 +1005,7 @@ static NSString *SPKActionButtonDisplayTitleForContext(NSString *identifier,
         id user = SPKResolveMediaForContext(context);
         NSString *pk = user ? [SPKUtils pkFromIGUser:user] : nil;
         if (pk.length > 0) {
-            BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+            BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
             BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
             BOOL applies = manualSeenEnabled ? !listed : listed;
             return applies ? SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_START_MARKING_STORIES_SEEN_TEXT") : SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_STOP_MARKING_STORIES_SEEN_TEXT");
@@ -1155,7 +1097,7 @@ static UIImage *SPKIconForActionIdentifier(NSString *identifier, SPKActionButton
         NSString *pk = user ? [SPKUtils pkFromIGUser:user] : nil;
         BOOL applies = YES;
         if (pk.length > 0) {
-            BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+            BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
             BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
             applies = manualSeenEnabled ? !listed : listed;
         }
@@ -2179,15 +2121,17 @@ static NSArray<SPKDownloadItemRequest *> *SPKBulkDownloadItemsFromEntries(NSArra
     return items;
 }
 
-static NSArray<NSString *> *SPKBulkDownloadLinksFromEntries(NSArray<SPKResolvedMediaEntry *> *entries, id media) {
+static NSArray<NSString *> *SPKBulkDownloadLinksFromEntries(NSArray<SPKResolvedMediaEntry *> *entries, id media, NSString *photoQualityOverride) {
     NSMutableOrderedSet<NSString *> *links = [NSMutableOrderedSet orderedSet];
     for (SPKResolvedMediaEntry *entry in entries) {
         id metadataObject = entry.metadataObject ?: entry.mediaObject ?
                                                                       : media;
-        NSURL *bestURL = SPKBestDownloadURLForMediaObject(metadataObject) ?: entry.videoURL ?
-                                                                                            : entry.photoURL;
-        if (bestURL.absoluteString.length > 0) {
-            [links addObject:bestURL.absoluteString];
+        NSURL *linkURL = [SPKMediaQualityManager downloadLinkURLForMediaObject:metadataObject
+                                                                      photoURL:entry.photoURL
+                                                                      videoURL:entry.videoURL
+                                                          photoQualityOverride:photoQualityOverride];
+        if (linkURL.absoluteString.length > 0) {
+            [links addObject:linkURL.absoluteString];
         }
     }
     return links.array;
@@ -2347,6 +2291,12 @@ static BOOL SPKIsActionVisible(SPKActionButtonContext *context,
         return context.source == SPKActionButtonSourceInstants &&
                [SPKUtils getBoolPref:@"instants_auto_save"] &&
                SPKInstantsAutoSaveActionTitleForUsername(SPKInstantsAutoSaveUsernameForContext(context)).length > 0;
+    }
+    if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
+        // Not a menu action. It backs the viewer's own eye button, which has no need of a
+        // menu row beside it, and the Instants menu is built once per button lifecycle so a
+        // row there could never track the snap on screen anyway.
+        return NO;
     }
     if ([identifier isEqualToString:kSPKActionToggleProfileStorySeenUserRule]) {
         return context.source == SPKActionButtonSourceProfile &&
@@ -2645,8 +2595,20 @@ static void SPKPerformBatchDownloadWithQualityPrompt(NSArray<SPKResolvedMediaEnt
     if (selectedEntries.count == 0)
         return;
 
+    BOOL copiesLinks = [identifier isEqualToString:kSPKActionDownloadAllLinks];
     void (^performBatchDownloadWithQuality)(NSString *) = ^(NSString *qualityOverride) {
         void (^startDownload)(void) = ^{
+            if (copiesLinks) {
+                [[SPKNotificationCenter shared] dismissTransientProgressPill];
+                NSArray<NSString *> *links = SPKBulkDownloadLinksFromEntries(selectedEntries, media, qualityOverride);
+                if (links.count == 0) {
+                    SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINKS_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
+                    return;
+                }
+                [UIPasteboard generalPasteboard].string = [links componentsJoinedByString:@"\n"];
+                SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(source, links.count > 1), links.count > 1 ? SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)links.count) : nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+                return;
+            }
             NSArray<SPKDownloadItemRequest *> *bulkItems = SPKBulkDownloadItemsFromEntries(selectedEntries, source, username, media, qualityOverride, destination);
             [SPKDownloadHelpers performBulkDownloadIdentifier:identifier
                                                          items:bulkItems
@@ -2656,6 +2618,9 @@ static void SPKPerformBatchDownloadWithQualityPrompt(NSArray<SPKResolvedMediaEnt
         };
 
         NSString *effectiveQuality = qualityOverride.length > 0 ? qualityOverride : [SPKUtils getStringPref:@"downloads_photo_quality"];
+        // Without a presenter to ask, a link resolves Always Ask to Max.
+        if (copiesLinks && [effectiveQuality isEqualToString:@"always_ask"])
+            effectiveQuality = @"max";
         if ([effectiveQuality isEqualToString:@"max"] && [SPKUtils getBoolPref:@"downloads_fetch_4k_images"]) {
             NSString *topPK = SPKMediaPKForMediaObject(media);
             if (topPK.length > 0 && ![SPKMediaQualityManager hasWebPhotoCandidatesFetchedForPK:topPK]) {
@@ -2716,17 +2681,6 @@ static BOOL SPKExecuteBulkChildAction(NSString *identifier,
     NSArray<SPKResolvedMediaEntry *> *downloadableEntries = SPKDownloadableEntries(entries);
     if (downloadableEntries.count < 2) {
         SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_BULK_MEDIA_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-        return YES;
-    }
-
-    if ([identifier isEqualToString:kSPKActionDownloadAllLinks]) {
-        NSArray<NSString *> *bulkLinks = SPKBulkDownloadLinksFromEntries(downloadableEntries, media);
-        if (bulkLinks.count == 0) {
-            SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINKS_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-            return YES;
-        }
-        [UIPasteboard generalPasteboard].string = [bulkLinks componentsJoinedByString:@"\n"];
-        SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(context.source, YES), SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)bulkLinks.count), @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
         return YES;
     }
 
@@ -2905,19 +2859,26 @@ static BOOL SPKExecuteCommonAction(NSString *identifier,
     }
 
     if ([identifier isEqualToString:kSPKActionCopyDownloadLink]) {
-        NSURL *bestURL = currentEntry.videoURL ?: currentEntry.photoURL;
-        if (!bestURL) {
-            id mediaForCopy = currentEntry.metadataObject ?: currentEntry.mediaObject ?
-                                                                                      : media;
-            bestURL = SPKBestDownloadURLForMediaObject(mediaForCopy);
-        }
-        if (!bestURL) {
-            SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINK_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-            return YES;
-        }
-
-        [UIPasteboard generalPasteboard].string = bestURL.absoluteString ?: @"";
-        SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(context.source, NO), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+        id mediaForCopy = currentEntry.metadataObject ?: currentEntry.mediaObject ?
+                                                                                  : media;
+        // Copying never adopts the "Fetching 4K candidates" pill the way a download
+        // does, so it has to clear it or the pill spins forever.
+        [[SPKNotificationCenter shared] dismissTransientProgressPill];
+        SPKActionButtonSource source = context.source;
+        [SPKMediaQualityManager resolveDownloadLinkForMediaObject:mediaForCopy
+                                                         photoURL:currentEntry.photoURL
+                                                         videoURL:currentEntry.videoURL
+                                                        presenter:SPKActionContextPresenter(context)
+                                                       sourceView:SPKActionContextAnchorView(context)
+                                                       completion:^(NSURL *url) {
+                                                           NSURL *bestURL = url ?: SPKBestDownloadURLForMediaObject(mediaForCopy);
+                                                           if (!bestURL) {
+                                                               SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINK_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
+                                                               return;
+                                                           }
+                                                           [UIPasteboard generalPasteboard].string = bestURL.absoluteString ?: @"";
+                                                           SPKNotify(identifier, SPKCopiedDownloadURLTitleForSource(source, NO), nil, @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
+                                                       }];
         return YES;
     }
 
@@ -3101,6 +3062,37 @@ static BOOL SPKExecuteToggleDirectAutoSaveThreadRuleAction(SPKActionButtonContex
     return YES;
 }
 
+/// The media PK of the Instant currently on screen, read straight off the resolved snap.
+/// Deliberately a PK read and nothing more: this runs during menu construction.
+static NSString *SPKInstantsMarkSeenMediaPKForContext(SPKActionButtonContext *context) {
+    id media = context ? SPKResolveMediaForContext(context) : nil;
+    if (!media)
+        return nil;
+    NSString *pk = SPKStringFromValue(SPKObjectForSelector(media, @"sourceMediaPK"));
+    if (pk.length == 0)
+        pk = SPKStringFromValue(SPKObjectForSelector(media, @"pk"));
+    return pk;
+}
+
+/// Releases one held Instant: stops keeping it unseen and marks it seen for real.
+static BOOL SPKExecuteInstantsMarkSeenAction(SPKActionButtonContext *context) {
+    NSString *pk = SPKInstantsMarkSeenMediaPKForContext(context);
+    if (pk.length == 0) {
+        SPKNotify(kSPKNotificationInstantsMarkSeen,
+                  SPKL(@"INSTANTS_MARK_SEEN_FAILED_TOAST"), nil, @"error_filled",
+                  SPKNotificationToneError);
+        return YES;
+    }
+    SPKInstantsManualSeenMarkMediaPK(pk);
+    SPKNotify(kSPKNotificationInstantsMarkSeen,
+              SPKL(@"INSTANTS_MARK_SEEN_DONE_TOAST"), nil, @"circle_check_filled",
+              SPKNotificationToneSuccess);
+    // The release above is written synchronously, so the viewer can move on straight away.
+    if ([SPKUtils getBoolPref:@"instants_advance_on_manual_seen"])
+        SPKInstantsAdvanceViewer(context.view);
+    return YES;
+}
+
 static BOOL SPKExecuteToggleInstantsAutoSaveUserRuleAction(SPKActionButtonContext *context) {
     NSString *username = SPKInstantsAutoSaveUsernameForContext(context);
     NSString *title = SPKInstantsAutoSaveConfirmationTitleForUsername(username);
@@ -3178,7 +3170,7 @@ static BOOL SPKExecuteToggleProfileStorySeenUserRuleAction(SPKActionButtonContex
         return YES;
     }
 
-    BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+    BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
     BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
     BOOL applies = manualSeenEnabled ? !listed : listed;
 
@@ -3314,6 +3306,9 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
     if ([identifier isEqualToString:kSPKActionToggleInstantsAutoSaveUserRule]) {
         return SPKExecuteToggleInstantsAutoSaveUserRuleAction(context);
     }
+    if ([identifier isEqualToString:kSPKActionInstantsMarkSeen]) {
+        return SPKExecuteInstantsMarkSeenAction(context);
+    }
     if ([identifier isEqualToString:kSPKActionToggleStoryAutoSaveUserRule]) {
         return SPKExecuteToggleStoryAutoSaveUserRuleAction(context);
     }
@@ -3349,7 +3344,10 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
     BOOL isVideo = [SPKMediaQualityManager mediaObjectIsVideo:media];
     NSString *photoQuality = [SPKUtils getStringPref:@"downloads_photo_quality"] ?: @"high";
     BOOL isBulkAction = SPKIsBulkChildActionIdentifier(identifier);
-    BOOL shouldFetch4K = [SPKUtils getBoolPref:@"downloads_fetch_4k_images"] && 
+    // The profile button acts on an IGUser: its pk is a user id, which the web media
+    // endpoint can't resolve, and a profile picture has no 4K candidates anyway.
+    BOOL shouldFetch4K = [SPKUtils getBoolPref:@"downloads_fetch_4k_images"] &&
+                         context.source != SPKActionButtonSourceProfile &&
                          !isVideo && 
                          ([photoQuality isEqualToString:@"max"] || ([photoQuality isEqualToString:@"always_ask"] && !isBulkAction));
 
@@ -3385,6 +3383,7 @@ BOOL SPKExecuteActionIdentifier(NSString *identifier, SPKActionButtonContext *co
         }
     }
     if (entries.count == 0) {
+        [[SPKNotificationCenter shared] dismissTransientProgressPill];
         SPKNotify(identifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_MEDIA_NOT_FOUND_TEXT"), nil, @"error_filled", SPKNotificationToneError);
         return NO;
     }
@@ -3504,7 +3503,10 @@ void SPKApplyButtonStyle(UIButton *button, SPKActionButtonSource source) {
             button.layer.shadowRadius = 1.8;
             button.layer.shadowOffset = CGSizeMake(0.0, 1.0);
         }
-    } else if (source == SPKActionButtonSourceStories || source == SPKActionButtonSourceDirect || source == SPKActionButtonSourceInstants) {
+    } else if (source == SPKActionButtonSourceStories || source == SPKActionButtonSourceDirect) {
+        // Instants is deliberately absent: its viewer draws on a fully black background, so
+        // a drop shadow separates the glyph from nothing and only muddies it. The reset at
+        // the top of this function is the Instants style.
         if (isChrome) {
             SPKChromeButton *chromeButton = (SPKChromeButton *)button;
             chromeButton.iconView.layer.shadowColor = [UIColor blackColor].CGColor;
@@ -3617,16 +3619,6 @@ static NSArray<UIMenuElement *> *SPKBuildBulkMenuChildren(SPKActionButtonConfigu
                                                                                                                     NSArray<SPKResolvedMediaEntry *> *selectedEntries = [tapBulkEntries objectsAtIndexes:selectedIndexes];
                                                                                                                     if (selectedEntries.count == 0)
                                                                                                                         return;
-                                                                                                                    if ([destinationIdentifier isEqualToString:kSPKActionDownloadAllLinks]) {
-                                                                                                                        NSArray<NSString *> *links = SPKBulkDownloadLinksFromEntries(selectedEntries, tapBulkMedia);
-                                                                                                                        if (links.count == 0) {
-                                                                                                                            SPKNotify(destinationIdentifier, SPKL(@"ACTION_BUTTON_ACTION_BUTTON_CORE_NO_LINKS_AVAILABLE_TEXT"), nil, @"error_filled", SPKNotificationToneError);
-                                                                                                                            return;
-                                                                                                                        }
-                                                                                                                        [UIPasteboard generalPasteboard].string = [links componentsJoinedByString:@"\n"];
-                                                                                                                        SPKNotify(destinationIdentifier, SPKCopiedDownloadURLTitleForSource(context.source, YES), SPKLP(@"COMMON_ITEM_COUNT", (NSInteger)links.count), @"copy_filled", SPKNotificationToneForIconResource(@"copy_filled"));
-                                                                                                                        return;
-                                                                                                                    }
                                                                                                                     SPKDownloadDestination dest = [destinationIdentifier isEqualToString:kSPKActionDownloadAllGallery] ? SPKDownloadDestinationGallery : SPKDownloadDestinationPhotos;
                                                                                                                     UIViewController *presenter = SPKActionContextPresenter(context);
                                                                                                                     UIView *anchorView = SPKActionContextAnchorView(context);
@@ -3655,8 +3647,8 @@ static NSArray<UIMenuElement *> *SPKBuildBulkMenuChildren(SPKActionButtonConfigu
 // open time (via a UIDeferredMenuElement) — this is what makes a mixed carousel
 // track the CURRENT slide: video-only actions (Trim, View Thumbnail, audio)
 // reflect the visible item instead of whatever slide 0 was when the button was
-// first configured. Non-feed surfaces call it once (their menus are built
-// eagerly, as before).
+// first configured. Instants does the same for the snap on screen. Other
+// surfaces call it once (their menus are built eagerly, as before).
 static NSArray<UIMenuElement *> *SPKBuildActionMenuElements(SPKActionButtonContext *context,
                                                             SPKActionButtonConfiguration *configuration,
                                                             __weak UIButton *weakButton) {
@@ -3867,9 +3859,15 @@ void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context)
                                                                                             topicTitle:context.settingsTitle ?: SPKActionButtonTopicTitleForSource(context.source)
                                                                                       supportedActions:context.supportedActions ?: SPKActionButtonSupportedActionsForSource(context.source)
                                                                                        defaultSections:SPKActionButtonDefaultSectionsForSource(context.source)];
-    id bulkMedia = SPKResolveBulkMediaForContext(context);
-    NSArray<SPKResolvedMediaEntry *> *bulkEntries = SPKDownloadableEntries(SPKEntriesFromMedia(bulkMedia));
-    NSString *menuSignature = SPKActionButtonMenuSignature(context, configuration, visibleActions, defaultIdentifier, bulkEntries.count);
+    // Instants builds its menu contents when it opens (below), so the bulk count is read there
+    // instead. Resolving every snap's URLs here ran inside the header's layout pass.
+    BOOL defersMenu = context.source == SPKActionButtonSourceFeed || context.source == SPKActionButtonSourceInstants;
+    NSUInteger bulkEntryCount = 0;
+    if (context.source != SPKActionButtonSourceInstants) {
+        id bulkMedia = SPKResolveBulkMediaForContext(context);
+        bulkEntryCount = SPKDownloadableEntries(SPKEntriesFromMedia(bulkMedia)).count;
+    }
+    NSString *menuSignature = SPKActionButtonMenuSignature(context, configuration, visibleActions, defaultIdentifier, bulkEntryCount);
     NSString *existingSignature = objc_getAssociatedObject(button, kSPKActionButtonMenuSignatureAssocKey);
     if ([existingSignature isEqualToString:menuSignature] && button.menu != nil) {
         button.showsMenuAsPrimaryAction = shouldOpenMenuOnTap;
@@ -3917,10 +3915,11 @@ void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context)
         objc_setAssociatedObject(button, kSPKActionButtonTapActionAssocKey, newTapAction, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 
-    // Feed items are the only surface with in-line, laterally-swipeable mixed
-    // carousels whose current slide changes WITHOUT the bar re-laying-out, so its
-    // menu is resolved lazily at open time (video-only actions track the visible
-    // slide). Other surfaces build eagerly — same behavior as before.
+    // Feed items have in-line, laterally-swipeable mixed carousels whose current slide
+    // changes WITHOUT the bar re-laying-out, and the Instants button keeps one menu for
+    // the whole viewer session while the snap under it changes. Both resolve their menu
+    // lazily at open time, so video-only actions track what is on screen and the bulk
+    // resolve stays off the layout path. Other surfaces build eagerly.
     UIMenu *fullMenu;
     NSString *menuTitle = @"";
     // Profile pictures have no posted date — the media object is an IGUser. Skip the
@@ -3936,7 +3935,7 @@ void SPKConfigureActionButton(UIButton *button, SPKActionButtonContext *context)
         }
     }
 
-    if (context.source == SPKActionButtonSourceFeed) {
+    if (defersMenu) {
         UIDeferredMenuElement *deferred = [UIDeferredMenuElement elementWithUncachedProvider:^(void (^completion)(NSArray<UIMenuElement *> *)) {
             completion(SPKBuildActionMenuElements(context, configuration, weakButton));
         }];

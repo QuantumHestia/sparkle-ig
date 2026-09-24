@@ -122,6 +122,8 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
 @property (nonatomic, strong) NSString *currentUsername;
 @property (nonatomic, strong) NSMutableDictionary<NSString *, NSDictionary *> *friendshipStatuses;
 @property (nonatomic, weak) UIView *storyOverlayView; // for resuming playback on dismiss
+/// Height of the list as actually laid out, or 0 before the first layout pass.
+@property (nonatomic, assign) CGFloat spk_measuredSheetHeight;
 @end
 
 @implementation SPKStoryMentionsVC
@@ -191,6 +193,23 @@ static const void *kSPKMentionButtonStateKey = &kSPKMentionButtonStateKey;
                                                 [weakSelf.tableView reloadData];
                                             }];
     }
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    // Row count times row height misses the bar and the safe area by a few
+    // points, which leaves the sheet one gesture short of showing its last row.
+    // The laid-out height carries both, so hand it to the resolver.
+    CGFloat measured = [SPKUtils sheetHeightFittingContentOfScrollView:self.tableView];
+    if (measured > 0.0 && fabs(measured - self.spk_measuredSheetHeight) > 0.5) {
+        self.spk_measuredSheetHeight = measured;
+        if (@available(iOS 16.0, *)) {
+            [self.navigationController.sheetPresentationController invalidateDetents];
+        }
+    }
+
+    [SPKUtils updateScrollingForFittedContent:self.tableView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -418,11 +437,16 @@ void SPKPresentStoryMentionsSheet(UIView *overlayView) {
     if (@available(iOS 16.0, *)) {
         CGFloat headerHeight = 56.0;
         CGFloat contentHeight = MAX(1, mentions.count) * kSPKMentionRowHeight;
-        CGFloat totalHeight = headerHeight + contentHeight + 40.0;
+        CGFloat estimatedHeight = headerHeight + contentHeight + 40.0;
+        // The estimate only has to carry the sheet until the list has been laid
+        // out once; from there the measured height is the accurate one.
+        __weak SPKStoryMentionsVC *weakVC = vc;
         UISheetPresentationControllerDetent *customDetent =
             [UISheetPresentationControllerDetent customDetentWithIdentifier:@"custom_fit"
                                                                    resolver:^CGFloat(id<UISheetPresentationControllerDetentResolutionContext> ctx) {
-                                                                       return MIN(totalHeight, ctx.maximumDetentValue * 0.85);
+                                                                       CGFloat measured = weakVC.spk_measuredSheetHeight;
+                                                                       CGFloat height = measured > 0.0 ? measured : estimatedHeight;
+                                                                       return MIN(height, ctx.maximumDetentValue * 0.85);
                                                                    }];
         sheet.detents = @[ customDetent ];
     } else {

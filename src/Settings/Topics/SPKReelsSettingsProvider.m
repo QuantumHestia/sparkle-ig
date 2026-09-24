@@ -3,6 +3,7 @@
 
 #import "../../Features/Reels/HideReelsHeader.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
+#import "../../Utils.h"
 #import "../SPKTopicSettingsSupport.h"
 
 static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
@@ -25,15 +26,35 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                          icon:SPKSettingsIcon(@"play")
                                          menu:SPKReelsTapControlMenu()],
                                SPKL(@"REELS_BEHAVIOR_TAP_CONTROLS_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_TITLE")
-                                           icon:SPKSettingsIcon(@"clock")
-                                    defaultsKey:@"reels_show_scrubber"],
-                               SPKL(@"REELS_BEHAVIOR_SHOW_PROGRESS_SCRUBBER_HELP")),
-            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_REELS_TITLE")
+            ({
+                SPKSetting *playbackControls = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_PLAYBACK_CONTROLS_TITLE")
+                                                                                             icon:SPKSettingsPlaybackIcon()
+                                                                                      defaultsKey:@"reels_playback_controls"],
+                                                                 SPKL(@"REELS_BEHAVIOR_PLAYBACK_CONTROLS_HELP"));
+                // Gates the Keep Speed For row below.
+                playbackControls.reloadsTableOnSwitchChange = YES;
+                playbackControls;
+            }),
+            ({
+                SPKSetting *speedScope = [SPKSetting menuCellWithTitle:SPKL(@"PLAYBACK_PANEL_KEEP_SPEED_TITLE")
+                                                                  icon:SPKSettingsIcon(@"clock")
+                                                                  menu:SPKPlaybackSpeedScopeMenu(@"reels_playback_speed_scope")];
+                speedScope.defaultsKey = @"reels_playback_speed_scope";
+                speedScope.helpText = SPKL(@"PLAYBACK_PANEL_KEEP_SPEED_HELP");
+                speedScope.enabledProvider = ^BOOL {
+                    return [SPKUtils getBoolPref:@"reels_playback_controls"];
+                };
+                speedScope;
+            }),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_STOP_LOOPING_TITLE")
+                                           icon:SPKSettingsIcon(@"loop")
+                                    defaultsKey:@"reels_stop_looping"],
+                               SPKL(@"REELS_BEHAVIOR_STOP_LOOPING_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_START_MUTED_TITLE")
                                            icon:SPKSettingsIcon(@"volume_off")
                                     defaultsKey:@"reels_disable_auto_unmute"
                                 requiresRestart:YES],
-                               SPKL(@"REELS_BEHAVIOR_DISABLE_AUTO_UNMUTING_HELP")),
+                               SPKL(@"REELS_BEHAVIOR_START_MUTED_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_BEHAVIOR_DISABLE_REELS_TAB_REFRESH_TITLE")
                                            icon:SPKSettingsIcon(@"arrow_cw")
                                     defaultsKey:@"reels_disable_tab_refresh"],
@@ -84,7 +105,11 @@ static NSString *const kSPKReelsActionButtonEnabledKey = @"reels_action_btn";
                                            icon:SPKSettingsIcon(@"repost")
                                     defaultsKey:@"reels_hide_repost_btn"
                                 requiresRestart:YES],
-                               SPKL(@"REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP"))
+                               SPKL(@"REELS_LAYOUT_HIDE_REPOST_BUTTON_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"REELS_LAYOUT_SHOW_REPOST_DATE_TITLE")
+                                           icon:SPKSettingsIcon(@"calendar")
+                                    defaultsKey:@"reels_show_repost_date"],
+                               SPKL(@"REELS_LAYOUT_SHOW_REPOST_DATE_HELP"))
         ],
                         nil),
         SPKTopicSection(SPKL(@"FEED_METRICS_HEADER"), @[

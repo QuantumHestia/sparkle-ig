@@ -120,6 +120,15 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 @property (nonatomic, strong) NSMutableSet<NSString *> *filterUsernames;
 @property (nonatomic, assign) BOOL selectionMode;
 @property (nonatomic, strong) NSMutableSet<NSString *> *selectedFileIDs;
+// Set while the two-finger multiple-selection drag is in flight. The drag drives
+// selection through the collection view's own selected state, so the tap path
+// has to stop clearing it, and the header chips have to stay put until the
+// fingers lift (removing them mid-drag shifts the rows under them).
+@property (nonatomic, weak, nullable) UIPinchGestureRecognizer *gridDensityPinch;
+@property (nonatomic, weak, nullable) UIGestureRecognizer *multiSelectOneFingerPan;
+@property (nonatomic, assign) BOOL multiSelectDragActive;
+@property (nonatomic, assign) BOOL multiSelectDragOpenedSelection;
+@property (nonatomic, strong, nullable) UISelectionFeedbackGenerator *multiSelectDragFeedback;
 // Signatures of the last-applied nav bar items, tracked separately for the
 // leading and trailing groups. The leading button changes as you browse folders
 // (close ⇄ back), but the trailing group does not — so reassigning trailing on
@@ -290,6 +299,16 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     [self refreshBottomToolbarItems];
     [self.navigationController setToolbarHidden:NO animated:animated];
     [self updateCollectionInsets];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    // UIKit adds its selection recognizers with the interaction rather than at
+    // init, and recomputes their enabled state whenever it revisits the
+    // collection view's selection support, so the one-finger pan is caught here
+    // instead of only once at setup.
+    [self disableOneFingerMultiSelectPan];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -556,6 +575,8 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handleGridPinch:)];
     [_collectionView addGestureRecognizer:pinch];
+    self.gridDensityPinch = pinch;
+    [self updateTwoFingerGestureConfiguration];
 
     [NSLayoutConstraint activateConstraints:@[
         [_collectionView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
@@ -610,6 +631,51 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     [self.collectionView reloadData];
     [self updateEmptyState];
     [self refreshBottomToolbarItems];
+    [self updateTwoFingerGestureConfiguration];
+}
+
+/// List and grid both want the two-finger touches, so hand them to exactly one
+/// owner per mode: the multiple-selection drag in list, the density pinch in grid.
+///
+/// UIKit keeps its own two-finger selection pan disabled unless the collection
+/// view reports that it supports multiple selection, which it answers from
+/// allowsMultipleSelectionDuringEditing (and from allowsMultipleSelection when it
+/// decides whether the sweep may run). Both are off by default, so implementing
+/// the delegate methods alone leaves the gesture permanently disabled. Turning
+/// them on costs nothing here: taps deselect immediately and the drag hands its
+/// result back to selectedFileIDs, so the collection view's own selected state is
+/// only ever borrowed for the length of a sweep.
+- (void)updateTwoFingerGestureConfiguration {
+    BOOL listMode = (self.viewMode == SPKGalleryViewModeList);
+    self.gridDensityPinch.enabled = !listMode;
+    self.collectionView.allowsMultipleSelection = listMode;
+    self.collectionView.allowsMultipleSelectionDuringEditing = listMode;
+    [self disableOneFingerMultiSelectPan];
+}
+
+/// Supporting multiple selection brings in a second selection recognizer beside
+/// the two-finger drag: a one-finger pan that starts a sweep from a swipe across
+/// the list's short axis. That turns an ordinary horizontal swipe into a
+/// selection, including one that begins at the scroll indicator, so only the
+/// two-finger drag is left switched on. If a future iOS drops the recognizer
+/// this finds nothing and the gesture set is whatever that release ships.
+- (void)disableOneFingerMultiSelectPan {
+    if (self.multiSelectOneFingerPan) {
+        self.multiSelectOneFingerPan.enabled = NO;
+        return;
+    }
+
+    Class oneFingerPanClass = NSClassFromString(@"_UIMultiSelectOneFingerPanGesture");
+    if (!oneFingerPanClass) {
+        return;
+    }
+    for (UIGestureRecognizer *recognizer in self.collectionView.gestureRecognizers) {
+        if ([recognizer isKindOfClass:oneFingerPanClass]) {
+            recognizer.enabled = NO;
+            self.multiSelectOneFingerPan = recognizer;
+            break;
+        }
+    }
 }
 
 #pragma mark - Grid Density
@@ -1282,6 +1348,14 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView *)cv didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // During the two-finger drag the collection view owns the selected state and
+    // decides the direction of the sweep, so mirror it instead of toggling, and
+    // leave the item selected so a reversed drag reports a matching deselect.
+    if (self.multiSelectDragActive) {
+        [self applyDragSelection:YES atIndexPath:indexPath];
+        return;
+    }
+
     [cv deselectItemAtIndexPath:indexPath animated:YES];
 
     if ([self isFolderIndexPath:indexPath]) {
@@ -1308,6 +1382,119 @@ typedef NS_ENUM(NSInteger, SPKGalleryViewMode) {
     [SPKFullScreenMediaPlayer showGalleryFiles:allFiles
                                startingAtIndex:idx
                             fromViewController:self];
+}
+
+- (void)collectionView:(UICollectionView *)cv didDeselectItemAtIndexPath:(NSIndexPath *)indexPath {
+    // Only the drag deselects meaningfully. Programmatic deselection does not
+    // reach the delegate, so the tap path never lands here.
+    if (!self.multiSelectDragActive) {
+        return;
+    }
+    [self applyDragSelection:NO atIndexPath:indexPath];
+}
+
+#pragma mark - Two-finger multiple selection
+
+- (BOOL)collectionView:(UICollectionView *)cv
+    shouldBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    // List rows only: the grid already answers a two-finger gesture with the
+    // column-density pinch, and the two would fight over the same touches.
+    if (self.viewMode != SPKGalleryViewModeList) {
+        return NO;
+    }
+    if ([self isFolderIndexPath:indexPath] || ![self galleryFileForCollectionIndexPath:indexPath]) {
+        return NO;
+    }
+
+    // The collection view reads its own selected state to decide whether this
+    // sweep selects or deselects, so publish our set into it before it begins.
+    // Starting on an already-picked row then unpicks along the drag.
+    [self syncCollectionSelectionFromSelectedFiles];
+    return YES;
+}
+
+- (void)collectionView:(UICollectionView *)cv
+    didBeginMultipleSelectionInteractionAtIndexPath:(NSIndexPath *)indexPath {
+    self.multiSelectDragActive = YES;
+    self.multiSelectDragFeedback = [[UISelectionFeedbackGenerator alloc] init];
+    [self.multiSelectDragFeedback prepare];
+
+    // Only a drag that opened selection mode itself is allowed to close it again
+    // when it ends up picking nothing. A drag inside an existing selection stays.
+    self.multiSelectDragOpenedSelection = !self.selectionMode;
+    if (!self.selectionMode) {
+        CGFloat chipHeight =
+            [self showsFolderChips] ? [SPKGalleryFolderChipBar preferredHeight] : 0.0;
+        [self enterSelectionMode];
+
+        // Selection mode retires the chip header, which pulls every row up by its
+        // height while the fingers are still down, so the sweep would carry on
+        // over rows that moved. Scrolling back by the same amount keeps the media
+        // under the fingers exactly where it was.
+        if (chipHeight > 0.0 && ![self showsFolderChips]) {
+            [cv layoutIfNeeded];
+            CGPoint offset = cv.contentOffset;
+            offset.y = MAX(-cv.adjustedContentInset.top, offset.y - chipHeight);
+            cv.contentOffset = offset;
+        }
+    }
+}
+
+- (void)collectionViewDidEndMultipleSelectionInteraction:(UICollectionView *)cv {
+    self.multiSelectDragActive = NO;
+    self.multiSelectDragFeedback = nil;
+
+    // Hand ownership of the selection back to selectedFileIDs, which drives the
+    // badges from here on.
+    for (NSIndexPath *indexPath in [cv.indexPathsForSelectedItems copy]) {
+        [cv deselectItemAtIndexPath:indexPath animated:NO];
+    }
+
+    if (self.multiSelectDragOpenedSelection && self.selectedFileIDs.count == 0) {
+        [self exitSelectionMode];
+    }
+    self.multiSelectDragOpenedSelection = NO;
+}
+
+/// Mirrors one drag-reported item into `selectedFileIDs` and its cell badge.
+- (void)applyDragSelection:(BOOL)selected atIndexPath:(NSIndexPath *)indexPath {
+    SPKGalleryFile *file = [self galleryFileForCollectionIndexPath:indexPath];
+    if (file.identifier.length == 0) {
+        return;
+    }
+    if ([self.selectedFileIDs containsObject:file.identifier] == selected) {
+        return;
+    }
+
+    if (selected) {
+        [self.selectedFileIDs addObject:file.identifier];
+    } else {
+        [self.selectedFileIDs removeObject:file.identifier];
+    }
+
+    [self.multiSelectDragFeedback selectionChanged];
+    [self.multiSelectDragFeedback prepare];
+    [self setupCenteredTitle];
+    [self refreshNavigationItems];
+    [self updateSelectionBadgeForFile:file selected:selected];
+}
+
+/// Publishes `selectedFileIDs` into the collection view's own selected state,
+/// which is otherwise kept empty because taps deselect immediately.
+- (void)syncCollectionSelectionFromSelectedFiles {
+    if (self.selectedFileIDs.count == 0) {
+        return;
+    }
+
+    NSArray<SPKGalleryFile *> *files = [self visibleGalleryFiles];
+    [files enumerateObjectsUsingBlock:^(SPKGalleryFile *file, NSUInteger idx, BOOL *stop) {
+        if (file.identifier.length == 0 || ![self.selectedFileIDs containsObject:file.identifier]) {
+            return;
+        }
+        [self.collectionView selectItemAtIndexPath:[NSIndexPath indexPathForItem:(NSInteger)idx inSection:0]
+                                          animated:NO
+                                    scrollPosition:UICollectionViewScrollPositionNone];
+    }];
 }
 
 - (void)showGalleryOpenFailureMessage:(NSString *)title actionIdentifier:(NSString *)actionIdentifier {

@@ -18,13 +18,19 @@ static inline BOOL SPKShouldBlockStoryAutoAdvance(void) {
         forcedStoryMatches = [mediaPK isEqualToString:SPKForcedStorySeenMediaPK];
     }
 
-    BOOL shouldBlockSeen = SPKStoryManualSeenAppliesToContext(SPKStoryContextFromMedia(arg2));
+    BOOL shouldBlockSeen = !SPKStorySeenReceiptsSessionEnabled() &&
+                           SPKStoryManualSeenAppliesToContext(SPKStoryContextFromMedia(arg2));
     if (shouldBlockSeen && !forcedStoryMatches) {
         SPKLog(@"General", @"[Sparkle] Prevented automatic story seen marking");
         return;
     }
 
     %orig;
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    %orig(animated);
+    SPKStoryEndSeenReceiptsSessionForViewer((UIViewController *)self);
 }
 %end
 
@@ -49,7 +55,7 @@ static inline BOOL SPKShouldBlockStoryAutoAdvance(void) {
 %end
 
 void SPKInstallDisableStorySeenHooksIfNeeded(void) {
-    if (![SPKUtils getBoolPref:@"stories_manual_seen"] &&
+    if (!SPKStoryManualSeenEnabled() &&
         SPKStoryManualSeenUserList(NO).count == 0 &&
         ![SPKUtils getBoolPref:@"stories_stop_auto_advance"]) {
         return;

@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreMedia/CoreMedia.h>
 #import <AVFoundation/AVFoundation.h>
+#import <CoreLocation/CoreLocation.h>
 #include <objc/NSObject.h>
 
 #ifdef __cplusplus
@@ -14,15 +15,21 @@
 - (id)normalizedURL; // method provided by Instagram app
 @end
 
-@interface IGActionableConfirmationToastViewModel : NSObject {
-    NSString *_text_annotatedTitleText;
-    NSString *_text_annotatedSubtitleText;
-}
+@interface IGActionableConfirmationToastViewModel : NSObject
+- (id)identifier;
 @end
 
 @interface IGActionableConfirmationToastPresenter : NSObject
-- (void)showAlertWithViewModel:(id)model isAnimated:(_Bool)animated animationDuration:(double)duration presentationPriority:(long long)priority tapActionBlock:(id)tap presentedHandler:(id)presented dismissedHandler:(id)dismissed;
+- (void)_showAlertWithViewModel:(id)model presentationContext:(id)context isAnimated:(_Bool)animated animationDuration:(double)duration presentationPriority:(long long)priority origin:(unsigned long long)origin toastType:(unsigned long long)type tapActionBlock:(id)tap tapToastBlock:(id)tapToast presentedHandler:(id)presented dismissedHandler:(id)dismissed;
 - (void)hideAlert;
+@end
+
+@interface IGSundialViewerInteractionCoordinator : NSObject
+- (void)presentAudioUnavailableToastFor:(id)media;
+@end
+
+@interface _TtC30IGStorySectionAudioCoordinator30IGStorySectionAudioCoordinator : NSObject
+- (void)showAudioUnavailableToast;
 @end
 
 @interface IGRootViewController : UIViewController
@@ -34,6 +41,12 @@
 
 @interface IGViewController : UIViewController
 - (void)_superPresentViewController:(UIViewController *)viewController animated:(BOOL)animated completion:(id)completion;
+@end
+
+@interface IGDSDefaultPartialModalSheetViewController : UIViewController
+- (void)_didPan:(UIPanGestureRecognizer *)pan; // target of _verticalPanGesture
+- (BOOL)disablePanToClose;
+- (BOOL)disableVerticalPan;
 @end
 
 @interface IGMainFeedAppHeaderController : UIViewController
@@ -76,6 +89,51 @@
 
 @interface IGProfileViewController : UIViewController
 - (instancetype)initWithConfiguration:(id)configuration accountSwitcherPresenter:(nullable id)presenter isMainProfileSurface:(BOOL)isMainProfileSurface;
+- (nullable id)user;
+// TabManager category. Page identifiers are NSNumber profile tab types.
+- (nullable id)dynamicPageViewController:(id)pageController viewControllerForPageWithIdentifier:(id)identifier;
+- (BOOL)dynamicPageViewController:(id)pageController canDisplayPlaceholderViewForPageWithIdentifier:(id)identifier;
+- (void)_tabControlValueChanged:(id)control;
+@end
+
+// Profile tab strip on builds without the Swift tabs plugin (410).
+@interface IGSegmentedTabControl : UIControl
+@property (copy, nonatomic) NSArray *segments;
+@property (nonatomic) long long selectedIndex;
+@property (weak, nonatomic) id delegate;
+@end
+
+@interface IGDynamicPageViewController : UIViewController
+@property (weak, nonatomic) id dataSource;
+@property (readonly, nonatomic) UICollectionView *collectionView;
+- (NSArray *)objectsForListAdapter:(id)listAdapter;
+@end
+
+// Owner collections config for the Saved page (same initializer on 410 and 446+).
+@interface IGSavedMediaCollectionsOwnerDataSourceConfiguration : NSObject
+- (instancetype)initWithUser:(id)user andLauncherSet:(id)launcherSet showOnlyPublicCollections:(BOOL)showOnlyPublicCollections;
+@end
+
+// Instagram's Saved collections page. Still conforms to IGProfileTabViewController.
+// The first initializer is 446+, the second is 410.
+@interface IGSavedMediaCollectionsViewController : IGViewController
+@property (nonatomic, weak) id profileTabDelegate;
+- (instancetype)initWithUserSession:(id)userSession
+            dataSourceConfiguration:(id)configuration
+                preferredEdgeInsets:(nullable id)preferredEdgeInsets
+                 disableFeedPreview:(BOOL)disableFeedPreview
+                               type:(unsigned long long)type;
+- (instancetype)initWithUserSession:(id)userSession
+            dataSourceConfiguration:(id)configuration
+               enableAddPlaceholder:(BOOL)enableAddPlaceholder
+                        entryModule:(nullable id)entryModule
+                preferredEdgeInsets:(nullable id)preferredEdgeInsets
+                 disableFeedPreview:(BOOL)disableFeedPreview
+                               type:(unsigned long long)type;
+- (void)updateContentInsets;
+- (void)viewDidLayoutSubviews;
+- (nullable UIScrollView *)scrollView;
+- (void)setRefreshControlBackgroundColor:(id)color;
 @end
 
 @interface IGProfileMenuSheetViewController : IGViewController
@@ -275,6 +333,10 @@
 
 @interface IGSundialViewerVideoCell : UIView
 @property (readonly, nonatomic) IGMedia *video;
+- (void)playWithReason:(long long)reason;
+- (void)pauseWithReason:(long long)reason;
+- (void)gestureController:(id)controller didObserveSingleTap:(id)tap;
+- (void)videoViewDidPlayThroughToCompletion:(id)videoView;
 @end
 
 @interface IGSundialViewerPhotoCell : UIView
@@ -290,7 +352,11 @@
 @property (retain, nonatomic) IGImageSpecifier *imageSpecifier;
 @end
 
+// Reels player on 410; 448 uses the Swift _TtC21IGVideoPlayerKitSwift13IGVideoPlayer
+// with the same play and seek selectors plus isLoopingOverride.
 @interface IGStatefulVideoPlayer : NSObject
+- (void)playWithReason:(long long)reason callsiteContext:(id)context;
+- (void)seekToTime:(double)time preciseTime:(BOOL)preciseTime;
 @end
 
 @interface IGStoryPhotoView : UIView
@@ -310,6 +376,8 @@
 - (void)fetchMidcards;
 - (BOOL)_isEligibleForAYPromo;
 - (BOOL)_isEligibleForSUMidcard;
+- (void)fetchMidcardsWithLness28Score:(id)score;
+- (BOOL)_isEligibleForSUMidcardWithLness28Score:(id)score;
 @end
 
 @interface IGStoryVideoView : UIView
@@ -324,6 +392,8 @@
 @interface IGStoryFullscreenOverlayView : UIView
 @property (nonatomic, weak, readwrite) id gestureDelegate;
 - (id)gestureDelegate;
+- (void)setChromeHidden:(BOOL)hidden;
+- (void)hideOverlaysExcludingSponsoredStory:(BOOL)excludingSponsoredStory;
 @end
 
 // Real superclass is IGViewController; UIViewController is enough for the
@@ -439,10 +509,44 @@
 @property (nonatomic, readonly) BOOL showMessageButtonWhenFollowing;
 @end
 
+@class IGStyledString;
+
 @interface IGCoreTextView : UIView
+@property (nonatomic, copy) IGStyledString *styledString;
+@property (nonatomic, weak) id linkHandler;
 @property (nonatomic, strong) NSString *text;
 - (void)addHandleLongPress;                                     // new
 - (void)handleLongPress:(UILongPressGestureRecognizer *)sender; // new
+@end
+
+@interface IGFeedItemHeaderCoreTextView : UIView
+@property (nonatomic, copy) IGStyledString *styledString;
+@end
+
+@interface IGFeedItemTextCell : UIView
+@property (readonly, nonatomic) IGCoreTextView *coreTextView;
+@property (readonly, nonatomic) IGStyledString *styledString;
+- (void)setStyledString:(IGStyledString *)styledString;
+- (void)updateStyledString;
+@end
+
+@interface IGUnifiedVideoCaptionView : UIView
+@property (retain, nonatomic) id viewModel;
+- (CGSize)sizeThatFits:(CGSize)size;
+- (void)prepareForAnimationToExpansionPercentage:(double)percentage;
+@end
+
+// Runtime-resolved Swift class used by expanded post and Reels caption sheets.
+@interface IGCommentRichCaptionView : UIView
+- (void)configureWith:(id)viewModel;
+- (void)setCoreTextLinkHandler:(id)handler;
+@end
+
+// Runtime-resolved to IGCommentCell on 410 and
+// IGCommentCells.IGCommentCell on newer Instagram builds.
+@interface IGCommentCell : UIView
+@property (readonly, nonatomic) UIView *commentView;
+- (void)bindViewModel:(id)viewModel;
 @end
 
 @interface IGUserSession : NSObject
@@ -463,6 +567,8 @@
 @interface IGStyledString : NSObject
 @property (retain, nonatomic) NSMutableAttributedString *attributedString;
 - (void)appendString:(id)arg1;
+- (void)setURL:(id)url range:(NSRange)range;
+- (void)setColor:(id)color range:(NSRange)range;
 @end
 
 @interface IGInstagramAppDelegate : NSObject <UIApplicationDelegate>
@@ -492,6 +598,50 @@
 @end
 
 @interface IGDirectInboxSuggestedThreadCellViewModel : NSObject
+@end
+
+// Backs the main DM inbox list. ObjC on IG 410, migrated to a Swift class of the
+// same bare name on newer builds, so it is always resolved through
+// SPKResolveIGClass rather than referenced directly.
+@interface IGDirectInboxListAdapterDataSource : NSObject
+- (id)objectsForListAdapter:(id)adapter;
+@end
+
+@interface IGDirectInboxViewController : UIViewController
+@end
+
+// Same inbox screen, rebuilt in Swift. Not a subclass of the above.
+@interface IGDirectInboxSwiftViewController : UIViewController
+@end
+
+// Swift class (IGDirectInboxViewControllerSwift module), resolved through
+// SPKResolveIGClass. Owns the inbox's Instants peek presentation.
+@interface IGDirectInboxCameraMediaCoordinator : NSObject
+- (void)tryShowQuickSnapPeek;
+@end
+
+// Swift class (IGQuickSnapExperimentation module). The class methods are thin
+// @objc thunks; Swift callers inline the gate, so only ObjC call sites see a hook.
+@interface IGQuickSnapExperimentationHelper : NSObject
++ (BOOL)isQuicksnapEnabledInInbox:(id)session;
+@end
+
+// Swift class (IGQuickSnapPresentationManager module). The card view is shared
+// between the Direct inbox and the profile corner stack.
+@interface IGQuickSnapPresentationManager : NSObject
+@property (readonly, nonatomic) UIView *cardView;
+@end
+
+// Category on IGUserSession in IG; always respondsToSelector: before calling.
+@interface IGUserSession (SPKQuickSnapPresentation)
+- (IGQuickSnapPresentationManager *)quickSnapPresentationManager;
+@end
+
+// Aggregate unread counts behind the app's badges. The two Direct fields are the
+// only ones Sparkle touches.
+@interface IGBadgeData : NSObject
+@property (readonly, nonatomic) unsigned long long directMessagesServerCalculated;
+@property (readonly, nonatomic) NSNumber *directMessagesClientCalculated;
 @end
 
 @interface IGDirectInboxHeaderCellViewModel : NSObject
@@ -524,6 +674,22 @@
 - (id)_currentSubtitleViewModel;
 - (void)setTitleViewModel:(id)titleViewModel;
 - (void)animationCoordinatorDidUpdate:(id)coordinator;
+@end
+
+// Header of the reply sheet opened from a reel's "reposted this" bubble; the
+// Repost Date feature places the repost's creation date beside its title.
+@interface IGDirectMessageModalTitleView : UIView
+@end
+
+@interface IGDate : NSObject
+@property (readonly, nonatomic) long long microseconds;
+@property (readonly, nonatomic) NSDate *date;
+@end
+
+@interface IGRepostModel : NSObject
+@property (readonly, copy, nonatomic) NSString *pk;
+@property (readonly, copy, nonatomic) NSString *mediaId;
+@property (readonly, copy, nonatomic) IGDate *createdAtDate;
 @end
 
 // Inbox row view model — its `socialContextText` carries the "Active Xh ago"
@@ -609,6 +775,17 @@
 - (BOOL)_isChatPeekEligibleForThreadId:(id)threadId;
 @end
 
+@interface _TtC29IGConsumerSubsDirectChatPeeks35IGDirectInboxChatPeekPreviewHandler : NSObject
+- (id)previewViewControllerForThreadId:(id)threadId userSession:(id)session containerWidth:(double)width;
+@end
+
+@interface _TtC39IGDirectLightweightThreadViewController39IGDirectLightweightThreadViewController : UIViewController
+- (id)initWithUserSession:(id)session threadId:(id)threadId onLoadCompletion:(id)completion;
+- (void)setShouldHideHeader:(BOOL)shouldHideHeader;
+- (void)setBypassSeenStateUpdate:(BOOL)bypassSeenStateUpdate;
+- (void)setShouldSkipScrollToNewMessagesSeparator:(BOOL)shouldSkip;
+@end
+
 @interface IGDirectMediaPickerConfig : NSObject
 @end
 
@@ -625,6 +802,7 @@
 
 @interface IGStoryTextEntryViewController : UIViewController
 - (void)textViewControllerDidUpdateWithColor:(id)color colorSource:(NSInteger)source;
+- (void)textViewControllerDidUpdateWithColor:(id)color colorSource:(NSInteger)source textColorEffect:(id)effect; // 446+
 @end
 
 @interface IGStoryColorPaletteView : UIView
@@ -668,9 +846,31 @@
 // per-surface Direct and Profile plugins were replaced by this single manager,
 // and the upsell is no longer a separate presenter: both entry points call one
 // presentPeek… and pass the real-vs-upsell decision in `peekMode` (0 = real).
+// IG 447 changed `peekMode` from an integer to an
+// IGConsumerSubsStoryPeekModeObjc instance, so the hooks declare it per version.
 @interface _TtC29IGConsumerSubsStoryPeekPlugin30IGConsumerSubsStoryPeekManager : NSObject
-- (void)presentPeekWithReelPK:(id)pk source:(id)source pogPosition:(long long)position peekMode:(long long)mode context:(id)context actions:(id)actions presenting:(id)presenting;
-- (void)presentPeekWithViewModel:(id)model source:(id)source pogPosition:(long long)position peekMode:(long long)mode context:(id)context actions:(id)actions presenting:(id)presenting;
+@end
+
+// IGConsumerSubsStoryPeekManaging.IGConsumerSubsStoryPeekModeObjc — IG 447+ boxed
+// peek mode. Wraps a Swift enum (standard/freemium × nux/peek/upsell) that is not
+// readable from Obj-C; the factories build the standard cases.
+@interface _TtC31IGConsumerSubsStoryPeekManaging31IGConsumerSubsStoryPeekModeObjc : NSObject
++ (instancetype)peek;
++ (instancetype)nux;
++ (instancetype)upsell;
+@end
+
+// IGConsumerSubsStoryPeekManaging.IGConsumerSubsStoryPeekEligibilityDecision — IG 448
+// eligibility result the post-header presenter hands its long-press arbiter.
+@interface _TtC31IGConsumerSubsStoryPeekManaging42IGConsumerSubsStoryPeekEligibilityDecision : NSObject
+@property (nonatomic, readonly) BOOL isPeekEligible;
+@property (nonatomic, readonly) BOOL isUpsellEligible;
+- (instancetype)initWithIsPeekEligible:(BOOL)peekEligible isUpsellEligible:(BOOL)upsellEligible;
+@end
+
+// IGFeedItemHeaderControllerStoryPeek.IGConsumerSubsStoryPeekFeedPostHeaderPresenter — IG 448.
+@interface _TtC35IGFeedItemHeaderControllerStoryPeek46IGConsumerSubsStoryPeekFeedPostHeaderPresenter : NSObject
+- (id)evaluateEligibilityWithReelViewModel:(id)model userSession:(id)session;
 @end
 
 @interface IGUFIInteractionCountsView : UIView
@@ -1027,4 +1227,77 @@ typedef FLEXAlertAction *_Nonnull (^FLEXAlertActionHandler)(void (^handler)(NSAr
 // between versions but the selector itself did not change.
 @interface IGFollowButtonViewConfiguration : NSObject
 + (instancetype)defaultButtonConfiguration;
+@end
+
+// Grid thumbnail cell section controller (profile, tagged and saved grids). Its
+// item size is where the tall 4:5 grid turns into a cell height on every build.
+typedef struct {
+    CGFloat columnSpacing;
+    CGFloat rowSpacing;
+    UIEdgeInsets insets;
+    CGFloat mediasPerRow;
+    CGFloat aspectRatio;
+    CGFloat cellCornerRadius;
+} SPKGridLayoutConfiguration;
+
+// Loading placeholder for media grids; its layout configuration sets the
+// placeholder tile shape independently of the real thumbnails.
+@interface IGDSShimmeringGridModel : NSObject
+- (instancetype)initWithLayoutConfiguration:(SPKGridLayoutConfiguration)configuration pattern:(id)pattern contentInset:(UIEdgeInsets)inset shimmering:(BOOL)shimmering;
+@end
+
+@interface IGDSShimmeringGridView : UIView
+- (CGSize)layoutDataSourceCollectionView:(id)view layout:(id)layout sizeForItemAtIndexPath:(NSIndexPath *)path;
+@end
+
+// Explore grid tile section controllers (photos and Reels). Explore's waterfall
+// layout places tiles from these item sizes.
+@interface IGDiscoveryMediaSectionController : NSObject
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+@end
+
+@interface IGDiscoveryTopReelsSectionController : NSObject
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+@end
+
+@interface IGMediaThumbnailSectionController : NSObject
+@property (nonatomic, readonly, weak) UIViewController *viewController;
+- (CGSize)sizeForItemAtIndex:(NSInteger)index;
+@end
+
+// Instagram's location stack (FBSharedFramework). IGThreadedLocationManager owns
+// the CLLocationManager on a private thread and is its delegate; IGLocationManager
+// sits on top as the threaded manager's delegate and caches the last fix that
+// features such as the Friends Map read and upload.
+@interface IGThreadedLocationManager : NSObject <CLLocationManagerDelegate>
+@property (readonly, copy, nonatomic) CLLocation *location;
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations;
+@end
+
+@interface IGLocationManager : NSObject
+@property (retain) CLLocation *lastLocation;
+- (void)locationManager:(id)manager didUpdateLocations:(NSArray<CLLocation *> *)locations;
+@end
+
+// IGFriendsMapSecondaryButtonsStackController.IGFriendsMapSecondaryButtonsStackView:
+// the column of round chrome buttons (locate, settings) on the Friends Map. Swift,
+// laid out by hand; bound in hook groups through SPKResolveIGClass.
+@interface IGFriendsMapSecondaryButtonsStackView : UIView
+- (void)didTapLocateButton;
+@end
+
+// Instagram's in-app browser. IGBrowserSession carries the request (usually an
+// l.instagram.com redirect) and the ads/sign-in context; IGBrowserController
+// presents it, and IGBrowserNavigationController is the presented container.
+@interface IGBrowserSession : NSObject
+@property (readonly) id webAuthenticationRequest;
+@property (retain, nonatomic) NSNumber *leadGenFormId;
+@end
+
+@interface IGBrowserController : NSObject
+- (void)presentBrowserWithBrowserSession:(IGBrowserSession *)session viewController:(UIViewController *)controller presentingPanGesture:(id)gesture forceFreshLoad:(BOOL)forceFreshLoad;
+@end
+
+@interface IGBrowserNavigationController : UINavigationController
+@property (readonly, nonatomic) IGBrowserSession *browserSession;
 @end

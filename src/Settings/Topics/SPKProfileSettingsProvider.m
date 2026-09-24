@@ -146,6 +146,17 @@ static UIMenu *SPKFollowIndicatorModeMenu(void) {
                                SPKL(@"PROFILE_PROFILE_PICTURE_LONG_PRESS_EXPAND_HELP"))
         ],
                         nil),
+        SPKTopicSection(SPKL(@"PROFILE_TABS_HEADER"), @[
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SAVED_TAB_TITLE")
+                                           icon:SPKSettingsIcon(@"save")
+                                    defaultsKey:@"profile_saved_tab"],
+                               SPKL(@"PROFILE_TABS_SAVED_TAB_HELP")),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"PROFILE_TABS_SQUARE_GRID_TITLE")
+                                           icon:SPKSettingsIcon(@"grid_square")
+                                    defaultsKey:@"profile_square_grid"],
+                               SPKL(@"PROFILE_TABS_SQUARE_GRID_HELP"))
+        ],
+                        nil),
         SPKTopicSection(SPKL(@"PROFILE_INDICATORS_HEADER"), @[
             ({
                 SPKSetting *mode = [SPKSetting menuCellWithTitle:SPKL(@"PROFILE_INDICATORS_FOLLOWING_INDICATOR_TITLE")

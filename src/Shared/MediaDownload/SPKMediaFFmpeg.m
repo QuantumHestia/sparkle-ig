@@ -16,6 +16,7 @@ static BOOL sSPKFFmpegAvailable = NO;
 static NSString *sSPKFFmpegLoadFailureSummary = nil;
 
 static NSString *SPKFFmpegStringPref(NSString *key, NSString *fallback);
+static NSInteger SPKFFmpegIntegerPref(NSString *key, NSInteger fallback);
 
 static NSString *const kSPKFFmpegLogsDirectoryName = @"SparkleFFmpegLogs";
 
@@ -50,20 +51,6 @@ static NSString *SPKFFmpegCommandStringFromArguments(NSArray<NSString *> *argume
     return [parts componentsJoinedByString:@" "];
 }
 
-// Used by SPKFFmpegAdvancedMergeArguments' VideoToolbox branch to mirror the
-// "ultrafast → realtime" and "slower → max quality" semantics of the speed
-// picker. The default-mode merge command no longer uses these (it switched to
-// libx264+preset), but the advanced+VideoToolbox path still does.
-static BOOL SPKFFmpegDashSpeedTierUsesRealtime(void) {
-    NSString *speed = SPKFFmpegStringPref(@"downloads_encoding_speed", @"medium");
-    return [speed isEqualToString:@"ultrafast"];
-}
-
-static BOOL SPKFFmpegDashSpeedTierIsMaxQuality(void) {
-    NSString *speed = SPKFFmpegStringPref(@"downloads_encoding_speed", @"medium");
-    return [speed isEqualToString:@"slower"];
-}
-
 static NSInteger SPKFFmpegConfiguredVideoBitrateKbpsOrZero(void) {
     NSString *value = SPKFFmpegStringPref(@"downloads_encoding_vid_bitrate_kbps", @"");
     NSInteger parsed = value.integerValue;
@@ -80,6 +67,61 @@ static NSInteger SPKFFmpegAdvancedDefaultBitrateKbps(NSInteger sourceBitrate) {
         return kbps;
     }
     return 8000;
+}
+
+// VideoToolbox needs roughly twice libx264's bitrate for the same picture: at
+// the source bitrate it scores ~70 VMAF where libx264 scores ~90, and doubling
+// it closes the gap. An automatic target is scaled accordingly; a bitrate the
+// user typed is used as is.
+static NSInteger SPKFFmpegAdvancedTargetBitrateKbps(NSInteger sourceBitrate, BOOL videoToolbox) {
+    NSInteger configured = SPKFFmpegConfiguredVideoBitrateKbpsOrZero();
+    if (configured > 0) {
+        return configured;
+    }
+    NSInteger automatic = SPKFFmpegAdvancedDefaultBitrateKbps(sourceBitrate);
+    return videoToolbox ? MIN(automatic * 2, 50000) : automatic;
+}
+
+// libx264 rejects CRF values above 51 and treats 0 as lossless, which the field
+// never means; anything outside 1...51 falls back to bitrate mode.
+static NSString *SPKFFmpegConfiguredCRFOrNil(void) {
+    NSInteger crf = SPKFFmpegStringPref(@"downloads_encoding_crf", @"").integerValue;
+    return crf > 0 ? [NSString stringWithFormat:@"%ld", (long)MIN(crf, 51)] : nil;
+}
+
+// Max Resolution names the picture's shorter side, as in "720p": a vertical
+// 1080x1920 reel at 720 becomes 720x1280. It only ever downscales. Sizing both
+// axes to at least N with the aspect ratio kept puts the shorter side at N
+// without knowing the orientation, so a crop's quarter turn is handled too.
+static NSString *SPKFFmpegMaxResolutionScaleFilter(NSInteger width, NSInteger height) {
+    NSString *maxResolution = SPKFFmpegStringPref(@"downloads_encoding_max_resolution", @"original");
+    NSInteger target = [maxResolution isEqualToString:@"original"] ? 0 : MAX(maxResolution.integerValue, 0);
+    if (target <= 0 || width <= 0 || height <= 0 || MIN(width, height) <= target) {
+        return nil;
+    }
+    return [NSString stringWithFormat:@"scale=%ld:%ld:force_original_aspect_ratio=increase:force_divisible_by=2",
+                                      (long)target, (long)target];
+}
+
+// Audio bitrate and channel layout only apply with Advanced Encoding on; with
+// it off, re-encoded audio uses the defaults the page shows.
+static NSInteger SPKFFmpegAudioBitrateKbps(void) {
+    if (![SPKUtils getBoolPref:@"downloads_adv_encoding"]) {
+        return 128;
+    }
+    return SPKFFmpegIntegerPref(@"downloads_encoding_audio_bitrate_kbps", 128);
+}
+
+static void SPKFFmpegAppendAudioChannelOptions(NSMutableArray<NSString *> *args) {
+    if (![SPKUtils getBoolPref:@"downloads_adv_encoding"]) {
+        return;
+    }
+    NSString *channels = SPKFFmpegStringPref(@"downloads_encoding_audio_channels", @"original").lowercaseString;
+    if ([channels isEqualToString:@"mono"]) {
+        [args addObjectsFromArray:@[ @"-ac", @"1" ]];
+    } else if ([channels isEqualToString:@"stereo"]) {
+        [args addObjectsFromArray:@[ @"-ac", @"2" ]];
+    }
 }
 
 static NSString *SPKFFmpegLogsDirectoryPath(void) {
@@ -483,12 +525,8 @@ static NSArray<NSString *> *SPKFFmpegAdvancedMergeArguments(NSURL *videoFileURL,
     }
 
     // Optional scale filter
-    NSString *maxResolution = SPKFFmpegStringPref(@"downloads_encoding_max_resolution", @"original");
-    NSInteger targetMaxResolution = [maxResolution isEqualToString:@"original"] ? 0 : MAX(maxResolution.integerValue, 0);
-    if (targetMaxResolution > 0 && width > 0 && height > 0) {
-        NSString *scaleFilter = width >= height
-                                    ? [NSString stringWithFormat:@"scale=%ld:-2", (long)targetMaxResolution]
-                                    : [NSString stringWithFormat:@"scale=-2:%ld", (long)targetMaxResolution];
+    NSString *scaleFilter = SPKFFmpegMaxResolutionScaleFilter(width, height);
+    if (scaleFilter.length > 0) {
         NSString *combined = extraVideoFilter.length > 0 ? [NSString stringWithFormat:@"%@,%@", scaleFilter, extraVideoFilter] : scaleFilter;
         [args addObjectsFromArray:@[ @"-vf", combined ]];
     } else if (extraVideoFilter.length > 0) {
@@ -496,16 +534,15 @@ static NSArray<NSString *> *SPKFFmpegAdvancedMergeArguments(NSURL *videoFileURL,
     }
 
     // Advanced DASH merge path respects the selected video codec.
-    NSString *selectedCodec = codecOverride.length > 0 ? codecOverride : SPKFFmpegStringPref(@"downloads_encoding_vid_codec", @"videotoolbox");
-    NSInteger configuredBitrate = SPKFFmpegConfiguredVideoBitrateKbpsOrZero();
-    NSInteger targetBitrate = configuredBitrate > 0 ? configuredBitrate : SPKFFmpegAdvancedDefaultBitrateKbps(sourceBitrate);
-    BOOL maxQualityTier = SPKFFmpegDashSpeedTierIsMaxQuality();
+    NSString *selectedCodec = codecOverride.length > 0 ? codecOverride : SPKFFmpegStringPref(@"downloads_encoding_vid_codec", @"libx264");
+    BOOL isLibx264 = [selectedCodec isEqualToString:@"libx264"];
+    NSInteger targetBitrate = SPKFFmpegAdvancedTargetBitrateKbps(sourceBitrate, !isLibx264);
 
-    if ([selectedCodec isEqualToString:@"libx264"]) {
+    if (isLibx264) {
         NSString *preset = SPKFFmpegStringPref(@"downloads_encoding_preset", @"medium");
-        NSString *profile = SPKFFmpegStringPref(@"downloads_encoding_h264_profile", @"main");
+        NSString *profile = SPKFFmpegStringPref(@"downloads_encoding_h264_profile", @"high");
         NSString *level = SPKFFmpegStringPref(@"downloads_encoding_h264_level", @"auto");
-        NSString *crf = SPKFFmpegStringPref(@"downloads_encoding_crf", @"");
+        NSString *crf = SPKFFmpegConfiguredCRFOrNil();
 
         [args addObjectsFromArray:@[
             @"-c:v",
@@ -514,7 +551,7 @@ static NSArray<NSString *> *SPKFFmpegAdvancedMergeArguments(NSURL *videoFileURL,
             SPKFFmpegPresetForSpeed(preset),
         ]];
 
-        if (crf.length > 0 && crf.integerValue > 0) {
+        if (crf) {
             [args addObjectsFromArray:@[ @"-crf", crf ]];
         } else {
             [args addObjectsFromArray:@[ @"-b:v", [NSString stringWithFormat:@"%ldk", (long)targetBitrate] ]];
@@ -533,19 +570,11 @@ static NSArray<NSString *> *SPKFFmpegAdvancedMergeArguments(NSURL *videoFileURL,
             @"-b:v",
             [NSString stringWithFormat:@"%ldk", (long)targetBitrate],
         ]];
-        if (SPKFFmpegDashSpeedTierUsesRealtime()) {
-            [args addObjectsFromArray:@[ @"-realtime", @"1" ]];
-        }
-        if (maxQualityTier) {
-            [args addObjectsFromArray:@[ @"-profile:v", @"high", @"-level", @"5.1" ]];
-        }
     }
 
-    // Pixel format
-    NSString *pixelFormat = SPKFFmpegStringPref(@"downloads_encoding_pixel_format", @"yuv420p");
-    if (![pixelFormat isEqualToString:@"default"] && pixelFormat.length > 0) {
-        [args addObjectsFromArray:@[ @"-pix_fmt", pixelFormat ]];
-    }
+    // Always 8-bit 4:2:0: every H.264 profile offered is 8-bit, so passing a
+    // 10-bit HDR source's format through makes libx264 refuse to start.
+    [args addObjectsFromArray:@[ @"-pix_fmt", @"yuv420p" ]];
 
     // Faststart is handled by a follow-up stream-copy pass; see
     // SPKFFmpegFaststartArguments and the merge orchestrator. Doing the moov
@@ -603,17 +632,8 @@ static NSArray<NSString *> *SPKFFmpegAudioReencodeArguments(NSURL *sourceURL, NS
         @"-c:a", @"aac"
     ]];
 
-    NSInteger audioBitrate = SPKFFmpegIntegerPref(@"downloads_encoding_audio_bitrate_kbps", 128);
-    if (audioBitrate > 0) {
-        [args addObjectsFromArray:@[ @"-b:a", [NSString stringWithFormat:@"%ldk", (long)audioBitrate] ]];
-    }
-
-    NSString *channels = SPKFFmpegStringPref(@"downloads_encoding_audio_channels", @"original").lowercaseString;
-    if ([channels isEqualToString:@"mono"]) {
-        [args addObjectsFromArray:@[ @"-ac", @"1" ]];
-    } else if ([channels isEqualToString:@"stereo"]) {
-        [args addObjectsFromArray:@[ @"-ac", @"2" ]];
-    }
+    [args addObjectsFromArray:@[ @"-b:a", [NSString stringWithFormat:@"%ldk", (long)SPKFFmpegAudioBitrateKbps()] ]];
+    SPKFFmpegAppendAudioChannelOptions(args);
 
     [args addObject:outputURL.path];
     return args;
@@ -636,16 +656,8 @@ static void SPKFFmpegAppendTrimAudioOptions(NSMutableArray<NSString *> *args, SP
         return; // None: video-only, no audio options.
     }
     [args addObjectsFromArray:@[ @"-c:a", @"aac" ]];
-    NSInteger audioBitrate = SPKFFmpegIntegerPref(@"downloads_encoding_audio_bitrate_kbps", 128);
-    if (audioBitrate > 0) {
-        [args addObjectsFromArray:@[ @"-b:a", [NSString stringWithFormat:@"%ldk", (long)audioBitrate] ]];
-    }
-    NSString *channels = SPKFFmpegStringPref(@"downloads_encoding_audio_channels", @"original").lowercaseString;
-    if ([channels isEqualToString:@"mono"]) {
-        [args addObjectsFromArray:@[ @"-ac", @"1" ]];
-    } else if ([channels isEqualToString:@"stereo"]) {
-        [args addObjectsFromArray:@[ @"-ac", @"2" ]];
-    }
+    [args addObjectsFromArray:@[ @"-b:a", [NSString stringWithFormat:@"%ldk", (long)SPKFFmpegAudioBitrateKbps()] ]];
+    SPKFFmpegAppendAudioChannelOptions(args);
 }
 
 // Appends the video encoder options honoring the user's encoding settings: the
@@ -697,12 +709,8 @@ static void SPKFFmpegAppendVideoEncodeOptions(NSMutableArray<NSString *> *args,
     if (leadingVideoFilter.length > 0) {
         [videoFilters addObject:leadingVideoFilter];
     }
-    NSString *maxResolution = SPKFFmpegStringPref(@"downloads_encoding_max_resolution", @"original");
-    NSInteger targetMaxResolution = [maxResolution isEqualToString:@"original"] ? 0 : MAX(maxResolution.integerValue, 0);
-    if (targetMaxResolution > 0 && width > 0 && height > 0) {
-        NSString *scaleFilter = width >= height
-                                    ? [NSString stringWithFormat:@"scale=%ld:-2", (long)targetMaxResolution]
-                                    : [NSString stringWithFormat:@"scale=-2:%ld", (long)targetMaxResolution];
+    NSString *scaleFilter = SPKFFmpegMaxResolutionScaleFilter(width, height);
+    if (scaleFilter.length > 0) {
         [videoFilters addObject:scaleFilter];
     }
     if (extraVideoFilter.length > 0) {
@@ -712,18 +720,18 @@ static void SPKFFmpegAppendVideoEncodeOptions(NSMutableArray<NSString *> *args,
         [args addObjectsFromArray:@[ @"-vf", [videoFilters componentsJoinedByString:@","] ]];
     }
 
-    NSString *selectedCodec = SPKFFmpegStringPref(@"downloads_encoding_vid_codec", @"videotoolbox");
-    NSInteger configuredBitrate = SPKFFmpegConfiguredVideoBitrateKbpsOrZero();
-    NSInteger targetBitrate = configuredBitrate > 0 ? configuredBitrate : SPKFFmpegAdvancedDefaultBitrateKbps(sourceBitrate);
+    NSString *selectedCodec = SPKFFmpegStringPref(@"downloads_encoding_vid_codec", @"libx264");
+    BOOL isLibx264 = [selectedCodec isEqualToString:@"libx264"];
+    NSInteger targetBitrate = SPKFFmpegAdvancedTargetBitrateKbps(sourceBitrate, !isLibx264);
 
-    if ([selectedCodec isEqualToString:@"libx264"]) {
+    if (isLibx264) {
         NSString *preset = SPKFFmpegStringPref(@"downloads_encoding_preset", @"medium");
-        NSString *profile = SPKFFmpegStringPref(@"downloads_encoding_h264_profile", @"main");
+        NSString *profile = SPKFFmpegStringPref(@"downloads_encoding_h264_profile", @"high");
         NSString *level = SPKFFmpegStringPref(@"downloads_encoding_h264_level", @"auto");
-        NSString *crf = SPKFFmpegStringPref(@"downloads_encoding_crf", @"");
+        NSString *crf = SPKFFmpegConfiguredCRFOrNil();
 
         [args addObjectsFromArray:@[ @"-c:v", @"libx264", @"-preset", SPKFFmpegPresetForSpeed(preset) ]];
-        if (crf.length > 0 && crf.integerValue > 0) {
+        if (crf) {
             [args addObjectsFromArray:@[ @"-crf", crf ]];
         } else {
             [args addObjectsFromArray:@[ @"-b:v", [NSString stringWithFormat:@"%ldk", (long)targetBitrate] ]];
@@ -736,18 +744,10 @@ static void SPKFFmpegAppendVideoEncodeOptions(NSMutableArray<NSString *> *args,
         }
     } else {
         [args addObjectsFromArray:@[ @"-c:v", @"h264_videotoolbox", @"-b:v", [NSString stringWithFormat:@"%ldk", (long)targetBitrate] ]];
-        if (SPKFFmpegDashSpeedTierUsesRealtime()) {
-            [args addObjectsFromArray:@[ @"-realtime", @"1" ]];
-        }
-        if (SPKFFmpegDashSpeedTierIsMaxQuality()) {
-            [args addObjectsFromArray:@[ @"-profile:v", @"high", @"-level", @"5.1" ]];
-        }
     }
 
-    NSString *pixelFormat = SPKFFmpegStringPref(@"downloads_encoding_pixel_format", @"yuv420p");
-    if (pixelFormat.length > 0 && ![pixelFormat isEqualToString:@"default"]) {
-        [args addObjectsFromArray:@[ @"-pix_fmt", pixelFormat ]];
-    }
+    // See SPKFFmpegAdvancedMergeArguments: always 8-bit 4:2:0.
+    [args addObjectsFromArray:@[ @"-pix_fmt", @"yuv420p" ]];
 }
 
 // Frame-accurate trim encode of a single (already-muxed) input. `-ss`/`-t` are
@@ -1813,7 +1813,7 @@ static void SPKFFmpegRunMergeAttempts(NSArray<NSDictionary<NSString *, id> *> *a
             @"cleanupPaths" : @[ normalizedSetPTSVideoURL.path ?: @"", normalizedSetPTSEncodeURL.path ?: @"" ]
         }];
     } else {
-        NSString *selectedCodec = SPKFFmpegStringPref(@"downloads_encoding_vid_codec", @"videotoolbox");
+        NSString *selectedCodec = SPKFFmpegStringPref(@"downloads_encoding_vid_codec", @"libx264");
         BOOL isLibx264 = [selectedCodec isEqualToString:@"libx264"];
 
         NSURL *advancedEncodeURL = SPKFFmpegPreFaststartURL(basename, isLibx264 ? @"advanced-libx264-pre-faststart" : @"advanced-videotoolbox-pre-faststart");

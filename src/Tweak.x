@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////
 
 // * Tweak version *
-NSString *SPKVersionString = @"v1.3.1";
+NSString *SPKVersionString = @"v1.4.0";
 
 // Variables that work across features
 __weak id SPKPendingDirectVisualMessageToMarkSeen = nil;
@@ -217,6 +217,14 @@ static const void *kSPKFlexThreeFingerGestureKey = &kSPKFlexThreeFingerGestureKe
     return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
 }
 - (_Bool)isLiquidGlassIconBarButtonEnabled {
+    return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
+}
+%end
+
+// IG 447 moved the toast gate off IGDSLauncherConfig into this Swift class.
+// The launcher-config toast hooks above still cover older versions.
+%hook _TtC20IGDSToastLiquidGlass20IGDSToastLiquidGlass
++ (_Bool)isEnabled {
     return [SPKUtils spk_liquidGlassLauncherPrefKey:@"interface_liquid_glass" orig:%orig];
 }
 %end

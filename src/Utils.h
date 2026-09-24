@@ -100,9 +100,15 @@ FOUNDATION_EXPORT Class _Nullable SPKResolveIGClass(NSString *qualified, NSStrin
 + (BOOL)spk_isLiquidGlassEffectivelyEnabled;
 
 + (void)cleanCache;
-+ (unsigned long long)cleanCacheReturningFreedBytes;
 + (unsigned long long)cacheSizeBytes;
-+ (NSString *)formattedCacheSize;
+/// Last measured cache size, for display on the main thread. Starts a background
+/// measurement when none exists or the last one is stale, and posts
+/// SPKSettingAccessoryTextDidChangeNotification when the text changes. Nil until
+/// the first measurement lands.
++ (nullable NSString *)cachedFormattedCacheSize;
+/// Clears the cache on a background queue and calls `completion` on the main
+/// thread. Returns NO without doing anything while a clear is already running.
++ (BOOL)cleanCacheInBackgroundWithCompletion:(nullable void (^)(unsigned long long freedBytes))completion;
 
 /// Locale used for Sparkle-owned display formatting. Explicit overrides use the
 /// selected Sparkle language; System Default preserves Instagram/system region.
@@ -199,6 +205,20 @@ FOUNDATION_EXPORT Class _Nullable SPKResolveIGClass(NSString *qualified, NSStrin
 
 + (NSURL *)getVideoUrl:(IGVideo *)video;
 + (NSURL *)getVideoUrlForMedia:(IGMedia *)media;
+
+// Scroll Views
+/// Lets `scrollView` scroll only while its content is taller than its viewport,
+/// so a sheet whose contents already fit stays put instead of rubber banding.
+/// Call from `viewDidLayoutSubviews` (and after a reload that changes height).
++ (void)updateScrollingForFittedContent:(nullable UIScrollView *)scrollView;
+
+/// The sheet height that would show all of `scrollView`'s content at once, its
+/// chrome included, or 0 while the scroll view has not been laid out yet.
+///
+/// Measured rather than estimated: the adjusted inset already carries the
+/// navigation bar and the bottom safe area, so a detent resolver fed this value
+/// lands on the exact height instead of a few points short.
++ (CGFloat)sheetHeightFittingContentOfScrollView:(nullable UIScrollView *)scrollView;
 
 // View Controller Helpers
 + (UIViewController *)viewControllerForView:(UIView *)view;

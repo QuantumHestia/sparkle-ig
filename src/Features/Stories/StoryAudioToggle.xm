@@ -494,9 +494,15 @@ static BOOL SPKStoryAudioWriteEnabled(UIView *overlayView, BOOL enabled) {
             BOOL applied = resolvedAfter == enabled;
             if (applied)
                 SPKStoryAudioSetViewerAudioState(overlayView, enabled);
-            if (!applied && enabled)
-                applied = SPKStoryAudioSetScopedGlobalState(overlayView, YES);
-            return applied;
+
+            // Every Story section builds its own audio coordinator and seeds it
+            // from the global announcer state, so a coordinator-only write is
+            // forgotten on the next snap. Mirror both directions into the scoped
+            // global state so the rest of the viewer session inherits the choice.
+            // The viewer restores the captured value on close, so Feed and Reels
+            // stay isolated either way.
+            BOOL mirrored = SPKStoryAudioSetScopedGlobalState(overlayView, enabled);
+            return applied ?: mirrored;
         } @catch (__unused NSException *exception) {
         }
     }

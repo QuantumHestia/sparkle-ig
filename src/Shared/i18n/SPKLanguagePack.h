@@ -33,6 +33,18 @@ FOUNDATION_EXPORT NSString *_Nullable SPKLanguagePackPathForCode(NSString *code)
 /// Language codes with an installed pack, alphabetically.
 FOUNDATION_EXPORT NSArray<NSString *> *SPKInstalledLanguagePackCodes(void);
 
+/// Records where an installed pack came from, so a later catalog can tell a newer build of the
+/// same language apart from the one on disk. `sha256` is nil for a pack imported from a file,
+/// which is what marks it as not tracking any published pack.
+FOUNDATION_EXPORT void SPKLanguagePackRecordProvenance(NSString *code, NSString *_Nullable sourceURL, NSString *_Nullable sha256);
+
+/// The sha256 recorded when `code` was installed, or nil when it came from a file and so has no
+/// published identity to compare a catalog row against.
+FOUNDATION_EXPORT NSString *_Nullable SPKLanguagePackRecordedSHA256(NSString *code);
+
+/// Forgets a pack's provenance. Called when the pack is deleted.
+FOUNDATION_EXPORT void SPKLanguagePackForgetProvenance(NSString *code);
+
 /// One installed pack, as the settings UI presents it.
 @interface SPKLanguagePack : NSObject
 /// Localization code the pack provides, e.g. "de" or "pt-BR".

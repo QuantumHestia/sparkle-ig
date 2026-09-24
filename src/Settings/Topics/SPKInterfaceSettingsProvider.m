@@ -48,7 +48,7 @@
         SPKTopicSection(SPKL(@"INTERFACE_EXPLORE_SEARCH_HEADER"), @[
             ({
                 SPKSetting *s = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_POSTS_GRID_TITLE")
-                                                           icon:SPKSettingsIcon(@"explore_grid")
+                                                           icon:SPKSettingsIcon(@"grid_tall")
                                                     defaultsKey:@"interface_hide_explore_grid"];
                 s.switchChangeHandler = ^(BOOL isOn) {
                     SPKPreferenceSetObject(@(isOn), @"interface_hide_explore_grid");
@@ -57,6 +57,10 @@
                 s.helpText = SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_EXPLORE_GRID_HELP");
                 s;
             }),
+            SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_TITLE")
+                                           icon:SPKSettingsIcon(@"grid_square")
+                                    defaultsKey:@"interface_explore_square_grid"],
+                               SPKL(@"INTERFACE_EXPLORE_SEARCH_SQUARE_GRID_HELP")),
             SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_EXPLORE_SEARCH_HIDE_TRENDING_SEARCHES_TITLE")
                                            icon:SPKSettingsIcon(@"trending")
                                     defaultsKey:@"interface_hide_trending_searches"
@@ -113,14 +117,15 @@
                 [[NSUserDefaults standardUserDefaults] setBool:isOn forKey:kSPKPrefInterfaceLiquidGlass];
                 [SPKUtils showRestartConfirmation];
             };
-            SPKSetting *progressiveBlur = [SPKSetting switchCellWithTitle:SPKL(@"INTERFACE_CAPTURE_PROGRESSIVE_BLUR_TITLE")
-                                                             defaultsKey:kSPKPrefInterfaceProgressiveBlur
-                                                          requiresRestart:YES];
-            progressiveBlur.helpText = SPKL(@"INTERFACE_PROGRESSIVE_BLUR_HELP");
+            SPKSetting *scrollEdgeStyle = [SPKSetting menuCellWithTitle:SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_TITLE")
+                                                                   icon:nil
+                                                                   menu:SPKScrollEdgeStyleMenu()];
+            scrollEdgeStyle.defaultsKey = kSPKPrefInterfaceScrollEdgeStyle;
+            scrollEdgeStyle.helpText = SPKL(@"INTERFACE_SCROLL_EDGE_EFFECT_HELP");
 
             [sections addObject:SPKTopicSection(SPKL(@"INTERFACE_LIQUID_GLASS_BLUR_HEADER"), @[
                           liquidGlass,
-                          progressiveBlur,
+                          scrollEdgeStyle,
                           tabBarBehaviorCell(),
                       ],
                                                 nil)];

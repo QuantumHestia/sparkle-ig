@@ -19,6 +19,16 @@ typedef void (^SPKDownloadSubmissionCompletion)(NSString *_Nullable jobID, NSErr
 - (void)submitRequest:(SPKDownloadRequest *)request
            completion:(nullable SPKDownloadSubmissionCompletion)completion;
 
+/// Post-hoc history entry for an already-saved local file (trim / crop /
+/// photo edit). Quiet: no pill, no transfer, no duplicate preflight.
+/// See SPKDownloadScheduler for semantics.
+- (nullable NSString *)recordCompletedFileAtURL:(nullable NSURL *)fileURL
+                                      mediaKind:(SPKDownloadMediaKind)kind
+                                    destination:(SPKDownloadDestination)destination
+                                       metadata:(nullable SPKGallerySaveMetadata *)metadata
+                                  sourceSurface:(SPKDownloadSourceSurface)surface
+                                      finalPath:(nullable NSString *)finalPath;
+
 - (BOOL)hasActiveJobWithHiddenPill;
 - (void)reshowProgressPill;
 - (void)confirmCancelForJobID:(NSString *)jobID;

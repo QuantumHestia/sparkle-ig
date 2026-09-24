@@ -44,6 +44,7 @@ FOUNDATION_EXPORT NSString *const kSPKActionToggleStorySeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleStoryAutoSaveUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleDirectAutoSaveThreadRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleInstantsAutoSaveUserRule;
+FOUNDATION_EXPORT NSString *const kSPKActionInstantsMarkSeen;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleProfileStorySeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionToggleProfileMessagesSeenUserRule;
 FOUNDATION_EXPORT NSString *const kSPKActionStoryMentionsSheet;
@@ -56,6 +57,9 @@ FOUNDATION_EXPORT NSString *const kSPKActionProfileCopyLink;
 FOUNDATION_EXPORT NSString *const SPKActionButtonConfigurationDidChangeNotification;
 
 @interface SPKActionMenuButton : SPKChromeButton
+/// When set, the button's alpha always mirrors this view's effective visibility,
+/// whoever writes it. Hosts that fade their subviews wholesale cannot strand it.
+@property (nonatomic, weak, nullable) UIView *spk_alphaSource;
 @end
 
 typedef id _Nullable (^SPKActionButtonMediaResolver)(id context);

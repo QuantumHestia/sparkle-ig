@@ -1,5 +1,6 @@
 #import "SPKStrings.h"
 #import "SPKSettingsViewController.h"
+#import "SPKPreferences.h"
 #import "../App/SPKStartupHooks.h"
 #import "../AssetUtils.h"
 #import "../Features/Messages/MessageSeenButtons.h"
@@ -369,6 +370,31 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     [self.view addSubview:self.tableView];
     [self setupNavigationItems];
     [self setupSearchController];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(spk_accessoryTextDidChange:)
+                                                 name:SPKSettingAccessoryTextDidChangeNotification
+                                               object:nil];
+}
+
+- (void)spk_accessoryTextDidChange:(NSNotification *)notification {
+    // No window check: the first measurement usually lands while the page is still
+    // being pushed, before it has a window, and skipping it then left the row blank
+    // until the next reload.
+    if (!self.isViewLoaded)
+        return;
+
+    NSMutableArray<NSIndexPath *> *paths = [NSMutableArray array];
+    for (NSIndexPath *indexPath in self.tableView.indexPathsForVisibleRows) {
+        if (indexPath.section >= (NSInteger)self.sections.count)
+            continue;
+        NSArray *rows = self.sections[indexPath.section][@"rows"];
+        SPKSetting *row = indexPath.row < (NSInteger)rows.count ? rows[indexPath.row] : nil;
+        if ([row isKindOfClass:[SPKSetting class]] && row.accessoryTextProvider)
+            [paths addObject:indexPath];
+    }
+    if (paths.count > 0)
+        [self.tableView reloadRowsAtIndexPaths:paths withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -993,14 +1019,24 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
             [tableView reloadData];
         }
     } else if (row.type == SPKTableCellNavigation) {
-        if (row.navSections.count > 0) {
-            UIViewController *vc = [[SPKSettingsViewController alloc] initWithTitle:row.title sections:row.navSections reduceMargin:NO];
-            ((SPKSettingsViewController *)vc).defersRestartPrompt = [row.userInfo[@"deferRestartPrompt"] boolValue];
-            vc.title = row.title;
-            [self.navigationController pushViewController:vc animated:YES];
-        } else if (row.navViewController) {
-            [self.navigationController pushViewController:row.navViewController animated:YES];
-        }
+        __weak __typeof(self) weakSelf = self;
+        void (^push)(void) = ^{
+            __strong __typeof(weakSelf) strongSelf = weakSelf;
+            if (!strongSelf)
+                return;
+            if (row.navSections.count > 0) {
+                UIViewController *vc = [[SPKSettingsViewController alloc] initWithTitle:row.title sections:row.navSections reduceMargin:NO];
+                ((SPKSettingsViewController *)vc).defersRestartPrompt = [row.userInfo[@"deferRestartPrompt"] boolValue];
+                vc.title = row.title;
+                [strongSelf.navigationController pushViewController:vc animated:YES];
+            } else if (row.navViewController) {
+                [strongSelf.navigationController pushViewController:row.navViewController animated:YES];
+            }
+        };
+        if (row.navigationGate)
+            row.navigationGate(push);
+        else
+            push();
     }
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -1336,6 +1372,9 @@ static CGFloat SPKSettingsHeaderTextCenterOffsetFromBottom(void) {
     }
     if ([defaultsKey hasPrefix:@"profile_follow_indicator"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SPKFollowIndicatorDidChangeNotification object:nil];
+    }
+    if ([defaultsKey isEqualToString:kSPKPrefInterfaceScrollEdgeStyle]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SPKScrollEdgeStyleDidChangeNotification object:nil];
     }
     if ([defaultsKey isEqualToString:@"msgs_seen_button_position"]) {
         [[NSNotificationCenter defaultCenter] postNotificationName:SPKMessageSeenButtonPositionDidChangeNotification object:nil];

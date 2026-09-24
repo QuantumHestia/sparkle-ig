@@ -27,6 +27,7 @@ static NSSet<NSNumber *> *SPKCaptureHiddenTags(void) {
     dispatch_once(&onceToken, ^{
         tags = [NSSet setWithArray:@[
             @921341, @921342, @921343, @921344, @921345,
+            @921399, @921400,
             @926001, @926002,
             @(kSPKCaptureFollowIndicatorTag)
         ]];

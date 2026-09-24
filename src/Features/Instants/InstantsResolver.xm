@@ -3,10 +3,12 @@
 #import <objc/runtime.h>
 #import <substrate.h>
 
+#import "../../App/SPKPerfMeter.h"
 #import "../../Shared/ActionButton/ActionButtonCore.h"
 #import "../../Shared/ActionButton/ActionButtonLookupUtils.h"
 #import "../../Shared/Account/SPKAccountManager.h"
 #import "../../Utils.h"
+#import "InstantsManualSeen.h"
 #import "InstantsResolver.h"
 
 // MARK: - Model Implementations
@@ -49,6 +51,10 @@ static id sTrackedActiveMedia = nil;
 /// its position relative to the surviving session order.
 static NSString *sTrackedActiveSuccessorKey = nil;
 static BOOL sConsumptionSessionActive = NO;
+/// Bumped whenever a viewing session begins. A deferred exit check captures this and drops
+/// out if a new session has started since, so closing one viewer and immediately opening
+/// another cannot reset the new session's state.
+static uint64_t sConsumptionSessionGeneration = 0;
 
 /// Canonically ordered media discovered during the current viewer session. Instagram
 /// removes items from its live queue as they reach the screen, but Expand and bulk actions
@@ -81,7 +87,7 @@ static id SPKInstantsLocateQuickSnapService(void) {
             for (UIWindow *window in ((UIWindowScene *)scene).windows) {
                 if (![window respondsToSelector:@selector(userSession)])
                     continue;
-                id session = [window valueForKey:@"userSession"];
+                id session = SPKKVCObject(window, @"userSession");
                 if (!session)
                     continue;
                 if ([session respondsToSelector:sharedQSSel]) {
@@ -133,27 +139,51 @@ static NSString *SPKInstantsServiceObservationKey(id media) {
     return identityKey.length > 0 ? [@"cdn:" stringByAppendingString:identityKey] : nil;
 }
 
+/// Declared ahead of the session ledger, which needs it to decide whether a later object for
+/// the same snap carries video information the one it already holds does not.
+static BOOL SPKInstantsServiceMediaIsVideo(id media);
+
 static void SPKInstantsAppendSessionMedia(NSArray *mediaList) {
     if (!sConsumptionSessionActive || mediaList.count == 0)
         return;
     if (!sSessionMedia)
         sSessionMedia = [NSMutableArray array];
 
-    NSMutableSet<NSString *> *knownKeys = [NSMutableSet setWithCapacity:sSessionMedia.count];
-    for (id existing in sSessionMedia) {
+    // Manually Mark Seen learns about snaps here rather than only from the service listener. The listener
+    // reports the list Instagram has *left*, so the snap on screen has already been removed
+    // by the time it fires and the topmost snap of a session is never announced at all.
+    // This ledger sees every snap, including the pre-appearance snapshot.
+    SPKInstantsManualSeenNoteServiceMedia(mediaList);
+
+    NSMutableDictionary<NSString *, NSNumber *> *knownIndexes =
+        [NSMutableDictionary dictionaryWithCapacity:sSessionMedia.count];
+    [sSessionMedia enumerateObjectsUsingBlock:^(id existing, NSUInteger idx, __unused BOOL *stop) {
         NSString *key = SPKInstantsServiceObservationKey(existing);
-        if (key.length > 0)
-            [knownKeys addObject:key];
-    }
+        if (key.length > 0 && !knownIndexes[key])
+            knownIndexes[key] = @(idx);
+    }];
     for (id media in mediaList) {
         NSString *key = SPKInstantsServiceObservationKey(media);
-        if (key.length > 0 && [knownKeys containsObject:key])
+        NSNumber *knownIndex = key.length > 0 ? knownIndexes[key] : nil;
+        if (knownIndex) {
+            // Same snap, possibly a better object. Instagram hands out a light model for the
+            // tray before the full one arrives, and the light one carries no video
+            // renditions, so keeping the first object seen typed a video Instant as a photo
+            // for the rest of the session. Position is preserved; only the object changes.
+            NSUInteger idx = knownIndex.unsignedIntegerValue;
+            id existing = sSessionMedia[idx];
+            if (existing != media && !SPKInstantsServiceMediaIsVideo(existing) &&
+                SPKInstantsServiceMediaIsVideo(media)) {
+                sSessionMedia[idx] = media;
+                SPKLog(@"Instants", @"session media upgraded to the hydrated object for %@", key);
+            }
             continue;
+        }
         if (key.length == 0 && [sSessionMedia containsObject:media])
             continue;
-        [sSessionMedia addObject:media];
         if (key.length > 0)
-            [knownKeys addObject:key];
+            knownIndexes[key] = @(sSessionMedia.count);
+        [sSessionMedia addObject:media];
     }
 }
 
@@ -166,11 +196,22 @@ static void SPKInstantsInsertSessionMedia(id media, NSString *successorKey) {
     if (!sSessionMedia)
         sSessionMedia = [NSMutableArray array];
 
+    SPKInstantsManualSeenNoteServiceMedia(@[ media ]);
+
     NSString *mediaKey = SPKInstantsServiceObservationKey(media);
-    for (id existing in sSessionMedia) {
+    for (NSUInteger i = 0; i < sSessionMedia.count; i++) {
+        id existing = sSessionMedia[i];
         NSString *existingKey = SPKInstantsServiceObservationKey(existing);
         if ((mediaKey.length > 0 && [existingKey isEqualToString:mediaKey]) ||
             (mediaKey.length == 0 && existing == media)) {
+            // Already present, but this object may be the hydrated one. Same rule as the
+            // bulk append: take video information the held object lacks, keep the position.
+            if (existing != media && !SPKInstantsServiceMediaIsVideo(existing) &&
+                SPKInstantsServiceMediaIsVideo(media)) {
+                sSessionMedia[i] = media;
+                SPKLog(@"Instants", @"session media upgraded to the hydrated object for %@",
+                       mediaKey ?: @"(no key)");
+            }
             return;
         }
     }
@@ -564,13 +605,32 @@ static NSInteger SPKInstantsIntegerIvarValue(id target, NSString *key, NSInteger
     }
 }
 
+/// Reads the first of `keys` that `target` actually exposes.
+///
+/// Deliberately does NOT use KVC. `-valueForKey:` on an object that does not have the
+/// key raises NSUndefinedKeyException, and this function is called with long speculative
+/// key lists against Swift objects, so nearly every probe used to throw and catch a real
+/// ObjC exception -- thousands of throw/unwind cycles per menu build, which is what made
+/// the Instants action button lock the viewer for seconds at a time.
+///
+/// Nothing is lost by dropping it: `SPKObjectForSelector` covers every declared property
+/// and method, and the two ivar readers below cover ivar-backed values with no accessor,
+/// which is the only thing KVC could otherwise add. Both are exception-free.
 static id SPKInstantsObjectValue(id target, NSArray<NSString *> *keys) {
     if (!target)
         return nil;
+    // The one thing KVC did that selector and ivar lookup do not: on a dictionary,
+    // -valueForKey: is a subscript. Keep that behaviour explicitly rather than losing it.
+    if ([target isKindOfClass:NSDictionary.class]) {
+        for (NSString *key in keys) {
+            id value = ((NSDictionary *)target)[key];
+            if (value && ![value isKindOfClass:NSNull.class])
+                return value;
+        }
+        return nil;
+    }
     for (NSString *key in keys) {
         id value = SPKObjectForSelector(target, key);
-        if (!value)
-            value = SPKKVCObject(target, key);
         if (!value)
             value = SPKInstantsSwiftIvarValue(target, key);
         if (!value)
@@ -618,6 +678,45 @@ static NSURL *SPKInstantsBestCandidateURL(id candidates) {
     return bestURL;
 }
 
+#pragma mark - Typed IGMedia Fast Path
+
+/// Instants media coming out of `IGQuickSnapService` is plain `IGMedia`, device-confirmed
+/// on IG 447: `availableTimeOrderedSnaps` and `sidePeekPreviewMedias` both return objects
+/// answering `pk`, `graphQLID`, `mediaId`, `mediaType`, `takenAt`, `imageVersions2`,
+/// `videoVersions`, `user`, `video` and `photo`.
+///
+/// That means the generic probing below -- long speculative key lists walked recursively
+/// through nested-fragment keys -- never had anything to find on the objects that actually
+/// matter, while costing a full traversal per media per resolve. Everything reachable
+/// through this check takes the same typed path Feed and Stories already use.
+///
+/// The probing layer is kept only for the objects that are NOT service media: view-derived
+/// fallbacks and Sparkle's own wrapper types.
+static BOOL SPKInstantsIsServiceMedia(id object) {
+    static Class mediaClass = Nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        mediaClass = NSClassFromString(@"IGMedia");
+    });
+    return mediaClass && [object isKindOfClass:mediaClass];
+}
+
+/// `IGMedia.mediaType` is a boxed enum: 1 = photo, 2 = video, 8 = carousel.
+///
+/// The enum alone is not enough for Instants. Video Instants have been observed carrying
+/// mediaType 1 while still exposing `videoVersions`, which typed them as photos here even
+/// though the download path resolved a video URL for them through the same object. The
+/// presence of video renditions is the authoritative signal, so both are checked.
+static BOOL SPKInstantsServiceMediaIsVideo(id media) {
+    id type = SPKObjectForSelector(media, @"mediaType");
+    if ([type respondsToSelector:@selector(integerValue)] && [type integerValue] == 2)
+        return YES;
+    id versions = SPKObjectForSelector(media, @"videoVersions");
+    if ([versions respondsToSelector:@selector(count)] && [versions count] > 0)
+        return YES;
+    return NO;
+}
+
 static NSArray<NSString *> *SPKInstantsNestedKeys(void) {
     return @[ @"asIGQuickSnapMedia", @"asQuickSnapMedia", @"asMSHQuickSnapMedia",
               @"media", @"item", @"model", @"viewModel", @"legacyViewModel",
@@ -633,6 +732,8 @@ static NSURL *SPKInstantsPhotoURLForObject(id object);
 static BOOL SPKInstantsObjectLooksVideo(id object) {
     if (!object)
         return NO;
+    if (SPKInstantsIsServiceMedia(object))
+        return SPKInstantsServiceMediaIsVideo(object);
 
     NSString *mediaType = SPKStringFromValue(SPKInstantsObjectValue(object, @[ @"computedMediaType", @"mediaType", @"productType", @"type" ])).lowercaseString;
     if ([mediaType containsString:@"video"])
@@ -660,6 +761,8 @@ static BOOL SPKInstantsObjectLooksVideo(id object) {
 static NSURL *SPKInstantsVideoURLForObject(id object) {
     if (!object)
         return nil;
+    if (SPKInstantsIsServiceMedia(object))
+        return [SPKUtils getVideoUrlForMedia:object];
 
     NSURL *directURL = SPKURLFromValue(object);
     if (SPKInstantsURLLooksVideo(directURL))
@@ -692,6 +795,8 @@ static NSURL *SPKInstantsVideoURLForObject(id object) {
 static NSURL *SPKInstantsPhotoURLForObject(id object) {
     if (!object)
         return nil;
+    if (SPKInstantsIsServiceMedia(object))
+        return [SPKUtils getPhotoUrlForMedia:object];
 
     NSURL *directURL = SPKURLFromValue(object);
     if (directURL && !SPKInstantsURLLooksVideo(directURL))
@@ -739,6 +844,17 @@ static NSURL *SPKInstantsPhotoURLForObject(id object) {
 static NSString *SPKInstantsMediaPKForObject(id object, NSInteger depth) {
     if (!object || depth > 3)
         return nil;
+    // On service media `pk` and `graphQLID` are the same "<mediaId>_<userPK>" string, so
+    // this agrees with SPKInstantsCacheMediaPK's ordering instead of diverging from it --
+    // the two disagreeing is what made dedup and matching pick different keys.
+    if (SPKInstantsIsServiceMedia(object)) {
+        for (NSString *key in @[ @"pk", @"graphQLID", @"mediaId" ]) {
+            NSString *value = SPKStringFromValue(SPKObjectForSelector(object, key));
+            if (value.length > 0)
+                return value;
+        }
+        return nil;
+    }
     for (NSString *key in @[ @"graphQLID", @"mediaId", @"mediaID", @"pk", @"mediaPk", @"id" ]) {
         NSString *value = SPKStringFromValue(SPKInstantsObjectValue(object, @[ key ]));
         if (value.length > 0)
@@ -754,7 +870,12 @@ static NSString *SPKInstantsMediaPKForObject(id object, NSInteger depth) {
 static NSDate *SPKInstantsPostedDateForObject(id object, NSInteger depth) {
     if (!object || depth > 3)
         return nil;
-    for (NSString *key in @[ @"takenAt", @"taken_at", @"takenAtDate", @"device_timestamp", @"deviceTimestamp", @"created_at", @"createdAt", @"upload_time", @"uploadTime", @"published_time", @"publishedTime" ]) {
+    // Service media exposes a single epoch-seconds `takenAt` number; skip the key sweep.
+    NSArray<NSString *> *dateKeys =
+        SPKInstantsIsServiceMedia(object)
+            ? @[ @"takenAt" ]
+            : @[ @"takenAt", @"taken_at", @"takenAtDate", @"device_timestamp", @"deviceTimestamp", @"created_at", @"createdAt", @"upload_time", @"uploadTime", @"published_time", @"publishedTime" ];
+    for (NSString *key in dateKeys) {
         id value = SPKInstantsObjectValue(object, @[ key ]);
         if (!value)
             continue;
@@ -770,6 +891,9 @@ static NSDate *SPKInstantsPostedDateForObject(id object, NSInteger depth) {
                 return [NSDate dateWithTimeIntervalSince1970:raw];
         }
     }
+    // Service media has no nested fragments to walk into.
+    if (SPKInstantsIsServiceMedia(object))
+        return nil;
     id nested = SPKInstantsObjectValue(object, SPKInstantsNestedKeys());
     if (nested && nested != object)
         return SPKInstantsPostedDateForObject(nested, depth + 1);
@@ -873,7 +997,7 @@ static void SPKInstantsInitTracking(UIView *stackView) {
     // This is a Swift Array bridged to NSArray of SingleSnapView instances.
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -904,7 +1028,7 @@ static void SPKInstantsInitTracking(UIView *stackView) {
     id state = SPKInstantsObjectValue(stackView, @[ @"state" ]);
     if (state && [state isKindOfClass:NSObject.class]) {
         @try {
-            id val = [state valueForKey:@"currentlyDisplayingQuickSnapIndex"];
+            id val = SPKKVCObject(state, @"currentlyDisplayingQuickSnapIndex");
             if ([val respondsToSelector:@selector(integerValue)]) {
                 initialIndex = [val integerValue];
             }
@@ -1084,7 +1208,7 @@ static NSInteger SPKInstantsActiveIndex(UIView *stackView) {
     // Primary: visual detection (always works if views are on screen)
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -1259,7 +1383,7 @@ static UIImageView *SPKInstantsImageViewInSnap(UIView *snap) {
             if (!hasImage) {
                 id spec = nil;
                 @try {
-                    spec = [imageView valueForKey:@"imageSpecifier"];
+                    spec = SPKKVCObject(imageView, @"imageSpecifier");
                 } @catch (__unused NSException *e) {
                 }
                 specURL = SPKURLFromValue(SPKObjectForSelector(spec, @"url") ?: SPKKVCObject(spec, @"url"));
@@ -1333,7 +1457,36 @@ static NSString *SPKInstantsURLIdentityKey(NSURL *url) {
 /// All identity keys a media object can be recognised by: every image candidate, every
 /// video version, and any single top-level URL. Used to match the on-screen snap back to
 /// its full-resolution entry in the store list.
+/// Identity keys are derived from a media object's full candidate list, which never
+/// changes for a given object, but `SPKInstantsResolveForHeader` used to rebuild them for
+/// every snap on every call -- and each rebuild walked `imageVersions2.candidates` plus
+/// both URL resolvers. Cache them per object.
+///
+/// Keyed weakly so a consumed snap that IG has released does not stay alive here; the
+/// deliberate strong retention of consumed media belongs to `sMediaByIdentityKey`, which
+/// has its own bound and reset rules.
+static NSMapTable<id, NSSet<NSString *> *> *sIdentityKeyCache = nil;
+
+static NSSet<NSString *> *SPKInstantsComputeIdentityKeysForMedia(id media);
+
 static NSSet<NSString *> *SPKInstantsIdentityKeysForMedia(id media) {
+    if (!media)
+        return nil;
+    if (!sIdentityKeyCache) {
+        sIdentityKeyCache = [NSMapTable mapTableWithKeyOptions:NSPointerFunctionsWeakMemory |
+                                                               NSPointerFunctionsObjectPointerPersonality
+                                                  valueOptions:NSPointerFunctionsStrongMemory];
+    }
+    NSSet<NSString *> *cached = [sIdentityKeyCache objectForKey:media];
+    if (cached)
+        return cached.count > 0 ? cached : nil;
+
+    NSSet<NSString *> *computed = SPKInstantsComputeIdentityKeysForMedia(media);
+    [sIdentityKeyCache setObject:computed ?: [NSSet set] forKey:media];
+    return computed;
+}
+
+static NSSet<NSString *> *SPKInstantsComputeIdentityKeysForMedia(id media) {
     if (!media)
         return nil;
     NSMutableSet<NSString *> *keys = [NSMutableSet set];
@@ -1753,6 +1906,7 @@ static SPKInstantsResolvedSnap *SPKInstantsStoreSnapMatchingIdentityKey(NSString
 }
 
 SPKInstantsResolvedSnap *SPKInstantsResolveActiveSnapInView(UIView *viewInHierarchy) {
+    SPK_PERF_SCOPE(@"InstantsResolver.resolveActiveSnap");
     sConsumptionSessionActive = YES;
     UIView *activeView = SPKInstantsActiveSnapViewInWindow(viewInHierarchy);
     NSString *visualIdentityKey = activeView
@@ -1881,7 +2035,7 @@ static NSArray<SPKInstantsResolvedSnap *> *SPKInstantsResolveFromStackView(UIVie
     // Read currentImages directly from the stack view (it has its own copy, separate from state)
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -2092,7 +2246,7 @@ static NSString *SPKInstantsActiveSnapPKFromStackView(UIView *stackView) {
     // Read currentImages from the stack view directly
     NSArray *currentImages = nil;
     @try {
-        currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+        currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
     } @catch (__unused NSException *e) {
     }
     if (!currentImages.count) {
@@ -2123,18 +2277,18 @@ static NSString *SPKInstantsActiveSnapPKFromStackView(UIView *stackView) {
     // Fallback: try the state's viewModel items array at the same index (may work early)
     id state = nil;
     @try {
-        state = [stackView valueForKey:@"state"];
+        state = SPKKVCObject(stackView, @"state");
     } @catch (__unused NSException *e) {
     }
     if (state && [state isKindOfClass:NSObject.class]) {
         id viewModel = nil;
         @try {
-            viewModel = [state valueForKey:@"viewModel"];
+            viewModel = SPKKVCObject(state, @"viewModel");
         } @catch (__unused NSException *e) {
         }
         if (!viewModel) {
             @try {
-                viewModel = [state valueForKey:@"_viewModel"];
+                viewModel = SPKKVCObject(state, @"_viewModel");
             } @catch (__unused NSException *e) {
             }
         }
@@ -2172,6 +2326,7 @@ static NSInteger SPKInstantsFindSnapIndexByPK(NSArray<SPKInstantsResolvedSnap *>
 /// and returns a complete SPKInstantsResolverResult.
 /// When no service media is available, falls back to the live stack view.
 SPKInstantsResolverResult *SPKInstantsResolveForHeader(UIView *header, NSString *reason) {
+    SPK_PERF_SCOPE(@"InstantsResolver.resolveForHeader");
     sConsumptionSessionActive = YES;
     // Seed the session from whatever Instagram exposed before/while opening the viewer,
     // then keep appending later service updates. These arrays are cleared on genuine exit.
@@ -2198,7 +2353,7 @@ SPKInstantsResolverResult *SPKInstantsResolveForHeader(UIView *header, NSString 
 
     if (stackView) {
         @try {
-            currentImages = SPKArrayFromCollection([stackView valueForKey:@"currentImages"]);
+            currentImages = SPKArrayFromCollection(SPKKVCObject(stackView, @"currentImages"));
         } @catch (__unused NSException *e) {
         }
         if (!currentImages.count) {
@@ -2582,6 +2737,11 @@ static void replaced_instantsServiceListenerUpdate(id self, SEL _cmd, id timeOrd
     if (orig_instantsServiceListenerUpdate)
         orig_instantsServiceListenerUpdate(self, _cmd, timeOrdered, peekPreview, didReceive);
     SPKInstantsCacheServiceSnaps(timeOrdered, peekPreview, @"listener");
+    // Manually Mark Seen keeps the stored seen state clean on every update rather than once at
+    // the end, because Instagram rewrites that value as each snap is consumed. It only
+    // makes the snaps reappear when the viewer closes.
+    SPKInstantsManualSeenNoteServiceMedia(SPKArrayFromCollection(timeOrdered));
+    SPKInstantsManualSeenHoldUnseen(sQuickSnapServiceInstance ?: SPKInstantsLocateQuickSnapService());
 }
 
 static void replaced_instantsBadgeManagerServiceUpdate(id self, SEL _cmd, id timeOrdered, id peekPreview, BOOL didReceive) {
@@ -2685,8 +2845,11 @@ static void replaced_consumptionVCViewWillAppear(id self, SEL _cmd, BOOL animate
     // The topmost Instant can be removed from the service/store before the header action
     // first resolves. Snapshot it before the viewer's appearance work performs that pop,
     // preserving the IGMedia model with its PK, timestamp, and full candidate list.
+    SPKInstantsManualSeenSetViewerOpen(YES);
+
     if (!sConsumptionSessionActive) {
         sConsumptionSessionActive = YES;
+        sConsumptionSessionGeneration++;
         NSArray *snapshot = SPKInstantsStoreSnapshot();
         SPKInstantsAppendSessionMedia(snapshot);
         SPKLog(@"Instants", @"viewer pre-appearance snapshot count=%lu",
@@ -2697,33 +2860,61 @@ static void replaced_consumptionVCViewWillAppear(id self, SEL _cmd, BOOL animate
         orig_consumptionVCViewWillAppear(self, _cmd, animated);
 }
 
+/// Whether the consumption view controller has genuinely left, as opposed to being covered.
+///
+/// Sparkle's full-screen preview presents with `UIModalPresentationFullScreen` (deliberately,
+/// so Instagram pauses the snap timer behind it), which tears the viewer's view out of the
+/// window exactly as a real exit does. Treating that as "left the viewer" wiped the store
+/// snapshot and the registry mid-session, so returning from an expand left the snap
+/// resolvable only from the view. While covered, the viewer is the presenting controller, so
+/// it keeps `presentedViewController` and its own parent/presenting links; a real exit has
+/// none of them.
+static BOOL SPKInstantsConsumptionVCHasLeft(UIViewController *viewController) {
+    if (!viewController)
+        return YES;
+    return viewController.presentedViewController == nil &&
+           viewController.presentingViewController == nil &&
+           viewController.parentViewController == nil &&
+           viewController.viewIfLoaded.window == nil;
+}
+
 static void replaced_consumptionVCViewDidDisappear(id self, SEL _cmd, BOOL animated) {
     if (orig_consumptionVCViewDidDisappear)
         orig_consumptionVCViewDidDisappear(self, _cmd, animated);
 
-    // `viewDidDisappear:` also fires when the viewer is merely COVERED — Sparkle's
-    // full-screen preview presents with UIModalPresentationFullScreen (deliberately, so
-    // IG pauses the snap timer behind it), which tears the viewer's view out of the
-    // window exactly as a real exit does. Treating that as "left the viewer" wiped the
-    // store snapshot and the registry mid-session, so returning from an expand left the
-    // snap resolvable only from the view: no backing media, and the download sheet
-    // collapsed to the single "Fallback source" row.
-    //
-    // A genuine exit sets one of these; being covered sets neither.
+    // `viewDidDisappear:` also fires when the viewer is merely covered, which must not end
+    // the session; see SPKInstantsConsumptionVCHasLeft for why the distinction matters and
+    // how it is drawn. A genuine exit usually sets one of the two flags below.
     UIViewController *viewController = [self isKindOfClass:UIViewController.class] ? (UIViewController *)self : nil;
     if (viewController) {
         BOOL leaving = viewController.isBeingDismissed || viewController.isMovingFromParentViewController;
-        // Safety net for a teardown that sets neither flag: fully detached from the
-        // hierarchy. Being covered keeps the parent/presenting links intact, so this
-        // cannot fire for a presentation.
-        BOOL detached = viewController.presentingViewController == nil &&
-                        viewController.parentViewController == nil &&
-                        viewController.viewIfLoaded.window == nil;
-        if (!leaving && !detached) {
+        if (!leaving && !SPKInstantsConsumptionVCHasLeft(viewController)) {
             SPKLog(@"Instants", @"consumption VC covered (not exiting) — keeping snapshot, registry & cache");
+            // Not necessarily covered. One of Instagram's dismiss animations sets neither
+            // flag and still has its links attached at this point, tearing them down only
+            // when the transition finishes, so an exit that way looked exactly like being
+            // covered and never ran the end-of-session work: the Instants stayed gone until
+            // something else refetched. Re-check once the transition has had time to end.
+            __weak UIViewController *weakVC = viewController;
+            uint64_t generation = sConsumptionSessionGeneration;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)),
+                           dispatch_get_main_queue(), ^{
+                UIViewController *strongVC = weakVC;
+                if (generation != sConsumptionSessionGeneration)
+                    return;
+                if (strongVC && !SPKInstantsConsumptionVCHasLeft(strongVC))
+                    return;
+                SPKLog(@"Instants", @"consumption VC left after the transition — closing the session");
+                SPKInstantsManualSeenEndViewerSession(sQuickSnapServiceInstance);
+                SPKInstantsResetResolverState(NO, @"consumption VC dismissed by transition");
+            });
             return;
         }
     }
+
+    // The viewer is genuinely gone, so this is where the held snaps are restored.
+    // Doing it any earlier would feed a consumed snap back into the still-open viewer.
+    SPKInstantsManualSeenEndViewerSession(sQuickSnapServiceInstance);
 
     SPKInstantsResetResolverState(NO, @"consumption VC disappeared");
 }

@@ -31,6 +31,13 @@ FORMS = {
     "tr": {"FILE": ("%ld dosya", "%ld dosya"), "ITEM": ("%ld öğe", "%ld öğe"), "USER": ("%ld kullanıcı", "%ld kullanıcı"), "PARTICIPANT": ("%ld katılımcı", "%ld katılımcı"), "MESSAGE": ("%ld mesaj", "%ld mesaj"), "SENDER": ("%ld gönderen", "%ld gönderen")},
     "vi": {"FILE": ("%ld tệp", "%ld tệp"), "ITEM": ("%ld mục", "%ld mục"), "USER": ("%ld người dùng", "%ld người dùng"), "PARTICIPANT": ("%ld người tham gia", "%ld người tham gia"), "MESSAGE": ("%ld tin nhắn", "%ld tin nhắn"), "SENDER": ("%ld người gửi", "%ld người gửi")},
     "zh-Hans": {"FILE": ("%ld 个文件", "%ld 个文件"), "ITEM": ("%ld 项", "%ld 项"), "USER": ("%ld 位用户", "%ld 位用户"), "PARTICIPANT": ("%ld 位参与者", "%ld 位参与者"), "MESSAGE": ("%ld 条消息", "%ld 条消息"), "SENDER": ("%ld 位发送者", "%ld 位发送者")},
+    "zh-Hant": {"FILE": ("%ld 個檔案", "%ld 個檔案"), "ITEM": ("%ld 項", "%ld 項"), "USER": ("%ld 位使用者", "%ld 位使用者"), "PARTICIPANT": ("%ld 位參與者", "%ld 位參與者"), "MESSAGE": ("%ld 則訊息", "%ld 則訊息"), "SENDER": ("%ld 位傳送者", "%ld 位傳送者")},
+    "es-419": {"FILE": ("%ld archivo", "%ld archivos"), "ITEM": ("%ld elemento", "%ld elementos"), "USER": ("%ld usuario", "%ld usuarios"), "PARTICIPANT": ("%ld participante", "%ld participantes"), "MESSAGE": ("%ld mensaje", "%ld mensajes"), "SENDER": ("%ld remitente", "%ld remitentes")},
+    "fa": {"FILE": ("%ld فایل", "%ld فایل"), "ITEM": ("%ld مورد", "%ld مورد"), "USER": ("%ld کاربر", "%ld کاربر"), "PARTICIPANT": ("%ld شرکت‌کننده", "%ld شرکت‌کننده"), "MESSAGE": ("%ld پیام", "%ld پیام"), "SENDER": ("%ld فرستنده", "%ld فرستنده")},
+    "fil": {"FILE": ("%ld file", "%ld na file"), "ITEM": ("%ld item", "%ld na item"), "USER": ("%ld user", "%ld na user"), "PARTICIPANT": ("%ld kalahok", "%ld na kalahok"), "MESSAGE": ("%ld mensahe", "%ld na mensahe"), "SENDER": ("%ld nagpadala", "%ld na nagpadala")},
+    "gsw-BE": {"FILE": ("%ld Datei", "%ld Dateie"), "ITEM": ("%ld Element", "%ld Element"), "USER": ("%ld Benutzer", "%ld Benutzer"), "PARTICIPANT": ("%ld Teilnähmer", "%ld Teilnähmer"), "MESSAGE": ("%ld Nachricht", "%ld Nachrichte"), "SENDER": ("%ld Absänder", "%ld Absänder")},
+    "id": {"FILE": ("%ld file", "%ld file"), "ITEM": ("%ld item", "%ld item"), "USER": ("%ld pengguna", "%ld pengguna"), "PARTICIPANT": ("%ld peserta", "%ld peserta"), "MESSAGE": ("%ld pesan", "%ld pesan"), "SENDER": ("%ld pengirim", "%ld pengirim")},
+    "th": {"FILE": ("%ld ไฟล์", "%ld ไฟล์"), "ITEM": ("%ld รายการ", "%ld รายการ"), "USER": ("ผู้ใช้ %ld คน", "ผู้ใช้ %ld คน"), "PARTICIPANT": ("ผู้เข้าร่วม %ld คน", "ผู้เข้าร่วม %ld คน"), "MESSAGE": ("%ld ข้อความ", "%ld ข้อความ"), "SENDER": ("ผู้ส่ง %ld คน", "ผู้ส่ง %ld คน")},
 }
 
 SLAVIC = {
@@ -47,6 +54,9 @@ OTHER = {
     "ja": ("他%ld人", "他%ld人"), "ko": ("외 %ld명", "외 %ld명"), "pt-BR": ("%ld outro", "%ld outros"),
     "ro": ("încă %ld", "încă %ld"), "ru": ("ещё %ld", "ещё %ld"), "tr": ("%ld kişi daha", "%ld kişi daha"),
     "uk": ("ще %ld", "ще %ld"), "vi": ("%ld người khác", "%ld người khác"), "zh-Hans": ("另外 %ld 人", "另外 %ld 人"),
+    "zh-Hant": ("另外 %ld 人", "另外 %ld 人"), "es-419": ("%ld más", "%ld más"), "fa": ("%ld نفر دیگر", "%ld نفر دیگر"),
+    "fil": ("%ld pa", "%ld pa"), "gsw-BE": ("%ld wyteri", "%ld wyteri"), "id": ("%ld lainnya", "%ld lainnya"),
+    "th": ("อีก %ld คน", "อีก %ld คน"),
 }
 
 

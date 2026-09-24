@@ -114,5 +114,37 @@
 			<string>%ld utenti</string>
 		</dict>
 	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_FAILED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld non riuscito</string>
+			<key>other</key>
+			<string>%ld non riusciti</string>
+		</dict>
+	</dict>
+	<key>DOWNLOADS_BACKGROUND_NOTIFICATION_SAVED_BODY</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>one</key>
+			<string>%ld elemento salvato</string>
+			<key>other</key>
+			<string>%ld elementi salvati</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

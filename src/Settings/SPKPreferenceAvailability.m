@@ -22,8 +22,8 @@ BOOL SPKPrefIsAvailable(NSString *key) {
         return YES;
     }
 
-    // Progressive blur relies on UIScrollEdgeEffect, which only exists on iOS 26+.
-    if ([key isEqualToString:kSPKPrefInterfaceProgressiveBlur]) {
+    // The scroll edge style relies on UIScrollEdgeEffect, which only exists on iOS 26+.
+    if ([key isEqualToString:kSPKPrefInterfaceScrollEdgeStyle]) {
         return SPKIsIOSVersionAtLeast(@"26.0");
     }
 

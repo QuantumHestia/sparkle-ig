@@ -8,6 +8,7 @@
 #import "SPKBulkActionMenuEditViewController.h"
 #import "SPKEditActionsListViewController.h"
 #import "SPKPreferences.h"
+#import "SPKSettingsViewController.h"
 
 #import "../AssetUtils.h"
 #import "../Shared/AutoSave/SPKAutoSave.h"
@@ -16,6 +17,25 @@
 #import "../Utils.h"
 
 CGFloat const SPKSettingsCellIconPointSize = 24.0;
+
+UIViewController *SPKSettingsTopPresenter(void) {
+    UIViewController *presenter = UIApplication.sharedApplication.keyWindow.rootViewController;
+    while (presenter.presentedViewController)
+        presenter = presenter.presentedViewController;
+    return presenter;
+}
+
+void SPKSettingsReloadPresenter(UIViewController *presenter) {
+    SPKSettingsViewController *settingsVC = nil;
+    if ([presenter isKindOfClass:SPKSettingsViewController.class]) {
+        settingsVC = (SPKSettingsViewController *)presenter;
+    } else if ([presenter isKindOfClass:UINavigationController.class]) {
+        UIViewController *top = ((UINavigationController *)presenter).topViewController;
+        if ([top isKindOfClass:SPKSettingsViewController.class])
+            settingsVC = (SPKSettingsViewController *)top;
+    }
+    [settingsVC.tableView reloadData];
+}
 
 NSDictionary *SPKTopicSection(NSString *header, NSArray *rows, NSString *footer) {
     NSMutableDictionary *section = [@{
@@ -41,6 +61,17 @@ NSDictionary *SPKTopicSectionWithInfoSheet(NSDictionary *section, BOOL usesInfoS
 
 UIImage *SPKSettingsIcon(NSString *name) {
     return [SPKAssetUtils instagramIconNamed:name pointSize:SPKSettingsCellIconPointSize];
+}
+
+UIImage *SPKSettingsPlaybackIcon(void) {
+    // SPKSettingsIcon substitutes a placeholder for a missing glyph, so look it up
+    // without one to know when to fall back.
+    UIImage *glyph = [SPKAssetUtils resolvedImageNamed:@"playback"
+                                             pointSize:SPKSettingsCellIconPointSize
+                                                weight:UIImageSymbolWeightRegular
+                                                source:SPKResolvedImageSourceInstagramIcon
+                                         renderingMode:UIImageRenderingModeAlwaysTemplate];
+    return glyph ?: SPKSettingsSystemIcon(@"speedometer", SPKSettingsCellIconPointSize, UIImageSymbolWeightRegular);
 }
 
 UIImage *SPKSettingsSystemIcon(NSString *name, CGFloat pointSize, UIImageSymbolWeight weight) {
@@ -207,6 +238,14 @@ UIMenu *SPKReelsTapControlMenu(void) {
     ]];
 }
 
+UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_VIDEO"), nil, nil, defaultsKey, @"video", NO),
+        SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_SESSION"), nil, nil, defaultsKey, @"session", NO),
+        SPKMenuCommand(SPKL(@"PLAYBACK_PANEL_SCOPE_ALWAYS"), nil, nil, defaultsKey, @"always", NO)
+    ]];
+}
+
 UIMenu *SPKMainFeedModeMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_FOR_YOU"), @"heart", nil, @"feed_mode", @"default", YES),
@@ -214,10 +253,33 @@ UIMenu *SPKMainFeedModeMenu(void) {
     ]];
 }
 
+UIMenu *SPKLinkOpeningModeMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, @"general_link_opening_mode", @"default", NO),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:@[
+                         SPKMenuCommand(SPKL(@"COMMON_LINK_OPEN_IN_APP_BROWSER_TEXT"), nil, nil, @"general_link_opening_mode", @"in_app", NO),
+                         SPKMenuCommand(SPKL(@"COMMON_LINK_OPEN_SAFARI_TEXT"), nil, nil, @"general_link_opening_mode", @"safari", NO),
+                         SPKMenuCommand(SPKL(@"COMMON_LINK_OPEN_ALWAYS_ASK_TEXT"), nil, nil, @"general_link_opening_mode", @"ask", NO)
+                     ]]
+    ]];
+}
+
 UIMenu *SPKSeenButtonPositionMenu(void) {
     return [UIMenu menuWithChildren:@[
         SPKMenuCommand(SPKL(@"MENU_TOP"), @"arrow_up", nil, @"msgs_seen_button_position", @"top", NO),
         SPKMenuCommand(SPKL(@"MENU_BOTTOM"), @"arrow_down", nil, @"msgs_seen_button_position", @"bottom", NO)
+    ]];
+}
+
+UIMenu *SPKHiddenChatsRevealResetMenu(void) {
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_LEAVING_THE_INBOX"), nil, nil, @"msgs_hidden_chats_reveal_reset", @"leave_inbox", NO),
+        SPKMenuCommand(SPKL(@"MENU_APP_BACKGROUNDED"), nil, nil, @"msgs_hidden_chats_reveal_reset", @"background", NO),
+        SPKMenuCommand(SPKL(@"MENU_MANUALLY"), nil, nil, @"msgs_hidden_chats_reveal_reset", @"never", NO)
     ]];
 }
 
@@ -240,6 +302,33 @@ UIMenu *SPKLiquidGlassTabBarStateMenu(void) {
                          SPKMenuCommand(SPKL(@"MENU_FIXED"), nil, nil, kSPKPrefInterfaceLiquidGlassTabBarMode, @"fixed", YES),
                          SPKMenuCommand(SPKL(@"MENU_HIDE_SCROLL"), nil, nil, kSPKPrefInterfaceLiquidGlassTabBarMode, @"hide", YES)
                      ]]
+    ]];
+}
+
+UIMenu *SPKScrollEdgeStyleMenu(void) {
+    // Only Off needs a restart: Instagram's own edge effect hides happen once
+    // while screens are set up. Every other style applies to open screens live.
+    NSMutableArray<UIMenuElement *> *styles = [NSMutableArray arrayWithArray:@[
+        SPKMenuCommand(SPKL(@"MENU_DEFAULT"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"default", NO),
+        SPKMenuCommand(SPKL(@"MENU_SOFT"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"soft", NO),
+        SPKMenuCommand(SPKL(@"MENU_HARD"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"hard", NO)
+    ]];
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, kSPKPrefInterfaceScrollEdgeStyle, @"off", YES),
+        [UIMenu menuWithTitle:@""
+                        image:nil
+                   identifier:nil
+                      options:UIMenuOptionsDisplayInline
+                     children:styles]
+    ]];
+}
+
+UIMenu *SPKStoryManualSeenModeMenu(void) {
+    static NSString *const kSPKStoryManualSeenModeKey = @"stories_manual_seen_mode";
+    return [UIMenu menuWithChildren:@[
+        SPKMenuCommand(SPKL(@"MENU_OFF"), nil, nil, kSPKStoryManualSeenModeKey, @"off", NO),
+        SPKMenuCommand(SPKL(@"STORIES_SEEN_RECEIPTS_MANUAL_SEEN_MODE_TAP"), nil, nil, kSPKStoryManualSeenModeKey, @"tap", NO),
+        SPKMenuCommand(SPKL(@"STORIES_SEEN_RECEIPTS_MANUAL_SEEN_MODE_TOGGLE"), nil, nil, kSPKStoryManualSeenModeKey, @"toggle", NO)
     ]];
 }
 

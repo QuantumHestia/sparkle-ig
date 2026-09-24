@@ -6,6 +6,7 @@
 #import "../AutoSave/SPKAutoSaveFilter.h"
 #import "../Instants/SPKInstantsAutoSave.h"
 #import "../Messages/SPKDirectAutoSave.h"
+#import "../Messages/SPKDirectHiddenChats.h"
 #import "../Messages/SPKDirectSeenContext.h"
 #import "../Messages/SPKPresenceTracking.h"
 #import "../Stories/SPKStoryAutoSave.h"
@@ -64,6 +65,7 @@ SPK_NOTIF_CONST(kSPKNotificationAutoSavePending, "auto_save_pending");
 SPK_NOTIF_CONST(kSPKNotificationDirectVisualMarkSeen, "direct_visual_mark_seen");
 SPK_NOTIF_CONST(kSPKNotificationThreadMessagesMarkSeen, "thread_messages_mark_seen");
 SPK_NOTIF_CONST(kSPKNotificationDirectThreadSeenRule, "direct_thread_seen_rule");
+SPK_NOTIF_CONST(kSPKNotificationDirectHiddenChat, "direct_hidden_chat");
 SPK_NOTIF_CONST(kSPKNotificationDirectAutoSave, "direct_auto_save");
 SPK_NOTIF_CONST(kSPKNotificationDirectAutoSaveThreadRule, "toggle_direct_auto_save_thread_rule");
 SPK_NOTIF_CONST(kSPKNotificationUnsentMessage, "unsent_message");
@@ -77,6 +79,7 @@ SPK_NOTIF_CONST(kSPKNotificationInstantsCaptureBlocked, "instants_capture_blocke
 SPK_NOTIF_CONST(kSPKNotificationInstantsUpload, "instants_upload");
 SPK_NOTIF_CONST(kSPKNotificationInstantsAutoSave, "instants_auto_save");
 SPK_NOTIF_CONST(kSPKNotificationInstantsAutoSaveUserRule, "toggle_instants_auto_save_user_rule");
+SPK_NOTIF_CONST(kSPKNotificationInstantsMarkSeen, "instants_mark_seen");
 
 SPK_NOTIF_CONST(kSPKNotificationProfileCopyInfo, "profile_copy_info");
 SPK_NOTIF_CONST(kSPKNotificationProfileAnalyzerComplete, "profile_analyzer_complete");
@@ -100,8 +103,10 @@ SPK_NOTIF_CONST(kSPKNotificationGalleryImport, "gallery_import");
 SPK_NOTIF_CONST(kSPKNotificationSettingsExport, "settings_export");
 SPK_NOTIF_CONST(kSPKNotificationSettingsImport, "settings_import");
 SPK_NOTIF_CONST(kSPKNotificationSettingsClearCache, "settings_clear_cache");
+SPK_NOTIF_CONST(kSPKNotificationLanguagePackUpdate, "language_pack_update");
 SPK_NOTIF_CONST(kSPKNotificationCopyDescription, "copy_description");
 SPK_NOTIF_CONST(kSPKNotificationCopyNoteText, "copy_note_text");
+SPK_NOTIF_CONST(kSPKNotificationFakeLocation, "fake_location");
 SPK_NOTIF_CONST(kSPKNotificationShareLongPressCopyLink, "share_long_press_copy_link");
 SPK_NOTIF_CONST(kSPKNotificationCopyComment, "copy_comment");
 SPK_NOTIF_CONST(kSPKNotificationCopyGIFLink, "copy_gif_link");
@@ -230,6 +235,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationDirectVisualMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_VISUAL_MESSAGE_SEEN_MESSAGE"), @"view_twice"),
               SPKNotificationItem(kSPKNotificationThreadMessagesMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_MARK_MESSAGES_SEEN_MESSAGE"), @"messages"),
               SPKNotificationItem(kSPKNotificationDirectThreadSeenRule, SPKL(@"UI_NOTIFICATION_CENTER_CHAT_SEEN_LIST_CHANGES_TEXT"), @"eye"),
+              SPKNotificationItem(kSPKNotificationDirectHiddenChat, SPKL(@"UI_NOTIFICATION_CENTER_HIDDEN_CHAT_CHANGES_TEXT"), @"messages_off"),
               SPKNotificationItem(kSPKNotificationUnsentMessage, SPKL(@"UI_NOTIFICATION_CENTER_UNSENT_MESSAGE"), @"undo"),
               SPKNotificationItem(kSPKNotificationUnsentReaction, SPKL(@"UI_NOTIFICATION_CENTER_REMOVED_REACTION_ACTION"), @"reactions"),
               SPKNotificationItem(kSPKNotificationPresenceOnline, SPKL(@"MESSAGES_ACTIVITY_USER_ONLINE_TITLE"), @"circle_check_filled"),
@@ -237,11 +243,13 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationPresenceTyping, SPKL(@"MESSAGES_ACTIVITY_USER_TYPING_TITLE"), @"keyboard"),
               SPKNotificationItem(kSPKNotificationPresenceRead, SPKL(@"MESSAGES_ACTIVITY_MESSAGE_READ_TITLE"), @"eye"),
               SPKNotificationItem(kSPKNotificationPresenceUserRule, SPKL(@"MESSAGES_ACTIVITY_LIST_CHANGES_TITLE"), @"activity"),
+              SPKNotificationItem(kSPKNotificationFakeLocation, SPKL(@"UI_NOTIFICATION_CENTER_FAKE_LOCATION_TEXT"), @"location"),
           ]},
         @{@"title" : SPKL(@"INSTANTS_CONFIRMATION_INSTANTS_TITLE"),
           @"items" : @[
               SPKNotificationItem(kSPKNotificationInstantsCaptureBlocked, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_CAPTURE_BLOCKED_TEXT"), @"lock"),
               SPKNotificationItem(kSPKNotificationInstantsUpload, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_UPLOAD_FAILED_TEXT"), @"warning"),
+              SPKNotificationItem(kSPKNotificationInstantsMarkSeen, SPKL(@"UI_NOTIFICATION_CENTER_INSTANT_MARK_SEEN_TEXT"), @"eye"),
           ]},
         @{@"title" : SPKL(@"PROFILE_TITLE"),
           @"items" : @[
@@ -280,6 +288,7 @@ NSArray<NSDictionary *> *SPKNotificationPreferenceSections(void) {
               SPKNotificationItem(kSPKNotificationSettingsExport, SPKL(@"UI_NOTIFICATION_CENTER_EXPORT_SETTINGS_TEXT"), @"arrow_up"),
               SPKNotificationItem(kSPKNotificationSettingsImport, SPKL(@"UI_NOTIFICATION_CENTER_IMPORT_SETTINGS_TEXT"), @"arrow_down"),
               SPKNotificationItem(kSPKNotificationSettingsClearCache, SPKL(@"GENERAL_GENERAL_CLEAR_CACHE_TITLE"), @"trash"),
+              SPKNotificationItem(kSPKNotificationLanguagePackUpdate, SPKL(@"UI_NOTIFICATION_CENTER_LANGUAGE_PACK_UPDATE_TEXT"), @"translate"),
               SPKNotificationItem(kSPKNotificationCopyDescription, SPKL(@"UI_NOTIFICATION_CENTER_COPY_DESCRIPTION_TEXT"), @"copy"),
               SPKNotificationItem(kSPKNotificationCopyNoteText, SPKL(@"MESSAGES_NOTES_COPY_NOTE_TEXT_TITLE"), @"copy"),
               SPKNotificationItem(kSPKNotificationShareLongPressCopyLink, SPKL(@"GENERAL_BEHAVIOR_HOLD_SEND_COPY_LINK_TITLE"), @"link"),
@@ -700,16 +709,29 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
         // When the user is already in the manage list (or anywhere in Settings),
         // don't advertise/enable "tap to open" — there's nothing to open.
         BOOL suppressSeenListTap = SPKManualSeenSettingsUIVisible();
+        // Hidden chat pills are informational rather than success toned, because their
+        // icon says which way the chat went and the success tone replaces it with a
+        // checkmark. They still open their list, so the tap is offered for that
+        // identifier on any tone.
+        BOOL offersListTap = (tone == SPKNotificationToneSuccess ||
+                              [identifier isEqualToString:kSPKNotificationDirectHiddenChat]) &&
+                             !suppressSeenListTap;
         NSString *resolvedSubtitle = subtitle;
-        if (tone == SPKNotificationToneSuccess && !suppressSeenListTap) {
+        if (offersListTap) {
             if ([identifier isEqualToString:kSPKNotificationStorySeenUserRule] ||
                 [identifier isEqualToString:kSPKNotificationProfileStorySeenUserRule]) {
-                BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+                BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
                 resolvedSubtitle = manualSeenEnabled ? SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_EXCLUDED_LIST_TEXT") : SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_INCLUDED_LIST_TEXT");
             } else if ([identifier isEqualToString:kSPKNotificationDirectThreadSeenRule] ||
                        [identifier isEqualToString:kSPKNotificationProfileMessagesSeenUserRule]) {
                 BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"msgs_manual_seen"];
                 resolvedSubtitle = manualSeenEnabled ? SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_EXCLUDED_LIST_TEXT") : SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_INCLUDED_LIST_TEXT");
+            } else if ([identifier isEqualToString:kSPKNotificationDirectHiddenChat]) {
+                // Only when the pill has nothing more specific to say: the hide pill's
+                // own subtitle explains how to get the chat back, which is worth more
+                // than naming the screen the tap opens.
+                if (resolvedSubtitle.length == 0)
+                    resolvedSubtitle = SPKL(@"UI_NOTIFICATION_CENTER_TAP_OPEN_HIDDEN_CHATS_TEXT");
             } else if ([identifier isEqualToString:kSPKNotificationPresenceUserRule]) {
                 resolvedSubtitle = SPKL(@"MESSAGES_ACTIVITY_TAP_TO_OPEN_LIST_SUBTITLE");
             } else if (SPKAutoSaveListViewControllerForRuleIdentifier(identifier)) {
@@ -723,7 +745,7 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
                             : nil;
         SPKNotificationPillView *pill = [SPKNotificationPillView toastPillWithTitle:title subtitle:resolvedSubtitle icon:icon tone:tone];
 
-        if (tone == SPKNotificationToneSuccess && !suppressSeenListTap) {
+        if (offersListTap) {
             if ([identifier isEqualToString:kSPKNotificationStorySeenUserRule] ||
                 [identifier isEqualToString:kSPKNotificationProfileStorySeenUserRule]) {
                 pill.onTapWhenCompleted = ^{
@@ -733,6 +755,10 @@ static BOOL SPKManualSeenSettingsUIVisible(void) {
                        [identifier isEqualToString:kSPKNotificationProfileMessagesSeenUserRule]) {
                 pill.onTapWhenCompleted = ^{
                     [SPKUtils presentViewControllerInSheet:SPKDirectManualSeenListViewController()];
+                };
+            } else if ([identifier isEqualToString:kSPKNotificationDirectHiddenChat]) {
+                pill.onTapWhenCompleted = ^{
+                    [SPKUtils presentViewControllerInSheet:SPKDirectHiddenChatsListViewController()];
                 };
             } else if (SPKAutoSaveListViewControllerForRuleIdentifier(identifier)) {
                 pill.onTapWhenCompleted = ^{

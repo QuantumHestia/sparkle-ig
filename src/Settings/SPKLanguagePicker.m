@@ -1,6 +1,9 @@
 #import "SPKStrings.h"
 #import "SPKLanguagePicker.h"
 #import "SPKLanguagePack.h"
+#import "../Shared/i18n/SPKLanguagePackAddFlow.h"
+#import "../Shared/i18n/SPKLanguagePackUpdater.h"
+#import "../Shared/UI/SPKNotificationCenter.h"
 #import "SPKSetting.h"
 #import "SPKSettingsViewController.h"
 #import "SPKTopicSettingsSupport.h"
@@ -9,7 +12,6 @@
 #import "../Shared/UI/SPKMediaChrome.h"
 #import "../Utils.h"
 
-#import <UniformTypeIdentifiers/UniformTypeIdentifiers.h>
 
 // Names the translation issue form. A bare issues/new carries a title but lands
 // on the template chooser, because blank issues are disabled for this repository.
@@ -38,9 +40,14 @@ static NSDictionary<NSString *, NSString *> *SPKLangNames(void) {
     dispatch_once(&o, ^{ m = @{
         @"en":@"English", @"ar":@"العربية", @"de":@"Deutsch", @"el":@"Ελληνικά",
         @"es-ES":@"Español", @"fr":@"Français", @"hi":@"हिन्दी", @"it":@"Italiano",
-        @"ja":@"日本語", @"ko":@"한국어", @"pt-BR":@"Português (Brasil)", @"ru":@"Русский",
+        @"ja":@"日本語", @"ko":@"한국어", @"lt":@"Lietuvių", @"pt-BR":@"Português (Brasil)", @"ru":@"Русский",
         @"ro":@"Română",
-        @"tr":@"Türkçe", @"uk":@"Українська", @"vi":@"Tiếng Việt", @"zh-Hans":@"简体中文" }; });
+        @"tr":@"Türkçe", @"uk":@"Українська", @"vi":@"Tiếng Việt", @"zh-Hans":@"简体中文",
+        @"zh-Hant":@"繁體中文", @"fa":@"فارسی", @"th":@"ไทย", @"fil":@"Filipino",
+        // Named here rather than left to the endonym fallback, which gets these three wrong:
+        // it answers "Indonesia" (the country) for id, lowercases the Spanish variant, and reads
+        // the BE in gsw-BE as Belgium, yielding "Schwiizertüütsch (Belgie)" for a Bernese pack.
+        @"id":@"Bahasa Indonesia", @"es-419":@"Español (Latinoamérica)", @"gsw-BE":@"Bärndütsch" }; });
     return m;
 }
 
@@ -55,16 +62,11 @@ NSString *SPKLanguageDisplayName(NSString *code) {
     return endonym.length > 0 ? endonym : code;
 }
 
-@interface SPKLanguagePickerViewController : SPKSettingsViewController <UIDocumentPickerDelegate>
+@interface SPKLanguagePickerViewController : SPKSettingsViewController
 
 @property (nonatomic, copy) NSArray<NSString *> *languageCodes;
 @property (nonatomic, copy) NSArray<SPKLanguagePack *> *installedPacks;
-// Held for the lifetime of the presentation: UIDocumentPickerViewController keeps
-// its delegate weakly, so nothing else retains us as the delegate while it is up.
-@property (nonatomic, strong, nullable) UIDocumentPickerViewController *activePicker;
-/// Archives from one pick, imported after the picker is off screen so anything
-/// this reports is presented by a sheet that is actually on screen.
-@property (nonatomic, strong, nullable) NSMutableArray<NSURL *> *pendingImportURLs;
+@property (nonatomic, assign) BOOL checkingForUpdates;
 
 @end
 
@@ -76,16 +78,6 @@ NSString *SPKLanguageDisplayName(NSString *code) {
         [self reloadLanguages];
     }
     return self;
-}
-
-// A safety net, not the main path. The document picker presents as a page sheet,
-// which leaves this view in the hierarchy and so fires no appearance callbacks
-// when it goes away; the picker's own dismissal completion drives the import.
-// Taking the queue is atomic, so being called from both is harmless.
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    if (self.pendingImportURLs.count > 0)
-        [self importPendingArchives];
 }
 
 - (void)reloadLanguages {
@@ -146,18 +138,37 @@ NSString *SPKLanguageDisplayName(NSString *code) {
         [languageRows addObject:row];
     }
 
-    SPKSetting *importRow = [SPKSetting buttonCellWithTitle:SPKL(@"LANGUAGE_PACK_IMPORT_TITLE")
-                                                   subtitle:SPKL(@"LANGUAGE_PACK_IMPORT_SUBTITLE")
-                                                       icon:SPKSettingsIcon(@"plus")
-                                                     action:^{
-                                                         [weakSelf presentImportPicker];
-                                                     }];
-    SPKSetting *exportRow = [SPKSetting buttonCellWithTitle:SPKL(@"LANGUAGE_PACK_EXPORT_TITLE")
-                                                   subtitle:SPKL(@"LANGUAGE_PACK_EXPORT_SUBTITLE")
-                                                       icon:SPKSettingsIcon(@"share")
-                                                     action:^{
-                                                         [weakSelf exportTemplate];
-                                                     }];
+    // One row, not four. Downloading a published language is the answer almost every time; a file,
+    // a link, and the English template belong to whoever is building a translation, and they live in
+    // that screen's own more menu rather than as three rows nobody else needs to read past.
+    // No icon on this row or the update toggle below it: the language rows above carry none, and a
+    // glyph on the only row in its own titled section is decoration the section header already does.
+    SPKSetting *addRow = [SPKSetting buttonCellWithTitle:SPKL(@"LANGUAGE_PACK_ADD_TITLE")
+                                                subtitle:nil
+                                                    icon:nil
+                                                  action:^{
+                                                      [weakSelf presentCatalog];
+                                                  }];
+    // The subtitle answers the only question the row raises once it is on: whether it has actually
+    // run. Before the first check there is nothing to report, so the row stands on its title.
+    NSString *lastChecked = [self lastCheckedSubtitle];
+    SPKSetting *autoUpdateRow =
+        lastChecked ? [SPKSetting switchCellWithTitle:SPKL(@"LANGUAGE_PACK_AUTO_UPDATE_TITLE")
+                                             subtitle:lastChecked
+                                          defaultsKey:kSPKLanguagePackAutoUpdateKey]
+                    : [SPKSetting switchCellWithTitle:SPKL(@"LANGUAGE_PACK_AUTO_UPDATE_TITLE")
+                                          defaultsKey:kSPKLanguagePackAutoUpdateKey];
+
+    // The automatic check only runs when the version moves, which is the only thing that can change a
+    // pack published as a release asset. A pack rebuilt and republished under a release the user
+    // already has is invisible to that, so this is the way to pick one up.
+    SPKSetting *checkNowRow =
+        [SPKSetting buttonCellWithTitle:self.checkingForUpdates ? SPKL(@"LANGUAGE_PACK_CHECKING_TITLE")
+                                                                : SPKL(@"LANGUAGE_PACK_CHECK_NOW_TITLE")
+                               subtitle:nil
+                                   icon:nil
+                                 action:^{ [weakSelf checkForPackUpdates]; }];
+    checkNowRow.userInfo = @{ @"hidesDisclosure" : @(YES) };
 
     // Reporting and contributing are different jobs with different destinations:
     // one fills in a form, the other opens the guide that needs no build.
@@ -171,7 +182,8 @@ NSString *SPKLanguageDisplayName(NSString *code) {
                                                           url:kSPKTranslationGuideURL];
     [self replaceSections:@[
         SPKTopicSection(@"", languageRows, SPKL(@"LANGUAGE_LIST_FOOTER")),
-        SPKTopicSection(SPKL(@"LANGUAGE_PACKS_HEADER"), @[ importRow, exportRow ], nil),
+        SPKTopicSection(SPKL(@"LANGUAGE_PACKS_HEADER"), @[ addRow ], SPKL(@"LANGUAGE_PACK_ADD_FOOTER")),
+        SPKTopicSection(SPKL(@"LANGUAGE_PACK_UPDATES_HEADER"), @[ autoUpdateRow, checkNowRow ], SPKL(@"LANGUAGE_PACK_UPDATES_FOOTER")),
         SPKTopicSection(@"", @[ reportRow, contributeRow ], SPKL(@"LANGUAGE_HELP_FOOTER")),
     ]];
 }
@@ -285,100 +297,65 @@ NSString *SPKLanguageDisplayName(NSString *code) {
     }
 }
 
-#pragma mark - Import and export
+#pragma mark - Adding a language
 
-- (void)presentImportPicker {
-    // Zip only. A folder cannot be selected in the Files browser once file types
-    // are on offer, and a picked catalog file is copied out of its folder before
-    // it arrives, losing the .lproj that says what language it is. An archive is
-    // the one shape that survives the trip intact.
-    UIDocumentPickerViewController *picker =
-        [[UIDocumentPickerViewController alloc] initForOpeningContentTypes:@[ UTTypeZIP ] asCopy:YES];
-    picker.delegate = self;
-    // Several languages can be installed in one go.
-    picker.allowsMultipleSelection = YES;
-    // UIKit dims files that do not conform to the requested type rather than
-    // hiding them, and offers no way to filter them out, so showing extensions is
-    // the only thing that makes the pickable archives obvious at a glance.
-    picker.shouldShowFileExtensions = YES;
-    self.activePicker = picker;
-    [self presentViewController:picker animated:YES completion:nil];
-}
-
-- (void)documentPickerWasCancelled:(UIDocumentPickerViewController *)controller {
-    self.activePicker = nil;
-}
-
-- (void)documentPicker:(UIDocumentPickerViewController *)controller didPickDocumentsAtURLs:(NSArray<NSURL *> *)urls {
-    self.activePicker = nil;
-    if (urls.count == 0)
-        return;
-
-    SPKLog(@"i18n", @"Picked %lu language pack archive(s)", (unsigned long)urls.count);
-    self.pendingImportURLs = [urls mutableCopy];
-
-    // Importing here would work, but reporting a failure or switching language
-    // would not: an alert raised now is presented into a picker that is on its
-    // way out, and dismissing this sheet would dismiss the picker instead. So
-    // dismiss the picker explicitly and act once it has actually gone. Its own
-    // automatic dismissal offers no completion to hang this on.
+- (void)presentCatalog {
     __weak typeof(self) weakSelf = self;
-    UIViewController *presented = self.presentedViewController ?: controller;
-    if (presented.presentingViewController) {
-        [presented dismissViewControllerAnimated:YES
-                                      completion:^{
-                                          [weakSelf importPendingArchives];
+    [SPKLanguagePackAddFlow presentCatalogFrom:self
+                                      onImport:^(NSString *code) {
+                                          [weakSelf reloadLanguages];
                                       }];
-        return;
-    }
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [weakSelf importPendingArchives];
-    });
 }
 
-- (void)importPendingArchives {
-    NSArray<NSURL *> *urls = self.pendingImportURLs;
-    self.pendingImportURLs = nil;
-    if (urls.count == 0)
+/// Runs the check the user asked for, ignoring the version stamp the automatic one goes by. A refresh
+/// announces itself with its own pill naming the languages, so the only case left to report here is
+/// finding nothing, which otherwise looks like the button did nothing at all.
+- (void)checkForPackUpdates {
+    if (self.checkingForUpdates)
         return;
+    self.checkingForUpdates = YES;
+    [self rebuildSections];
 
-    NSMutableArray<NSString *> *failures = [NSMutableArray array];
-    for (NSURL *url in urls) {
-        NSError *error = nil;
-        SPKLanguagePack *pack = [SPKLanguagePackManager importPackAtURL:url error:&error];
-        if (!pack) {
-            SPKWarnLog(@"i18n", @"Language pack import failed for %@: %@", url.lastPathComponent, error);
-            [failures addObject:[NSString stringWithFormat:@"%@: %@", url.lastPathComponent,
-                                                           error.localizedDescription ?: SPKL(@"LANGUAGE_PACK_ERROR_GENERIC")]];
+    __weak typeof(self) weakSelf = self;
+    [SPKLanguagePackUpdater checkForUpdatesNow:^(NSInteger refreshed, NSError *error) {
+        typeof(self) strongSelf = weakSelf;
+        if (!strongSelf)
+            return;
+        strongSelf.checkingForUpdates = NO;
+        if (refreshed > 0)
+            [strongSelf reloadLanguages];  // also rebuilds, and the pack list itself has changed
+        else
+            [strongSelf rebuildSections];
+
+        if (error) {
+            [strongSelf presentErrorWithTitle:SPKL(@"LANGUAGE_PACK_CATALOG_ERROR")
+                                      message:error.localizedDescription];
+        } else if (refreshed == 0) {
+            SPKNotify(kSPKNotificationLanguagePackUpdate, SPKL(@"LANGUAGE_PACK_ALL_CURRENT_TOAST"), nil,
+                      @"translate", SPKNotificationToneForIconResource(@"translate"));
         }
-    }
-
-    // Installing a pack makes a language available; it does not choose it. The
-    // new rows appear in the list above and switching stays an explicit tap,
-    // which also keeps importing several at once from meaning anything arbitrary.
-    [self reloadLanguages];
-
-    if (failures.count > 0) {
-        [self presentErrorWithTitle:SPKL(@"LANGUAGE_PACK_IMPORT_ERROR_TITLE")
-                            message:[failures componentsJoinedByString:@"\n"]];
-    }
+    }];
 }
 
-- (void)exportTemplate {
-    NSError *error = nil;
-    NSString *archive = [SPKLanguagePackManager exportArchiveForLanguage:@"en" error:&error];
-    if (archive.length == 0) {
-        [self presentErrorWithTitle:SPKL(@"LANGUAGE_PACK_EXPORT_ERROR_TITLE") message:error.localizedDescription];
-        return;
-    }
-
-    UIActivityViewController *share =
-        [[UIActivityViewController alloc] initWithActivityItems:@[ [NSURL fileURLWithPath:archive] ]
-                                         applicationActivities:nil];
-    share.popoverPresentationController.sourceView = self.view;
-    share.popoverPresentationController.sourceRect = CGRectMake(CGRectGetMidX(self.view.bounds),
-                                                                CGRectGetMidY(self.view.bounds), 1.0, 1.0);
-    [self presentViewController:share animated:YES completion:nil];
+/// When the check last succeeded, or nil before it ever has.
+- (nullable NSString *)lastCheckedSubtitle {
+    NSDate *last = [SPKLanguagePackUpdater lastCheckDate];
+    if (!last)
+        return nil;  // nothing has run yet, so there is no date to claim
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    // Written in the language Sparkle is being read in, so day names and ordering match the rest of
+    // the screen. The shared helper keeps the device's regional variant when the language is merely
+    // being followed, which is what preserves its 12/24-hour clock.
+    formatter.locale = [SPKUtils spk_activeFormattingLocale];
+    // The subtitle gets one line, so the date has to stay short. A check that just ran makes
+    // "Today at 03:24" the useful reading; once the date is old enough to spell out, the time of day
+    // stops being the interesting part, so it goes and the date alone still fits.
+    BOOL relative = [NSCalendar.currentCalendar isDateInToday:last] || [NSCalendar.currentCalendar isDateInYesterday:last];
+    formatter.dateStyle = NSDateFormatterMediumStyle;
+    formatter.timeStyle = relative ? NSDateFormatterShortStyle : NSDateFormatterNoStyle;
+    formatter.doesRelativeDateFormatting = relative;
+    return [NSString stringWithFormat:SPKL(@"LANGUAGE_PACK_LAST_CHECKED_FORMAT"),
+                                      [formatter stringFromDate:last]];
 }
 
 - (void)presentErrorWithTitle:(NSString *)title message:(NSString *)message {

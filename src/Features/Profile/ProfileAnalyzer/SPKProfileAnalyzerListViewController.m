@@ -732,7 +732,15 @@ static NSString *SPKPARelativeDate(NSDate *date) {
     if (self.kind == SPKPAListKindVisited && indexPath.row < (NSInteger)self.shownVisits.count) {
         SPKProfileAnalyzerVisit *v = self.shownVisits[indexPath.row];
         NSString *count = v.visitCount > 1 ? [NSString stringWithFormat:SPKL(@"PROFILE_PROFILE_ANALYZER_LIST_VALUE_VISITS_FORMAT"), (long)v.visitCount] : @"";
-        cell.subtitleLabel.text = [NSString stringWithFormat:@"%@%@", SPKPARelativeDate(v.lastSeen), count];
+        // The localized count carries its own leading bullet with inconsistent
+        // spacing across locales (and none before it), so strip it here and
+        // rejoin with a single " • " separator.
+        NSString *trimmedCount = [count stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if ([trimmedCount hasPrefix:@"•"] || [trimmedCount hasPrefix:@"·"]) {
+            trimmedCount = [[trimmedCount substringFromIndex:1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        }
+        NSString *dateString = SPKPARelativeDate(v.lastSeen);
+        cell.subtitleLabel.text = trimmedCount.length ? [NSString stringWithFormat:@"%@ • %@", dateString, trimmedCount] : dateString;
     } else if (self.kind == SPKPAListKindProfileUpdate) {
         SPKProfileAnalyzerProfileChange *ch = [self updateAtIndexPath:indexPath];
         cell.subtitleLabel.text = ch ? [self changeSummaryForUpdate:ch] : @"";

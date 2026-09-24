@@ -514,8 +514,11 @@ static NSArray<UIView *> *SPKShareCandidateSubviews(UIView *root, NSInteger maxD
         [queue removeObjectAtIndex:0];
         UIView *view = entry[@"view"];
         NSInteger depth = [entry[@"depth"] integerValue];
-        if (view != root && SPKShareViewLooksLikeSendControl(view)) {
+        if (view != root && view.userInteractionEnabled && SPKShareViewLooksLikeSendControl(view)) {
+            // Outermost match only. The send glyph and label inside a matched
+            // control must stay untouched, or they start swallowing its taps.
             [matches addObject:view];
+            continue;
         }
         if (depth >= maxDepth)
             continue;
@@ -545,12 +548,18 @@ static void SPKInstallShareLongPressOnView(UIView *view) {
         [SPKShareCopyLongPressRecognizers() addObject:existingRecognizer];
         return;
     }
-    view.userInteractionEnabled = YES;
+    // Never force userInteractionEnabled: enabling it on a decorative subview of
+    // the send button makes that subview the hit-test target and the button's
+    // center stops receiving taps, even with the recognizer disabled.
+    if (!view.userInteractionEnabled)
+        return;
     UILongPressGestureRecognizer *gesture = [[UILongPressGestureRecognizer alloc] initWithTarget:view action:@selector(spk_copyShareLinkLongPressed:)];
-    gesture.minimumPressDuration = 0.22;
+    gesture.minimumPressDuration = 0.3;
     gesture.cancelsTouchesInView = YES;
-    gesture.delaysTouchesBegan = YES;
-    gesture.delaysTouchesEnded = YES;
+    // Delaying touches holds the button's tap back until the long press fails,
+    // which drops quick taps on the send button.
+    gesture.delaysTouchesBegan = NO;
+    gesture.delaysTouchesEnded = NO;
     gesture.enabled = SPKShareLongPressCopyEnabled();
     for (UIGestureRecognizer *existing in view.gestureRecognizers.copy) {
         if ([existing isKindOfClass:UILongPressGestureRecognizer.class] && existing != gesture) {

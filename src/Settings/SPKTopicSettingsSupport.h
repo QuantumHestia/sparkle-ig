@@ -15,6 +15,8 @@ NSDictionary *SPKTopicSectionWithInfoSheet(NSDictionary *section, BOOL usesInfoS
 FOUNDATION_EXPORT CGFloat const SPKSettingsCellIconPointSize;
 UIImage *SPKSettingsIcon(NSString *name);
 UIImage *SPKSettingsSystemIcon(NSString *name, CGFloat pointSize, UIImageSymbolWeight weight);
+/// Playback controls row icon; IG builds without the speed glyph (410) get an SF Symbol.
+UIImage *SPKSettingsPlaybackIcon(void);
 SPKSetting *SPKSettingApplyIconTint(SPKSetting *setting, UIColor *_Nullable tintColor);
 /// Attaches `helpText` to a row built inline inside a section's row array.
 SPKSetting *SPKSettingWithHelp(SPKSetting *setting, NSString *helpText);
@@ -23,11 +25,17 @@ SPKSetting *SPKTopicNavigationSetting(NSString *title, NSString *iconName, CGFlo
 SPKSetting *SPKActionButtonDefaultActionNavigationSetting(SPKActionButtonSource source);
 SPKSetting *SPKActionButtonConfigurationNavigationSetting(SPKActionButtonSource source, NSString *topicTitle, NSArray<NSString *> *supportedActions, NSArray<SPKActionMenuSection *> *defaultSections);
 UIMenu *SPKReelsTapControlMenu(void);
+/// "Keep Speed For" choices for a playback controls scope key (`stories_playback_speed_scope`, ...).
+UIMenu *SPKPlaybackSpeedScopeMenu(NSString *defaultsKey);
 UIMenu *SPKMainFeedModeMenu(void);
 UIMenu *SPKSeenButtonPositionMenu(void);
+UIMenu *SPKHiddenChatsRevealResetMenu(void);
 UIMenu *SPKLastActiveFormatMenu(void);
 UIMenu *SPKLiquidGlassTabBarStateMenu(void);
+UIMenu *SPKScrollEdgeStyleMenu(void);
+UIMenu *SPKStoryManualSeenModeMenu(void);
 UIMenu *SPKSwipeCloseCommentsDirectionMenu(void);
+UIMenu *SPKLinkOpeningModeMenu(void);
 UIMenu *SPKCacheAutoClearMenu(void);
 UIMenu *SPKNotificationProgressSubtitleStyleMenu(void);
 UIMenu *SPKNotificationPillPositionMenu(void);
@@ -40,5 +48,14 @@ UIMenu *SPKAutoSaveFilterModeMenu(NSString *filterModeKey, NSString *subjectPlur
 UIMenu *SPKStoryAutoSaveFilterModeMenu(void);
 UIMenu *SPKGalleryShortcutTargetMenu(void);
 SPKSetting *SPKFeedHeaderButtonDefaultActionNavigationSetting(void);
+
+/// The view controller a settings row should present from: the topmost presented
+/// controller, which is normally the navigation controller wrapping the page.
+UIViewController *SPKSettingsTopPresenter(void);
+
+/// Reloads whichever settings page is on screen behind `presenter`, so rows whose
+/// enabled state depends on something outside NSUserDefaults (a keychain-backed lock,
+/// for one) redraw after the flow that changed it finishes.
+void SPKSettingsReloadPresenter(UIViewController *presenter);
 
 NS_ASSUME_NONNULL_END

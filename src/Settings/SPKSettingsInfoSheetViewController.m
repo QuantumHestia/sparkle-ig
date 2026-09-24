@@ -61,8 +61,13 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
 
 @property (nonatomic, copy) NSArray<SPKSetting *> *rows;
 @property (nonatomic, strong) UIStackView *entryStack;
+@property (nonatomic, strong) UIScrollView *scrollView;
+/// Height of the assembled sheet as actually laid out, or 0 before the first
+/// layout pass. Preferred over the estimate once it lands.
+@property (nonatomic, assign) CGFloat spk_measuredSheetHeight;
 
 - (CGFloat)spk_contentHeightForWidth:(CGFloat)width;
+- (CGFloat)spk_sheetHeightForWidth:(CGFloat)width;
 
 @end
 
@@ -207,8 +212,11 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
     self.extendedLayoutIncludesOpaqueBars = YES;
 
     UIScrollView *scrollView = [UIScrollView new];
+    self.scrollView = scrollView;
     scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    scrollView.alwaysBounceVertical = YES;
+    // Scrolling is armed in -viewDidLayoutSubviews, and only when the
+    // explanation is taller than the stop the sheet settled on.
+    scrollView.alwaysBounceVertical = NO;
     // Runs the full height of the sheet, under the navigation bar, so the bar
     // picks up its own scroll-edge treatment: Liquid Glass on iOS 26, and the
     // solid Instagram background with a hairline on iOS 18 and lower. The safe
@@ -241,6 +249,35 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
     ]];
 }
 
+/// The height the detent should resolve to: the measured one once there is a
+/// layout to measure, and the text estimate only until then.
+- (CGFloat)spk_sheetHeightForWidth:(CGFloat)width {
+    if (self.spk_measuredSheetHeight > 0.0)
+        return self.spk_measuredSheetHeight;
+    return [self spk_contentHeightForWidth:width];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    // The estimate is measured from the text rather than from the view tree, so
+    // it can land a few points short of the real layout: enough for the sheet to
+    // need a scroll it visibly should not need, which costs a gesture to
+    // discover. Once there is a laid-out height, hand it to the resolver and let
+    // the sheet settle on it.
+    CGFloat measured = [SPKUtils sheetHeightFittingContentOfScrollView:self.scrollView];
+    if (measured > 0.0 && fabs(measured - self.spk_measuredSheetHeight) > 0.5) {
+        self.spk_measuredSheetHeight = measured;
+        if (@available(iOS 16.0, *)) {
+            // Height does not feed back into the wrap width, so the next pass
+            // measures the same content and this settles after one round.
+            [self.navigationController.sheetPresentationController invalidateDetents];
+        }
+    }
+
+    [SPKUtils updateScrollingForFittedContent:self.scrollView];
+}
+
 // MARK: - Presentation
 
 + (void)presentFromViewController:(UIViewController *)presenter
@@ -270,7 +307,7 @@ static CGFloat SPKInfoSheetTextHeight(NSString *text, UIFont *font, CGFloat widt
                                                                        if (!strongVC || !strongNav)
                                                                            return context.maximumDetentValue * 0.5;
 
-                                                                       CGFloat height = [strongVC spk_contentHeightForWidth:CGRectGetWidth(strongNav.view.bounds)];
+                                                                       CGFloat height = [strongVC spk_sheetHeightForWidth:CGRectGetWidth(strongNav.view.bounds)];
                                                                        return MIN(MAX(height, kSPKInfoSheetMinimumHeight), context.maximumDetentValue);
                                                                    }];
         sheet.detents = @[ fitted ];

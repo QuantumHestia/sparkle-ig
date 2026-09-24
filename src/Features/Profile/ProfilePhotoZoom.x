@@ -98,16 +98,48 @@ static NSURL *SPKImageURLFromViewHierarchy(UIView *view) {
     return nil;
 }
 
-static BOOL SPKShouldInterceptProfileLongPress(UILongPressGestureRecognizer *gesture) {
-    if (![SPKUtils getBoolPref:@"profile_photo_zoom"]) {
-        return NO;
-    }
+// Demangled: IGProfileStoryViewerPresenter.IGProfileStoryPresenter
+static Class SPKProfileStoryPresenterClass(void) {
+    return objc_getClass("_TtC29IGProfileStoryViewerPresenter23IGProfileStoryPresenter");
+}
 
-    if (!gesture || gesture.state != UIGestureRecognizerStateBegan) {
-        return NO;
+// Zoom only applies to the profile page header. Avatars elsewhere (explore,
+// feed, comments) keep IG's own long press, which is usually the story peek.
+static UIViewController *SPKProfileControllerForView(UIView *view) {
+    Class profileControllerClass = NSClassFromString(@"IGProfileViewController");
+    if (!profileControllerClass || !view)
+        return nil;
+    for (UIViewController *controller = [SPKUtils viewControllerForAncestralView:view]; controller; controller = controller.parentViewController) {
+        if ([controller isKindOfClass:profileControllerClass])
+            return controller;
     }
+    return nil;
+}
 
-    UIView *view = gesture.view;
+// The profile header uses the same long press for story peek and for the photo.
+// When story peek is unlocked and the avatar shows a story ring, IG's peek owns
+// the gesture, and the photo zoom moves into the peek's "View profile picture"
+// row (see the presenter hook below).
+static BOOL SPKProfileStoryPeekOwnsLongPress(UIView *view) {
+    if (![SPKUtils getBoolPref:@"stories_unlock_preview"] || !SPKProfileStoryPresenterClass())
+        return NO;
+
+    UIViewController *controller = SPKProfileControllerForView(view);
+    if (!controller)
+        return NO;
+
+    UIView *photoView = SPKObjectForSelector(view, @"profilePhotoView") ?: view;
+    SEL hasRing = NSSelectorFromString(@"hasAnyStoryRing");
+    for (UIView *candidate = photoView; candidate; candidate = candidate.superview) {
+        if ([candidate respondsToSelector:hasRing])
+            return ((BOOL (*)(id, SEL))objc_msgSend)(candidate, hasRing);
+        if (candidate == controller.view)
+            break;
+    }
+    return NO;
+}
+
+static BOOL SPKShowProfilePhotoZoomFromView(UIView *view) {
     if (!view) {
         return NO;
     }
@@ -135,6 +167,35 @@ static BOOL SPKShouldInterceptProfileLongPress(UILongPressGestureRecognizer *ges
                                    pausePlayback:nil
                                   resumePlayback:nil];
     return YES;
+}
+
+static BOOL SPKShouldInterceptProfileLongPress(UILongPressGestureRecognizer *gesture) {
+    if (![SPKUtils getBoolPref:@"profile_photo_zoom"]) {
+        return NO;
+    }
+
+    if (!gesture || gesture.state != UIGestureRecognizerStateBegan || !gesture.view) {
+        return NO;
+    }
+
+    if (!SPKProfileControllerForView(gesture.view) || SPKProfileStoryPeekOwnsLongPress(gesture.view)) {
+        return NO;
+    }
+
+    return SPKShowProfilePhotoZoomFromView(gesture.view);
+}
+
+static id SPKProfilePhotoZoomBlock(id original, UIView *view) {
+    if (!view)
+        return original;
+    void (^fallback)(void) = original;
+    __weak UIView *weakView = view;
+    return [^{
+        if ([SPKUtils getBoolPref:@"profile_photo_zoom"] && SPKShowProfilePhotoZoomFromView(weakView))
+            return;
+        if (fallback)
+            fallback();
+    } copy];
 }
 
 static void (*orig_coinFlipLongPress)(id, SEL, UILongPressGestureRecognizer *);
@@ -167,6 +228,30 @@ static void SPKHookedCoinFlipLongPress(id self, SEL _cmd, UILongPressGestureReco
     }
 
     %orig;
+}
+%end
+
+// When story peek owns the long press (see SPKProfileStoryPeekOwnsLongPress) but
+// Instagram then declines to peek for this account, it falls back to its own
+// expanded picture through this delegate callback. Showing the zoom here keeps a
+// long press on a story ring from ever landing on Instagram's viewer.
+%hook IGProfileViewController
+- (void)profileAvatarActionsController:(id)controller showExpandedProfilePicFrom:(id)from isLongPress:(BOOL)isLongPress {
+    if (isLongPress && [SPKUtils getBoolPref:@"profile_photo_zoom"]) {
+        UIView *sourceView = [from isKindOfClass:[UIView class]] ? from : self.view;
+        if (SPKShowProfilePhotoZoomFromView(sourceView))
+            return;
+    }
+    %orig;
+}
+%end
+
+// The profile story peek's "View profile picture" row, and the expanded photo IG
+// falls back to when a peek cannot load, both open the zoom instead.
+%hook _TtC29IGProfileStoryViewerPresenter23IGProfileStoryPresenter
+- (void)showStoryPeekFromView:(UIView *)view storyViewModel:(id)model showExpandedPicFallbackHandler:(id)fallback onFollowUser:(id)onFollow onViewProfilePicture:(id)onViewProfilePicture {
+    UIView *sourceView = [view isKindOfClass:[UIView class]] ? view : nil;
+    %orig(view, model, SPKProfilePhotoZoomBlock(fallback, sourceView), onFollow, SPKProfilePhotoZoomBlock(onViewProfilePicture, sourceView));
 }
 %end
 

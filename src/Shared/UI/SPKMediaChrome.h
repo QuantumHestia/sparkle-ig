@@ -69,6 +69,16 @@ NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItems(NSArray<UIBarButton
 /// distributed evenly across the standard bottom bar.
 NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItemsWithTrailingGroup(NSArray<UIBarButtonItem *> *primaryItems, NSArray<UIBarButtonItem *> *trailingItems);
 
+/// Like the above for any number of groups, given leading to trailing. Each
+/// non-empty group becomes its own glass capsule on iOS 26; on iOS <= 18 every
+/// item is distributed evenly across the standard bottom bar.
+NSArray<UIBarButtonItem *> *SPKMediaChromeBottomToolbarItemsWithGroups(NSArray<NSArray<UIBarButtonItem *> *> *groups);
+
+/// Shows `title` in the navigation bar. While the top scroll edge style is soft
+/// on iOS 26+, the text sits in a Liquid Glass capsule so it stays readable
+/// over bright media; otherwise it is the plain navigation title. Nil clears it.
+void SPKMediaChromeSetGlassTitle(UIViewController *viewController, NSString *_Nullable title);
+
 /// Applies media-chrome styling to a bottom toolbar: neutral tint, and on iOS
 /// 18 and lower a solid background matching the settings/list view background
 /// (mirroring the navigation bar). No-op background on iOS 26+, where Liquid

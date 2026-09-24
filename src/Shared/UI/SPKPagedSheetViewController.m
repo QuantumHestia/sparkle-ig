@@ -341,7 +341,17 @@
     static const CGFloat kIconSize = 24.0;
 
     UIImage *glyph = nil;
-    if (iconName.length > 0) {
+    NSString *fallbackSymbol = entry[@"symbol"];
+    if (iconName.length > 0 && fallbackSymbol.length > 0) {
+        // Glyphs missing from older Instagram builds fall back to the entry's SF Symbol
+        // instead of the generic placeholder.
+        glyph = [SPKAssetUtils resolvedImageNamed:iconName
+                               fallbackSystemName:fallbackSymbol
+                                        pointSize:0
+                                           weight:UIImageSymbolWeightSemibold
+                                           source:SPKResolvedImageSourceInstagramIcon
+                                    renderingMode:UIImageRenderingModeAlwaysTemplate];
+    } else if (iconName.length > 0) {
         // Load the pristine catalog image at native size (pointSize 0 = no rasterising
         // downscale), the same path menuIconNamed: relies on. Forcing a smaller point
         // size routes vector-backed (.svg) glyphs through a renderer downscale that

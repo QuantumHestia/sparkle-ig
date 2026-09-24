@@ -98,6 +98,8 @@ FOUNDATION_EXPORT NSInteger const SPKDownloadStoreSchemaVersion;
 FOUNDATION_EXPORT NSString *const kSPKDownloadMaxConcurrentKey;
 FOUNDATION_EXPORT NSString *const kSPKDownloadHistoryLimitKey;
 FOUNDATION_EXPORT NSString *const kSPKDownloadDetectDuplicatesKey;
+FOUNDATION_EXPORT NSString *const kSPKDownloadBackgroundKey;
+FOUNDATION_EXPORT NSString *const kSPKDownloadBackgroundNotificationKey;
 
 FOUNDATION_EXPORT NSNotificationName const SPKDownloadServiceDidChangeNotification;
 FOUNDATION_EXPORT NSNotificationName const SPKDownloadJobDidChangeNotification;

@@ -1,29 +1,35 @@
 #import "SPKStartupHooks.h"
 
 #import "../Utils.h"
+#import "../Shared/i18n/SPKLanguagePackUpdater.h"
 #import "SPKHookBisect.h"
 #import "SPKStabilityGuard.h"
 
 FOUNDATION_EXPORT void SPKInstallLiquidGlassHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProgressiveBlurHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallDebugButtonIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFeedActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHeaderActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFollowingFeedHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallReelsActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoriesActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoryAudioToggleHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallStoryPlaybackControlsHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallHideAudioUnavailableToastHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoryAutoSaveHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallDirectAutoSaveHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallMessagesActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAggregatedMediaActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfileActionButtonHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfilePhotoZoomHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallSquareGridHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallBackgroundRefreshHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSeenButtonHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallFollowConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallCreateGroupButtonControlHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallConfirmSendHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSharedLinkCleanupHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallBrowserLinkRoutingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallShareLongPressCopyHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideMetaAIHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAccountSwitchHooksIfNeeded(void);
@@ -38,6 +44,7 @@ FOUNDATION_EXPORT void SPKInstallTweakStoryHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakReelsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakMessagesHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallTweakGeneralUIHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallDownloadNotificationRoutingHooks(void);
 FOUNDATION_EXPORT void SPKInstallTweakLaunchCriticalHooks(void);
 FOUNDATION_EXPORT void SPKInstallOpenLinkFromClipboardHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideExploreGridHooksIfEnabled(void);
@@ -47,6 +54,7 @@ FOUNDATION_EXPORT void SPKInstallNavigationHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallSettingsShortcutsHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableHapticsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCopyDescriptionHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallTappableTextLinksHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideRecentSearchesHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallSearchBarIconRemapHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDetailedColorPickerHooksIfEnabled(void);
@@ -66,8 +74,11 @@ FOUNDATION_EXPORT void SPKInstallDisableStorySeenHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallStickerInteractConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallStoryPollVoteCountsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideReelsHeaderHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallRepostDateHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallHideReelsViewerCommentBarHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallReelsPlaybackHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallReelsPlaybackControlsHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallReelsStopLoopingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDisableScrollingReelsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFollowIndicatorHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallProfileAnalyzerVisitTrackerHooksIfEnabled(void);
@@ -78,6 +89,8 @@ FOUNDATION_EXPORT void SPKInstallInstantsAutoSaveHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsAllowScreenshotHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsReactionConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallInstantsGalleryUploadHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallInstantsManualSeenHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallInstantsHideInInboxHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallVisualMsgModifierHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallNoSuggestedChatsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallChangeThemeConfirmHooksIfEnabled(void);
@@ -86,7 +99,10 @@ FOUNDATION_EXPORT void SPKInstallDisableTypingStatusHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallFullLastActiveHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallShhConfirmHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallHideFriendsMapHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallFakeLocationHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallFriendsMapFakeLocationButtonHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallKeepDeletedMessagesHooksIfEnabled(void);
+FOUNDATION_EXPORT void SPKInstallHiddenChatsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallPresenceNotificationsHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallAccurateActiveStatusHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCallConfirmHooksIfEnabled(void);
@@ -95,6 +111,7 @@ FOUNDATION_EXPORT void SPKInstallDMInteractionConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallDMRefreshConfirmHooksIfEnabled(void);
 FOUNDATION_EXPORT void SPKInstallCaptureHidingHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallProfileHeaderControlsHooksIfNeeded(void);
+FOUNDATION_EXPORT void SPKInstallProfileSavedTabHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallAudioPageDownloadHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallDirectMessageMenuHooksIfNeeded(void);
 FOUNDATION_EXPORT void SPKInstallNotesActionsHooksIfEnabled(void);
@@ -144,11 +161,11 @@ void SPKInstallLaunchCriticalHooks(void) {
     // session. Installing this with the delayed Messages surface misses that
     // one-time initializer, leaving the configured refresh interval inert.
     SPK_INSTALL(SPKInstallAccurateActiveStatusHooksIfEnabled);
-    // Progressive blur relies on UIScrollEdgeEffect (iOS 26+ only).
+    // The scroll edge style relies on UIScrollEdgeEffect (iOS 26+ only). The
+    // hooks install in every mode and read the style at call time, so changing
+    // it applies live; Off makes them pass through.
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"26.0")) {
-        if ([SPKUtils getBoolPref:@"interface_progressive_blur"]) {
-            SPK_INSTALL(SPKInstallProgressiveBlurHooksIfEnabled);
-        }
+        SPK_INSTALL(SPKInstallProgressiveBlurHooksIfEnabled);
     }
     // Liquid Glass surface hooks install on any iOS: the tab bar experiment
     // gates reshape the bar into the floating pill even pre-26 (only the glass
@@ -160,6 +177,10 @@ void SPKInstallLaunchCriticalHooks(void) {
     SPK_INSTALL(SPKInstallTweakLaunchCriticalHooks);
     SPK_INSTALL(SPKInstallFollowingFeedHooksIfEnabled);
     SPK_INSTALL(SPKInstallAdBlockingEarlyHooksIfEnabled);
+    // Instagram starts locating (and the Friends Map uploads) as the session comes
+    // up. A fake location installed with the delayed Messages surface would let
+    // that first upload carry the real position.
+    SPK_INSTALL(SPKInstallFakeLocationHooksIfNeeded);
     SPK_INSTALL(SPKInstallStoryAdBlockingHooksIfEnabled);
     SPK_INSTALL(SPKInstallNavigationHooksIfNeeded);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
@@ -189,6 +210,7 @@ void SPKInstallFeedSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallHideRepostButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableHomeButtonRefreshHooksIfEnabled);
     SPK_INSTALL(SPKInstallCopyDescriptionHooksIfEnabled);
+    SPK_INSTALL(SPKInstallTappableTextLinksHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideMetricsHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableAppIconGestureHooksIfEnabled);
 }
@@ -203,6 +225,8 @@ void SPKInstallStorySurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallFeedFilteringHooksIfEnabled);
     SPK_INSTALL(SPKInstallStoriesActionButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallStoryAudioToggleHooksIfEnabled);
+    SPK_INSTALL(SPKInstallStoryPlaybackControlsHooksIfEnabled);
+    SPK_INSTALL(SPKInstallHideAudioUnavailableToastHooksIfEnabled);
     SPK_INSTALL(SPKInstallStoryAutoSaveHooksIfEnabled);
     SPK_INSTALL(SPKInstallSeenButtonHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);
@@ -228,11 +252,15 @@ void SPKInstallReelsSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallFeedFilteringHooksIfEnabled);
     SPK_INSTALL(SPKInstallLikeConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallReelsPlaybackHooksIfNeeded);
+    SPK_INSTALL(SPKInstallReelsPlaybackControlsHooksIfEnabled);
+    SPK_INSTALL(SPKInstallReelsStopLoopingHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideReelsHeaderHooksIfEnabled);
+    SPK_INSTALL(SPKInstallRepostDateHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideReelsViewerCommentBarHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableScrollingReelsHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideRepostButtonHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideMetricsHooksIfEnabled);
+    SPK_INSTALL(SPKInstallTappableTextLinksHooksIfEnabled);
 }
 
 void SPKInstallMessagesSurfaceHooksIfNeeded(void) {
@@ -256,8 +284,11 @@ void SPKInstallMessagesSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallInstantsAllowScreenshotHooksIfEnabled);
     SPK_INSTALL(SPKInstallInstantsReactionConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallInstantsGalleryUploadHooksIfEnabled);
+    SPK_INSTALL(SPKInstallInstantsManualSeenHooksIfEnabled);
+    SPK_INSTALL(SPKInstallInstantsHideInInboxHooksIfEnabled);
     SPK_INSTALL(SPKInstallVisualMsgModifierHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedChatsHooksIfEnabled);
+    SPK_INSTALL(SPKInstallHiddenChatsHooksIfEnabled);
     SPK_INSTALL(SPKInstallChangeThemeConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallFollowRequestConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallDisableTypingStatusHooksIfEnabled);
@@ -265,6 +296,7 @@ void SPKInstallMessagesSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallPresenceNotificationsHooksIfEnabled);
     SPK_INSTALL(SPKInstallShhConfirmHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideFriendsMapHooksIfEnabled);
+    SPK_INSTALL(SPKInstallFriendsMapFakeLocationButtonHooksIfNeeded);
     SPK_INSTALL(SPKInstallKeepDeletedMessagesHooksIfEnabled);
     SPK_INSTALL(SPKInstallCallConfirmHooksIfEnabled);
     SPK_INSTALL(SPKInstallDMAudioMsgConfirmHooksIfEnabled);
@@ -292,6 +324,7 @@ void SPKInstallProfileSurfaceHooksIfNeeded(void) {
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
     SPK_INSTALL(SPKInstallFollowIndicatorHooksIfEnabled);
     SPK_INSTALL(SPKInstallProfileHeaderControlsHooksIfNeeded);
+    SPK_INSTALL(SPKInstallProfileSavedTabHooksIfNeeded);
     SPK_INSTALL(SPKInstallProfileAnalyzerVisitTrackerHooksIfEnabled);
     SPK_INSTALL(SPKInstallSettingsShortcutsHooksIfNeeded);
 }
@@ -302,14 +335,26 @@ void SPKInstallGeneralUIHooksIfNeeded(void) {
         return;
     }
     SPKHookBisectSetCurrentSurface(@"General UI");
+    // Not a hook: the language packs already installed ask the catalog whether newer builds of
+    // themselves exist. It throttles itself to once a day and delays past launch, so it costs a
+    // no-op call here on every other launch.
+    [SPKLanguagePackUpdater checkForUpdatesIfDue];
     SPK_INSTALL(SPKInstallAccountSwitchHooksIfNeeded);
     SPK_INSTALL(SPKInstallTweakGeneralUIHooksIfNeeded);
+    // Not a hook: shows the floating debug button from Tools > Diagnostics.
+    SPK_INSTALL(SPKInstallDebugButtonIfEnabled);
+    // Installed regardless of the toggle: a notification posted before the user
+    // turned it off can still be tapped afterwards.
+    SPK_INSTALL(SPKInstallDownloadNotificationRoutingHooks);
     SPK_INSTALL(SPKInstallSharedLinkCleanupHooksIfEnabled);
+    // Installed regardless of the setting: the mode is read on every browser launch.
+    SPK_INSTALL(SPKInstallBrowserLinkRoutingHooksIfNeeded);
     SPK_INSTALL(SPKInstallShareLongPressCopyHooksIfNeeded);
     SPK_INSTALL(SPKInstallHideMetaAIHooksIfEnabled);
     SPK_INSTALL(SPKInstallNoSuggestedUsersHooksIfEnabled);
     SPK_INSTALL(SPKInstallOpenLinkFromClipboardHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideExploreGridHooksIfEnabled);
+    SPK_INSTALL(SPKInstallSquareGridHooksIfEnabled);
     SPK_INSTALL(SPKInstallHideTrendingSearchesHooksIfEnabled);
     SPK_INSTALL(SPKInstallCustomFontHooksIfEnabled);
     SPK_INSTALL(SPKInstallNavigationHooksIfNeeded);

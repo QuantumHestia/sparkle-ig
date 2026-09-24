@@ -4,7 +4,7 @@
 
 # Sparkle for Instagram
 
-`v1.3.1` · Tested on versions **445.0.0** and **410.1.0**
+`v1.4.0` · Tested on versions **448.0.0** and **410.1.0**
 
 [📣 IPA Releases](https://t.me/sparkle_ig) · [💬 Chat & Support](https://t.me/+f-Xo21HnfCY3NmE0) · [📦 Jailbreak Repo](https://efibalogh.github.io/sparkle-ig/) · [📥 DEB Releases](https://github.com/efibalogh/sparkle-ig/releases/latest) · [🐛 Issues](https://github.com/efibalogh/sparkle-ig/issues/new/choose) · [❤️ Support](https://ko-fi.com/sparkle_ig)
 
@@ -53,27 +53,40 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - An optional feed-header shortcut button for one-tap access to Gallery, Profile Analyzer, Deleted Messages, Downloads or Settings.
 - **Keep deleted messages**:
   - Preserve unsent DMs, log removed reactions, and recover view-once media, with a browsable log.
+- **Hidden chats**:
+  - Hide any 1:1 or group chat from the DM inbox with a long press, reveal them again by holding the inbox title, and optionally mute them on Instagram itself, messages and calls both, so no push or vibration arrives while they stay hidden. Hidden chats stay out of the recipients Instagram suggests when sharing and can be kept out of the unread badge, and revealing them can be put behind Face ID, Touch ID, or a passcode of its own.
 - **Activity notifications**:
   - Get notified when a tracked user comes online, goes offline, starts typing, or reads a message you sent, and make Instagram's own green dot accurate with an early-installed presence refresh and no grace period.
+- **Fake location**:
+  - Show friends on the Friends Map a place you pick on a map or by search instead of where you are, switch it from a button on the map itself, and keep a list of saved places. Only Instagram sees the fake location, so Maps and other apps keep the real one.
 - **Profile Analyzer**:
   - Fetches your followers/following and surfaces mutuals, non-followbacks, and a durable change log (new/lost followers, profile updates) across scans.
 - **Per-account settings**:
   - Each logged-in account keeps its own preferences, gallery scope, and download history, including account-scoped history clearing.
 - **Story viewer tools**:
   - Search everyone who saw your story, filter non-followers, and star viewers for quick lookup later.
+- **Playback controls**:
+  - A floating panel for stories and reels with playback speed (0.5x to 2x), scrubbing, 5 second skips, and pause, remembered per video, per session, or always.
 - **Privacy & focus**:
   - Hide ads, Meta AI, and suggested content.
   - Disable seen receipts, typing status, screenshot detection, and view-once limits.
+  - Unlock native message previews from the inbox long-press menu on supported Instagram versions.
   - Block doom-scrolling.
   - Build a custom tab bar with a live preview: reorder or hide destinations, choose launch and swipe behavior, trade a hidden tab for one-tap access to Saved collections in the custom layout, and drop the bar entirely when a single tab is left.
+  - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
+  - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
 - **Custom app font**:
   - Import your own `.otf`/`.ttf` font and use it across Instagram and Sparkle, matched per weight and previewed face by face before you pick it.
 - **Language packs**:
   - Sparkle ships in English. Other languages are community translations you install from the Translate button in Sparkle Settings, as a language pack, and remove again with a swipe. Anything a pack does not translate falls back to English. Dates use the selected language's ordering, punctuation, and month names while respecting the device's 12/24-hour clock. Built-in Action Button section names follow the selected language; names you customize remain exactly as entered. A language ships with Sparkle, no pack needed, once a native speaker has reviewed it. See [Help translate](#help-translate).
 - **Confirmations**:
   - Optional "are you sure?" guards for accidental likes, follows, reposts, calls, comments, and more.
+- **Link detection and routing**:
+  - Open links from bios, captions, stories, messages, and ads in an in-app Safari view or the Safari app instead of Instagram's browser, with Instagram's redirect and tracking parameters stripped first.
+  - Instagram leaves web addresses in captions and comments as plain text. Sparkle can find them, color them, and make them tappable, opening them in an in-app Safari view, in the Safari app, or after asking each time. Off by default, and nothing is requested from a link until you tap it.
 - **Liquid Glass (iOS 26+)**:
   - Native Liquid Glass integration across Sparkle's own UI, plus an option to force-enable Instagram's.
+  - **Scroll Edge Effect** picks how content meets the top bar as you scroll: off (Instagram disables the effect), the iOS default, the soft progressive blur, or a hard edge with a dividing line (iOS 27 defaults to hard). Changes apply live.
   - On iOS 18 and lower, a **Pill-Shaped Tab Bar** toggle brings the floating pill tab bar (shape only; the glass material stays iOS 26+).
 
 ## Installation
@@ -123,7 +136,7 @@ You can build from source locally, or fork the repo and run the **Build and Pack
 
 By default, **long-press the Home tab** or the **Profile settings button** to open Sparkle Settings. You can also enable *Show Settings on App Launch*. If you hide the Home tab, the long-press automatically moves to another visible tab so Settings is always reachable.
 
-Tap the **Translate** button in the top-right of Sparkle Settings for the language sheet. English is the only language Sparkle ships; the same sheet imports community language packs from zip archives, exports the English strings a translation starts from, and removes an installed pack with a swipe. Importing only makes a language available; switching to it is a separate tap. A System Default row that follows Instagram appears once a pack is installed. A restart applies the choice across every Instagram account. Anything untranslated falls back to English.
+Tap the **Translate** button in the top-right of Sparkle Settings for the language sheet. English is the only language Sparkle ships; **Add a Language** opens the published list, where one tap installs a translation; its more menu imports a pack from Files or a link and exports the English strings a translation starts from. A swipe removes an installed pack. Installed packs refresh themselves when a release publishes newer ones, so the screens a release adds arrive translated rather than in English; it checks after each Sparkle update, only for languages you already have, and never replaces a pack you imported from a file. **Check for Updates** runs the same check on demand. Importing only makes a language available; switching to it is a separate tap. A System Default row that follows Instagram appears once a pack is installed. A restart applies the choice across every Instagram account. Anything untranslated falls back to English.
 
 ## Screenshots
 
@@ -179,7 +192,7 @@ The `ipa` command takes composable flags:
 | `--flex` | Bundle `libFLEX.dylib` (in-app debugging) |
 | `--patch` | Run `ipapatch` |
 | `--no-ext` | Strip all `.appex` bundles before injection |
-| `--dev` | `DEV=1` build (also enables the developer diagnostics: performance meter and hook bisect, under Settings → Tools → Diagnostics) |
+| `--dev` | `DEV=1` build (also adds the developer diagnostics, performance meter and hook bisect, under Settings → Tools → Diagnostics) |
 | `--buildonly` | Build the deb and dylibs only, skip IPA packaging |
 | `--bundle-id <id>` | Override the bundle ID |
 
@@ -228,9 +241,9 @@ Contributions are greatly appreciated! Feel free to open a pull request.
 
 ### Help translate
 
-Sparkle ships English only. The 16 catalogs in `translations/` were produced by machine translation and no native speaker has reviewed them, which is why they are a starting point rather than something users are given by default. Expect unnatural phrasing, terms that should have stayed in English, and help text that describes the wrong setting.
+Sparkle ships English only. The 24 catalogs in `translations/` were produced by machine translation and no native speaker has reviewed them, which is why they are a starting point rather than something users are given by default. Expect unnatural phrasing, terms that should have stayed in English, and help text that describes the wrong setting.
 
-If you read one of these languages, correcting it is the single most useful contribution you can make, and it needs no build: edit `translations/<locale>.lproj/Localizable.strings`, run `tools/lint-i18n.py --locale <locale>`, open a pull request. **A reviewed language ships with Sparkle.** Until then, anyone can install it from the language sheet with **Import Language Pack**, and you can test your own work the same way.
+If you read one of these languages, correcting it is the single most useful contribution you can make, and it needs no build: edit `translations/<locale>.lproj/Localizable.strings`, run `tools/lint-i18n.py --locale <locale>`, open a pull request. **A reviewed language ships with Sparkle.** Until then, anyone can install it from the language sheet with **Add a Language**, and you can test your own work from that screen's more menu with **Import from Files**.
 
 For a single correction, no checkout is needed: tap the Translate button in Sparkle Settings, choose **Report a Translation Issue** at the bottom of the language sheet, or [start one](https://github.com/efibalogh/sparkle-ig/issues/new?template=3-translation.yaml) directly. The form asks for the language, where the text appears, what it says now, and what it should say.
 

@@ -4,7 +4,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceLiquidGlass;
 FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceLiquidGlassTabBarMode;
-FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceProgressiveBlur;
+FOUNDATION_EXPORT NSString *const kSPKPrefInterfaceScrollEdgeStyle;
+/// Posted after the scroll edge style changes so on-screen views re-apply it.
+FOUNDATION_EXPORT NSNotificationName const SPKScrollEdgeStyleDidChangeNotification;
 FOUNDATION_EXPORT NSString *const kSPKPrefInstantsDisableCameraControl;
 
 #ifdef __cplusplus

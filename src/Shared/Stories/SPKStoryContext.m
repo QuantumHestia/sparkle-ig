@@ -614,10 +614,38 @@ BOOL SPKStoryManualSeenListContainsUser(NSString *pk, BOOL manualSeenEnabled) {
 }
 
 BOOL SPKStoryManualSeenAppliesToContext(SPKStoryContext *context) {
-    BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+    BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
     NSString *pk = SPKStoryUserPKFromMediaObject(context.media);
     BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
     return manualSeenEnabled ? !listed : listed;
+}
+
+// Deliberately not persisted and scoped to one story viewer: leaving stories
+// (or a relaunch) always returns to blocking seen receipts, so a forgotten
+// toggle cannot keep sending receipts. The weak reference also ends the
+// session if the viewer is deallocated without a disappearance callback.
+static __weak UIViewController *SPKStorySeenReceiptsSessionViewer = nil;
+
+BOOL SPKStoryManualSeenEnabled(void) {
+    NSString *mode = [SPKUtils getStringPref:@"stories_manual_seen_mode"];
+    return [mode isEqualToString:@"tap"] || [mode isEqualToString:@"toggle"];
+}
+
+BOOL SPKStoryEyeButtonTogglesSeenReceipts(void) {
+    return [[SPKUtils getStringPref:@"stories_manual_seen_mode"] isEqualToString:@"toggle"];
+}
+
+BOOL SPKStorySeenReceiptsSessionEnabled(void) {
+    return SPKStorySeenReceiptsSessionViewer != nil && SPKStoryEyeButtonTogglesSeenReceipts();
+}
+
+void SPKStorySetSeenReceiptsSessionViewer(UIViewController *viewer) {
+    SPKStorySeenReceiptsSessionViewer = viewer;
+}
+
+void SPKStoryEndSeenReceiptsSessionForViewer(UIViewController *viewer) {
+    if (viewer && SPKStorySeenReceiptsSessionViewer == viewer)
+        SPKStorySeenReceiptsSessionViewer = nil;
 }
 
 static void SPKStoryEnrichManualSeenUserEntryIfNeeded(NSDictionary *entry, BOOL manualSeenEnabled) {
@@ -673,7 +701,7 @@ static void SPKStoryEnrichManualSeenUserEntryIfNeeded(NSDictionary *entry, BOOL 
 void SPKStoryToggleUserForCurrentManualSeenMode(NSString *pk, NSString *username, NSString *fullName, NSString *profilePicUrl) {
     if (pk.length == 0)
         return;
-    BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+    BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
     NSString *normalized = SPKStoryNormalizeUsername(username);
 
     NSArray<NSDictionary *> *users = SPKStoryManualSeenUserList(manualSeenEnabled);
@@ -735,7 +763,7 @@ static NSString *SPKStoryManualSeenListHelpText(BOOL manualSeenEnabled) {
 
 - (instancetype)init {
     if ((self = [super init])) {
-        _manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+        _manualSeenEnabled = SPKStoryManualSeenEnabled();
         self.title = SPKStoryManualSeenListTitle(_manualSeenEnabled);
         self.showsAddButton = YES;
         self.infoText = SPKStoryManualSeenListHelpText(_manualSeenEnabled);
@@ -904,7 +932,7 @@ static BOOL SPKStoryCurrentUserRuleState(SPKStoryContext *context, NSString **ou
     if (username.length == 0)
         return NO;
 
-    BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+    BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
     NSString *pk = SPKStoryUserPKFromMediaObject(context.media);
     BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
     NSString *listTitle = SPKStoryManualSeenListTitle(manualSeenEnabled);
@@ -949,7 +977,7 @@ NSString *SPKStoryCurrentUserRuleConfirmationMessage(SPKStoryContext *context) {
 void SPKStoryToggleUserRuleForPK(NSString *pk, NSString *username, NSString *fullName, NSString *profilePicUrl) {
     if (pk.length == 0)
         return;
-    BOOL manualSeenEnabled = [SPKUtils getBoolPref:@"stories_manual_seen"];
+    BOOL manualSeenEnabled = SPKStoryManualSeenEnabled();
     BOOL listed = SPKStoryManualSeenListContainsUser(pk, manualSeenEnabled);
     SPKStoryToggleUserForCurrentManualSeenMode(pk, username, fullName, profilePicUrl);
     if (!listed) {

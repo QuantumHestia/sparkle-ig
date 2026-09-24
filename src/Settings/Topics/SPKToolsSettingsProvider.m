@@ -5,6 +5,7 @@
 #import "../../App/SPKFlexLoader.h"
 #import "../../App/SPKStabilityGuard.h"
 #import "../../AssetUtils.h"
+#import "../../Shared/Diagnostics/SPKDiagnostics.h"
 #import "../../Shared/Gallery/SPKGalleryLockViewController.h"
 #import "../../Shared/Settings/SPKSettingsLockManager.h"
 #import "../../Shared/UI/SPKIGAlertPresenter.h"
@@ -18,29 +19,6 @@
 #endif
 #import "SPKInterfaceSettingsProvider.h"
 
-static UIViewController *SPKSettingsLockPresenter(void) {
-    UIViewController *presenter = UIApplication.sharedApplication.keyWindow.rootViewController;
-    while (presenter.presentedViewController)
-        presenter = presenter.presentedViewController;
-    return presenter;
-}
-
-static void SPKSettingsLockReloadPresenter(UIViewController *presenter) {
-    // `presenter` is the topmost presented VC, which is usually the navigation
-    // controller wrapping the settings page rather than the page itself. Reload
-    // whichever SPKSettingsViewController is actually on screen so the Change
-    // Passcode row greys/ungreys with the lock toggle.
-    SPKSettingsViewController *settingsVC = nil;
-    if ([presenter isKindOfClass:SPKSettingsViewController.class]) {
-        settingsVC = (SPKSettingsViewController *)presenter;
-    } else if ([presenter isKindOfClass:UINavigationController.class]) {
-        UIViewController *top = ((UINavigationController *)presenter).topViewController;
-        if ([top isKindOfClass:SPKSettingsViewController.class])
-            settingsVC = (SPKSettingsViewController *)top;
-    }
-    [settingsVC.tableView reloadData];
-}
-
 static NSDictionary *SPKSettingsLockSection(void) {
     SPKSetting *lockSwitch = [SPKSetting switchCellWithTitle:SPKL(@"TOOLS_GENERAL_SETTINGS_PASSCODE_LOCK_TITLE")
                                                         icon:SPKSettingsIcon(@"lock")
@@ -50,13 +28,13 @@ static NSDictionary *SPKSettingsLockSection(void) {
     };
     lockSwitch.switchChangeHandler = ^(BOOL enabled) {
         SPKSettingsLockManager *currentManager = [SPKSettingsLockManager sharedManager];
-        UIViewController *presenter = SPKSettingsLockPresenter();
+        UIViewController *presenter = SPKSettingsTopPresenter();
         if (enabled && !currentManager.isLockEnabled) {
             [SPKGalleryLockViewController presentMode:SPKGalleryLockModeSetPasscode
                                            forManager:currentManager
                                    fromViewController:presenter
                                            completion:^(__unused BOOL success) {
-                                               SPKSettingsLockReloadPresenter(presenter);
+                                               SPKSettingsReloadPresenter(presenter);
                                            }];
             return;
         }
@@ -68,13 +46,13 @@ static NSDictionary *SPKSettingsLockSection(void) {
                                                             [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_CANCEL")
                                                                                         style:SPKIGAlertActionStyleCancel
                                                                                       handler:^{
-                                                                                          SPKSettingsLockReloadPresenter(presenter);
+                                                                                          SPKSettingsReloadPresenter(presenter);
                                                                                       }],
                                                             [SPKIGAlertAction actionWithTitle:SPKL(@"ALERT_ACTION_DISABLE")
                                                                                         style:SPKIGAlertActionStyleDestructive
                                                                                       handler:^{
                                                                                           [currentManager removePasscode];
-                                                                                          SPKSettingsLockReloadPresenter(presenter);
+                                                                                          SPKSettingsReloadPresenter(presenter);
                                                                                       }],
                                                         ]];
         }
@@ -88,7 +66,7 @@ static NSDictionary *SPKSettingsLockSection(void) {
                                                           action:^{
                                                               [SPKGalleryLockViewController presentMode:SPKGalleryLockModeChangePasscode
                                                                                              forManager:[SPKSettingsLockManager sharedManager]
-                                                                                     fromViewController:SPKSettingsLockPresenter()
+                                                                                     fromViewController:SPKSettingsTopPresenter()
                                                                                              completion:^(__unused BOOL success){
                                                                                              }];
                                                           }];
@@ -97,6 +75,20 @@ static NSDictionary *SPKSettingsLockSection(void) {
     };
 
     return SPKTopicSection(SPKL(@"TOOLS_SETTINGS_LOCK_HEADER"), @[ lockSwitch, changePasscode ], nil);
+}
+
+static NSDictionary *SPKDiagnosticsSection(void) {
+    SPKSetting *debugButton = SPKSettingWithHelp([SPKSetting switchCellWithTitle:SPKL(@"TOOLS_DEBUG_BUTTON_TITLE") defaultsKey:kSPKPrefToolsDebugButton],
+                                                 SPKL(@"TOOLS_DEBUG_BUTTON_HELP"));
+    debugButton.switchChangeHandler = ^(BOOL isOn) {
+        SPKPreferenceSetObject(@(isOn), kSPKPrefToolsDebugButton);
+        SPKDebugButtonRefresh();
+    };
+    NSMutableArray<SPKSetting *> *rows = [NSMutableArray arrayWithObject:debugButton];
+#if SPK_DEV
+    [rows addObject:SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP"))];
+#endif
+    return SPKTopicSection(SPKL(@"TOOLS_DIAGNOSTICS_HEADER"), rows, nil);
 }
 
 @implementation SPKToolsSettingsProvider
@@ -182,11 +174,7 @@ static NSDictionary *SPKSettingsLockSection(void) {
                                      }],
 #endif
         ], nil),
-#if SPK_DEV
-        SPKTopicSection(SPKL(@"TOOLS_DIAGNOSTICS_HEADER"),
-                        @[ SPKSettingWithHelp([SPKHookBisectSettingsProvider rootSetting], SPKL(@"TOOLS_DIAGNOSTICS_HOOK_BISECT_HELP")) ],
-                        nil),
-#endif
+        SPKDiagnosticsSection(),
         SPKSettingsLockSection(),
     ]];
 

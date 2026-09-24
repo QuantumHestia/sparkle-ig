@@ -1,11 +1,17 @@
 #import "../../Shared/ActionButton/ActionButtonCore.h"
 #import "../../Shared/ActionButton/SPKActionButtonConfiguration.h"
+#import "../../App/SPKPerfMeter.h"
 #import "../../Utils.h"
+#import "../../Shared/i18n/SPKStrings.h"
+#import "../../AssetUtils.h"
+#import "InstantsManualSeen.h"
+#import "InstantsModeViews.h"
 #import "InstantsResolver.h"
 #import <objc/runtime.h>
 #import <substrate.h>
 
 static NSInteger const kSPKInstantsActionButtonTag = 921399;
+static NSInteger const kSPKInstantsMarkSeenButtonTag = 921400;
 
 // MARK: - Anchor Helpers
 
@@ -14,7 +20,7 @@ static UIView *SPKInstantsHeaderOwnedView(UIView *header, NSString *key) {
         return nil;
     id view = nil;
     @try {
-        view = [header valueForKey:key];
+        view = SPKKVCObject(header, key);
     } @catch (__unused NSException *e) {
     }
     if (![view isKindOfClass:UIView.class]) {
@@ -66,46 +72,12 @@ static BOOL SPKInstantsHeaderIsVisible(UIView *header) {
 
 /// YES when a snap is actually being consumed (viewed). The action button belongs only
 /// on the consumption header, not on the creation/camera header (which hosts the gallery
-/// upload button at the same anchor). Detected by the presence of a visible
-/// IGQuickSnapImmersiveViewerSingleSnapView in the same window.
-/// Visibility test for header-mode detection.
-///
-/// This MUST stay identical to `SPKInstantsViewIsVisible` in InstantsGalleryUpload.xm.
-/// The two features decide which of them owns the header's right-hand slot from the same
-/// signals, so any divergence lets both conclude they own it and draw on top of each
-/// other. A looser test here (no size check, alpha >= 0.01) previously counted a
-/// collapsed leftover snap view as "still consuming" while the gallery button, using the
-/// stricter test, saw the creation view and installed itself as well.
-static BOOL SPKInstantsModeViewIsVisible(UIView *view) {
-    return view && view.window && !view.hidden && view.alpha >= 0.05 &&
-           view.bounds.size.width > 1.0 && view.bounds.size.height > 1.0;
-}
-
-/// Whether any visible view in the header's window has a class containing `needle`.
-static BOOL SPKInstantsWindowHasVisibleViewOfClass(UIView *header, NSString *needle) {
-    UIWindow *window = header.window;
-    if (!window)
-        return NO;
-    NSMutableArray<UIView *> *queue = [NSMutableArray arrayWithObject:window];
-    NSUInteger idx = 0;
-    while (idx < queue.count) {
-        UIView *view = queue[idx++];
-        if (SPKInstantsModeViewIsVisible(view) &&
-            [NSStringFromClass(view.class) containsString:needle]) {
-            return YES;
-        }
-        for (UIView *sub in view.subviews)
-            [queue addObject:sub];
-    }
-    return NO;
-}
-
+/// upload button at the same anchor).
 static BOOL SPKInstantsHeaderIsConsumption(UIView *header) {
-    if (!SPKInstantsWindowHasVisibleViewOfClass(header, @"IGQuickSnapImmersiveViewerSingleSnapView"))
-        return NO;
+    UIWindow *window = header.window;
     // Creation wins the slot: when the camera page is up, the gallery-upload button owns
     // this position, so the action button must stand down even if a snap view lingers.
-    return !SPKInstantsWindowHasVisibleViewOfClass(header, @"IGQuickSnapCreationView");
+    return SPKInstantsWindowShowsSnapView(window) && !SPKInstantsWindowShowsCreationView(window);
 }
 
 // MARK: - Action Context
@@ -184,6 +156,7 @@ static CGRect SPKInstantsButtonFrame(UIView *header, UIButton *button) {
 }
 
 static void SPKInstantsPlaceButton(UIView *header) {
+    SPK_PERF_SCOPE(@"InstantsActionButton.placeButton");
     if (!header)
         return;
 
@@ -269,15 +242,102 @@ static void SPKInstantsPlaceButton(UIView *header) {
     [header bringSubviewToFront:button];
 }
 
+// MARK: - Mark as Seen Button
+
+/// Sits one slot left of the action button, in the same header and behind the same
+/// eligibility checks, so it can never outlive the viewer or appear over the creation page.
+/// It is a plain button rather than a menu row because releasing one Instant is a single
+/// deliberate act, and the menu is built once per button lifecycle: a row there could not
+/// track the snap currently on screen.
+@interface SPKInstantsMarkSeenButtonTarget : NSObject
+@end
+
+@implementation SPKInstantsMarkSeenButtonTarget
+
++ (instancetype)shared {
+    static SPKInstantsMarkSeenButtonTarget *sShared = nil;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        sShared = [[SPKInstantsMarkSeenButtonTarget alloc] init];
+    });
+    return sShared;
+}
+
+- (void)buttonTapped:(UIButton *)sender {
+    UIView *header = sender.superview;
+    if (!header)
+        return;
+    SPKExecuteActionIdentifier(kSPKActionInstantsMarkSeen,
+                              SPKInstantsActionContext(header, sender), NO);
+}
+
+@end
+
+static CGRect SPKInstantsMarkSeenButtonFrame(UIView *header, UIView *button) {
+    CGFloat side = 44.0;
+    // Measured from the action button's live frame, which the same layout pass has already
+    // set, so the two stay adjacent whatever anchor the header turns out to offer. Reading
+    // the placed frame also keeps the fallback anchor search from picking the action button
+    // itself and pushing this one a slot too far left.
+    UIButton *actionButton = (UIButton *)[header viewWithTag:kSPKInstantsActionButtonTag];
+    if (![actionButton isKindOfClass:UIButton.class] || actionButton.superview != header) {
+        // No action button on this header, so take its slot rather than leaving a gap.
+        return SPKInstantsButtonFrame(header, (UIButton *)button);
+    }
+    CGRect actionFrame = actionButton.frame;
+    return CGRectMake(CGRectGetMinX(actionFrame) - side, CGRectGetMinY(actionFrame),
+                      side, CGRectGetHeight(actionFrame));
+}
+
+static void SPKInstantsPlaceMarkSeenButton(UIView *header) {
+    if (!header)
+        return;
+
+    UIButton *existing = (UIButton *)[header viewWithTag:kSPKInstantsMarkSeenButtonTag];
+    if (!SPKInstantsManualSeenIsEnabled() || !SPKInstantsHeaderIsVisible(header) ||
+        !SPKInstantsHeaderIsConsumption(header)) {
+        [existing removeFromSuperview];
+        return;
+    }
+
+    UIButton *button = existing;
+    if (!button) {
+        button = [UIButton buttonWithType:UIButtonTypeSystem];
+        button.tag = kSPKInstantsMarkSeenButtonTag;
+        button.translatesAutoresizingMaskIntoConstraints = YES;
+        button.tintColor = UIColor.whiteColor;
+        button.adjustsImageWhenHighlighted = YES;
+        button.accessibilityLabel = SPKL(@"INSTANTS_MARK_SEEN_TITLE");
+        [button setImage:[SPKAssetUtils instagramIconNamed:@"eye"
+                                                pointSize:24.0
+                                            renderingMode:UIImageRenderingModeAlwaysTemplate]
+                forState:UIControlStateNormal];
+        [button addTarget:[SPKInstantsMarkSeenButtonTarget shared]
+                      action:@selector(buttonTapped:)
+            forControlEvents:UIControlEventTouchUpInside];
+        [header addSubview:button];
+        SPKApplyButtonStyle(button, SPKActionButtonSourceInstants);
+    }
+
+    CGRect expectedFrame = SPKInstantsMarkSeenButtonFrame(header, button);
+    if (!SPKInstantsActionFrameMatches(button, expectedFrame))
+        button.frame = expectedFrame;
+    button.hidden = NO;
+    button.alpha = 1.0;
+    [header bringSubviewToFront:button];
+}
+
 // MARK: - Hook
 
 typedef void (*SPKInstantsHeaderLayoutIMP)(id, SEL);
 static SPKInstantsHeaderLayoutIMP orig_instantsHeaderLayoutSubviews = NULL;
 
 static void replaced_instantsHeaderLayoutSubviews(id self, SEL _cmd) {
+    SPK_PERF_SCOPE(@"InstantsActionButton.headerLayout");
     if (orig_instantsHeaderLayoutSubviews)
         orig_instantsHeaderLayoutSubviews(self, _cmd);
     SPKInstantsPlaceButton((UIView *)self);
+    SPKInstantsPlaceMarkSeenButton((UIView *)self);
 }
 
 static void SPKHookInstanceMethod(const char *className, SEL selector, IMP replacement, IMP *original) {
@@ -322,6 +382,7 @@ static void SPKInstallInstantsActionButtonHooksAttempt(NSUInteger attempt) {
                           @selector(layoutSubviews),
                           (IMP)replaced_instantsHeaderLayoutSubviews,
                           (IMP *)&orig_instantsHeaderLayoutSubviews);
+    SPKInstallInstantsModeViewHooks();
     SPKInstallInstantsResolverHooks();
     sSPKInstantsActionButtonHooksInstalled = YES;
     SPKLog(@"Instants", @"[Sparkle] Instants action button hooks installed");

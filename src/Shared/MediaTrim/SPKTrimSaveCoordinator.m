@@ -2,6 +2,8 @@
 #import "SPKTrimSaveCoordinator.h"
 #import "../../Utils.h"
 #import "../Downloads/SPKDownloadDestinationWriter.h"
+#import "../Downloads/SPKDownloadHelpers.h"
+#import "../Downloads/SPKDownloadService.h"
 #import "../Gallery/SPKGalleryFile.h"
 #import "../Gallery/SPKGallerySaveMetadata.h"
 #import "../Gallery/SPKGalleryViewController.h"
@@ -41,6 +43,26 @@
                   completion:(void (^)(NSURL *_Nullable, NSError *_Nullable))completion;
 @end
 
+// Records a trim/crop/edit save in Download History. Gallery trims bypass the
+// download pipeline (they save straight to the Gallery), so without this they
+// never appear in history. Quiet record: no pill, no duplicate preflight.
+static void SPKRecordTrimSaveToHistory(NSURL *_Nullable rendered,
+                                       SPKDownloadDestination destination,
+                                       SPKGallerySaveMetadata *_Nullable metadata,
+                                       NSString *_Nullable finalPath) {
+    NSString *ext = rendered.pathExtension.length > 0 ? rendered.pathExtension
+                                                      : finalPath.pathExtension;
+    SPKDownloadMediaKind kind = [SPKDownloadHelpers mediaKindForExtension:ext ?: @""];
+    SPKDownloadSourceSurface surface =
+        [SPKDownloadHelpers resolvedSourceSurface:SPKDownloadSourceSurfaceOther metadata:metadata];
+    [[SPKDownloadService shared] recordCompletedFileAtURL:rendered
+                                                mediaKind:kind
+                                              destination:destination
+                                                 metadata:metadata
+                                            sourceSurface:surface
+                                                finalPath:finalPath];
+}
+
 @implementation SPKTrimSaveCoordinator
 
 + (void)saveResult:(SPKTrimResult *)result
@@ -74,6 +96,7 @@
             // filename/attribution), but should sort as the newest item — the
             // edit happened just now.
             [saved markAddedNow];
+            SPKRecordTrimSaveToHistory(rendered, SPKDownloadDestinationGallery, metadata, saved.filePath);
             done(YES, (mediaType == SPKGalleryMediaTypeImage) ? SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_FRAME_SAVED_GALLERY_TEXT") : (mediaType == SPKGalleryMediaTypeAudio) ? SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_AUDIO_SAVED_GALLERY_TEXT")
                                                                                                                                     : SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_TRIMMED_CLIP_SAVED_GALLERY_TEXT"));
         } else {
@@ -97,6 +120,12 @@
     SPKTrimStoreBlock replaceStore = ^(NSURL *rendered, void (^done)(BOOL, NSString *)) {
         NSError *error = nil;
         BOOL ok = [originFile replaceMediaWithFileURL:rendered mediaType:mediaType error:&error];
+        if (ok) {
+            // No staged preview copy: the replaced Gallery file itself backs
+            // preview (and the Gallery fallback once it is gone).
+            SPKGallerySaveMetadata *replacedMetadata = [originFile saveMetadata];
+            SPKRecordTrimSaveToHistory(nil, SPKDownloadDestinationGallery, replacedMetadata, originFile.filePath);
+        }
         done(ok, ok ? SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_ORIGINAL_REPLACED_TEXT") : (error.localizedDescription ?: SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_COULD_NOT_REPLACE_ORIGINAL_TEXT")));
     };
 
@@ -247,6 +276,8 @@
                                                      metadata:metadata
                                                    completion:^(BOOL ok, NSError *error) {
                                                        dispatch_async(dispatch_get_main_queue(), ^{
+                                                           if (ok)
+                                                               SPKRecordTrimSaveToHistory(rendered, SPKDownloadDestinationPhotos, metadata, nil);
                                                            done(ok, ok ? SPKL(@"DOWNLOADS_DOWNLOAD_PRESENTER_SAVED_PHOTOS_TEXT") : (error.localizedDescription ?: SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_COULD_NOT_SAVE_PHOTOS_TEXT")));
                                                        });
                                                    }];
@@ -338,10 +369,11 @@
                                                            folderPath:nil
                                                              metadata:metadata
                                                                 error:&error];
-            if (saved)
+            if (saved) {
+                SPKRecordTrimSaveToHistory(rendered, SPKDownloadDestinationGallery, metadata, saved.filePath);
                 done(YES, (mediaType == SPKGalleryMediaTypeImage) ? SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_FRAME_SAVED_GALLERY_TEXT") : (mediaType == SPKGalleryMediaTypeAudio) ? SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_AUDIO_SAVED_GALLERY_TEXT")
                                                                                                                                         : SPKL(@"MEDIA_TRIM_TRIM_SAVE_COORDINATOR_TRIMMED_CLIP_SAVED_GALLERY_TEXT"));
-            else
+            } else
                 done(NO, error.localizedDescription ?: SPKL(@"DOWNLOADS_DOWNLOAD_DESTINATION_WRITER_COULD_NOT_SAVE_GALLERY_TEXT"));
         };
     }

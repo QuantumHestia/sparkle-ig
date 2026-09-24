@@ -5,6 +5,7 @@
 #import <compression.h>
 
 #import "../App/SPKCore.h"
+#import "../App/SPKPreferenceMigrations.h"
 #import "../Features/Messages/DeletedMessagesLog/SPKDeletedMessagesStorage.h"
 #import "../Features/Profile/ProfileAnalyzer/SPKProfileAnalyzerStorage.h"
 #import "../Shared/Account/SPKAccountManager.h"
@@ -157,7 +158,8 @@ static NSSet<NSString *> *SPKTransferExcludedKeys(void) {
     dispatch_once(&onceToken, ^{
         excluded = [NSSet setWithArray:@[
             @"app_safe_startup",
-            @"app_startup_profiling"
+            @"app_startup_profiling",
+            SPKPreferenceMigrationsCompletedKey
         ]];
     });
     return excluded;
@@ -1245,6 +1247,8 @@ static NSString *SPKTransferArchiveFilename(BOOL includeSettings, BOOL includeGa
 
         if (importSettings) {
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            // Backups made before a preference rename carry the legacy keys.
+            prefs = SPKPreferenceMigrationsAppliedToDictionary(prefs);
 
             if (currentScope) {
                 // FLATTEN: re-home the backup's (base-key, effective-value) settings into the

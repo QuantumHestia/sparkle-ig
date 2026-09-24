@@ -31,7 +31,6 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 @property (nonatomic, strong) UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) UITapGestureRecognizer *singleTapGesture;
 @property (nonatomic, strong) NSURL *preparedPlaybackURL;
-@property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, assign) BOOL hasPreparedPlayer;
 @property (nonatomic, assign) BOOL hasStartedPlayback;
 @property (nonatomic, assign) BOOL isLoadingThumbnail;
@@ -43,7 +42,20 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 @property (nonatomic, strong) NSLayoutConstraint *thumbnailBottomConstraint;
 @property (nonatomic, assign) NSInteger loadGeneration;
 @property (nonatomic, assign) BOOL lastReportedZoomState;
-@property (nonatomic, assign) BOOL wasPlayingBeforeBackground;
+/// Set when Sparkle paused a playing video (page swiped away, app backgrounded), so
+/// the next display resumes it. A pause made in the transport controls never sets it.
+@property (nonatomic, assign) BOOL resumeWhenShown;
+/// Set while AVKit runs this player in Picture in Picture. The window is gone by
+/// then, so playback suspension and teardown have to stand down until it stops.
+@property (nonatomic, assign) BOOL isPictureInPictureActive;
+/// Holds the controller alive for the duration of a Picture in Picture session:
+/// the viewer is usually dismissed the moment it starts, and a deallocated
+/// controller takes the player (and the floating window) down with it.
+@property (nonatomic, strong, nullable) SPKFullScreenVideoViewController *pictureInPictureRetain;
+/// Set between the restore button being pressed and the host being back on screen.
+/// The session's stop callback can land inside that window, and the player must
+/// survive it: it is about to play into the restored viewer.
+@property (nonatomic, assign) BOOL isRestoringFromPictureInPicture;
 
 @end
 
@@ -84,6 +96,10 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
         self.thumbnailView.image = self.mediaItem.thumbnail;
     }
 
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(appWillResignActive:)
+                                                 name:UIApplicationWillResignActiveNotification
+                                               object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(appDidEnterBackground:)
                                                  name:UIApplicationDidEnterBackgroundNotification
@@ -152,7 +168,6 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 
     _playerViewController = [[AVPlayerViewController alloc] init];
     _playerViewController.showsPlaybackControls = YES;
-    _playerViewController.allowsPictureInPicturePlayback = NO;
     _playerViewController.delegate = self;
     _playerViewController.view.backgroundColor = [UIColor clearColor];
 
@@ -168,6 +183,8 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     if ([_playerViewController respondsToSelector:@selector(setEntersFullScreenWhenTapped:)]) {
         [_playerViewController setEntersFullScreenWhenTapped:NO];
     }
+
+    [self applyPictureInPicturePreference];
 
     [self addChildViewController:_playerViewController];
     _playerViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
@@ -199,6 +216,94 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
         [strongSelf spk_syncControlsForZoomState];
         [strongSelf notifyZoomStateIfChanged];
     };
+}
+
+// Picture in Picture is off by default: the expanded viewer is Sparkle's own
+// chrome and a floating window outliving it surprises most viewers. Read at call
+// time so the toggle applies to the next video without a restart.
+- (void)applyPictureInPicturePreference {
+    if (!_playerViewController)
+        return;
+    BOOL allowed = [SPKUtils getBoolPref:@"general_preview_allow_pip"];
+    if (_playerViewController.allowsPictureInPicturePlayback != allowed) {
+        _playerViewController.allowsPictureInPicturePlayback = allowed;
+    }
+    // Without this the window only appears from the PiP button, never from the
+    // viewer leaving the app, which is what people mean by asking for PiP.
+    if (_playerViewController.canStartPictureInPictureAutomaticallyFromInline != allowed) {
+        _playerViewController.canStartPictureInPictureAutomaticallyFromInline = allowed;
+    }
+}
+
+#pragma mark - Picture in Picture
+
+- (void)playerViewControllerWillStartPictureInPicture:(AVPlayerViewController *)playerViewController {
+    self.isPictureInPictureActive = YES;
+    self.pictureInPictureRetain = self;
+    // The floating window exists so the viewer can be left. Staying put would put
+    // the same video on screen twice and leave the viewer to be closed by hand.
+    if ([self.delegate respondsToSelector:@selector(mediaContentWillStartPictureInPicture:)]) {
+        [self.delegate mediaContentWillStartPictureInPicture:self];
+    }
+}
+
+// Without this AVKit has nowhere to put the video back, so the restore button just
+// ends the session, which reads as the window being dismissed.
+- (void)playerViewController:(AVPlayerViewController *)playerViewController
+    restoreUserInterfaceForPictureInPictureStopWithCompletionHandler:(void (^)(BOOL restored))completionHandler {
+    if (![self.delegate respondsToSelector:@selector(mediaContent:restorePictureInPictureWithCompletion:)]) {
+        completionHandler(self.view.window != nil);
+        return;
+    }
+    self.isRestoringFromPictureInPicture = YES;
+    __weak typeof(self) weakSelf = self;
+    [self.delegate mediaContent:self
+        restorePictureInPictureWithCompletion:^(BOOL restored) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            strongSelf.isRestoringFromPictureInPicture = NO;
+            completionHandler(restored);
+        }];
+}
+
+- (void)playerViewControllerDidStopPictureInPicture:(AVPlayerViewController *)playerViewController {
+    [self finishPictureInPictureSession];
+}
+
+- (void)playerViewController:(AVPlayerViewController *)playerViewController
+    failedToStartPictureInPictureWithError:(NSError *)error {
+    [self finishPictureInPictureSession];
+    // The window never came, so nothing is showing this video any more.
+    if (!self.view.window ||
+        UIApplication.sharedApplication.applicationState != UIApplicationStateActive) {
+        [self suspendPlayback];
+    }
+}
+
+- (BOOL)isEligibleForAutomaticPictureInPicture {
+    return _playerViewController.canStartPictureInPictureAutomaticallyFromInline &&
+           [AVPictureInPictureController isPictureInPictureSupported] &&
+           self.view.window != nil && self.isPlaybackActive;
+}
+
+- (void)finishPictureInPictureSession {
+    if (!self.isPictureInPictureActive)
+        return;
+    self.isPictureInPictureActive = NO;
+    if ([self.delegate respondsToSelector:@selector(mediaContentDidStopPictureInPicture:)]) {
+        [self.delegate mediaContentDidStopPictureInPicture:self];
+    }
+    // Restoring into the viewer keeps the player; a session that ended with the
+    // viewer already gone has nothing left to play into.
+    if (!self.isRestoringFromPictureInPicture && !self.view.window) {
+        [self tearDownPlayer];
+    }
+    // Releasing the self-reference here can be the last release, which would run
+    // -dealloc inside this call. Hand it to the next main-queue turn instead.
+    SPKFullScreenVideoViewController *retained = self.pictureInPictureRetain;
+    _pictureInPictureRetain = nil;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        (void)retained;
+    });
 }
 
 - (void)setupThumbnailView {
@@ -295,6 +400,26 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     } else {
         layout();
     }
+}
+
+- (void)synchronizePlayerControlsToBottomBoundaryInset:(CGFloat)bottomInset
+                                              animated:(BOOL)animated {
+    if (!_playerViewController)
+        return;
+
+    // additionalSafeAreaInsets is additive. Subtract our previous contribution
+    // from AVKit's effective safe area to recover what UIKit currently
+    // propagates, then provide only the missing distance to the toolbar. This
+    // also removes our inset if a later appearance cycle starts propagating the
+    // complete safe area on its own.
+    UIEdgeInsets currentAdditional =
+        _playerViewController.additionalSafeAreaInsets;
+    CGFloat inheritedBottom =
+        MAX(0.0, _playerViewController.view.safeAreaInsets.bottom -
+                     currentAdditional.bottom);
+    UIEdgeInsets required = UIEdgeInsetsZero;
+    required.bottom = MAX(0.0, bottomInset - inheritedBottom);
+    [self setPlayerControlOverlayInsets:required animated:animated];
 }
 
 - (void)setupLoadingIndicator {
@@ -404,6 +529,7 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 - (void)prepareForDisplay {
     [self preloadThumbnailIfNeeded];
     [self ensurePlayerViewControllerIfNeeded];
+    [self applyPictureInPicturePreference];
 
     NSURL *resolvedURL = [[SPKMediaCacheManager sharedManager] bestAvailableFileURLForItem:self.mediaItem];
     if (_player && _hasPreparedPlayer && resolvedURL && [self.preparedPlaybackURL isEqual:resolvedURL]) {
@@ -412,9 +538,7 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
             _thumbnailView.hidden = YES;
             _thumbnailView.alpha = 0.0;
         }
-        if (!_isPlaying) {
-            [self play];
-        }
+        [self resumePlaybackForDisplay];
         return;
     }
 
@@ -447,19 +571,30 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
                                                                     strongSelf->_thumbnailView.hidden = YES;
                                                                     strongSelf->_thumbnailView.alpha = 0.0;
                                                                 }
-                                                                if (!strongSelf->_isPlaying) {
-                                                                    [strongSelf play];
-                                                                }
+                                                                [strongSelf resumePlaybackForDisplay];
                                                                 return;
                                                             }
 
                                                             [strongSelf preparePlayerWithURL:localURL];
-                                                            if (strongSelf->_playerItem && !strongSelf->_hasStartedPlayback) {
-                                                                [strongSelf startPlayback];
-                                                            } else if (strongSelf->_player && !strongSelf->_isPlaying) {
-                                                                [strongSelf play];
-                                                            }
+                                                            [strongSelf resumePlaybackForDisplay];
                                                         }];
+}
+
+// The first display starts playback. Later displays (returning to the page, a sheet
+// closing over it) only resume a video Sparkle paused, so a pause the viewer made in
+// AVKit's controls, which bypasses -pause, is kept.
+- (void)resumePlaybackForDisplay {
+    if (!_player)
+        return;
+    if (!_hasStartedPlayback) {
+        [self startPlayback];
+        return;
+    }
+    if (!self.resumeWhenShown)
+        return;
+    self.resumeWhenShown = NO;
+    if (!self.isPlaybackActive)
+        [self play];
 }
 
 - (void)startPlayback {
@@ -474,7 +609,6 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 
     _playerViewController.player = _player;
     [_player play];
-    _isPlaying = YES;
 
     [self hideThumbnailWhenReady];
 }
@@ -523,19 +657,30 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 #pragma mark - Notifications
 
 - (void)playerItemDidReachEnd:(NSNotification *)notification {
-    _isPlaying = NO;
+    self.resumeWhenShown = NO;
+}
+
+// Read the state before the system gets a chance to pause a backgrounding player on
+// its own, which would otherwise look like a pause the viewer made.
+- (void)appWillResignActive:(NSNotification *)notification {
+    self.resumeWhenShown = self.resumeWhenShown || self.isPlaybackActive;
 }
 
 - (void)appDidEnterBackground:(NSNotification *)notification {
-    self.wasPlayingBeforeBackground = self.isPlaying;
-    [self pause];
+    // Automatic Picture in Picture starts as the app backgrounds, and its
+    // will-start callback can land after this one. Pausing here would hand AVKit a
+    // paused player, so a video the window is about to take is left alone; if it
+    // never comes, the failure callback pauses it instead.
+    if (self.isPictureInPictureActive || [self isEligibleForAutomaticPictureInPicture])
+        return;
+    [self suspendPlayback];
 }
 
 - (void)appDidBecomeActive:(NSNotification *)notification {
-    if (self.wasPlayingBeforeBackground) {
-        self.wasPlayingBeforeBackground = NO;
-        [self play];
-    }
+    // Off-screen pages keep their flag for when they are swiped back to.
+    if (!self.view.window)
+        return;
+    [self resumePlaybackForDisplay];
 }
 
 #pragma mark - Controls
@@ -548,10 +693,15 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     }
 }
 
+// The player's own state, not a mirror of it: AVKit's transport controls play and
+// pause the AVPlayer directly, without going through -play or -pause.
+- (BOOL)isPlaybackActive {
+    return _player && _player.timeControlStatus != AVPlayerTimeControlStatusPaused;
+}
+
 - (void)play {
     if (_player) {
         [_player play];
-        _isPlaying = YES;
         return;
     }
     [self prepareForDisplay];
@@ -559,7 +709,17 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 
 - (void)pause {
     [_player pause];
-    _isPlaying = NO;
+}
+
+- (void)suspendPlayback {
+    // A Picture in Picture window is still on screen and playing, so the page
+    // leaving the viewer must not pause it.
+    if (self.isPictureInPictureActive)
+        return;
+    // OR in the current state: a second suspend of an already suspended video (the
+    // app backgrounding while the page is off screen) must not forget it was playing.
+    self.resumeWhenShown = self.resumeWhenShown || self.isPlaybackActive;
+    [_player pause];
 }
 
 #pragma mark - Cleanup
@@ -582,7 +742,7 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
     _preparedPlaybackURL = nil;
     _hasPreparedPlayer = NO;
     _hasStartedPlayback = NO;
-    _isPlaying = NO;
+    _resumeWhenShown = NO;
 }
 
 - (void)reloadWithFileURL:(NSURL *)url {
@@ -598,6 +758,10 @@ static NSTimeInterval const kPlayerControlOverlayInsetAnimationDuration = 0.25;
 }
 
 - (void)cleanup {
+    // Keep the player running for the floating window; the session's own stop
+    // handler tears it down.
+    if (self.isPictureInPictureActive)
+        return;
     self.loadGeneration++;
     [self tearDownPlayer];
     [_loadingIndicator stopAnimating];

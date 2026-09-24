@@ -2,6 +2,7 @@
 #import <UIKit/UIKit.h>
 
 #import "../../Utils.h"
+#import "../../Shared/ActionButton/ActionButtonLookupUtils.h"
 
 static NSString *const kSPKInstantsConfirmReactionPref = @"instants_confirm_reaction";
 
@@ -24,7 +25,7 @@ static NSString *SPKInstantsControlText(UIControl *control) {
         return nil;
     id text = nil;
     @try {
-        text = [control valueForKey:@"text"];
+        text = SPKKVCObject(control, @"text");
     } @catch (__unused NSException *exception) {
     }
     if ([text isKindOfClass:NSString.class])

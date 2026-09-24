@@ -22,10 +22,20 @@ NS_ASSUME_NONNULL_BEGIN
 extern "C" {
 #endif
 
+// Which incoming messages get a saved candidate snapshot.
+typedef NS_ENUM(NSInteger, SPKDMCandidateMode) {
+    SPKDMCandidateModeNone = 0,
+    SPKDMCandidateModeAll,
+    // Keep Deleted Messages stops Instagram from removing an unsent message, so
+    // its content can still be read from Instagram's cache at unsend time. Only
+    // media whose links expire needs to be captured when it arrives.
+    SPKDMCandidateModeExpiringMediaOnly,
+};
+
 void spkDMCaptureNoteInsert(id _Nullable message,
                             NSString *_Nullable ownerPk,
                             NSString *_Nullable threadId,
-                            BOOL persistCandidate);
+                            SPKDMCandidateMode candidateMode);
 
 // `keys` are the IGDirectMessageKey objects from the unsend delta. The
 // capture side extracts sids itself, persists pending removals, and falls back
@@ -47,10 +57,19 @@ void spkDMCaptureResolveThreadMeta(id _Nullable applicator,
                                    NSString *_Nullable threadId,
                                    NSString *_Nullable ownerPk);
 
-NSArray<NSDictionary *> *spkDMCapturePreviewMetadataForKeys(NSArray *_Nullable keys,
-                                                            id _Nullable applicator,
-                                                            NSString *_Nullable ownerPk,
-                                                            NSString *_Nullable threadId);
+// Resolves toast previews for unsent message keys. Live message references are
+// taken on the calling thread, before Instagram applies the removal; building
+// the previews happens on the capture queue, ahead of the unsend's own
+// finalize, and the results are appended to `collector` there. Read
+// `collector` only from a block passed to spkDMCaptureAfterQueuedWork.
+void spkDMCaptureQueuePreviewMetadataForKeys(NSArray *_Nullable keys,
+                                             id _Nullable applicator,
+                                             NSString *_Nullable ownerPk,
+                                             NSString *_Nullable threadId,
+                                             NSMutableArray<NSDictionary *> *collector);
+
+// Runs `block` on the capture queue once everything queued so far has run.
+void spkDMCaptureAfterQueuedWork(dispatch_block_t block);
 
 // Reaction unsend: someone removed a reaction they had placed on a message.
 // `reaction` is an IGDirectMessageReaction; `reactorPk` is the user who removed

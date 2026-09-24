@@ -291,32 +291,320 @@ extern "C" void SPKInstallLiquidGlassHooksIfEnabled(void) {
     });
 }
 
-// MARK: - Progressive Blur Hooks
-%group SPKProgressiveBlurHooks
+// MARK: - Scroll edge style hooks
+//
+// interface_scroll_edge_style drives the top edge effect of every scroll view:
+// off lets Instagram disable it as usual, default keeps it visible with the system style,
+// and soft and hard pin that style. Bottom and side edges always keep the
+// system treatment: a style forced onto the edge behind a
+// toolbar or tab bar renders a flat band on iOS 27 instead of the blur.
+//
+// Only scroll views whose content runs under a top bar get the effect. Every
+// other scroll view keeps its top edge hidden: full-screen containers, story
+// viewers, carousels and small inner lists have nothing to separate from, and
+// on the iOS 27 SDK such a container draws its edge over all of its content,
+// which blurs the navigation chrome and story header inside it.
+//
+// The hooks stay installed on iOS 26+ and read the mode at call time, so every
+// mode except Off applies live. Instagram hides edge effects once while it sets
+// screens up, so returning to Off needs a restart to bring those hides back.
+
+typedef NS_ENUM(NSInteger, SPKScrollEdgeMode) {
+    SPKScrollEdgeModeOff = 0,
+    SPKScrollEdgeModeDefault,
+    SPKScrollEdgeModeSoft,
+    SPKScrollEdgeModeHard,
+};
+
+static SPKScrollEdgeMode sSPKScrollEdgeMode = SPKScrollEdgeModeOff;
+// Set while a live sweep runs; collects every scroll view whose edge effect
+// changed.
+static NSHashTable<UIScrollView *> *sSPKScrollEdgeChangedScrollViews;
+
+// Stamped on the effect fetched through -topEdgeEffect. The effect object has
+// no public edge identity, and the setter hooks must leave other edges alone.
+// Holds whether the owning scroll view is eligible for a forced style.
+static char kSPKScrollEdgeTopKey;
+// Stamped when Sparkle hid the effect, so only those hides are ever undone.
+static char kSPKScrollEdgeSparkleHiddenKey;
+// Stamped when Sparkle replaced the style, so default can restore automatic.
+static char kSPKScrollEdgeForcedStyleKey;
+
+static SPKScrollEdgeMode SPKScrollEdgeModeForPreference(NSString *preference) {
+    if ([preference isEqualToString:@"off"])
+        return SPKScrollEdgeModeOff;
+    if ([preference isEqualToString:@"soft"])
+        return SPKScrollEdgeModeSoft;
+    if ([preference isEqualToString:@"hard"])
+        return SPKScrollEdgeModeHard;
+    return SPKScrollEdgeModeDefault;
+}
+
+static id SPKScrollEdgeStyleObject(SEL selector) {
+    Class styleClass = objc_getClass("UIScrollEdgeEffectStyle");
+    if (![styleClass respondsToSelector:selector])
+        return nil;
+    return ((id (*)(id, SEL))objc_msgSend)(styleClass, selector);
+}
+
+// The style Sparkle pins on top edges, or nil to follow the system.
+static id SPKScrollEdgeForcedStyle(void) {
+    switch (sSPKScrollEdgeMode) {
+    case SPKScrollEdgeModeSoft:
+        return SPKScrollEdgeStyleObject(@selector(softStyle));
+    case SPKScrollEdgeModeHard:
+        return SPKScrollEdgeStyleObject(@selector(hardStyle));
+    default:
+        return nil;
+    }
+}
+
+// A top bar or header shows up as a real top inset. Containers report none,
+// and inner lists only a few points of padding.
+static BOOL SPKScrollEdgeIsEligible(UIScrollView *scrollView) {
+    return scrollView.adjustedContentInset.top >= 20.0;
+}
+
+static id SPKTopEdgeEffect(UIScrollView *scrollView) {
+    if (![scrollView respondsToSelector:@selector(topEdgeEffect)])
+        return nil;
+    id effect = ((id (*)(id, SEL))objc_msgSend)(scrollView, @selector(topEdgeEffect));
+    if (effect) {
+        NSNumber *eligible = @(SPKScrollEdgeIsEligible(scrollView));
+        if (![objc_getAssociatedObject(effect, &kSPKScrollEdgeTopKey) isEqual:eligible])
+            objc_setAssociatedObject(effect, &kSPKScrollEdgeTopKey, eligible, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return effect;
+}
+
+static BOOL SPKTopEdgeEffectIsEligible(id effect) {
+    return [objc_getAssociatedObject(effect, &kSPKScrollEdgeTopKey) boolValue];
+}
+
+// Hides the top edge of ineligible scroll views, and in Hard mode while the
+// content rests at the top: an explicitly set hard style stays visible once
+// shown, unlike the system-resolved one, which fades out at rest.
+static BOOL SPKUpdateTopEdgeVisibility(UIScrollView *scrollView, id effect) {
+    if (!effect || ![effect respondsToSelector:@selector(setHidden:)] || ![effect respondsToSelector:@selector(isHidden)])
+        return NO;
+    BOOL wantsHidden = NO;
+    if (sSPKScrollEdgeMode != SPKScrollEdgeModeOff && !SPKTopEdgeEffectIsEligible(effect)) {
+        wantsHidden = YES;
+    } else if (sSPKScrollEdgeMode == SPKScrollEdgeModeHard && scrollView.window) {
+        // Half a point of slack absorbs fractional insets and rubber-band settling.
+        wantsHidden = scrollView.contentOffset.y <= -scrollView.adjustedContentInset.top + 0.5;
+    }
+    BOOL isHidden = ((BOOL (*)(id, SEL))objc_msgSend)(effect, @selector(isHidden));
+    if (wantsHidden) {
+        if (!isHidden) {
+            objc_setAssociatedObject(effect, &kSPKScrollEdgeSparkleHiddenKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            ((void (*)(id, SEL, BOOL))objc_msgSend)(effect, @selector(setHidden:), YES);
+            return YES;
+        }
+    } else if (objc_getAssociatedObject(effect, &kSPKScrollEdgeSparkleHiddenKey)) {
+        objc_setAssociatedObject(effect, &kSPKScrollEdgeSparkleHiddenKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (isHidden) {
+            ((void (*)(id, SEL, BOOL))objc_msgSend)(effect, @selector(setHidden:), NO);
+            return YES;
+        }
+    }
+    return NO;
+}
+
+// Returns whether the edge effect's style or visibility actually changed, so
+// live sweeps can leave untouched scroll views alone.
+static BOOL SPKApplyScrollEdgeMode(UIScrollView *scrollView) {
+    id effect = SPKTopEdgeEffect(scrollView);
+    if (!effect || ![effect respondsToSelector:@selector(setStyle:)] || ![effect respondsToSelector:@selector(style)])
+        return NO;
+
+    BOOL changed = NO;
+    id forced = SPKTopEdgeEffectIsEligible(effect) ? SPKScrollEdgeForcedStyle() : nil;
+    id current = ((id (*)(id, SEL))objc_msgSend)(effect, @selector(style));
+    if (forced) {
+        objc_setAssociatedObject(effect, &kSPKScrollEdgeForcedStyleKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        if (current != forced) {
+            ((void (*)(id, SEL, id))objc_msgSend)(effect, @selector(setStyle:), forced);
+            changed = YES;
+        }
+    } else if (objc_getAssociatedObject(effect, &kSPKScrollEdgeForcedStyleKey)) {
+        objc_setAssociatedObject(effect, &kSPKScrollEdgeForcedStyleKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        id automatic = SPKScrollEdgeStyleObject(@selector(automaticStyle));
+        if (automatic && current != automatic) {
+            ((void (*)(id, SEL, id))objc_msgSend)(effect, @selector(setStyle:), automatic);
+            changed = YES;
+        }
+    }
+
+    if (SPKUpdateTopEdgeVisibility(scrollView, effect))
+        changed = YES;
+    if (changed)
+        [sSPKScrollEdgeChangedScrollViews addObject:scrollView];
+    return changed;
+}
+
+static void SPKForEachScrollView(UIView *root, void (^block)(UIScrollView *scrollView)) {
+    NSMutableArray<UIView *> *stack = [NSMutableArray arrayWithObject:root];
+    while (stack.count > 0) {
+        UIView *view = stack.lastObject;
+        [stack removeLastObject];
+        if ([view isKindOfClass:UIScrollView.class])
+            block((UIScrollView *)view);
+        [stack addObjectsFromArray:view.subviews];
+    }
+}
+
+// UIKit does not rebuild an edge effect's layers after a live style or
+// visibility change until the scroll view and the effect view lay out again.
+static void SPKNudgeScrollEdgeLayout(UIScrollView *scrollView) {
+    [scrollView setNeedsLayout];
+    for (UIView *container in scrollView.subviews) {
+        for (UIView *subview in container.subviews) {
+            if ([NSStringFromClass(subview.class) containsString:@"ScrollEdgeEffect"]) {
+                [container setNeedsLayout];
+                [subview setNeedsLayout];
+            }
+        }
+    }
+}
+
+// Rebuilding an edge effect can change a scroll view's top inset, which moves
+// an open list. Keep each list's distance from its top edge rather than its raw
+// offset: the raw offset fights UIKit whenever the inset really changed.
+static void SPKKeepScrollDistances(NSMapTable<UIScrollView *, NSNumber *> *distances) {
+    for (UIScrollView *scrollView in distances) {
+        if (scrollView.isTracking || scrollView.isDecelerating)
+            continue;
+        CGFloat distance = [[distances objectForKey:scrollView] doubleValue];
+        CGPoint offset = scrollView.contentOffset;
+        offset.y = distance - scrollView.adjustedContentInset.top;
+        if (fabs(offset.y - scrollView.contentOffset.y) > 0.5)
+            [scrollView setContentOffset:offset animated:NO];
+    }
+}
+
+static void SPKReapplyScrollEdgeModeEverywhere(void) {
+    NSString *preference = [SPKUtils getStringPref:kSPKPrefInterfaceScrollEdgeStyle];
+    sSPKScrollEdgeMode = SPKScrollEdgeModeForPreference(preference);
+    sSPKScrollEdgeChangedScrollViews = [NSHashTable weakObjectsHashTable];
+    NSMapTable<UIScrollView *, NSNumber *> *distances = [NSMapTable weakToStrongObjectsMapTable];
+
+    // Everything, including the layout that rebuilds the effects and the
+    // offset correction, commits in one transaction, so no frame ever shows
+    // the list moved.
+    [CATransaction begin];
+    [CATransaction setDisableActions:YES];
+    [UIView performWithoutAnimation:^{
+        for (UIWindow *window in UIApplication.sharedApplication.windows) {
+            SPKForEachScrollView(window, ^(UIScrollView *scrollView) {
+                [distances setObject:@(scrollView.contentOffset.y + scrollView.adjustedContentInset.top) forKey:scrollView];
+            });
+        }
+        for (UIWindow *window in UIApplication.sharedApplication.windows) {
+            SPKForEachScrollView(window, ^(UIScrollView *scrollView) {
+                SPKApplyScrollEdgeMode(scrollView);
+            });
+        }
+        NSHashTable<UIScrollView *> *changed = sSPKScrollEdgeChangedScrollViews;
+        sSPKScrollEdgeChangedScrollViews = nil;
+        for (UIScrollView *scrollView in changed) {
+            SPKNudgeScrollEdgeLayout(scrollView);
+            [scrollView layoutIfNeeded];
+        }
+        // Only the lists that were touched get corrected.
+        for (UIScrollView *scrollView in distances.keyEnumerator.allObjects) {
+            if (![changed containsObject:scrollView])
+                [distances removeObjectForKey:scrollView];
+        }
+        SPKKeepScrollDistances(distances);
+    }];
+    [CATransaction commit];
+
+    // Insets that settle on the following pass get the same correction.
+    if (distances.count > 0) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [UIView performWithoutAnimation:^{
+                SPKKeepScrollDistances(distances);
+            }];
+        });
+    }
+    SPKLog(@"LiquidGlass", @"Scroll edge style applied live, style=%@, rebuilt=%lu", preference, (unsigned long)distances.count);
+}
+
+%group SPKScrollEdgeHooks
 %hook UIScrollEdgeEffect
 + (void)hide {
-    // No-op to prevent globally hiding scroll-edge effects
+    // Instagram hides edge effects globally; every mode but Off keeps them.
+    if (sSPKScrollEdgeMode == SPKScrollEdgeModeOff)
+        %orig;
 }
 
 - (BOOL)ig_isHidden {
-    return NO; // Always show the progressive blur
+    return sSPKScrollEdgeMode == SPKScrollEdgeModeOff ? %orig : NO;
 }
 
 - (void)ig_setIsHidden:(BOOL)hidden {
-    %orig(NO); // Intercept and prevent individual hiders
+    %orig(sSPKScrollEdgeMode == SPKScrollEdgeModeOff ? hidden : NO);
+}
+
+// UIKit writes the automatic style again while navigation chrome changes, and
+// it resolves to hard on iOS 27, so pin top edges on every write.
+- (void)setStyle:(id)style {
+    id forced = SPKTopEdgeEffectIsEligible(self) ? SPKScrollEdgeForcedStyle() : nil;
+    %orig(forced ?: style);
 }
 %end
+
+// Edge effects are created lazily with the automatic style, so apply the mode
+// as each scroll view lands in a window. UIScrollView has no public
+// didMoveToWindow of its own, and the table and collection view overrides
+// bypass one added here, so hook the private window move every subclass uses.
+%hook UIScrollView
+- (void)_didMoveFromWindow:(UIWindow *)fromWindow toWindow:(UIWindow *)toWindow {
+    %orig;
+    if (toWindow && sSPKScrollEdgeMode != SPKScrollEdgeModeOff)
+        SPKApplyScrollEdgeMode(self);
+}
+
+- (void)setContentOffset:(CGPoint)contentOffset {
+    %orig;
+    if (sSPKScrollEdgeMode == SPKScrollEdgeModeHard)
+        SPKUpdateTopEdgeVisibility(self, SPKTopEdgeEffect(self));
+}
+
+- (void)setContentSize:(CGSize)contentSize {
+    %orig;
+    if (sSPKScrollEdgeMode == SPKScrollEdgeModeHard)
+        SPKUpdateTopEdgeVisibility(self, SPKTopEdgeEffect(self));
+}
+
+- (void)adjustedContentInsetDidChange {
+    %orig;
+    // Eligibility follows the top inset, which settles after the first layout.
+    if (sSPKScrollEdgeMode != SPKScrollEdgeModeOff && self.window)
+        SPKApplyScrollEdgeMode(self);
+}
+%end
+
 %end
 
 extern "C" void SPKInstallProgressiveBlurHooksIfEnabled(void) {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if (objc_getClass("UIScrollEdgeEffect")) {
-            %init(SPKProgressiveBlurHooks);
-            SPKLog(@"LiquidGlass", @"SPKProgressiveBlurHooks successfully installed!");
-        } else {
+        if (!objc_getClass("UIScrollEdgeEffect")) {
             SPKLog(@"LiquidGlass", @"UIScrollEdgeEffect class not found at runtime, skipping hooks.");
+            return;
         }
+        NSString *preference = [SPKUtils getStringPref:kSPKPrefInterfaceScrollEdgeStyle];
+        sSPKScrollEdgeMode = SPKScrollEdgeModeForPreference(preference);
+        %init(SPKScrollEdgeHooks);
+        [[NSNotificationCenter defaultCenter] addObserverForName:SPKScrollEdgeStyleDidChangeNotification
+                                                          object:nil
+                                                           queue:NSOperationQueue.mainQueue
+                                                      usingBlock:^(__unused NSNotification *notification) {
+                                                          SPKReapplyScrollEdgeModeEverywhere();
+                                                      }];
+        SPKLog(@"LiquidGlass", @"Scroll edge hooks installed, style=%@", preference);
     });
 }
 

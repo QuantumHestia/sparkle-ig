@@ -3,6 +3,7 @@
 #import "../../Utils.h"
 
 #import <objc/message.h>
+#import <objc/runtime.h>
 
 ////////////////////////////////////////////////////////
 
@@ -119,12 +120,18 @@ static id SPKFeaturedUserFromOwner(id owner) {
 
 // While following, tapping the button opens the relationship sheet rather than unfollowing on the
 // spot, and that sheet carries its own Unfollow row which is confirmed where it is selected. Only
-// the surfaces where the tap itself ends the follow are confirmed here.
+// the surfaces where the tap itself ends the follow are confirmed here. IG 448 dropped the
+// Objective-C accessor and kept the flag as a plain Swift stored Bool, so the ivar is read directly
+// when the getter is gone; missing it would prompt on the tap and again on the sheet's row.
 static BOOL SPKFollowControllerOpensRelationshipSheet(id controller) {
-    if (![controller respondsToSelector:@selector(canShowRelationshipSheetWhenFollowing)])
+    if ([controller respondsToSelector:@selector(canShowRelationshipSheetWhenFollowing)])
+        return ((id<SPKFollowControlling>)controller).canShowRelationshipSheetWhenFollowing;
+
+    Ivar flag = controller ? class_getInstanceVariable(object_getClass(controller), "canShowRelationshipSheetWhenFollowing") : NULL;
+    if (!flag)
         return NO;
 
-    return ((id<SPKFollowControlling>)controller).canShowRelationshipSheetWhenFollowing;
+    return ((const uint8_t *)(__bridge const void *)controller)[ivar_getOffset(flag)] & 1;
 }
 
 // A few surfaces, notifications among them, configure the follow control to turn into a Message
