@@ -4,7 +4,7 @@
 
 # Sparkle for Instagram
 
-`v1.3.1` · Tested on versions **445.0.0** and **410.1.0**
+`v1.4.0` · Tested on versions **448.0.0** and **410.1.0**
 
 [📣 IPA Releases](https://t.me/sparkle_ig) · [💬 Chat & Support](https://t.me/+f-Xo21HnfCY3NmE0) · [📦 Jailbreak Repo](https://efibalogh.github.io/sparkle-ig/) · [📥 DEB Releases](https://github.com/efibalogh/sparkle-ig/releases/latest) · [🐛 Issues](https://github.com/efibalogh/sparkle-ig/issues/new/choose) · [❤️ Support](https://ko-fi.com/sparkle_ig)
 
@@ -73,7 +73,7 @@ For the full list of features, check out [`FEATURES.md`](FEATURES.md).
   - Unlock native message previews from the inbox long-press menu on supported Instagram versions.
   - Block doom-scrolling.
   - Build a custom tab bar with a live preview: reorder or hide destinations, choose launch and swipe behavior, trade a hidden tab for one-tap access to Saved collections in the custom layout, and drop the bar entirely when a single tab is left.
-  - Bring back a Saved tab on your own profile, right beside your posts, tagged, and reels.
+  - Bring back the Saved tab on your own profile, right beside your posts, tagged, and reels.
   - Switch profile and Explore grids back to square thumbnails instead of the taller 3:4 layout.
 - **Custom app font**:
   - Import your own `.otf`/`.ttf` font and use it across Instagram and Sparkle, matched per weight and previewed face by face before you pick it.

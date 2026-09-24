@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////
 
 // * Tweak version *
-NSString *SPKVersionString = @"v1.3.1";
+NSString *SPKVersionString = @"v1.4.0";
 
 // Variables that work across features
 __weak id SPKPendingDirectVisualMessageToMarkSeen = nil;
